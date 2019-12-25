@@ -1,0 +1,353 @@
+/* default&bootstrap */
+body{color:#333; font-size: 14px; font-family: 'Noto Sans KR', sans-serif;}
+a, a:hover, a:focus, a:active{color:#333;}
+img, a, button, input, select{display:inline-block; border:0; outline:0;}
+input[type=checkbox], input[type=radio]{margin:0;}
+label{margin-bottom: 0; font-weight: normal;}
+button{padding: 0; background: transparent;}
+.container-fluid, .row, ul, li, .list-inline, .list-inline>li, h1, h2, h3, p {margin:0;padding:0;}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, 
+.col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, 
+.col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, 
+.col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9
+, section{padding: 15px 15px;}
+.glyphicon{font-size: 14px;}
+.lead{margin-bottom:0;}
+
+
+
+/* common */
+.contents{margin-top: 100px;}
+.contents.none-nav{margin-top: 50px;}
+.line-style{height: 50px; border: 1px solid; border-width: 1px 0; line-height: 50px;}
+.eng{
+    font-family: 'Permanent Marker', cursive;
+    /* font-family: 'Monoton', cursive; */
+    /* font-family: 'Libre Barcode 128 Text', cursive; */
+    /* font-family: 'Stalinist One', cursive; */
+    /* font-family: 'Seymour One', sans-serif; */
+}
+/* 맨위로이동, 더로드하기 버튼 */
+.btn-bottom{
+    padding: 30px 0;
+    border-top: 1px solid;
+}
+.btn-bottom > button{
+    padding: 5px 50px;
+    border: 1px solid;
+    border-radius: 20px;
+    /* font-size: 13px; */
+}
+/* 상품목록, 상세보기페이지: nav */
+.page-nav{
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    padding: 0 15px;
+    border: 0;
+    border-bottom: 1px solid;
+    background: white;
+    line-height: 50px;
+    z-index: 999;
+}
+.page-nav .glyphicon{
+    margin: 0 3px;
+    font-size: 12px;
+}
+/* 페이지하단 페이징바 */
+.paging-bar{
+    border-top: 1px solid;
+    line-height: 50px;
+}
+.paging-bar li.cPage{font-weight: bold; font-size: 15px;}
+.paging-bar a{
+    padding: 0 15px;
+}
+.paging-bar .glyphicon{
+    font-size: 13px;
+}
+
+
+/* media */
+/* 
+@media (max-width: 991px) {
+    p{background: cadetblue;}
+}
+@media (max-width: 767px) {
+    p{background: coral;}
+} 
+*/
+
+
+
+/* header.jsp */
+header{background: white;}
+/* first line */
+#header-wrapper{
+    height:50px; 
+    border-bottom: 1px solid;
+}
+#header-wrapper>div{
+    height: 100%; 
+    border-right: 1px solid;
+}
+#header-wrapper div:last-of-type{border-right:0;}
+#logo{position: relative; height: 50px;}
+#logo h1{
+    position: absolute;
+    left:0;
+    top: -8px;
+    margin: 0;
+    font-size: 35px;
+    font-weight: normal;
+}
+#logo a{padding: 10px 15px;}
+#logo a:hover, #logo a:active, #logo a:focus{text-decoration: none;}
+#search{padding: 12px 15px;}
+#search input{font-size: 13px;}
+#search input::placeholder{color:#242424;}
+#btn-search{
+    margin: 3px 3px 0 0;
+    padding: 0;
+}
+#btn-search .glyphicon{top:2px;}
+
+/* menu */
+#menu{position: relative; padding:0;}
+#menu>ul {padding-right: 15px;}
+#menu>ul li:nth-of-type(4) {padding-right: 7px;}
+#menu>ul li a {padding: 15px 5px;}
+#menu>ul li.login-show{display: none;}
+/* #menu>ul li.login-hide{display: none;} */
+
+
+/* side menu */
+.sidemenu-wrapper{
+    position: fixed;
+    top: 50px;
+    right: 0;
+    width: 33.4%;
+    height: 100%;
+    border: 1px solid;
+    border-width: 0 0 1px 1px;
+    background: white;
+    z-index: 9999;
+    transition: transform .25s ease-in-out;
+    transition-property: width, transform;
+    transform: translateX(105%);
+}
+.sidemenu-wrapper.show-sidemenu{
+    transform: translateX(0);
+}
+.sidemenu-wrapper ul{
+    top:100px;
+    height: 82%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+.sidemenu-wrapper ul::-webkit-scrollbar { 
+    display: none !important; 
+}
+.sidemenu-wrapper header, .sidemenu-wrapper li{
+    height: 50px;
+    border-bottom: 1px solid;
+    background: white;
+}
+.sidemenu-wrapper header a, .sidemenu-wrapper li a{
+    display: block;
+    padding: 14px;
+}
+.sidemenu-wrapper .glyphicon{float: right; margin-top:4px; font-size: 12px;}
+.sidemenu-wrapper header .glyphicon{float:left;}
+
+/* second line */
+#header-second{
+    height: 46px;
+    font-size: 14px;
+    font-weight: bold;
+}
+#header-second li a {
+    padding: 12px 15px;
+}
+
+
+
+
+/* footer.jsp */
+footer, footer header{
+    background: #aaaaac;
+}
+/* first line */
+#footer-menu>div{
+    height: 200px;
+    padding: 10px 20px;
+    border: 1px solid;
+    border-width: 0 1px 1px 0;
+}
+#footer-menu>div:last-of-type{border-right: 0;}
+#footer-menu header{
+    margin: 20px 0;
+    font-weight: 400;
+}
+#footer-menu li {
+    margin-bottom: 7px;
+}
+#q-call{font-weight: 400;}
+#q-email{
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+/* second line */
+#about{
+    height: 100%;
+    padding: 20px 15px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+#about>p:first-of-type{
+    margin-bottom: 5px; 
+    font-weight: bold;
+    font-size: 20px;
+}
+/* #about>p:not(:first-of-type){color: #707070;} */
+#about .bar{margin: 0 7px;}
+#about .bar::before{content: "ㅣ";}
+#copyright{
+    position: relative;
+    padding-left: 30px;
+    font-size: 13px;
+}
+#copyright span{
+    position: absolute;
+    left: 15px;
+}
+
+
+
+
+
+/* index.jsp */
+/* 배너 */
+.carousel-control.right, .carousel-control.left{background-image: none;}
+
+/* 이용방법 소개 */
+#introduce{height: 50px; border-bottom: 0; line-height: inherit;}
+#introduce a{display: block; padding: 5px 15px 8px;}
+#introduce span{font-size: 25px;}
+
+/* 추천상품목록 */
+.rcmd-cate-header a{
+    position: relative;
+    display: block;
+    padding-left: 15px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.rcmd-cate-header .cate-plus{
+    position: absolute;
+    top: 17px;
+    right: 15px;
+}
+.item-list>div{
+    position: relative;
+    height: 100%;
+    padding: 0;
+    border-left: 1px solid;
+}
+.item-list>div:first-of-type{border:0;}
+.item-list a{padding: 50px 0 150px;}
+.item-list img{width: 60%;}
+.ptext-wrapper{
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+} 
+.pbrand{font-weight: bold;}
+.pname{width: 90%;}
+.price-wrapper{margin-top: 10px;}
+.price{margin-bottom: 5px;}
+.rent-period{font-size: 12px;}
+.rent-type{
+    display: inline-block;
+    padding: 1px 3px 3px;
+    border: 1px solid lightgray;
+    color: gray;
+    font-size: 11px;
+}
+
+
+
+
+
+/* view_list.jsp */
+/* 상품목록 */
+#view-list .item-list>div{
+    position: relative;
+    height: 100%;
+    padding: 0;
+    border-left: 1px solid;
+    border-bottom: 1px solid;
+}
+#view-list .item-list a{
+    padding: 40px 0 180px;
+}
+#view-list .item-list img{
+    width: 60%;
+}
+
+/* 상품목록 더 불러오기 */
+#load-more{
+    border-top: 0;
+}
+
+
+
+
+
+/* view_details.jsp */
+/* 이미지/옵션 영역 */
+#view-wrapper{position: relative; height: 700px; border-bottom: 1px solid;}    
+#view-img{height: 100%; padding: 0; margin-top: 50px; border-right: 1px solid; overflow-y: scroll;}
+#view-img img{width: 100%;}
+
+#opt-wrapper{height: 100%; padding: 50px 0;}
+#opt-header{
+    position: fixed;
+    width: 50%;
+    border-bottom: 1px solid;
+    background: white;
+    z-index: 999;
+    transition: top 0.2s ease-in-out;
+}
+.static-header{position: static; width: 100%;}
+#opt-header>div{
+    padding: 0;
+    height: 50px;
+    line-height: 50px;
+}
+#opt-header>div:first-of-type{border-right: 1px solid;}
+#btn-wishlist{
+    position: relative;
+    width: 100%;
+    padding: 0;
+}
+#btn-wishlist .glyphicon{
+    position: absolute;
+    top: 17px;
+    right: 70px;
+    font-size: 16px;
+}
+#opt-inner{padding: 0; margin-top: 50px;}
+#opt-inner>section{border-bottom: 1px solid;}
+#opt-inner .pbrand{font-size: 13px; font-weight: normal;}
+#opt-inner #pname{font-size: 16px; font-weight: bold;}
+#opt-inner h3{
+    font-size: 14px;
+    font-weight: normal;
+}
+#sel-rent-period ul{
+    display: none;
+}
+#sel-rent-period ul.chk{
+    display: block;
+}

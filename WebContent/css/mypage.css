@@ -1,0 +1,279 @@
+/* common */
+.content-wrapper{
+    padding: 0;
+    border: 1px solid;
+    border-width: 0 1px;
+}
+.content-header{
+    height: 50px;
+    border: 1px solid;
+    border-width: 1px 0;
+    line-height: 50px;
+}
+.btn-radius{
+    margin-top: 7px;
+    padding: 3px 15px;
+    border: 1px solid;
+    border-radius: 20px;
+    font-size: 14px;
+}
+.em-blue{
+    color: #008bcc;
+    font-weight: bold;
+} 
+.em-purple{color: rebeccapurple; font-weight: bold;}
+.em-pink{color: crimson;}
+/* .bg-purple{background: #7d37c3; color: white;} */
+/* .bg-purple{background: #21de0b} */
+/* .bg-purple{background:rgb(19, 84, 140); color: white;} */
+/* .bg-purple{background:rgb(247, 21, 94);} */
+/* .bg-purple{background:#C997EB;} */
+/* .bg-purple{background:#3C92BA;} */
+.bg-purple{background:#0F4C81; color: whitesmoke;}
+.sel{background: #aaaaac;}
+.strong{font-weight: bold;}
+
+
+
+/* 주문현황: my_order_status.jsp */
+/* 주문상태보기 */
+.my-header{padding: 0;}
+.my-header li, #search-list-date li{
+    height: 50px;
+    border-left: 1px solid;
+    line-height: 50px;
+}
+.my-header li:first-of-type, #search-list-date li:first-of-type{border-left: 0;}
+.my-header>div{border: 0;}
+.my-header .em-blue{font-size: 15px;}
+/* 주문현황 기간검색 */
+.my-header button{width: 100%;}
+
+/* 주문현황 리스트 */
+.list-wrapper{padding:0;}
+.list-tbl{width: 100%;}
+.list-tbl thead tr{height: 50px; border-bottom: 3px double;}
+/* .list-tbl th, .list-tbl td{border-left: 1px solid;}  
+.list-tbl th:first-of-type, .list-tbl td:first-of-type{border-left: 0;} */
+.list-tbl tbody tr{border-top: 1px solid;}
+.list-tbl .rent-period{font-size: 14px;}
+/* 주문현황: 상품정보 */
+.item-info{padding: 20px 0 15px;}
+.item-info a{display: inline;}
+.item-info img{width: 20%; margin-right: 10px;}
+.item-info .pname{width: 100%; margin-bottom: 15px;}
+.item-info .price{margin-bottom: 3px; font-size: 15px;}
+.item-info .rent-type{margin-right: 5px;}
+/* 주문현황: 변경 */
+.item-change li:first-of-type .btn-radius{margin-top: 0;}
+
+
+/* 계약중인 렌탈: my_contracting_rental.jsp */
+#contracting-tbl .em-blue{font-weight: normal;}
+
+
+/* 포인트 확인: my_point.jsp */
+#point-selOpt li{border-bottom: 1px solid;}
+#point-list .list-tbl th, #point-list .list-tbl td{border-left: 0;}
+#point-list .em-blue{font-weight: normal;}
+#point-list .em-purple{font-weight: normal;}
+
+
+/* 위시리스트: my_wishlist.jsp */
+/* 위시리스트, 장바구니 목록 */
+.wishlist-wrapper, .cart-wrapper{padding: 0;}
+.wishlist-inner>li{height: 140px; border-bottom: 1px solid;}
+.wishlist-inner>li:last-of-type{border-bottom: 0;}
+.wishlist-inner>li>div{
+    height: 100%;
+    border-left: 1px solid;
+}
+.wishlist-inner>li>div:first-of-type{border-left: 0;}
+.item-chk{padding: 0;}
+.item-chk input{
+    margin: 0 5px;
+    background-color: white;
+    border: 1px solid;
+}
+.wishlist-inner .item-chk input{margin-top: 60%;}
+.item-img{padding: 0;}
+.item-img a{height: 100%;}
+.wishlist-inner .item-img img{width: 50%; padding: 13px 0;}
+.wish-info{position:relative; padding: 15px;}
+.wish-info a{display:block;}
+.wish-info a:hover, .wish-info a:active, .wish-info a:focus{text-decoration: none;}
+.wishBtn-wrapper li{position: absolute; right: 15px; display: inline-block;}
+.wishBtn-wrapper .btn-radius{padding: 3px 45px;}
+.wishBtn-wrapper .btn-del{top: 15px;}
+.wishBtn-wrapper .btn-addCart{bottom: 55px;}
+.wishBtn-wrapper .btn-rentNow{bottom: 20px;}
+/* 위시리스트, 장바구니 선택옵션 */
+.itemChk-wrapper{height: 50px; padding: 0 15px; border-top: 1px solid; }
+.itemChk-wrapper p{display: inline-block; line-height: 50px;}
+.itemChk-wrapper button{margin-left: 5px;}
+.btnChkAll-wrapper{margin-top: 7px;}
+.btnChkAll-wrapper .btn-radius{margin-top: 3px;}
+
+
+/* 장바구니: my_cart.jsp */
+.cart-wrapper .price{
+    color: #999;
+}
+.cart-wrapper .em-price{
+    color: #333;
+    font-size: 15px;
+    font-weight: bold;
+}
+.cart-wrapper th.item-chk input{margin-top: 5px;}
+.cart-wrapper th.item-chk, .cart-wrapper td.item-chk{padding: 0 0 0 10px;}
+.cart-wrapper td{padding: 15px;}
+.cart-wrapper td.item-info{padding:15px 0;}
+.order-no input{
+    width: 10%; 
+    border: 1px solid;
+    border-width: 1px 0;
+    background: white;
+}
+/* .order-no button{
+    border: 1px solid;
+    width: 20px;
+} */
+.order-no .glyphicon{
+    padding: 5px 0;
+    font-size: 10px;
+}
+.view-totalPrice{
+    border-top: 1px solid;
+}
+
+
+
+/* 1:1문의: my_oneToOne.html */
+/* .btn-qna{width: 100%;} */
+.btn-radius.btn-qna{
+    margin-top: 10px;
+    padding: 5px 40px;
+    line-height: 1.4;
+}
+.qna-title{padding: 0;}
+.qna-title a{
+    width: 100%;
+    padding: 14px 0;
+}
+
+
+
+/* 이용후기: my_review.jsp */
+.my-header.link a{width: 100%;}
+/* 작성가능한 이용후기 */
+#writable-review .wishlist-inner>li, #writed-review .wishlist-inner>li{height: 140px;}
+#writable-review .wishlist-inner>li>div, #writed-review .wishlist-inner>li>div{border-left: 0;}
+#writable-review .item-img img{width: 30%;}
+#writable-review .btn-radius.btn-qna{margin-top: 35px;}
+#writable-review .item-info{padding-top: 20px;}
+.ship-date{
+    margin-top: 30px;
+    color: gray;
+    font-size: 14px;
+}
+/* 작성한 이용후기 */
+#writed-review .item-img img{width: 40%;}
+.review-header{
+    height: 50px;
+    padding: 0;
+    border-bottom: 2px double;
+}
+.review-header .item-info{padding: 0; line-height: 50px;}
+.review-header .item-info .pname{margin-bottom: 0;}
+.reviewBtn-wrapper{padding: 6px 0 0 40px;}
+.reviewBtn-wrapper li:first-of-type{margin-right: 8px;}
+.review-content{padding: 15px 20px;}
+
+
+
+
+/* 1:1문의글 등록: my_oneToOne_form */
+label{margin-right: 60px;}
+select{
+    width: 150px;
+    margin-top: -7px;
+    padding: 5px 10px;
+    border: 1px solid;
+}
+input[type=text], input[type=email], input[type=password]{
+    padding: 7px 15px;
+    border: 1px solid;
+}
+textarea{
+    padding: 7px 5px;
+    border: 1px solid;
+    resize: none;
+    outline: none;
+}
+input[type=file]{
+    display: inline;
+    overflow: hidden;
+}
+#oneToOneFrm>div{
+    padding: 15px 20px 20px;
+}
+#oneToOneFrm .qContent-wrapper, #oneToOneFrm .file-wrapper, #oneToOneFrm .memberId-wrapper{padding-top: 0;}
+#oneToOneFrm>div:first-of-type{border-bottom: 1px solid;}
+#oneToOneFrm input[type=text]{
+    width: 80%;
+}
+.qContent-wrapper, .file-wrapper{position: relative;}
+.qContent-wrapper label, .file-wrapper label{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+.qContent-wrapper textarea{
+    margin-left: 112px;
+    width: 80%;
+}
+.file-wrapper label{top: 3px;}
+.file-wrapper input{margin-left: 111px;}
+.memberId-wrapper{border-bottom: 1px solid;}
+.memberId-wrapper label{margin-right: 22px;}
+#oneToOneFrm .memberId-wrapper input[type=text]{width: 25%;}
+#oneToOneFrm .btnForm-wrapper{padding-bottom: 0;}
+.btnForm-wrapper .btn-radius{
+    padding: 5px 50px;
+    margin: 0 10px;
+    font-size: 13px;
+}
+
+
+
+
+/* 로그인, 회원가입 */
+#signUpFrm>div, #loginFrm>div, #editInfoFrm>div{margin-bottom: 20px;}
+#signUpFrm .btnForm-wrapper, #editInfoFrm .btnForm-wrapper{padding-top: 20px;}
+.form-header{border-top: 0;}
+.form-wrapper{padding: 40px 50px;}
+.form-wrapper .req{color: #a5a5a5; font-size: 11px;}
+.form-wrapper input{font-size: 13px;}
+.form-wrapper input[type=text], input[type=email], input[type=password]{width: 65%;}
+.form-wrapper input::placeholder{color: #a5a5a5; font-size: 12px;}
+.form-wrapper label{width: 90px;}
+.form-wrapper select{width: 70px;}
+.form-wrapper #tel2{width: 47%; margin-left: 11px;}
+.form-wrapper #postcode{width: 30%; background: white;}
+.form-wrapper #btn-postcode{margin-left: 15px; background: white;}
+.form-wrapper #memberId{width: 45%; background: white;}
+.form-wrapper #btn-idcheck{margin-left: 15px; background: white;}
+.form-wrapper #address, .form-wrapper #detailAddress{margin: 5px 0 0 153px;}
+.hobby-wrapper p{display: inline-block; width: 100px; margin-right: 50px;}
+.hobby-inner{display: inline-block; margin-bottom: 5px;}
+.hobby-inner:not(:first-of-type){margin-left: 153px;}
+.hobby-inner label{width: inherit; margin-right: 30px;}
+.btnForm-wrapper.btn-bottom{padding: 0; border-top: 0;}
+#signUpFrm .btnForm-wrapper .btn-radius{padding: 5px 80px;}
+/* 로그인 */
+.check-wrapper label{width: 100px; margin-right: 0;}
+#loginFrm #memberId{margin-bottom: 10px;}
+#loginFrm .btn-login{padding: 5px 135px; margin-bottom: 10px;}
+#loginFrm .btn-signup{padding: 5px 129px;}
+/* 회원정보수정: my_edit_memberInfo.jsp */
+#editInfoFrm #memberName, #editInfoFrm #memberId{padding: 7px 0; border: 0;}

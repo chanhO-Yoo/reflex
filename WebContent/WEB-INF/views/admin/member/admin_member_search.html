@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>re:flex</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet"> <!-- 부트스트랩 -->
+        <link href="css/style.css" rel="stylesheet">
+    
+        <script src="js/jquery-3.4.1.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/header.js"></script>
+
+        <style>
+        .height-45{
+            height: 45px;
+        }
+        </style>
+
+    </head>
+    <body>
+    
+        <header class="container-fluid navbar-fixed-top">
+            
+            <!-- first line -->
+            <div id="header-first" class="row">
+                <div id="logo" class="col-md-4">
+                        <h1><a href="admin_header.html">re:flex</a></h1>
+                </div>
+                <div id="search" class="col-md-4">
+                    <h2 class="sr-only">회원 검색</h2>
+                    <form action="">
+                        <button type="submit" id="btn-search" aria-label="search products">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                        <input type="search" name="search" placeholder="검색">
+                    </form>
+                </div>
+                <div id="header-first-menu" class="col-md-4">
+                    <ul class="list-unstyled list-inline text-right">
+                        <li><a href="#">관리인</a></li>
+                        <li>
+                            <h2 class="sr-only">장바구니</h2>
+                            <a href="#" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                        </li>
+                    </ul>
+                    <!-- side menu -->
+                    <div>
+                        <h2 class="sr-only">사이드메뉴</h2>
+                        <button type="button"  id="btn-sidemenu">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                        </button>
+                        <ul id="level1-sidemenu" class="list-unstyled sidemenu">
+                            <li></li>
+                            <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                            <li><a href="#">패션<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                            <li><a href="#">뷰티<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                            <li><a href="#">리빙<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                            <li><a href="#">키즈<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                            <li><a href="#">레저<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                            <li><a href="#">고객서비스</a></li>
+                        </ul>
+                        <ul id="level2-recommended" class="list-unstyled sidemenu">
+                            <li class="go-back text-center"><a href="#"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>이럴 때 빌려봐</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                            <li><a href="#">바캉스 갈 때</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 2 line -->
+            <nav id="header-second" class="line-style">
+                <h2 class="sr-only">메인메뉴</h2>
+                <ul class="list-unstyled list-inline">
+                    <li><a href="admin_item.html">회원관리</a></li>
+                    <li><a href="admin_order.html">주문관리</a></li>
+                    <li><a href="admin_member.html">회원관리</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- 메인 컨텐츠 -->
+        <div class="container-fluid contents">
+            <!-- 회원검색 - 메뉴제목 -->
+            <div class="row itemTitle">
+                <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                    <h3>회원조회</h3>
+                </div>
+            </div>
+            <!-- 한줄 여백 -->
+            <div class="row height-45"></div>
+            <!-- 회원검색 - 서브제목 -->
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                    <h4>회원 검색</h4>
+                </div>
+            </div>
+            <!-- 회원검색 - 검색 폼 -->
+            <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+                <form class="form-inline">
+                    <!-- 회원검색 - 검색 종류 선택 -->
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option>회원명</option>
+                            <option>회원아이디</option>
+                        </select>
+                    </div>
+                    <!-- 회원검색 - 검색어 입력 -->
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="searchKeyword" placeholder="검색어를 입력하세요">
+                    </div>
+                    <button type="submit" class="btn btn-default">검색</button>
+                </form>
+                
+            </div>
+            <!-- 한줄 여백 -->
+            <div class="row height-45"></div>
+             <!-- 회원검색 - 검색결과 서브제목 -->
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                    <h4>회원 목록</h4>
+                </div>
+            </div>
+            <!-- 회원검색 - 회원 검색 결과 -->
+            <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+                <table class="table ">
+                    <tr>
+                        <th>회원아이디</th>
+                        <th>이름</th>
+                        <th>주소</th>
+                        <th>가입일</th>
+                        <th>포인트</th>
+                        <th>구매내역</th>
+                        <th>삭제</th>
+                    </tr>
+                    <tr>
+                        <th>honggd</th>
+                        <th>홍길동</th>
+                        <th>서울시 강남구 역삼동 123번지 3층</th>
+                        <th>2019-12-20</th>
+                        <th>3729</th>
+                        <th><button type="button" class="btn btn-primary">수정</button></th>
+                        <th><button type="button" class="btn btn-danger">삭제</button></th>
+                    </tr>
+                    <tr>
+                        <th>kimcs</th>
+                        <th>김철수</th>
+                        <th>서울시 서초구 서초동 21번지 2층</th>
+                        <th>2018-09-12</th>
+                        <th>2361</th>
+                        <th><button type="button" class="btn btn-primary">수정</button></th>
+                        <th><button type="button" class="btn btn-danger">삭제</button></th>
+                    </tr>
+                    <tr>
+                        <th>kimyh</th>
+                        <th>김영희</th>
+                        <th>서울시 송파구 잠실본동 123번지 12층</th>
+                        <th>2016-04-07</th>
+                        <th>4891</th>
+                        <th><button type="button" class="btn btn-primary">수정</button></th>
+                        <th><button type="button" class="btn btn-danger">삭제</button></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
