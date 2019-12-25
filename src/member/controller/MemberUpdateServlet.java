@@ -1,7 +1,6 @@
 package member.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,13 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
-@WebServlet("/member/memberEnrollEnd")
-public class MemberEnrollEndServlet extends HttpServlet {
+@WebServlet("/member/memberUpdate")
+public class MemberUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    public MemberUpdateServlet() {
+        super();
+    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.encoding
@@ -32,6 +36,7 @@ public class MemberEnrollEndServlet extends HttpServlet {
 		String memberAddress1 = request.getParameter("memberAddress1");
 		String memberAddress2 = request.getParameter("memberAddress2");
 		String[] hobbyArr = request.getParameterValues("hobby");
+		
 		
 		//3.business logic
 		Member member = new Member();
@@ -62,37 +67,35 @@ public class MemberEnrollEndServlet extends HttpServlet {
 		member.setMemberHobby1(memberHobby1);
 		member.setMemberHobby2(memberHobby2);
 		
-		System.out.println("before :: m@EnrollEndServlet.java="+member);
-
-		int result = new MemberService().memberEnroll(member);
-		System.out.println("result@EnrollEndServlet.java="+result);
-		System.out.println("after :: m@EnrollEndServlet.java="+member);
+		int result = new MemberService().memberUpdate(member);
 		
-		//4.view단 처리 : msg.jsp사용 -> index페이지로 리다이렉트
+		//4.view단 처리
+		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
-		String loc = "/";
+		String loc = "/member/memberMyPage?memberId="+memberId; // index페이지 가르키는 중 
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		
-		if(result > 0) {
-			msg = member.getMemberId()+"님 회원가입에 성공하셨습니다.";
-			
-			request.setAttribute("msg", msg);
-			request.setAttribute("loc", loc);
-			
-			requestDispatcher.forward(request, response);
+		if(result>0) {
+			msg="회원 수정 성공.";
 		}
 		else {
-			msg = "회원가입에 실패하였습니다.";
-			
-			request.setAttribute("msg", msg);
-			request.setAttribute("loc", loc);
-			
-			requestDispatcher.forward(request, response);
+			msg="회원 수정 실패.";
 		}
 		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
 		
+//		HttpSession session = request.getSession(true);
 		
+//		Member MemberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
+
+//		//로그인한 회원이 admin이아닌 경우에만 session 수정
+//		if(!"admin".equals(MemberLoggedIn.getMemberId())) {
+//			//세션에 로그인한 회원 객체를 속성으로 저장.
+//			session.setAttribute("memberLoggedIn", member);
+//		}
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(view);
+		requestDispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -20,7 +20,7 @@
     <header class="container-fluid navbar-fixed-top">
         <div id="header-wrapper" class="row">
             <div id="logo" class="col-md-4">
-                <h1 class="eng"><a href="index.html">re:flex</a></h1>
+                <h1 class="eng"><a href="<%=request.getContextPath()%>/">re:flex</a></h1>
             </div>
             <div id="search" class="col-md-4">
                 <h2 class="sr-only">상품 검색</h2>
@@ -52,7 +52,8 @@
                     <header></header>
                     <ul class="list-unstyled">
                         <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-                        <li><a href="#">마이페이지</a></li>
+                        
+                        <li><a href="<%=request.getContextPath()%>/member/memberMyPage?memberId=yoochanho">마이페이지</a></li>
                         <li><a href="#">고객서비스(FAQ)</a></li>
                         <li><a href="#">re:flex 소개</a></li>
                     </ul>

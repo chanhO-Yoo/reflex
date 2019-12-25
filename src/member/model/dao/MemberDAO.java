@@ -102,4 +102,32 @@ public class MemberDAO {
 		return result;
 	}
 
+	public int memberUpdate(Connection conn, Member member) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("memberUpdate");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			
+			pstmt.setString(1, member.getMemberPassword());
+			pstmt.setString(2, member.getMemberPhone());
+			pstmt.setString(3, member.getMemberEmail());
+			pstmt.setInt(4, member.getMemberPostcode());
+			pstmt.setString(5, member.getMemberAddress());
+			pstmt.setString(6, member.getMemberDetailAddress());
+			pstmt.setString(7, member.getMemberHobby1());
+			pstmt.setString(8, member.getMemberHobby2());
+			pstmt.setString(9, member.getMemberId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
+
 }
