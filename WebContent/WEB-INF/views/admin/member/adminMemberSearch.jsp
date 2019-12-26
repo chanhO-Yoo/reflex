@@ -94,12 +94,12 @@ String pageBar = (String)request.getAttribute("pageBar");
                     </tbody>
                     
                 </table>
-                <div class="row">
+               
                 
-                <div class="col-md-6" id="pageBar">
+                <div  id="pageBar">
 		<%=pageBar %>
 	</div>
-                </div>
+              
             </div>
         </div>
 
