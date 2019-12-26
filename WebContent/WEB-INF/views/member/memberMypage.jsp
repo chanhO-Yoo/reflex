@@ -66,7 +66,7 @@
                 <h2 class="sr-only">회원정보수정</h2>
                 <!-- 회원수정 폼 -->
                 <section class="form-wrapper">
-                    <form action="<%= request.getContextPath() %>/member/memberUpdateEnd" id="editInfoFrm" method="post">
+                    <form action="<%= request.getContextPath() %>/member/memberUpdate" id="editInfoFrm" method="post">
                         <div>
                             <label for="memberName">이름</label>
                             <input type="text" name="memberName" id="memberName" value="<%= m.getMemberName() %>" readonly required>

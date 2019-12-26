@@ -179,6 +179,7 @@ input[type=file]{display: inline; overflow: hidden;}
 .qContent-wrapper textarea{margin-left: 112px; width: 80%;}
 .file-wrapper label{top: 3px;}
 .file-wrapper input{margin-left: 111px;}
+#oneToOneFrm>div.memberId-wrapper{padding-bottom: 30px;}
 .memberId-wrapper{border-bottom: 1px solid;}
 .memberId-wrapper label{margin-right: 22px;}
 #oneToOneFrm .memberId-wrapper input[type=text]{width: 25%;}

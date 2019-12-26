@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
-@WebServlet("/member/memberUpdate")
-public class MemberUpdateServlet extends HttpServlet {
+@WebServlet("/member/memberMyPage")
+public class MemberMypageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MemberUpdateServlet() {
+    public MemberMypageServlet() {
         super();
     }
 
@@ -34,7 +34,7 @@ public class MemberUpdateServlet extends HttpServlet {
 		
 		//조회된 회원이 있는 경우
 		if(m != null) {
-			view = "/WEB-INF/views/member/memberUpdate.jsp";
+			view = "/WEB-INF/views/member/memberMypage.jsp";
 			//조회된 회원 속성으로 저장
 			request.setAttribute("member", m);
 		}

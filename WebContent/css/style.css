@@ -277,8 +277,9 @@ footer, footer header{background: #aaaaac;}
 /* Q&A */
 #details-qna .list-tbl{border-top: 1px solid;}
 #details-qna .btn-wrapper{position: relative; height: 50px;}
-#details-qna .btn-wrapper button{position: absolute; top: 5px; right: 15px;}
-#details-qna .qna-title button{width: 80%; padding: 14px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+#details-qna .btn-wrapper a{position: absolute; top: 5px; right: 20px; padding: 3px 20px;}
+#details-qna .btn-wrapper a:hover, #details-qna .btn-wrapper a:focus, #details-qna .btn-wrapper a:active{text-decoration: none;}
+#details-qna .qna-title a{width: 80%; padding: 14px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 .qna-view{background: #f7f7f7;}
 .qna-view td{padding: 0 20px;}
 .qna-view .q-wrapper:first-of-type{border-bottom: 1px solid #b2b2b2;}

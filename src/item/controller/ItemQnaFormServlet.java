@@ -1,4 +1,4 @@
-package mypage.controller;
+package item.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MypageRentalFinServlet
+ * Servlet implementation class ItemQnaFormServlet
  */
-@WebServlet("/mypage/mypageRentalFin")
-public class MypageRentalFinServlet extends HttpServlet {
+@WebServlet("/item/itemQnaForm")
+public class ItemQnaFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/mypage/mypageRentalFin.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/item/itemQnaForm.jsp").forward(request, response);
 	}
 
 	/**

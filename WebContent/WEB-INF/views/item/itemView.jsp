@@ -178,7 +178,7 @@
 	            <!-- 상품QNA -->
 	            <section id="details-qna">
 	                <div class="btn-wrapper">
-	                    <button type="button" class="btn-radius">문의하기</button>
+	                    <a href="<%=request.getContextPath()%>/item/itemQnaForm" class="btn-radius">문의하기</a>
 	                </div>
 	                <section id="point-list" class="list-wrapper">
 	                    <h3 class="sr-only">문의내역 리스트</h3>
