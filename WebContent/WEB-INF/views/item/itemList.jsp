@@ -1,7 +1,16 @@
+<%@page import="item.model.vo.ItemImage"%>
+<%@page import="java.util.Map"%>
+<%@page import="item.model.vo.Item"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+<%
+	List<Item> itemList = (List<Item>)request.getAttribute("itemList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
+	System.out.println(itemList);
+	System.out.println(imgMap.get(0));
+%>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
