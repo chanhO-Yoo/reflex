@@ -1,4 +1,4 @@
-package member.controller;
+package mypage.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/member/memberEnroll")
-public class MemberEnrollFormServlet extends HttpServlet {
+/**
+ * Servlet implementation class MypageRentalFinServlet
+ */
+@WebServlet("/mypage/mypageRentalFin")
+public class MypageRentalFinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public MemberEnrollFormServlet() {
-        super();
-    }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/member/memberEnroll.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/mypage/mypageRentalFin.jsp").forward(request, response);
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

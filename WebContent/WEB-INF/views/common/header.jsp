@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|Monoton|Permanent+Marker|Righteous|Seymour+One|Stalinist+One&display=swap" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet"> <!-- 부트스트랩 -->
     <link href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/css/mypage.css" rel="stylesheet">
     <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
@@ -20,7 +21,7 @@
     <header class="container-fluid navbar-fixed-top">
         <div id="header-wrapper" class="row">
             <div id="logo" class="col-md-4">
-                <h1 class="eng"><a href="<%=request.getContextPath()%>/">re:flex</a></h1>
+                <h1 class="eng"><a href="<%=request.getContextPath()%>/index.jsp">re:flex</a></h1>
             </div>
             <div id="search" class="col-md-4">
                 <h2 class="sr-only">상품 검색</h2>
@@ -34,12 +35,12 @@
             <div id="menu" class="col-md-4">
                 <ul class="list-unstyled list-inline text-right">
                     <!-- 로그인시 li.login-hide안보이게 하고 li.login-show 보이게 -->
-                    <li class="login-hide"><a href="#">로그인</a></li>
-                    <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberEnroll" >회원가입</a></li>
+                    <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
+                    <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>
                     <li class="login-show"><a href="#">로그아웃</a></li>
                     <li>
                         <h2 class="sr-only">장바구니</h2>
-                        <a href="#" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                        <a href="<%=request.getContextPath()%>/member/memberCart" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                     </li>
                     <li>
                         <button type="button"  id="btn-sidemenu">
@@ -48,32 +49,55 @@
                     </li>
                 </ul>
                 <!-- side menu -->
+                <!-- level1 -->
+                <div id="sidemenu-closeLayer">
                 <nav id="level1-sidemenu" class="sidemenu-wrapper">
                     <header></header>
                     <ul class="list-unstyled">
                         <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-                        
-                        <li><a href="<%=request.getContextPath()%>/member/memberMyPage?memberId=yoochanho">마이페이지</a></li>
+                        <li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
                         <li><a href="#">고객서비스(FAQ)</a></li>
                         <li><a href="#">re:flex 소개</a></li>
                     </ul>
                 </nav>
+                <!-- level2: 이럴때빌려봐 -->
                 <nav id="level2-recommended" class="sidemenu-wrapper">
                     <header class="text-center">
-                        <a href="">
-                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                            이럴 때 빌려봐
-                        </a>
+                        <button type="button" class="btn-goLevel1">
+                        	<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                              이럴 때 빌려봐
+                        </button>
                     </header>
                     <ul class="list-unstyled">
-                        <li><a href="view_list.html">반려동물과 함께 할 때</a></li>
-                        <li><a href="#">육아할 때</a></li>
-                        <li><a href="#">파티할 때</a></li>
-                        <li><a href="#">운동할 때</a></li>
-                        <li><a href="#">여행갈 때</a></li>
-                        <li><a href="#">캠핑갈 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList">육아할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList">파티할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList">운동할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList">여행갈 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList">캠핑갈 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList">반려동물과 함께 할 때</a></li>
                     </ul>
                 </nav>
+                <!-- level2: 마이페이지 / 로그인 안했으면 경고창 -->
+                <nav id="level2-mypage" class="sidemenu-wrapper">
+                    <header class="text-center">
+                        <button type="button" class="btn-goLevel1">
+                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                            마이페이지
+                        </button>
+                    </header>
+                    <ul class="list-unstyled">
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList">주문조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist">위시리스트</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng">계약중인 렌탈</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalFin">종료중인 렌탈</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint">포인트 확인</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
+                        <li><a href="<%=request.getContextPath()%>/member/memberUpdate">회원정보 수정</a></li>
+                        <li><a href="">회원정보 탈퇴</a></li>
+                    </ul>
+                </nav>
+                </div>
             </div>
         </div>
     </header>

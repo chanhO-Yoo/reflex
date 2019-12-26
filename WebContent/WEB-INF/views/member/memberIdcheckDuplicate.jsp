@@ -70,8 +70,6 @@
 			<input type="text" name="memberId" id="memberId_" placeholder="아이디를 입력하세요."/>
 			&nbsp;&nbsp;
 			<input type="button" value="아이디 중복 검사" onclick="checkIdDuplicate();"/>
-		
-		
 		</form>
 	<% } %>
 	</div>
