@@ -42,7 +42,6 @@
             </div>
             <div id="menu" class="col-md-4">
                 <ul class="list-unstyled list-inline text-right">
-                    <!-- 로그인시 li.login-hide안보이게 하고 li.login-show 보이게 -->
                     <%if(memberLoggedIn==null){ %>
                     <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
                     <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>

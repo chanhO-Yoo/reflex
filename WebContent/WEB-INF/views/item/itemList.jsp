@@ -10,9 +10,10 @@
 	String categoryNo = (String)request.getAttribute("categoryNo");
 	List<Item> itemList = (List<Item>)request.getAttribute("itemList");
 	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
-	/* System.out.println("imgMap.get(1)="+imgMap.get(1));
+	System.out.println(categoryNo);
+	System.out.println("imgMap.get(1)="+imgMap.get(1));
 	System.out.println("imgMap.get(1).get(0)="+imgMap.get(1).get(0));
-	System.out.println("imgMap.get(1).get(0).getItemImageDefault()="+imgMap.get(1).get(0).getItemImageDefault()); */
+	System.out.println("imgMap.get(1).get(0).getItemImageDefault()="+imgMap.get(1).get(0).getItemImageDefault());
 	
 %>
 <!-- page nav -->
