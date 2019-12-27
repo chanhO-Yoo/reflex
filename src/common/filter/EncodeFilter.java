@@ -24,7 +24,7 @@ public class EncodeFilter implements Filter {
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-//		System.out.println("-------EncodeFilter.init호출------");
+		System.out.println("-------EncodeFilter.init호출------");
 		this.fConfig = filterConfig;
 	}
 
@@ -37,7 +37,7 @@ public class EncodeFilter implements Filter {
 		
 		
 		request.setCharacterEncoding(encodeType);
-//		System.out.println("["+encodeType+"] 인코딩 처리@EncodeFilter");
+		System.out.println("["+encodeType+"] 인코딩 처리@EncodeFilter");
 		
 		//다음 필터의 doFilter 메서드 호출 : 마지막 필터라면, servlet호출
 		chain.doFilter(request, response);
