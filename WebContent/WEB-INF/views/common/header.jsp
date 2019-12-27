@@ -126,7 +126,7 @@
                         <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint">포인트 확인</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
-                        <li><a href="<%=request.getContextPath()%>/member/memberUpdate">회원정보 수정</a></li>
+                        <li><a href="<%=request.getContextPath()%>/member/memberUpdate?<%=memberLoggedIn.getMemberId()%>">회원정보 수정</a></li>
                         <li><a href="">회원정보 탈퇴</a></li>
                     </ul>
                 </nav>
