@@ -25,4 +25,81 @@ public class AdminService {
 	        return list;
 	}
 
+	public List<Member> selectMemberByMemberId(String searchKeyword, int cPage, int numPerPage) {
+		List<Member> list = null;
+		Connection conn = getConnection();
+		list = new AdminDAO().selectMemberByMemberId(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContentByMemberId(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContentByMemberId(conn, searchKeyword);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Member> selectMemberByMemberName(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Member> list = new AdminDAO().selectMemberByMemberName(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContentByMemberName(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContentByMemberName(conn, searchKeyword);
+		close(conn);
+		return totalContent;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
