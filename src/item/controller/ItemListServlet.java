@@ -32,18 +32,17 @@ public class ItemListServlet extends HttpServlet {
 		try {
 			//상품목록 가져오기
 			List<Item> itemList = new ItemService().selectItemList(categoryNo);
-			System.out.println("list@servlet="+itemList);
-			
 			
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>();
 			if(itemList!=null && !itemList.isEmpty()) {
 				for(Item i: itemList){
 					//상품이미지 가져오기
 					List<ItemImage> imgList = new ItemService().selectItemImageList(i.getItemNo());
-					System.out.println("imgList@servlet="+imgList);
 					
 					imgMap.put(i.getItemNo(), imgList);
 				}
+				
+				request.setAttribute("categoryNo", categoryNo);
 				request.setAttribute("itemList", itemList);
 				request.setAttribute("imgMap", imgMap);
 				request.getRequestDispatcher("/WEB-INF/views/item/itemList.jsp").forward(request, response);

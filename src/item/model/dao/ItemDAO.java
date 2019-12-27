@@ -43,8 +43,6 @@ public class ItemDAO {
 			
 			list = new ArrayList<>();
 			while(rset.next()) {
-				System.out.println("111111111");
-				
 				Item item = new Item();
 				item.setItemNo(rset.getInt("item_no"));
 				item.setCategoryNo(categoryNo);
@@ -56,7 +54,6 @@ public class ItemDAO {
 				item.setItemEnrollDate(rset.getDate("item_enroll_date"));
 				list.add(item);
 			}
-			System.out.println("list@dao="+list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new ItemException("상품목록조회 에러!", e);
