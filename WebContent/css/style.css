@@ -94,7 +94,7 @@ header{background: white;}
 #menu>ul li:nth-of-type(4) {padding-right: 7px;}
 #menu>ul li a {padding: 15px 5px;}
 #menu>ul li.login-show{display: none;}
-
+#btn-sidemenu{padding: 5px 0 5px 10px;}
 
 /* side menu */
 .sidemenu-wrapper{
