@@ -2,6 +2,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="item.model.vo.Item"%>
 <%@page import="java.util.List"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -71,8 +72,11 @@
 				Item item = itemList.get(i);
 				int mapIdx = i+1; //imgMap에서 imgList가져올 키값(상품번호)
 				List<ItemImage> imgList = imgMap.get(mapIdx);
-				int discountedPrice = ((int)Math.ceil((item.getItemPrice()*0.95)/14)/100)*100; //14일기준
-				//DecimalFormat dc = new DecimalFormat("###,###,###원");
+				
+				//원화 콤마찍기
+				int discountedPrice = (int)Math.ceil((item.getItemPrice()*0.95)/14)/100*100; //14일기준
+				DecimalFormat dc = new DecimalFormat("###,###,###원");
+				String dP = dc.format(discountedPrice);
 				/* for(ItemImage img: imgList){
 					if("IMG03".equals(img.getItemImageTypeNo())){
 						int idx = imgList.indexOf(img);
@@ -86,7 +90,7 @@
 	                <p class="pbrand"><%=item.getItemBrand() %></p>
 	                <p class="pname"><%=item.getItemName() %></p>
 	                <div class="price-wrapper">
-	                    <p class="price"><%= %>/<span class="rent-period"> 14일</span></p>
+	                    <p class="price"><%=dP %>/<span class="rent-period"> 14일</span></p>
 	                    <p class="rent-type">일시납</p>
 	                </div>
 	            </div>
