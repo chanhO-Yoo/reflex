@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ page import="member.model.vo.*" %>
+   
+   <% 
+   		//로그인한 경우
+   		Member memberLoggedIn= (Member)session.getAttribute("memberLoggedIn");
+   		
+   %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,6 +23,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/header.js"></script>
+    
 </head>
 <body>
     <header class="container-fluid navbar-fixed-top">
@@ -35,9 +43,24 @@
             <div id="menu" class="col-md-4">
                 <ul class="list-unstyled list-inline text-right">
                     <!-- 로그인시 li.login-hide안보이게 하고 li.login-show 보이게 -->
+                    <%if(memberLoggedIn==null){ %>
                     <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
                     <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>
-                    <li class="login-show"><a href="#">로그아웃</a></li>
+                    <%}
+                    else{
+                    %>
+                    <li>
+						<%=memberLoggedIn.getMemberName() %>님, 안녕하세요.
+                    
+                    </li>                    
+                    <li>
+							<input type="button" value="로그아웃" 
+									class="login-show"
+								   onclick="location.href='<%=request.getContextPath()%>/member/logout'"/>             
+                    </li>
+				
+					<% 	} %>
+
                     <li>
                         <h2 class="sr-only">장바구니</h2>
                         <a href="<%=request.getContextPath()%>/member/memberCart" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
@@ -55,7 +78,15 @@
                     <header></header>
                     <ul class="list-unstyled">
                         <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                        <% if(memberLoggedIn != null 
+						  && "admin".equals(memberLoggedIn.getMemberId())){ %>
+				
+                        <li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+					<% }else{ %>
+                        
+                        
                         <li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                        <%} %>
                         <li><a href="#">고객서비스(FAQ)</a></li>
                         <li><a href="#">re:flex 소개</a></li>
                     </ul>
@@ -78,6 +109,7 @@
                     </ul>
                 </nav>
                 <!-- level2: 마이페이지 / 로그인 안했으면 경고창 -->
+                
                 <nav id="level2-mypage" class="sidemenu-wrapper">
                     <header class="text-center">
                         <button type="button" class="btn-goLevel1">
@@ -85,6 +117,7 @@
                             마이페이지
                         </button>
                     </header>
+                    
                     <ul class="list-unstyled">
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList">주문조회</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist">위시리스트</a></li>
@@ -97,6 +130,22 @@
                         <li><a href="">회원정보 탈퇴</a></li>
                     </ul>
                 </nav>
+                <nav id="level2-adminPage" class="sidemenu-wrapper">
+                    <header class="text-center">
+                    
+                        <button type="button" class="btn-goLevel1">
+                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                            관리자페이지
+                        </button>
+                    </header>
+                    <ul class="list-unstyled">
+                        <li><a href="#">상품관리</a></li>
+                        <li><a href="#">주문관리</a></li>
+                        <li><a href="#">회원관리</a></li>
+                 
+                    </ul>
+                </nav>
+                
                 </div>
             </div>
         </div>
