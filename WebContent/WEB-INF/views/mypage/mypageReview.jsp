@@ -50,7 +50,7 @@ function showContent(btn, sectionId){
                         <button type="button" onclick="showContent(this, 'writable-review')">작성가능한 이용후기</button>
                     </li>
                     <li class="col-md-6 text-center">
-                        <button type="button" onclick="showContent(this, 'writed-review')">작성가능한 이용후기</button>
+                        <button type="button" onclick="showContent(this, 'writed-review')">작성한 이용후기</button>
                     </li>
                 </ul>
             </section>

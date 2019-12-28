@@ -21,6 +21,7 @@ $(()=>{
     //현재 선택된 탭이 상품Q&A이면 펼치기 함수 적용
     $(".qna-view").hide();
     if($("#details-qna").hasClass('active')){
+    	console.log("11111");
         viewAnswer();
     }
 
@@ -71,6 +72,7 @@ function showContent(btn, sectionId){
 //상품Q&A 펼치기
 function viewAnswer(){
     $(".qna-header").on("click", function(){
+    	console.log(this);
         $(this).next().slideToggle();   
         var $header = $(this);
 

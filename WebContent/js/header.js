@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
 function closeMenu(){
     let layer = $("#sidemenu-closeLayer");
     $(document).mouseup(function(e){
-        console.log(e.target);
+        //console.log(e.target);
         if(layer.has(e.target).lenght===0)
             layer.hide();
     });
