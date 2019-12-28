@@ -95,6 +95,34 @@ public class ItemDAO {
 		
 		return list;
 	}
+
+	public int itemEnroll(Connection conn, Item item) {
+		System.out.println("item@DAO="+item);
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("itemEnroll");
+		try {
+			//1. prepareStatment객체 생성
+			pstmt = conn.prepareStatement(query);
+			
+			//2.쿼리 실행
+			pstmt.setString(1, item.getCategoryNo());
+			pstmt.setInt(2, item.getItemStock());
+			pstmt.setString(3, item.getItemBrand());
+			pstmt.setString(4, item.getItemName());
+			pstmt.setInt(5, item.getItemPrice());
+			pstmt.setString(6, item.getItemDesc());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 }
