@@ -7,7 +7,7 @@ import java.util.Date;
 
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
-public class MvcFileRenamePolicy implements FileRenamePolicy {
+public class ReflexFileRenamePolicy implements FileRenamePolicy {
 
 	@Override
 	public File rename(File oldFile) {
@@ -29,7 +29,7 @@ public class MvcFileRenamePolicy implements FileRenamePolicy {
 			String newName = sdf.format(new Date())+"_"+rndNum+ext;
 			System.out.println("생성된 파일명@mvcFileRenamePolicy="+newName);
 			
-			//새팡리 객체
+			//새파일 객체
 			newFile = new File(oldFile.getParent(),newName);
 			
 		} while(!createNewFile(newFile));

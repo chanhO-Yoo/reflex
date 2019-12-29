@@ -28,9 +28,66 @@ public class ItemService {
 		return list;
 	}
 
-	public int itemEnroll(Item item) {
+	public int enrollItem(Item item) {
 		Connection conn = getConnection();
-		int result = new ItemDAO().itemEnroll(conn, item);
+		int result = new ItemDAO().enrollItem(conn, item);
+		if(result>0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	public int selectItemLastNo() {
+		Connection conn = getConnection();
+		int itemNo = new ItemDAO().selectItemLastNo(conn);
+		
+		return itemNo;
+	}
+
+	public int enrollImage(ItemImage itemImg) {
+		Connection conn = getConnection();
+		int result = new ItemDAO().enrollImage(conn,itemImg);
+		if(result>0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	public Item selectOne(int itemNo) {
+		Connection conn = getConnection();
+		Item item = new ItemDAO().selectOne(conn,itemNo);
+		
+		return item;
+	}
+
+	public int updateItem(Item item) {
+		Connection conn = getConnection();
+		int result = new ItemDAO().updateItem(conn, item);
+		if(result>0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	public ItemImage selectImageOne(int itemMainImageNo) {
+		Connection conn = getConnection();
+		ItemImage itemImg = new ItemDAO().selectImageOne(conn,itemMainImageNo);
+		
+		return itemImg;
+	}
+
+	public int updateImage(ItemImage itemImg) {
+		Connection conn = getConnection();
+		int result = new ItemDAO().updateImage(conn, itemImg);
 		if(result>0)
 			commit(conn);
 		else 

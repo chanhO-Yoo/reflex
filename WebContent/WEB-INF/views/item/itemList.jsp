@@ -85,7 +85,7 @@
 	%>
 		<div class="col-md-3">
 	        <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>" class="center-block">
-	            <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageDefault()%>" alt="item" class="center-block">
+	            <img src="<%=request.getContextPath()%>/images/<%=imgList.get(0).getItemImageRenamed() %>" alt="item" class="center-block">
 	            <div class="ptext-wrapper">
 	                <p class="pbrand"><%=item.getItemBrand() %></p>
 	                <p class="pname"><%=item.getItemName() %></p>

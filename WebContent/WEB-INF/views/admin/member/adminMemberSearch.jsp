@@ -15,13 +15,8 @@ String pageBar = (String)request.getAttribute("pageBar");
 .height-45{
    height: 45px;
 }
-div#search-memberId {
-display:<%="memberId".equals(searchType)||searchType==null?"":"none"%>;
-}
-div#search-memberName {
-display:<%="memberName".equals(searchType)?"":"none"%>;
-}
-
+div#search-memberId {display:<%="memberId".equals(searchType)||searchType==null?"":"none"%>;}
+div#search-memberName {display:<%="memberName".equals(searchType)?"":"none"%>;}
 </style>
 <script>
 $(()=>{
@@ -36,7 +31,6 @@ $(()=>{
 	});
 });
 </script>
-
         <!-- 메인 컨텐츠 -->
         <div class="container-fluid contents">
             <!-- 회원검색 - 메뉴제목 -->

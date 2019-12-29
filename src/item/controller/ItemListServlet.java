@@ -33,11 +33,18 @@ public class ItemListServlet extends HttpServlet {
 			//상품목록 가져오기
 			List<Item> itemList = new ItemService().selectItemList(categoryNo);
 			
+			System.out.println("itemList="+itemList);
+			
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>();
 			if(itemList!=null && !itemList.isEmpty()) {
 				for(Item i: itemList){
+					
 					//상품이미지 가져오기
+					System.out.println("i.getItemNo="+i.getItemNo());
+					
 					List<ItemImage> imgList = new ItemService().selectItemImageList(i.getItemNo());
+					
+					System.out.println("imgList="+imgList);
 					
 					imgMap.put(i.getItemNo(), imgList);
 				}

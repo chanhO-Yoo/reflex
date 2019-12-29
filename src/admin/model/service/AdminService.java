@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import admin.model.dao.AdminDAO;
+import item.model.vo.Item;
 import member.model.vo.Member;
 //프로젝트 Service
 public class AdminService {
@@ -20,9 +21,9 @@ public class AdminService {
 
 	public List<Member> selectMemberList(int cPage, int numPerPage) {
 		 Connection conn = getConnection();
-	        List<Member> list= new AdminDAO().selectMemberList(conn, cPage, numPerPage);
-	        close(conn);
-	        return list;
+	     List<Member> list= new AdminDAO().selectMemberList(conn, cPage, numPerPage);
+	     close(conn);
+	     return list;
 	}
 
 	public List<Member> selectMemberByMemberId(String searchKeyword, int cPage, int numPerPage) {
@@ -52,6 +53,50 @@ public class AdminService {
 		int totalContent = new AdminDAO().selectTotalContentByMemberName(conn, searchKeyword);
 		close(conn);
 		return totalContent;
+	}
+
+	public int selectTotalItem() {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalItem(conn);
+		close(conn);
+		return totalItem;
+	}
+
+	public List<Item> selectItemList(int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	     List<Item> list= new AdminDAO().selectItemList(conn, cPage, numPerPage);
+	     close(conn);
+	     return list;
+	}
+
+	public List<Item> selectItemByItemName(String searchKeyword, int cPage, int numPerPage) {
+		List<Item> list = null;
+		Connection conn = getConnection();
+		list = new AdminDAO().selectItemByItemName(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<Item> selectItemByCategoryNo(String searchKeyword, int cPage, int numPerPage) {
+		List<Item> list = null;
+		Connection conn = getConnection();
+		list = new AdminDAO().selectItemByCategoryNo(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalItemByItemName(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalItemByItemName(conn, searchKeyword);
+		close(conn);
+		return totalItem;
+	}
+
+	public int selectTotalItemByCategoryNo(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalItemByCategoryNo(conn, searchKeyword);
+		close(conn);
+		return totalItem;
 	}
 
 	

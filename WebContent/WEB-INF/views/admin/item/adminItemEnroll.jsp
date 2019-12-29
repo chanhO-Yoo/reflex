@@ -38,7 +38,7 @@
                 <div class="row height-45"></div>
 
                 <!-- 상품등록 폼 -->
-                <form action="<%=request.getContextPath()%>/admin/itemEnrollEnd" class="p-0 col-md-8 col-sm-8 col-xs-8 col-md-offset-2">
+                <form action="<%=request.getContextPath()%>/admin/itemEnrollEnd" class="p-0 col-md-8 col-sm-8 col-xs-8 col-md-offset-2" method="post" enctype="multipart/form-data">
                     <!-- 상품등록 - 카테고리 -->
                     <div class="container-fluid" id="category">
                         <div class="subtitle border-all height-45" >
@@ -144,7 +144,7 @@
                         </div>
                         <div class="row container-fluid border-no-top">
                             <div class="subtitle col-md-6">대표이미지</div>
-                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageMain" name="inputItemImageMain">
+                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageMain" name="inputItemImageMain" required>
                         </div>
                         <div class="row container-fluid border-no-top">
                             <div class="subtitle col-md-6">서브이미지1</div>

@@ -29,9 +29,7 @@ $(()=>{
 		
 		$("#search-"+$(this).val()).css("display", "inline-block");
 	});
-	
 });
-
 </script>
         <!-- 메인 컨텐츠 -->
         <div class="container-fluid contents">

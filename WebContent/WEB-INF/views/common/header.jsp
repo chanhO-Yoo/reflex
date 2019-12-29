@@ -100,7 +100,7 @@
                         </button>
                     </header>
                     <ul class="list-unstyled">
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">반려동물과 함께 할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT01">반려동물과 함께 할 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT02">육아할 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList">파티할 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList">운동할 때</a></li>
@@ -126,7 +126,7 @@
                         <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint">포인트 확인</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
-                        <li><a href="<%=request.getContextPath()%>/member/memberUpdate">회원정보 수정</a></li>
+                        <li><a href="<%=request.getContextPath()%>/member/memberUpdate?memberId=admin">회원정보 수정</a></li>
                         <li><a href="">회원정보 탈퇴</a></li>
                     </ul>
                 </nav>
@@ -139,7 +139,8 @@
                         </button>
                     </header>
                     <ul class="list-unstyled">
-                        <li><a href="<%=request.getContextPath()%>/admin/itemEnroll">상품관리</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/itemEnroll">상품등록</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/itemSearch">상품조회</a></li>
                         <li><a href="#">주문관리</a></li>
                         <li><a href="#">회원관리</a></li>
                     </ul>

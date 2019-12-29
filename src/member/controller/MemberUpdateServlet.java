@@ -19,8 +19,6 @@ public class MemberUpdateServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1.encoding
-		request.setCharacterEncoding("UTF-8");
 		
 		//2.parameter handling
 		String memberId = request.getParameter("memberId");

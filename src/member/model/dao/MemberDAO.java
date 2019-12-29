@@ -52,7 +52,7 @@ public class MemberDAO {
 				m.setMemberEmail(rset.getString("member_email"));
 				m.setMemberPostcode(rset.getInt("member_postcode"));
 				m.setMemberAddress(rset.getString("member_address"));
-				m.setMemberDetailAddress(rset.getString("member_detail_address"));
+				m.setMemberDetailAddress(rset.getString("member_detail_adress"));
 				m.setMemberPoint(rset.getInt("member_point"));
 				m.setMemberHobby1(rset.getString("member_hobby1"));
 				m.setMemberHobby2(rset.getString("member_hobby2"));
