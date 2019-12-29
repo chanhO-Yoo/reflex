@@ -1,6 +1,8 @@
 package item.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,13 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import item.model.service.ItemService;
-import item.model.vo.Item;
 
 /**
- * Servlet implementation class ItemQnaFormServlet
+ * Servlet implementation class ItemQnaFormEndServlet
  */
-@WebServlet("/item/itemQnaForm")
-public class ItemQnaFormServlet extends HttpServlet {
+@WebServlet("/item/itemQnaFormEnd")
+public class ItemQnaFormEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,25 +26,30 @@ public class ItemQnaFormServlet extends HttpServlet {
 		//파라미터 핸들링
 		String categoryNo = request.getParameter("categoryNo");
 		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+		String qnaContent = request.getParameter("qnaContent");
+		//XSS공격대비 &문자변환
+		qnaContent = qnaContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
+		String memberId = request.getParameter("memberId");
+		
+		Map<String, Object> paramMap = new HashMap<>(); //파라미터 담을 map
+		paramMap.put("itemNo", itemNo);
+		paramMap.put("qnaContent", qnaContent);
+		paramMap.put("memberId", memberId);
 		
 		try {
 			//업무로직
-			Item item = new ItemService().selectItemOne(itemNo);
+			int result = new ItemService().insertItemQna(paramMap);
 			
 			//뷰단처리
-			String view = "";
-			if(categoryNo!=null && item!=null) {
-				view = "/WEB-INF/views/item/itemQnaForm.jsp";
-				request.setAttribute("categoryNo", categoryNo);
-				request.setAttribute("item", item);
-			}
-			else {
-				view = "/WEB-INF/views/common/msp.jsp";
-				request.setAttribute("msg", "상품Q&A등록페이지 로딩 실패!");
-				request.setAttribute("loc", "/item/itemView?categoryNo="+categoryNo+"&itemNo="+item.getItemNo());
-			}
+			String msg = "";
 			
-			request.getRequestDispatcher(view).forward(request, response);
+			if(result>0) msg = "상품Q&A등록이 완료되었습니다.";
+			else msg = "상품Q&A등록에 실패하였습니다.";
+			
+			request.setAttribute("msg", msg);
+			request.setAttribute("loc", "/item/itemView?categoryNo="+categoryNo+"&itemNo="+itemNo);
+			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+			
 		} catch(Exception e) {
 			throw e;
 		}

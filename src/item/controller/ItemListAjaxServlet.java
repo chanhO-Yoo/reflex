@@ -17,10 +17,10 @@ import item.model.vo.Item;
 import item.model.vo.ItemImage;
 
 /**
- * Servlet implementation class ItemListServlet
+ * Servlet implementation class ItemListAjaxServlet
  */
-@WebServlet("/item/itemList")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/item/itemListAjax")
+public class ItemListAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -59,65 +59,57 @@ public class ItemListServlet extends HttpServlet {
 			//cPage=1이거나 cPage=pageNo일 때도 전부 클릭 가능하게 함.  
 			//1.이전
 			if(pageNo!=1) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			//2.pageNo
 			while(pageNo<=pageEnd && pageNo<=totalPage) {
 				if(cPage==pageNo)
-					pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+					pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 				else
-					pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+					pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 				pageNo++;
 			}
 			//3.다음
 			if(pageNo<=totalPage) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
-			
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
 			
 			
 			//업무로직
-			List<Item> itemList = null; //상품 담을 리스트
+			List<Item> itemList = null;
+			Map<Integer, List<ItemImage>> imgMap = new HashMap<>();
 			List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
-			Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
 			
-			if(filterType==null || "null".equals(filterType) || "upToDate".equals(filterType)) {
+			if("upToDate".equals(filterType)) {
 				itemList = itemService.selectItemAll(categoryNo, cPage, numPerPage);
 			}
 			else if("reviewCnt".equals(filterType)) {
+				
 			}
 			else if("lowPrice".equals(filterType)) {
 				itemList = itemService.selectItemAllByLowPrice(categoryNo, cPage, numPerPage);
 			}
 			else if("highPrice".equals(filterType)) {
+				
 			}
 			
-			
 			//뷰단처리
-			String view = "/WEB-INF/views/item/itemListAjax.jsp"; 
-			String loc = "/item/itemList?categoryNo="+categoryNo;
-//			String view = "/WEB-INF/views/common/msg.jsp"; 
-//			String loc = "/";
-			String msg = "";
-			
-			if(itemList!=null) {
+			String view = "";
+			if(itemList!=null && !itemList.isEmpty()) {
 				//상품번호 담기
 				for(Item i: itemList){
 					itemNoList.add(i.getItemNo());
 				}
 				
 				for(int i=0; i<itemNoList.size(); i++) {
-					//상품이미지 담기
+					//상품이미지 가져오기
 					List<ItemImage> imgList = itemService.selectItemImageList(itemNoList.get(i));
 					imgMap.put(itemNoList.get(i), imgList);
 				}
 				
-				if(filterType==null || "null".equals(filterType)) {
-					view = "/WEB-INF/views/item/itemList.jsp";
-				}
-				
+				view = "/WEB-INF/views/item/itemListAjax.jsp";
 				request.setAttribute("categoryNo", categoryNo);
 				request.setAttribute("itemList", itemList);
 				request.setAttribute("itemNoList", itemNoList);
@@ -126,25 +118,9 @@ public class ItemListServlet extends HttpServlet {
 				request.getRequestDispatcher(view).forward(request, response);
 			}
 			else {
-				
-				if(filterType==null || "null".equals(filterType)) {
-					msg = "상품목록 조회 실패!";
-					loc = "/";
-				}
-				else if("upToDate".equals(filterType)) {
-					msg = "신상품순 조회 실패!";
-				}
-				else if("reviewCnt".equals(filterType)) {
-					msg = "상품평순 조회 실패!";
-				}
-				else if("lowPrice".equals(filterType)) {
-					msg = "낮은가격순 조회 실패!";
-				}
-				else if("highPrice".equals(filterType)) {
-					msg = "높은가격순 조회 실패!";
-				}
-				request.setAttribute("msg", msg);
-				request.setAttribute("loc", loc);
+				view = "/WEB-INF/views/common/msg.jsp";
+				request.setAttribute("msg", "낮은가격순 조회 실패!");
+				request.setAttribute("loc", "/item/itemList?categoryNo="+categoryNo);
 				request.getRequestDispatcher(view).forward(request, response);
 			}
 			

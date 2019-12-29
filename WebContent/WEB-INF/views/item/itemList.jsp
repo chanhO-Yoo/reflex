@@ -9,13 +9,34 @@
 <%
 	String categoryNo = (String)request.getAttribute("categoryNo");
 	List<Item> itemList = (List<Item>)request.getAttribute("itemList");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
 	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
-	System.out.println(categoryNo);
-	System.out.println("imgMap.get(1)="+imgMap.get(1));
-	System.out.println("imgMap.get(1).get(0)="+imgMap.get(1).get(0));
-	System.out.println("imgMap.get(1).get(0).getItemImageDefault()="+imgMap.get(1).get(0).getItemImageDefault());
-	
+	String pageBar = (String)request.getAttribute("pageBar");
+	System.out.println("itemList@jsp="+itemList);
 %>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+	let selectFilter = document.querySelector("#filterType");
+	
+	selectFilter.addEventListener('change', function(){
+		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
+		console.log(optionVal);
+		$.ajax({
+			url: "<%=request.getContextPath()%>/item/itemList?categoryNo=<%=categoryNo%>&filterType="+optionVal,
+			type: "get",
+			dataType: "html",
+			success: data=>{
+				console.log(data);
+				//$('#view-list').html("");
+				$('#view-list').html(data);
+			},
+			error: (x, s, e) =>{
+				console.log("ajax처리실패!!!", x, s, e);
+			} 
+		});
+	});
+});
+</script>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -59,48 +80,51 @@
         <%
         	}
         %>
+        <li class="pull-right">
+            <select name="filterType" id="filterType">
+                <option value="upToDate">신상품순</option>
+                <option value="reviewCnt">상품평순</option>
+                <option value="lowPrice">낮은 가격순</option>
+                <option value="highPrice">높은 가격순</option>
+            </select>
+        </li>
     </ul>
 </nav>
 
 <div id="view-list" class="container-fluid contents">
 	<!-- 상품목록 -->
 	<div class="row item-list">
-	<% 
-		if(itemList!=null && !itemList.isEmpty()) {
-			for(int i=0; i<itemList.size(); i++){
-				/* 상품번호에 맞는 상품이미지리스트 가져오기 */
-				/* 목록에는 IMG01만 보이면 되니까 imgList.get()의 인덱스는 무조건 0임 */
-				Item item = itemList.get(i);
-				int mapIdx = i+1; //imgMap에서 imgList가져올 키값(상품번호)
-				List<ItemImage> imgList = imgMap.get(mapIdx);
-				
-				//원화 콤마찍기
-				int discountedPrice = (int)Math.ceil((item.getItemPrice()*0.95)/14)/100*100; //14일기준
-				DecimalFormat dc = new DecimalFormat("###,###,###원");
-				String dP = dc.format(discountedPrice);
-				/* for(ItemImage img: imgList){
-					if("IMG03".equals(img.getItemImageTypeNo())){
-						int idx = imgList.indexOf(img);
-						System.out.println(imgList.get(idx));
-					}  */
-	%>
+<% 
+	//조회된 상품이 있는 경우
+	if(!itemList.isEmpty()) {
+		for(int i=0; i<itemList.size(); i++){
+			/* 상품번호에 맞는 상품이미지리스트 가져오기 */
+			/* 상품번호는 itemNoList로 제어 */
+			/* 상품목록에는 IMG01만 보이면 되니까 imgList.get()의 인덱스는 무조건 0임 */
+			Item item = itemList.get(i);
+			List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+			
+			//가격 콤마찍기
+			int discountedPrice = (int)Math.ceil((item.getItemPrice()*0.95)/240*14)/100*100; //14일기준
+			DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+			String dP = dc.format(discountedPrice);
+%>
 		<div class="col-md-3">
-	        <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>" class="center-block">
-	            <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageDefault()%>" alt="item" class="center-block">
-	            <div class="ptext-wrapper">
-	                <p class="pbrand"><%=item.getItemBrand() %></p>
-	                <p class="pname"><%=item.getItemName() %></p>
-	                <div class="price-wrapper">
-	                    <p class="price"><%=dP %>/<span class="rent-period"> 14일</span></p>
-	                    <p class="rent-type">일시납</p>
-	                </div>
-	            </div>
-	        </a>
-	    </div>
+		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=categoryNo %>&itemNo=<%=item.getItemNo()%>" class="center-block">
+		        <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageDefault()%>" alt="item" class="center-block">
+		        <div class="ptext-wrapper">
+		            <p class="pbrand"><%=item.getItemBrand() %></p>
+		            <p class="pname"><%=item.getItemName() %></p>
+		            <div class="price-wrapper">
+		                <p class="price"><%=dP %>/<span class="rent-period"> 14일</span></p>
+		                <p class="rent-type">일시납</p>
+		            </div>
+		        </div>
+		    </a>
+		</div>
 	<%			
-			}
 		}
-		//상품개수가 4의 배수가 아니면 부족한만큼 빈 박스로 채움
+		//상품개수가 4의 배수가 아니면 부족한 만큼 빈 박스로 채움
 		if(itemList.size()%4!=0){
 			int plus = 4 - (itemList.size()%4);
 			for(int i=0; i<plus; i++){
@@ -113,29 +137,35 @@
 	</div>
 	<!-- 페이징바 -->
 	<nav class="paging-bar text-center">
-	    <ul class="list-unstyled list-inline">
-	        <li>
-	            <a href="#" aria-label="Previous">
-	                <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-	            </a>
-	        </li>
-	        <li class="cPage"><a href="#">1</a></li>
-	        <li><a href="#">2</a></li>
-	        <li><a href="#">3</a></li>
-	        <li><a href="#">4</a></li>
-	        <li><a href="#">5</a></li>
-	        <li>
-	            <a href="#" aria-label="Next">
-	                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-	            </a>
-	        </li>
-	    </ul>
+	    <ol class="list-unstyled list-inline">
+	    	<%=pageBar %>
+	    </ol>
 	</nav>
 </div>
-    
+	    
 <!-- 맨위로 이동 버튼 -->
 <div id="go-to-top" class="btn-bottom">
-    <button type="button" id="btn-gotop" class="center-block">맨 위로 이동</button>
+    <button type="button" id="btn-gotop" class="center-block" onclick="window.scrollTo(0,0);">맨 위로 이동</button>
 </div>
+
+<%
+	}
+	//조회된 상품이 없는 경우
+	else{
+%>
+	</div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+		<div class="col-md-1"></div>
+			<div id="warning-wrapper" class="col-md-10 content-wrapper text-center">
+				<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품이 없습니다.</p> 
+			</div>
+		<div class="col-md-1"></div>
+	</div>
+</div>
+<%
+	}
+%>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

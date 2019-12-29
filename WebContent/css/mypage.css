@@ -187,10 +187,12 @@ input[type=file]{display: inline; overflow: hidden;}
 .btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px; font-size: 13px;}
 
 
+/* 이용후기 등록 */
+#reviewFrm-wrapper #oneToOneFrm .qContent-wrapper{padding-top: 20px;}
 
 
 /* 로그인, 회원가입 */
-#signUpFrm>div, #loginFrm>div, #editInfoFrm>div, #orderFrm>div{margin-bottom: 20px;}
+#signUpFrm>div, #loginFrm>div, #editInfoFrm>div, #leaveFrm>div, #orderFrm>div{margin-bottom: 20px;}
 #signUpFrm .btnForm-wrapper, #editInfoFrm .btnForm-wrapper{padding-top: 20px;}
 .form-header{border-top: 0;}
 .form-wrapper{padding: 40px 50px;}

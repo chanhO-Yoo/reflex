@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ page import="member.model.vo.*" %>
-   
-   <% 
-   		//로그인한 경우
-   		Member memberLoggedIn= (Member)session.getAttribute("memberLoggedIn");
-   		
-   %>
+<%@ page import="member.model.vo.*" %>
+<% 
+	//로그인한 경우
+	Member memberLoggedIn= (Member)session.getAttribute("memberLoggedIn");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,7 +21,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/js/header.js"></script>
-    
 </head>
 <body>
     <header class="container-fluid navbar-fixed-top">
@@ -43,23 +40,20 @@
             <div id="menu" class="col-md-4">
                 <ul class="list-unstyled list-inline text-right">
                     <%if(memberLoggedIn==null){ %>
-                    <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
-                    <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>
-                    <%}
-                    else{
+	                    <li><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
+	                    <li><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>
+                    <%
+                    	}
+                    	else{
                     %>
-                    <li>
-						<%=memberLoggedIn.getMemberName() %>님, 안녕하세요.
-                    
-                    </li>                    
-                    <li>
-							<input type="button" value="로그아웃" 
-									class="login-show"
-								   onclick="location.href='<%=request.getContextPath()%>/member/logout'"/>             
-                    </li>
-				
+	                    <li><span class="strong"><%=memberLoggedIn.getMemberName()%></span>님</li>                    
+	                    <li>
+	                    	<a href="<%=request.getContextPath()%>/member/logout">로그아웃</a>
+								<%-- <input type="button" value="로그아웃" 
+										class="login-show"
+									   onclick="location.href='<%=request.getContextPath()%>/member/logout'"/> --%>             
+	                    </li>
 					<% 	} %>
-
                     <li>
                         <h2 class="sr-only">장바구니</h2>
                         <a href="<%=request.getContextPath()%>/member/memberCart" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
@@ -77,17 +71,15 @@
                     <header></header>
                     <ul class="list-unstyled">
                         <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-                        <% if(memberLoggedIn != null 
-						  && "admin".equals(memberLoggedIn.getMemberId())){ %>
-				
-                        <li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-					<% }else{ %>
-                        
-                        
-                        <li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-                        <%} %>
-                        <li><a href="#">고객서비스(FAQ)</a></li>
-                        <li><a href="#">re:flex 소개</a></li>
+                        <% if(memberLoggedIn != null  && "admin".equals(memberLoggedIn.getMemberId())){ %>
+                        	<li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+						<% }
+                        	else{ 
+                        %>
+                        	<li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                        <% } %>
+                        <li><a href="<%=request.getContextPath()%>/faq/faqBoard">고객서비스(FAQ)</a></li>
+                        <li><a href="<%=request.getContextPath()%>/faq/faqIndex">re:flex 소개</a></li>
                     </ul>
                 </nav>
                 <!-- level2: 이럴때빌려봐 -->
@@ -99,12 +91,12 @@
                         </button>
                     </header>
                     <ul class="list-unstyled">
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">반려동물과 함께 할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT01">반려동물과 함께 할 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT02">육아할 때</a></li>
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">파티할 때</a></li>
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">운동할 때</a></li>
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">여행갈 때</a></li>
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">캠핑갈 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT03">파티할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT04">운동할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT05">여행갈 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT06">캠핑갈 때</a></li>
                     </ul>
                 </nav>
                 <!-- level2: 마이페이지 / 로그인 안했으면 경고창 -->
