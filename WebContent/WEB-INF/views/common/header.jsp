@@ -60,11 +60,13 @@
                     </li>
 				
 					<% 	} %>
-
+					
+					<%if(memberLoggedIn !=null && !"admin".equals(memberLoggedIn.getMemberId())) {%>
                     <li>
                         <h2 class="sr-only">장바구니</h2>
                         <a href="<%=request.getContextPath()%>/member/memberCart" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                     </li>
+                    <%} %>
                     <li>
                         <button type="button"  id="btn-sidemenu">
                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
@@ -82,11 +84,16 @@
 						  && "admin".equals(memberLoggedIn.getMemberId())){ %>
 				
                         <li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-					<% }else{ %>
+					<% }else{ 
+					
+						if(memberLoggedIn!=null){%>
                         
                         
                         <li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-                        <%} %>
+                        <%
+                        	} 
+                        }
+                        %>
                         <li><a href="#">고객서비스(FAQ)</a></li>
                         <li><a href="#">re:flex 소개</a></li>
                     </ul>
@@ -109,7 +116,9 @@
                     </ul>
                 </nav>
                 <!-- level2: 마이페이지 / 로그인 안했으면 경고창 -->
-                
+                <%
+                	if(memberLoggedIn != null){
+                %>
                 <nav id="level2-mypage" class="sidemenu-wrapper">
                     <header class="text-center">
                         <button type="button" class="btn-goLevel1">
@@ -126,10 +135,15 @@
                         <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint">포인트 확인</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
-                        <li><a href="<%=request.getContextPath()%>/member/memberUpdate">회원정보 수정</a></li>
-                        <li><a href="">회원정보 탈퇴</a></li>
+                      
+                   		<li><a href="<%=request.getContextPath()%>/member/memberUpdate?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 수정</a></li> 
+                        <li><a href="<%=request.getContextPath()%>/member/memberDelete?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 탈퇴</a></li>
                     </ul>
                 </nav>
+                <%
+                	}
+                %>
+                
                 <nav id="level2-adminPage" class="sidemenu-wrapper">
                     <header class="text-center">
                     
@@ -139,9 +153,14 @@
                         </button>
                     </header>
                     <ul class="list-unstyled">
-                        <li><a href="#">상품관리</a></li>
-                        <li><a href="#">주문관리</a></li>
-                        <li><a href="#">회원관리</a></li>
+                        <li><a href="#">상품등록</a></li>
+                        <li><a href="#">상품조회</a></li>
+                        <li><a href="#">렌탈내역</a></li>
+                        <li><a href="#">판매현황</a></li>
+                        <li><a href="#">배송관리</a></li>
+                        <li><a href="#">이용후기관리</a></li>
+                        <li><a href="#">1:1문의관리</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/member/memberSearch">회원조회</a></li>
                  
                     </ul>
                 </nav>

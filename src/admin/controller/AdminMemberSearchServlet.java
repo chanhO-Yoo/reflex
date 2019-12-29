@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
+import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
@@ -93,6 +94,9 @@ public class AdminMemberSearchServlet extends HttpServlet {
 				}
 		
 				//3.업무로직
+				String memberId = request.getParameter("memberId");
+				Member m = new MemberService().selectOne(memberId);
+				
 				List<Member> list = new AdminService().selectMemberList(cPage, numPerPage);
 				request.setAttribute("list",list);
 				request.setAttribute("pageBar", pageBar);
