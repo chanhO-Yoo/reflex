@@ -24,7 +24,7 @@ public class MypageReviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-BoardService boardService = new BoardService();
+			BoardService boardService = new BoardService();
 		
 		//1.파라미터 핸들링
 		final int numPerPage = 5;

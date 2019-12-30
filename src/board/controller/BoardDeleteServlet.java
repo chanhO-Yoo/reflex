@@ -42,31 +42,31 @@ public class BoardDeleteServlet extends HttpServlet {
 		int result = new BoardService().deleteBoard(Review_no);
 		
 		//파일삭제
-		if(result>0 && !"".equals(renamedFileName)) {
+	//	if(result>0 && !"".equals(renamedFileName)) {
 			//파일저장경로
-			String saveDirectory
-				= getServletContext().getRealPath("/upload/board");
-			
-			File delFile = new File(saveDirectory, renamedFileName);
-			System.out.println("delFile="+delFile);
+//			String saveDirectory
+//				= getServletContext().getRealPath("/upload/board");
+//			
+//			File delFile = new File(saveDirectory, renamedFileName);
+//			System.out.println("delFile="+delFile);
 			
 			//1.삭제처리
 //			boolean bool = delFile.delete();
 			
 			//2.이동처리
-			String delDirectory 
-				= getServletContext().getRealPath("/delete/board");
-			File delFileTo = new File(delDirectory, renamedFileName);
-			boolean bool = delFile.renameTo(delFileTo);
+//			String delDirectory 
+//				= getServletContext().getRealPath("/delete/board");
+//			File delFileTo = new File(delDirectory, renamedFileName);
+//			boolean bool = delFile.renameTo(delFileTo);
 			
-			System.out.println("파일삭제 : "+(bool?"성공!":"실패!"));
-		}
+//			System.out.println("파일삭제 : "+(bool?"성공!":"실패!"));
+		//}
 		
 		//3. 받은 결과에 따라 뷰페이지 내보내기
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		//javascript/html에서 사용할 url은 contextPath를 포함한다.
-		String loc = "/board/boardList";
+		String loc = "/mypage/mypageReview";
 
 		if(result>0)
 			msg = "게시글 삭제 성공!";

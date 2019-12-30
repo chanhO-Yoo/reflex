@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
 <%@page import="java.util.List"%>
-<%@page import="board.model.vo.*"%>
+<%@ page import="board.model.vo.*" %>
+
 <%
-	Board be = (Board)request.getAttribute("board");
 	List<Board> list = (List<Board>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
-	
-	System.out.println("mypage@review="+be);
 %>
+
 <script>
 //탭 누르면 내용 보이기
 function showContent(btn, sectionId){
@@ -116,7 +116,7 @@ function showContent(btn, sectionId){
             <section id="writed-review" class="list-wrapper">
                 <h3 class="sr-only">작성한 이용후기 리스트</h3>
                 <ul class="list-unstyled wishlist-inner">
-                <% for(Board b : list){ %>
+               <% for(Board b : list){ %>
                     <li class="row">
                         <section class="review-header">
                             <div class="item-img col-md-2">
@@ -124,24 +124,25 @@ function showContent(btn, sectionId){
                             </div>
                             <div class="wish-info item-info col-md-7">
                                 <a href="">
-                                    <p class="text-left pname"><%=b.getOrder_details_no() %></p>
+                                    <p class="text-left pname"><%=b.getReview_writer() %></p>
                                 </a>
                             </div>
                             <div class="col-md-3 reviewBtn-wrapper">
                                 <ul class="list-unstyled list-inline">
                                     <li><button type="button" class="btn-radius">수정하기</button></li>
                                     <li><button type="button" class="btn-radius" onclick="deleteBoard()">삭제하기</button></li>
-                                 	 <form name="boardDelFrm" action="<%=request.getContextPath()%>/board/boardDelete" method="post">
-	   									 <input type="hidden" name="Review_no" value="<%=b.getReview_no() %>" />	  
-    								</form>
+                                 
                                 </ul>
+                                	<form name="boardDelFrm" action="<%=request.getContextPath()%>/board/boardDelete" method="post">
+									    <input type="hidden" name="Review_no" value="<%=b.getReview_no() %>" />
+    								</form>
                             </div>
                         </section>
                         <section class="review-content">
-                      
                             <div class="star">
+                      		<% for(int i=0; i<b.getReview_star(); i++){ %>
                                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-    
+    							<%} %>
                             </div>
                             <div>
                                 <p><%=b.getReview_content()%></p>
@@ -156,16 +157,17 @@ function showContent(btn, sectionId){
             <nav class="paging-bar text-center">
                 <ul class="list-unstyled list-inline">
                 <li>
-                    <a href="#" aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    </a>
+                    <p  aria-label="Previous">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="pageBar" >
+							<%=pageBar %>
+                        
+                        </span>
+                    </p>
                 </li>
           
                 </ul>
             </nav>
-            	<div id="pageBar">
-					<%=pageBar %>
-				</div>
+            	
         </div>
            
         <div class="col-md-1"></div>
