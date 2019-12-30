@@ -1,7 +1,13 @@
+<%@page import="mypage.model.vo.MyPage"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+List<MyPage> list = (List<MyPage>)request.getAttribute("list");
 
+String pageBar = (String)request.getAttribute("pageBar");
+%>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -99,48 +105,38 @@
                             <th class="col-md-2 text-center">포인트</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="row">
-                            <td class="col-md-2">2019/12/22</td>
-                            <td class="col-md-2">적립</td>
-                            <td class="col-md-6">구매시 적립</td>
-                            <td class="col-md-2">+1,050원</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-md-2">2019/12/22</td>
-                            <td class="col-md-2">적립</td>
-                            <td class="col-md-6">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루) 리뷰작성</td>
-                            <td class="col-md-2">+500원</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-md-2">2019/12/22</td>
-                            <td class="col-md-2">사용</td>
-                            <td class="col-md-6">구매시 사용</td>
-                            <td class="col-md-2">-500원</td>
-                        </tr>
+                   <tbody>
+                        <% if(list==null || list.isEmpty()){ %>
+            <tr>
+                <td colspan="9" align="center"> 검색 결과가 없습니다. </td>
+            </tr>
+        <% 
+            } 
+            else{
+                for(MyPage m : list){ 
+        %>
+        <tr  class="row">
+   <!--      String email = m.getEmail()!=null?m.getEmail():""; -->
+        	<td class="col-md-2"><%=m.getPointChangeDate()%></td>
+        	<td class="col-md-2"><%=m.getPointStatus()%></td>
+        	<td class="col-md-6"><%=m.getPointChangeReason()%></td>
+        	<td class="col-md-2"><%=m.getPointAmount()%></td>
+        </tr>
+                    
+                    	
+        <%		} 
+            }
+        %>
+                      
                     </tbody>
                 </table>
             </section>
+            
             <!-- 페이징바 -->
-            <nav class="paging-bar text-center">
-                <ul class="list-unstyled list-inline">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    </a>
-                </li>
-                <li class="cPage"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                    </a>
-                </li>
-                </ul>
-            </nav>
+            <div  id="pageBar">
+				<%=pageBar %>
+			</div>
+              
         </div>
         <div class="col-md-1"></div>
     </div>

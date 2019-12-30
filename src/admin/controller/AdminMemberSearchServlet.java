@@ -98,7 +98,9 @@ public class AdminMemberSearchServlet extends HttpServlet {
 				request.setAttribute("list",list);
 				request.setAttribute("pageBar", pageBar);
 		
-		System.out.println(list);
+		System.out.println("admin-membersearch-servlet"+list);
+		
+		
 		
 		request.getRequestDispatcher("/WEB-INF/views/admin/member/adminMemberSearch.jsp").forward(request, response);
 		
