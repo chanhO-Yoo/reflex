@@ -304,5 +304,4 @@ public class ItemDAO {
 		return totalContent;
 	}
 	
-	
 }

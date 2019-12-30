@@ -42,7 +42,6 @@
             </div>
             <div id="menu" class="col-md-4">
                 <ul class="list-unstyled list-inline text-right">
-                    <!-- 로그인시 li.login-hide안보이게 하고 li.login-show 보이게 -->
                     <%if(memberLoggedIn==null){ %>
                     <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
                     <li class="login-hide"><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>
@@ -114,7 +113,7 @@
                         <li><a href="<%=request.getContextPath()%>/item/itemList">캠핑갈 때</a></li>
                     </ul>
                 </nav>
-                <!-- level2: 마이페이지 / 로그인 안했으면 경고창 -->
+                <!-- level2: 마이페이지 -->
                 <%
                 	if(memberLoggedIn != null){
                 %>
@@ -127,14 +126,13 @@
                     </header>
                     
                     <ul class="list-unstyled">
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList">주문조회</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist">위시리스트</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng">계약중인 렌탈</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalFin">종료중인 렌탈</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint">포인트 확인</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
-                      
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList?memberId=<%=memberLoggedIn.getMemberId()%>">주문조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberLoggedIn.getMemberId()%>">위시리스트</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng?memberId=<%=memberLoggedIn.getMemberId()%>">계약중인 렌탈</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalFin?memberId=<%=memberLoggedIn.getMemberId()%>">종료중인 렌탈</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint?memberId=<%=memberLoggedIn.getMemberId()%>">포인트 확인</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageReview?memberId=<%=memberLoggedIn.getMemberId()%>">이용후기 내역</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne?memberId=<%=memberLoggedIn.getMemberId()%>">1:1문의 내역</a></li>
                    		<li><a href="<%=request.getContextPath()%>/member/memberUpdate?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 수정</a></li> 
                         <li><a href="<%=request.getContextPath()%>/member/memberDelete?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 탈퇴</a></li>
                     </ul>

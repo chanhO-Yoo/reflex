@@ -28,40 +28,66 @@
 	//상품설명
 	String desc = item.getItemDesc();
 	String[] descArray = desc.split(",");
-	System.out.println("memberLoggedIn="+memberLoggedIn);
+	
+	//위시리스트 ajax - 회원아이디 담아놓기
+	String memberId = "";
+	if(memberLoggedIn!=null) memberId = memberLoggedIn.getMemberId();
+	else memberId = "null";
 %>
 <script src="<%=request.getContextPath()%>/js/itemView.js"></script>
 <script>
 $(function(){
-	//Q&A등록하기 버튼 눌렀을 경우
+	//Q&A등록하기 버튼
 	$('#btn-goQna').on('click', function(){
-		<%
-			if(memberLoggedIn==null){
-		%>
-			if(!confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) return;
-			location.href = "<%=request.getContextPath()%>/member/memberLogin";
-		<%
-			}
-			else
-		%>
+		if(<%=memberLoggedIn==null%>){
+			goLogin();
+		}else{
 			location.href = "<%=request.getContextPath()%>/item/itemQnaForm?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>";
+		}
 	});
 	
 	//위시리스트 버튼 눌렀을 경우
 	$("#btn-wishlist").on('click', function(){
-		<%
-			if(memberLoggedIn==null){
-		%>
+		if(<%=memberLoggedIn==null%>){
 			goLogin();
-		<%
-			}
-			else{
-		%>
-			if(!confirm("상품을 위시리스트에 담으시겠습니까?")) return;
-			location.href = "<%=request.getContextPath()%>/mypage/mypageWishlist";
-		<%
-			}
-		%>
+		}
+		else{
+			if(!confirm("현재 상품을 위시리스트에 담으시겠습니까?")) return;
+			
+			let rentTypeVal = $("#rent-type option:selected").val();
+			let rentTypePriceVal = $("#rent-type option:selected").text();
+			console.log(rentTypeVal);
+			$.ajax({
+				url: "<%=request.getContextPath()%>/mypage/mypageWishlistInsert",
+				type: "post",
+				data: {
+					memberId: "<%=memberId%>",
+					itemNo: <%=item.getItemNo()%>,
+					rentType: rentTypeVal,
+					rentTypePrice: rentTypePriceVal
+				},
+				dataType: "json",
+				success: data => {
+					console.log(data);
+					let result = data.result;
+					
+					if(result===1){
+						if(!confirm("위시리스트에 상품이 담겼습니다.\n위시리스트 페이지로 이동하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberId%>";
+					}
+					else if(result===-1){
+						if(!confirm("이미 위시리스트에 존재하는 상품입니다!\n위시리스트 페이지로 이동하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberId%>";
+					}
+					else{
+						alert("위시리스트에 상품담기를 실패하였습니다!");
+					}
+				},
+				error: (jqxhr, textStatus, errorThrown)=>{
+					console.log(jqxhr, textStatus, errorThrown);
+				} 
+			});
+		}
 	});
 	
 });
@@ -199,9 +225,9 @@ function changeOrderNo(num){
 	                <p>렌탈옵션</p>
 	                <label for="rent-type" class='sr-only'>렌탈옵션</label>
 	                <select name="rentType" id="rent-type">
-	                    <option value="7"><span class="rt-price"><%=price7%></span><span class="period">(일시납 7일)</option>
-	                    <option value="14" selected><span class="rt-price"><%=price14%></span><span class="period">(일시납 14일)</option>
-	                    <option value="30"><span class="rt-price"><%=price30%></span><span class="period">(일시납 30일)</option>
+	                    <option value="7"><span class="rt-price"><%=price7%></span><span class="period">/일시납 7일</option>
+	                    <option value="14" selected><span class="rt-price"><%=price14%></span><span class="period">/일시납 14일</option>
+	                    <option value="30"><span class="rt-price"><%=price30%></span><span class="period">/일시납 30일</option>
 	                </select>
 	            </section>
 	            <section id="sel-amount">
