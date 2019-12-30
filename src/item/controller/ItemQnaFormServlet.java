@@ -1,11 +1,15 @@
 package item.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import item.model.service.ItemService;
+import item.model.vo.Item;
 
 /**
  * Servlet implementation class ItemQnaFormServlet
@@ -18,7 +22,31 @@ public class ItemQnaFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/item/itemQnaForm.jsp").forward(request, response);
+		//파라미터 핸들링
+		String categoryNo = request.getParameter("categoryNo");
+		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+		
+		try {
+			//업무로직
+			Item item = new ItemService().selectItemOne(itemNo);
+			
+			//뷰단처리
+			String view = "";
+			if(categoryNo!=null && item!=null) {
+				view = "/WEB-INF/views/item/itemQnaForm.jsp";
+				request.setAttribute("categoryNo", categoryNo);
+				request.setAttribute("item", item);
+			}
+			else {
+				view = "/WEB-INF/views/common/msp.jsp";
+				request.setAttribute("msg", "상품Q&A등록페이지 로딩 실패!");
+				request.setAttribute("loc", "/item/itemView?categoryNo="+categoryNo+"&itemNo="+item.getItemNo());
+			}
+			
+			request.getRequestDispatcher(view).forward(request, response);
+		} catch(Exception e) {
+			throw e;
+		}
 	}
 
 	/**

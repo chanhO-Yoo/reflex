@@ -32,7 +32,7 @@
         </div>
         <!-- 이용방법 소개 -->
         <div id="introduce" class="line-style text-center">
-            <a href=""><p><span class="eng">re:flex</span>의 렌탈서비스가 궁금하다면?</p></a>
+            <a href="<%=request.getContextPath()%>/faq/faqIndex"><p><span class="eng">re:flex</span>의 렌탈서비스가 궁금하다면?</p></a>
         </div>
         <!-- 추천상품목록1 -->
         <div class="line-style rcmd-cate-header">

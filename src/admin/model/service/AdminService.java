@@ -1,12 +1,15 @@
 package admin.model.service;
 
 import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 
 import admin.model.dao.AdminDAO;
+import member.model.dao.MemberDAO;
 import member.model.vo.Member;
 //프로젝트 Service
 public class AdminService {
@@ -54,7 +57,6 @@ public class AdminService {
 		return totalContent;
 	}
 
-	
 	
 	
 	
