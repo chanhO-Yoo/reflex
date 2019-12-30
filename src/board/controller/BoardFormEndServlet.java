@@ -1,4 +1,4 @@
-package board.controller;
+ package board.controller;
 
 import java.io.IOException;
 
@@ -82,7 +82,7 @@ public class BoardFormEndServlet extends HttpServlet {
 		int result = new BoardService().insertBoard(b);
 		
 		String msg = "";
-		String loc = "/board/boardView?boardNo="+b.getReview_no();
+		String loc = "/mypage/mypageReview";
 		
 		if(result>0) {
 			msg = "게시글 등록 성공!";

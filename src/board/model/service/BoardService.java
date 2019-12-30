@@ -36,7 +36,7 @@ public class BoardService {
 		//트랜잭션 처리
 		if(result>0) {
 			//새로 발급된 게시글번호를 가져와서 board객체에 대입
-			b.setReview_no(new BoardDAO().selectLastSeq(conn));
+//			b.setReview_no(new BoardDAO().selectLastSeq(conn));
 			commit(conn);
 		}
 		else 

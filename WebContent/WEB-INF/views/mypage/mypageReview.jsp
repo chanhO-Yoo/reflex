@@ -92,7 +92,7 @@ function showContent(btn, sectionId){
                             <p class="ship-date">렌탈 시작일 2019.12.22일</p>
                         </div>
                         <div class="col-md-2">
-                            <a href="<%=request.getContextPath() %>/" class="btn-radius btn-qna">구매후기 쓰기</a>
+                            <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>
                     <li class="row">
