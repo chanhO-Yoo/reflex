@@ -28,62 +28,19 @@ public class MyPageDAO {
 			e.printStackTrace();
 		}
 	}
-	
-
-	public MyPage selectOne(Connection conn, String memberId) {
-		MyPage m = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String query = prop.getProperty("selectOne");
-		
-		
-		try {
-			//1. prepareStatment객체 생성
-			pstmt = conn.prepareStatement(query);
-			
-			//2.미완성 쿼리 값 대입
-			pstmt.setString(1, memberId);
-			
-			//3.쿼리 실행
-			rset = pstmt.executeQuery();
-			
-			//4. resultSet => member
-			if(rset.next()) {
-				m = new MyPage();
-				
-				m.setPointNo(rset.getInt("point_no"));
-				m.setMemberId(rset.getString("member_id"));
-				m.setPointStatus(rset.getString("point_status").charAt(0));
-				m.setPointAmount(rset.getInt("point_amount"));
-				m.setPointChangeReason(rset.getString("point_change_reason"));
-				m.setPointChangeDate(rset.getDate("point_change_date"));
-			}
-			System.out.println("myPage@selectOne dao = "+m);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return m;
-	}
-
 
 	public List<MyPage> selectMemberList(Connection conn, int cPage, int numPerPage) {
-		 List<MyPage> list = new ArrayList<>();
+		
+		List<MyPage> list = new ArrayList<>();
 	        PreparedStatement pstmt = null;
 	        ResultSet rset = null;
 	        
-	        String query = prop.getProperty("selectPointListByPaging");
+	        String query = prop.getProperty("selectMemberListByPaging");
 	        
 	        try{
 	            //미완성쿼리문을 가지고 객체생성. 
 	            pstmt = conn.prepareStatement(query);
-	            //cPage, numPerPage
-	            //1, 10 => 1, 10 => 0+1
-	            //2, 10 => 11, 20 => 10+1
-	            //3, 10 => 21, 30 => 20+1
+	         
 	            //(공식1)시작rownum, 끝rownum
 	            pstmt.setInt(1, (cPage-1)*numPerPage+1);
 	            pstmt.setInt(2, cPage*numPerPage);
@@ -94,16 +51,15 @@ public class MyPageDAO {
 	            rset = pstmt.executeQuery();
 	            
 	            while(rset.next()){
-	                MyPage m = new MyPage();
+	            	MyPage m = new MyPage();
 	                //컬럼명은 대소문자 구분이 없다.
-	                
-	                m.setPointNo(rset.getInt("point_no"));
-					m.setMemberId(rset.getString("member_id"));
-					m.setPointStatus(rset.getString("point_status").charAt(0));
+	            	m.setPointNo(rset.getInt("point_no"));
+	            	m.setMemberId(rset.getString("member_id"));
+	            	m.setPointStatus(rset.getString("point_status").charAt(0));
 					m.setPointAmount(rset.getInt("point_amount"));
 					m.setPointChangeReason(rset.getString("point_change_reason"));
 					m.setPointChangeDate(rset.getDate("point_change_date"));
-					
+	                
 	                list.add(m);
 	            }
 	        }catch(Exception e){
@@ -116,6 +72,36 @@ public class MyPageDAO {
 	        
 	        return list;
 	}
+
+	public int selectTotalContent(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalContent");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalContent;
+	}
+	
+
 
 
 	

@@ -14,21 +14,19 @@ import mypage.model.vo.MyPage;
 
 public class MyPageService {
 
-	public MyPage selectOne(String memberId) {
-		Connection conn = getConnection();
-		
-		MyPage m = new MyPageDAO().selectOne(conn, memberId);
-		
-		close(conn);
-		
-		return m;
-	}
-
 	public List<MyPage> selectMemberList(int cPage, int numPerPage) {
-		 	Connection conn = getConnection();
+		 Connection conn = getConnection();
 	        List<MyPage> list= new MyPageDAO().selectMemberList(conn, cPage, numPerPage);
 	        close(conn);
 	        return list;
 	}
+
+	public int selectTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = new MyPageDAO().selectTotalContent(conn);
+		close(conn);
+		return totalContent;
+	}
+
 
 }

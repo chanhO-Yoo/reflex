@@ -4,10 +4,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-MyPage m = (MyPage)request.getAttribute("mypage");
+List<MyPage> list = (List<MyPage>)request.getAttribute("list");
 
-
-String pageBar = (String)request.getAttribute("pageBar");	
+String pageBar = (String)request.getAttribute("pageBar");
 %>
 <!-- page nav -->
 <nav class="line-style page-nav">
@@ -106,35 +105,38 @@ String pageBar = (String)request.getAttribute("pageBar");
                             <th class="col-md-2 text-center">포인트</th>
                         </tr>
                     </thead>
-                    <tbody>
-       
-                        <tr class="row">
-                            <td class="col-md-2"></td>
-                            <td class="col-md-2"></td>
-                            <td class="col-md-6"></td>
-                            <td class="col-md-2"></td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-md-2">2019/12/22</td>
-                            <td class="col-md-2">적립</td>
-                            <td class="col-md-6">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루) 리뷰작성</td>
-                            <td class="col-md-2">+500원</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="col-md-2">2019/12/22</td>
-                            <td class="col-md-2">사용</td>
-                            <td class="col-md-6">구매시 사용</td>
-                            <td class="col-md-2">-500원</td>
-                        </tr>
+                   <tbody>
+                        <% if(list==null || list.isEmpty()){ %>
+            <tr>
+                <td colspan="9" align="center"> 검색 결과가 없습니다. </td>
+            </tr>
+        <% 
+            } 
+            else{
+                for(MyPage m : list){ 
+        %>
+        <tr  class="row">
+   <!--      String email = m.getEmail()!=null?m.getEmail():""; -->
+        	<td class="col-md-2"><%=m.getPointChangeDate()%></td>
+        	<td class="col-md-2"><%=m.getPointStatus()%></td>
+        	<td class="col-md-6"><%=m.getPointChangeReason()%></td>
+        	<td class="col-md-2"><%=m.getPointAmount()%></td>
+        </tr>
+                    
+                    	
+        <%		} 
+            }
+        %>
+                      
                     </tbody>
                 </table>
             </section>
-            <!-- 페이징바 -->
-           
-                 <div  id="pageBar">
-					<%=pageBar%>
-				</div>
             
+            <!-- 페이징바 -->
+            <div  id="pageBar">
+				<%=pageBar %>
+			</div>
+              
         </div>
         <div class="col-md-1"></div>
     </div>
