@@ -92,7 +92,7 @@ function showContent(btn, sectionId){
                             <p class="ship-date">렌탈 시작일 2019.12.22일</p>
                         </div>
                         <div class="col-md-2">
-                            <a href="" class="btn-radius btn-qna">구매후기 쓰기</a>
+                            <a href="<%=request.getContextPath() %>/" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>
                     <li class="row">
@@ -107,7 +107,7 @@ function showContent(btn, sectionId){
                             <p class="ship-date">렌탈 시작일 2019.12.22일</p>
                         </div>
                         <div class="col-md-2">
-                            <a href="" class="btn-radius btn-qna">구매후기 쓰기</a>
+                            <a href="<%=request.getContextPath()%>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>
                 </ul>
@@ -129,7 +129,7 @@ function showContent(btn, sectionId){
                             </div>
                             <div class="col-md-3 reviewBtn-wrapper">
                                 <ul class="list-unstyled list-inline">
-                                    <li><button type="button" class="btn-radius">수정하기</button></li>
+                                    <li><button type="button" class="btn-radius" onclick="updateBoard()">수정하기</button></li>
                                     <li><button type="button" class="btn-radius" onclick="deleteBoard()">삭제하기</button></li>
                                  
                                 </ul>
@@ -176,10 +176,10 @@ function showContent(btn, sectionId){
 	
 <script>
 
-//	function updateBoard(){
+function updateBoard(){
+ location.href = "<%=request.getContextPath()%>/mypage/mypageReviewForm";	
+}
 	
-
-	//}
    	function deleteBoard(){
         if(!confirm('이 게시글을 정말 삭제하시겠습니까?')) return;
         $("[name=boardDelFrm]").submit();

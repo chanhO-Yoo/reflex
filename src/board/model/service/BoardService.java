@@ -19,7 +19,7 @@ public class BoardService {
 		List<Board> list 
 			= new BoardDAO().selectBoardList(conn, cPage, numPerPage);
 		close(conn);
-		System.out.println("BoardService@+="+list);
+//		System.out.println("BoardService@+="+list);
 		return list;
 	}
 

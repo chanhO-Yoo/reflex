@@ -40,7 +40,7 @@ public class MypageReviewServlet extends HttpServlet {
 		//a.컨텐츠영역
 		List<Board> list 
 			= boardService.selectBoardList(cPage, numPerPage); 
-		System.out.println("list@servlet="+list);
+//		System.out.println("list@servlet="+list);
 		
 		//b.페이징바영역
 		//전체게시글수, 전체페이지수

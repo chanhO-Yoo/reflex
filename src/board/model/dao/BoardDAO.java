@@ -66,7 +66,7 @@ public class BoardDAO {
 				
 				list.add(b1);
 			}
-			System.out.println("list@dao="+list);
+//			System.out.println("list@dao="+list);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,12 +112,19 @@ public class BoardDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-//			pstmt.setString(1, b.getBoardTitle());
-//			pstmt.setString(2, b.getBoardWriter());
-//			pstmt.setString(3, b.getBoardContent());
-//			pstmt.setString(4, b.getOriginalFileName());
-//			pstmt.setString(5, b.getRenamedFileName());
+			
 
+			pstmt.setInt(1, b.getReview_no());
+			pstmt.setInt(2, b.getOrder_details_no());
+			pstmt.setString(3, b.getReview_writer());
+			pstmt.setDate(4, b.getReview_date());
+			pstmt.setInt(5, b.getReview_star());
+			pstmt.setString(6, b.getReview_content());
+			pstmt.setString(7, b.getReview_image());
+			pstmt.setInt(8, b.getReview_readCount());
+		
+			
+	
 			
 			result = pstmt.executeUpdate();
 			

@@ -59,25 +59,23 @@ public class BoardFormEndServlet extends HttpServlet {
 //		String boardTitle = request.getParameter("boardTitle");
 //		String boardWriter = request.getParameter("boardWriter");
 //		String boardContent = request.getParameter("boardContent");
-		String boardTitle = multiReq.getParameter("boardTitle");
-		String boardWriter = multiReq.getParameter("boardWriter");
-		String boardContent = multiReq.getParameter("boardContent");
-		
+			int reviewStar =Integer.parseInt(multiReq.getParameter("star"));
+		String reviewWriter = multiReq.getParameter("reviewWriter");
+		String reviewContent = multiReq.getParameter("reviewContent");
+		System.out.println("bofomm@servlet="+reviewStar);
 		//XSS공격대비 &문자변환
-		boardContent = boardContent.replaceAll("<", "&lt;")
+		reviewContent = reviewContent.replaceAll("<", "&lt;")
 								   .replaceAll(">", "&gt;")
 								   .replaceAll("\\n", "<br/>");//개행문자처리
 		
-		String originalFileName 
+		String review_image 
 			= multiReq.getOriginalFileName("upFile");//사용자 업로드한 파일명
 		String renamedFileName
 			= multiReq.getFilesystemName("upFile");//실제 저장된 파일명
 		
-//		Board b = new Board(0, boardTitle, boardWriter, 
-//							boardContent, originalFileName, renamedFileName, 
-//							null, 0);
-		//임시방편
-		Board b=new Board();
+		Board b = new Board(0,0,reviewWriter,null,reviewStar,reviewContent,review_image,0);
+		
+		
 		System.out.println("b@boardFormEnd="+b);
 		
 		//2.business logic
