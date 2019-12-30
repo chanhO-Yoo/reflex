@@ -93,9 +93,6 @@ public class AdminMemberSearchServlet extends HttpServlet {
 					pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberSearch?cPage="+pageNo+"'>[다음]</a>\n";							
 				}
 		
-				//3.업무로직
-				String memberId = request.getParameter("memberId");
-				Member m = new MemberService().selectOne(memberId);
 				
 				List<Member> list = new AdminService().selectMemberList(cPage, numPerPage);
 				request.setAttribute("list",list);

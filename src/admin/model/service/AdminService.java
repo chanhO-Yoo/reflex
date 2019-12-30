@@ -57,6 +57,22 @@ public class AdminService {
 		return totalContent;
 	}
 
+	public int memberDelete(String memberId) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().memberDelete(conn, memberId);
+		
+		
+		if(result>0)
+			commit(conn);
+		
+		else 
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
 	
 	
 	
