@@ -279,6 +279,30 @@ public class ItemDAO {
 		
 		return qnaAns;
 	}
+
+	public int selectItemQnaCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectItemQnaCount");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("상품Q&A 게시글수 조회 에러!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
 	
 	
 }

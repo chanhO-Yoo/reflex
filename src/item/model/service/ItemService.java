@@ -73,5 +73,12 @@ public class ItemService {
 		return qnaAns;
 	}
 
+	public int selectItemQnaCount() {
+		Connection conn = getConnection();
+		int totalContent = new ItemDAO().selectItemQnaCount(conn);
+		close(conn);
+		return totalContent;
+	}
+
 
 }

@@ -288,7 +288,12 @@ footer, footer header{background: #aaaaac;}
 .q-wrapper{position: relative; padding: 20px;}
 .q-wrapper .q-title{position: absolute; top: 20px; left: 15px; font-size: 15px;}
 .q-wrapper p{width: 90%;}
-
+/* 배송/반품정보 */
+#details-infoShip{width: 80%; line-height: 1.8;}
+#details-infoShip>div{margin: 50px 0;}
+#details-infoShip img{width: 100%;}
+#details-infoShip ul{margin: 0 0 50px;}
+#details-infoShip>div.info-return img{margin-bottom: 50px;}
 
 
 /* Q&A작성폼 */

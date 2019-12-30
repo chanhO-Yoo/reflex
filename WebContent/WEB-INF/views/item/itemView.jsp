@@ -14,6 +14,7 @@
 	List<ItemImage> imgList = (List<ItemImage>)request.getAttribute("imgList");
 	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList");
 	Map<Integer, ItemQnaAns> qnaMap = (Map<Integer, ItemQnaAns>)request.getAttribute("qnaMap");
+	int qnaTotalContent = (int)request.getAttribute("qnaTotalContent");
 	
 	//가격 콤마찍기
 	int discountedPrice7 = (int)Math.ceil((item.getItemPrice()*0.98)/240*7)/100*100; //14일기준
@@ -27,34 +28,57 @@
 	//상품설명
 	String desc = item.getItemDesc();
 	String[] descArray = desc.split(",");
+	System.out.println("memberLoggedIn="+memberLoggedIn);
 %>
 <script src="<%=request.getContextPath()%>/js/itemView.js"></script>
 <script>
 $(function(){
+	//Q&A등록하기 버튼 눌렀을 경우
 	$('#btn-goQna').on('click', function(){
 		<%
 			if(memberLoggedIn==null){
 		%>
-				if(!confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) return;
-				location.href = "<%=request.getContextPath()%>/member/memberLogin";
+			if(!confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) return;
+			location.href = "<%=request.getContextPath()%>/member/memberLogin";
 		<%
 			}
 			else
 		%>
-				location.href = "<%=request.getContextPath()%>/item/itemQnaForm?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>";
-			
+			location.href = "<%=request.getContextPath()%>/item/itemQnaForm?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>";
+	});
+	
+	//위시리스트 버튼 눌렀을 경우
+	$("#btn-wishlist").on('click', function(){
+		<%
+			if(memberLoggedIn==null){
+		%>
+			goLogin();
+		<%
+			}
+			else{
+		%>
+			if(!confirm("상품을 위시리스트에 담으시겠습니까?")) return;
+			location.href = "<%=request.getContextPath()%>/mypage/mypageWishlist";
+		<%
+			}
+		%>
 	});
 	
 });
+function goLogin(){
+	if(!confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) return;
+	location.href = "<%=request.getContextPath()%>/member/memberLogin";
+}
 function changeOrderNo(num){
 	let stockStr = <%=item.getItemStock()%>; //상품 재고
-	let inputOrderNo = document.querySelector("#orderNo"); 
-	let orderNoVal = (inputOrderNo.value*1)+num; //수량(정수형)
+	let inputOrderNo = document.querySelector("#orderNo");
+	let oldNo = inputOrderNo.value;
+	let newNo = (inputOrderNo.value*1)+num; //수량(정수형)
 	
-	if(orderNoVal < 1) orderNoVal = 1;
-	if(orderNoVal > stockStr) orderNoVal = stockStr;
+	if(newNo < 1) newNo = 1;
+	if(newNo > stockStr) newNo = stockStr;
 	
-	inputOrderNo.value = orderNoVal;
+	inputOrderNo.value = newNo;
 	
 	//수량 변경되면 가격 변경
 	let totalPrice = document.querySelector("#total-price");
@@ -62,14 +86,32 @@ function changeOrderNo(num){
 	let delIdx = curVal.indexOf('원');
 	curVal = curVal.substr(0, delIdx).replace(',','');
 	curVal *= 1; //정수형변환
+	let plusPrice = curVal; //더하고 뺄 가격 
 	
+	let changeVal = 0; //변경될 가격
 	
-	let changeVal = curVal * orderNoVal; //변경될 가격
-	
-	//현재 가격이 변경될 가격보다 작을 경우(plus)
-	if(curVal < changeVal)
+	//플러스버튼 누를 때 
+	if(oldNo < newNo){
+		console.log("plus");
+		for(let i=0; i<newNo; i++){
+			changeVal += plusPrice;	
+			//console.log("changeValAfterPlus="+changeVal);
+		}
+		//console.log("changeValAfterPlus="+changeVal);
 		totalPrice.innerText = changeVal.toLocaleString()+"원";
-		
+	}
+	//마이너스버튼 누를 때
+	else{
+		console.log("minus");
+		for(let i=0; i<newNo; i++){
+			changeVal -= plusPrice;	
+		}
+		//console.log("changeValAfterMinus="+changeVal);
+		totalPrice.innerText = changeVal.toLocaleString()+"원";
+	}
+	totalPrice.innerText = changeVal.toLocaleString()+"원";
+	
+	//totalPrice.innerText = changeVal.toLocaleString()+"원";
 	
 }
 </script>
@@ -143,7 +185,6 @@ function changeOrderNo(num){
 	                <p id="total-price" class="text-center"><%=price14%></p>
 	            </div>
 	            <div class="col-md-6">
-	                <!-- 위시리스트 페이지로 이동하겠냐는 알림창 띄우기 -->
 	                <button type="button" id="btn-wishlist" class="center-block">
 	                   	 위시리스트에 담기<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
 	                </button>
@@ -201,7 +242,7 @@ function changeOrderNo(num){
 	            <li class="col-md-3 active"><button type="button" onclick="showContent(this, 'details-img')">상품상세</button></li>
 	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-infoShip');">배송/반품</button></li>
 	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-review');">이용후기(<span class="board-cnt">10</span>)</button></li>
-	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-qna');">상품Q&A(<span class="board-cnt">10</span>)</button></li>
+	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-qna');">상품Q&A(<span class="board-cnt"><%=qnaTotalContent %></span>)</button></li>
 	        </ul>
 	    </section>
 	    <div class="details-contents row">
@@ -213,9 +254,50 @@ function changeOrderNo(num){
 	                <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(imgList.size()-1).getItemImageDefault()%>" alt="상품정보이미지">
 	            </section>
 	            <!-- 배송반품 -->
-	            <section id="details-infoShip">
-	                <p>배송반품</p>
-	            </section>
+                <section id="details-infoShip" class="center-block">
+                    <div class="info-ship">
+                        <h3 class="sr-only">배송안내</h3>
+                        <img src="<%=request.getContextPath()%>/images/info_ship.JPG" alt="배송안내 사진">
+                        <ul class="list-unstyled">
+                            <li>-주문한 상품은 배송준비 단계 이후에는 주문취소가 불가 합니다.(이후부터는 반품/교환 신청만 가능합니다.)</li>
+                            <li>-렌탈 상품의 경우 창고 출고 과정을 동영상 서비스로 제공하고 있습니다.</li>
+                        </ul>
+                        <p class="strong">배송지역</p>
+                        <p>-전국 배송 (단, 일부 상품의 경우 도서/산간지역의 배송이 제한되거나 특정 지역만 배송이 가능합니다.)</p>
+                    </div>
+                    <div class="info-back">
+                        <h3 class="sr-only">회수안내</h3>
+                        <img src="<%=request.getContextPath()%>/images/info_back.JPG" alt="회수안내 사진">
+                        <ul class="list-unstyled">
+                            <li>-보증금은 계약 종료 후 반환 됩니다. 상품의 훼손/구성품 분실 시 정비비가 발생될 수 있으며, 보증금에서 차감후 지급됩니다.</li>
+                            <li>-회수된 상품의 검수 과정을 마이페이지에서 동영상으로 확인할 수 있습니다.</li>
+                        </ul>
+                        <p class="strong">공통사항</p>
+                        <ul class="list-unstyled">
+                            <li>-렌탈계약 종료일 5일전에 회수 안내 알림톡/SMS가 발송되며, 회수 당일 날 담당 택배기사(롯데택배로 배송된 상품에 한함)가 연락 후상품을 회수합니다.</li>
+                            <li>-구성품 리스트를 참고하여 상품의 구성품을 확인하시고 받으신 상품 박스에 스티로폼, 비닐 등 배송 시 동봉되었던 충전재와 함께 넣어주시기 바랍니다.</li>
+                            <li>-인수형장기 설치 상품은 별도의 회수가 없습니다.</li>
+                            <li>-픽업상품은 상품을 수령한 매장으로 직접 반품(반송)하셔야 합니다. (택배송 불가)</li>
+                        </ul>
+                    </div>
+                    <div class="info-return">
+                        <h3 class="sr-only">교환/반품안내</h3>
+                        <img src="<%=request.getContextPath()%>/images/info_return.JPG" alt="교환반품안내 사진">
+                        <p class="strong">교환/ 반품 안내</p>
+                        <ul class="list-unstyled">
+                            <li>-교환/반품 신청은 "마이페이지-계약중인 렌탈-계약 상세 정보"에서 계약건 별로 신청 가능 합니다.</li>
+                            <li>-교환 접수가 완료되면 대체상품을 배송해드리면서 기존 상품을 회수합니다.</li>
+                            <li>-반품 시 환불처리는 창고 입고/검수 완료 후에 진행됩니다. (제품 훼손, 구성품 분실시 별도 정비비가 발생할 수 있습니다.)</li>
+                            <li>-회수된 상품의 검수 과정을 마이페이지에서 동영상으로 확인할 수 있습니다.</li>
+                        </ul>
+                        <p class="strong">공통사항</p>
+                        <ul class="list-unstyled">
+                            <li>-지정 택배회사가 아닌 타 택배회사를 통해 고객님께서 직접 발송하는 경우 택배비는 본인 부담입니다.</li>
+                            <li>-단순변심으로 인한 반품시, 반품(편도) 배송비가 부과됩니다.</li>
+                            <li>-무료배송 상품의 경우에도 반품시에는 배송비가 적용됩니다.</li>
+                        </ul>
+                    </div>
+                </section>
 	            <!-- 이용후기 -->
 	            <section id="details-review">
 	                <section id="writed-review" class="list-wrapper">

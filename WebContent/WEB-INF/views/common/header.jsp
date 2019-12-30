@@ -74,19 +74,24 @@
                     <header></header>
                     <ul class="list-unstyled">
                         <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-                        <% if(memberLoggedIn != null 
-						  && "admin".equals(memberLoggedIn.getMemberId())){ %>
-				
-                        <li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
-					<% }else{ 
-					
-						if(memberLoggedIn!=null){%>
-                        
-                        
-                        <li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+                        <% 
+                        	//관리자가 로그인한 경우
+                        	if(memberLoggedIn != null && "admin".equals(memberLoggedIn.getMemberId())){ %>
+                        	<li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
+						<% 
+							} 
+                        	//로그인한 회원이 있는 경우 마이페이지 메뉴 
+							if(memberLoggedIn!=null){%>
+                        	<li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
                         <%
-                        	} 
-                        }
+	                        }
+                        	//로그인 안했으면 로그인, 회원가입 메뉴 보이게
+							else{
+                        %>
+                        	<li><a href="<%=request.getContextPath()%>/member/memberLogin">로그인</a></li>
+                        	<li><a href="<%=request.getContextPath()%>/member/memberEnroll">회원가입</a></li>
+                        <%
+							}
                         %>
                         <li><a href="#">고객서비스(FAQ)</a></li>
                         <li><a href="#">re:flex 소개</a></li>
