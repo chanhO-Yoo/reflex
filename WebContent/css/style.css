@@ -52,7 +52,10 @@ button{padding: 0; background: transparent;}
 .paging-bar li.cPage{font-weight: bold; font-size: 15px;}
 .paging-bar a{padding: 0 15px;}
 .paging-bar .glyphicon{font-size: 13px;}
-
+/* 조회된 것이 없을 때 */
+#warning-wrapper.content-wrapper{padding: 50px; font-size: 15px;}
+#warning-wrapper p{position:relative;}
+#warning-wrapper p .glyphicon{position: absolute; top: 0; left: 370px; font-size: 20px;}
 
 /* media */
 /* 
