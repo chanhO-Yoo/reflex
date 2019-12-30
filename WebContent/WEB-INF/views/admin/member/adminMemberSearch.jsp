@@ -22,6 +22,9 @@ div#search-memberName {
 display:<%="memberName".equals(searchType)?"":"none"%>;
 }
 
+
+
+
 </style>
 <script>
 $(()=>{
