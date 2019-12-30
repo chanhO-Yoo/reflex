@@ -54,25 +54,38 @@ function hasScrolled(){
 
 //옵션 영역 가격 변하게 하기
 function changePrice(){
-	//총가격
-	let totalPrice = document.querySelector("#total-price");
+	let totalPrice = document.querySelector("#total-price"); //맨 위에 찍히게 될 총가격
+	let inputOrderNo = document.querySelector("#orderNo"); //수량
+	let rentType = document.querySelector("#rent-type"); //렌탈유형 선택
+	let rentPrice = 0; //렌탈유형별 가격(정수형)
+	
+	//1.렌탈유형선택 후 수량 1인 경우를 기본으로 가격 띄움
+	//2.수량 변경되면 가격 변경
+	//3.렌탈유형을 바꾸면 수량을 다시 1로 바꾸고 그 가격 띄움
 	
 	//렌탈유형 선택
-	let rentType = document.querySelector("#rent-type");
-	let rentPrice = 0;
-	
 	rentType.addEventListener('change', function(){
 		let ptxt = rentType.options[rentType.selectedIndex].text;
 		let delIdx = ptxt.indexOf('원');
 		rentPrice = ptxt.substr(0, delIdx).replace(',','');
-		rentPrice *= 1; //정수형변환
+		rentPrice *= 1; //선택한 렌탈유형의 가격(정수형)
 		
-		//수량선택
-		let orderNo = document.querySelector("#orderNo").value*1;
-		let price = rentPrice*orderNo; //렌탈옵션*수량
-		totalPrice.innerText = price.toLocaleString()+"원";
+		//수량1 셋팅, 수량1에 대한 가격 띄움
+		inputOrderNo.value = "1";
+		totalPrice.innerText = rentPrice.toLocaleString()+"원";
 	});
 	
+	//수량선택
+	let oldVal = inputOrderNo.value;
+	inputOrderNo.addEventListener('propertychange change keyup paste input', function(){
+		console.log(this.value);
+		/*let curVal = this.value;
+		if(curVal == oldVal) 
+			return;
+		oldVal = curVal;*/
+	});
+	//let price = rentPrice*orderNo; //렌탈옵션*수량
+	//totalPrice.innerText = price.toLocaleString()+"원";
 }
 
 //하단 탭 누르면 내용 보이기

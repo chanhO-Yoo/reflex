@@ -45,33 +45,32 @@ $(function(){
 			
 	});
 	
-	//수량버튼 클릭
-	changeOrderNo();
 });
-function changeOrderNo(){
-	let stockStr = <%=item.getItemStock()%>-1+""; //상품 재고(문자열)
-	let inputOrderNo = document.querySelector("#orderNo");
-	let oderNoNum = inputOrderNo.value*1; //수량(정수형)
-	let btnPlus = document.querySelector(".btn-plus");
-	let btnMinus = document.querySelector(".btn-minus");
+function changeOrderNo(num){
+	let stockStr = <%=item.getItemStock()%>; //상품 재고
+	let inputOrderNo = document.querySelector("#orderNo"); 
+	let orderNoVal = (inputOrderNo.value*1)+num; //수량(정수형)
 	
-	btnMinus.addEventListener('click', function(){
-		if(inputOrderNo.value==="1"){
-			this.disabled = "disabled";
-		}
-		
-		oderNoNum -= 1; //정수형
-		inputOrderNo.value = oderNoNum+""; //문자열
-	});
+	if(orderNoVal < 1) orderNoVal = 1;
+	if(orderNoVal > stockStr) orderNoVal = stockStr;
 	
-	btnPlus.addEventListener('click', function(){
-		if(inputOrderNo.value===stockStr){
-			this.disabled = "disabled";
-		}
+	inputOrderNo.value = orderNoVal;
+	
+	//수량 변경되면 가격 변경
+	let totalPrice = document.querySelector("#total-price");
+	let curVal = totalPrice.innerText; //현재 선택된 렌탈유형 가격(수량1기준)
+	let delIdx = curVal.indexOf('원');
+	curVal = curVal.substr(0, delIdx).replace(',','');
+	curVal *= 1; //정수형변환
+	
+	
+	let changeVal = curVal * orderNoVal; //변경될 가격
+	
+	//현재 가격이 변경될 가격보다 작을 경우(plus)
+	if(curVal < changeVal)
+		totalPrice.innerText = changeVal.toLocaleString()+"원";
 		
-		oderNoNum += 1; //정수형
-		inputOrderNo.value = oderNoNum+""; //문자열
-	});
+	
 }
 </script>
 <!-- page nav -->
@@ -167,9 +166,9 @@ function changeOrderNo(){
 	            <section id="sel-amount">
 	                <p>수량</p>
 	                <label for="" class="sr-only">구매수량</label>
-	                <button type="button" class="btn-minus"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-	                <input type="text" name="orderNo" id="orderNo" class="text-center" value="1" disabled>
-	                <button type="button" class="btn-plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+	                <button type="button" class="btn-minus" onclick="changeOrderNo(-1);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+	                <input type="text" name="orderNo" id="orderNo" class="text-center" value="1" readonly>
+	                <button type="button" class="btn-plus" onclick="changeOrderNo(1);"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 	            </section>
 	            <div id="opt-footer" class="row">
 	                <div class="col-md-6">

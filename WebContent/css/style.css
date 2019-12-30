@@ -238,7 +238,7 @@ footer, footer header{background: #aaaaac;}
 #opt-header>div, #opt-footer>div{padding: 0; height: 50px; line-height: 50px;}
 #opt-header>div:first-of-type, #opt-footer>div:first-of-type{border-right: 1px solid;}
 #btn-wishlist{position: relative; width: 100%; padding: 0;}
-#btn-wishlist .glyphicon{position: absolute; top: 19px; right: 160px; font-size: 16px;}
+#btn-wishlist .glyphicon{position: absolute; top: 20px; right: 160px; font-size: 16px;}
 #opt-inner{padding: 0; margin-top: 50px;}
 #opt-inner>section{padding: 30px 20px; border-bottom: 1px solid;}
 #opt-inner>section:last-of-type{border-bottom: 0;}
@@ -248,7 +248,7 @@ footer, footer header{background: #aaaaac;}
 #rent-type{width: 185px; padding: 3px 10px; border: 1px solid;}
 #orderNo{width: 40px; padding: 3px; border: 1px solid; background: white;}
 #sel-amount .glyphicon{font-size: 12px;}
-#sel-amount button{width: 27px; padding: 3px; border: 1px solid; margin-right: -5px; background: white;}
+#sel-amount button{width: 27px; padding: 3px; border: 1px solid; margin-right: -6px; background: white;}
 #sel-amount button:last-of-type{margin-left: -6px;}
 #opt-footer{border-bottom: 1px solid;}
 #opt-footer button{width: 100%; padding: 0;}
