@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 List<Member> list = (List<Member>)request.getAttribute("list");
-
+Member mm = (Member)request.getAttribute("member"); 
 String searchType = request.getParameter("searchType");
 String searchKeyword = request.getParameter("searchKeyword");
 
@@ -128,25 +128,24 @@ $(()=>{
         	<td><%=m.getMemberEnrollDate()%></td>
         	<td><%=m.getMemberPoint()%></td>
         	<td><button type="button" class="btn btn-primary">수정</button></td>
-            <td><button type="button" class="btn btn-danger">삭제</button></td>
+            <td><button type="button"  class="btn btn-danger">삭제</button></td>
         </tr>
                     
                     	
-                     <%		} 
+        <%		} 
             }
         %>
-                    </tbody>
+      </tbody>
                     
-                </table>
+    </table>
                
                 
-                <div  id="pageBar">
+     <div  id="pageBar">
 		<%=pageBar %>
 	</div>
               
-            </div>
-        </div>
-
+     </div>
+</div>
 
 
 
