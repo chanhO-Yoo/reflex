@@ -49,16 +49,10 @@
                     <%}
                     else{
                     %>
-                    <li>
-						<%=memberLoggedIn.getMemberName() %>님
-                    
-                    </li>                    
-                    <li>
-							<input type="button" value="로그아웃" 
-									class="login-show"
-								   onclick="location.href='<%=request.getContextPath()%>/member/logout'"/>             
-                    </li>
-				
+	                <li><span class="strong"><%=memberLoggedIn.getMemberName()%></span>님</li>                    
+	                <li>
+	                	<a href="<%=request.getContextPath()%>/member/logout">로그아웃</a>
+	                </li>
 					<% 	} %>
 					
 					<%if(memberLoggedIn !=null && !"admin".equals(memberLoggedIn.getMemberId())) {%>
