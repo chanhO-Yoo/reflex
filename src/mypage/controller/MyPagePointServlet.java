@@ -1,4 +1,4 @@
-package mypage;
+package mypage.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
+
 import member.model.vo.Member;
 import mypage.model.service.MyPageService;
 import mypage.model.vo.MyPage;
@@ -78,9 +79,10 @@ public class MyPagePointServlet extends HttpServlet {
 		if(pageNo <= totalPage) {
 			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?cPage="+pageNo+"'>[다음]</a>\n";							
 		}
-
-		
+		String memberId = request.getParameter("memberId");
+		MyPage mypage = new MyPageService().selectOne(memberId);
 		List<MyPage> list = new MyPageService().selectMemberList(cPage, numPerPage);
+		System.out.println("mypage-memberid @@"+mypage);
 		request.setAttribute("list",list);
 		request.setAttribute("pageBar", pageBar);
 

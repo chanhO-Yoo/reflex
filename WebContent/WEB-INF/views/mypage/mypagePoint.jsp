@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 List<MyPage> list = (List<MyPage>)request.getAttribute("list");
-
+MyPage m = (MyPage)request.getAttribute("list");
 String pageBar = (String)request.getAttribute("pageBar");
 %>
 <!-- page nav -->
@@ -18,7 +18,7 @@ String pageBar = (String)request.getAttribute("pageBar");
         <li class="go-boxmenu">
             <a href="">마이페이지</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-        </li>
+        </li> 
         <li>포인트확인</li>
     </ul>
 </nav>
@@ -107,26 +107,25 @@ String pageBar = (String)request.getAttribute("pageBar");
                     </thead>
                    <tbody>
                         <% if(list==null || list.isEmpty()){ %>
-            <tr>
-                <td colspan="9" align="center"> 검색 결과가 없습니다. </td>
-            </tr>
-        <% 
-            } 
-            else{
-                for(MyPage m : list){ 
-        %>
-        <tr  class="row">
-   <!--      String email = m.getEmail()!=null?m.getEmail():""; -->
-        	<td class="col-md-2"><%=m.getPointChangeDate()%></td>
-        	<td class="col-md-2"><%=m.getPointStatus()%></td>
-        	<td class="col-md-6"><%=m.getPointChangeReason()%></td>
-        	<td class="col-md-2"><%=m.getPointAmount()%></td>
-        </tr>
+            				<tr>
+                				<td colspan="9" align="center"> 검색 결과가 없습니다. </td>
+            				</tr>
+        				<% 
+           					} 
+            				else{
+                				for(MyPage mm : list){ 
+        				%>
+        						<tr class="row">
+        							<td class="col-md-2"> <%=mm.getPointChangeDate()%> </td>
+        							<td class="col-md-2"> <%=mm.getPointStatus()%> </td>
+        							<td class="col-md-6"> <%=mm.getPointChangeReason()%> </td>
+        							<td class="col-md-2"> <%=mm.getPointAmount()%> </td>
+        						</tr>
                     
                     	
-        <%		} 
-            }
-        %>
+        				<%		} 
+            				}
+        				%>
                       
                     </tbody>
                 </table>

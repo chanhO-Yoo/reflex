@@ -100,6 +100,43 @@ public class MyPageDAO {
 		
 		return totalContent;
 	}
+
+	public int selectOne(Connection conn, String memberId) {
+		MyPage m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			//1.Statement객체생성
+			pstmt = conn.prepareStatement(query);//미완성 쿼리 전달
+			
+			//2.미완성 쿼리 값대입
+			pstmt.setString(1, memberId);
+			
+			//3.쿼리실행 => ResultSet
+			rset = pstmt.executeQuery();
+			
+			//4.ResultSet => Member
+			if(rset.next()) {
+				m = new MyPage();
+				
+				m.setMemberId(rset.getString("memberid"));
+		
+			}
+			
+			System.out.println("member@dao.selectOne="+m);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//5.자원반납
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+	}
 	
 
 
