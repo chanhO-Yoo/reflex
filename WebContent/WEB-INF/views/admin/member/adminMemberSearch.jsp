@@ -144,6 +144,7 @@ function confirmDelete(){
         	<td><%=m.getMemberAddress()%></td>
         	<td><%=m.getMemberEnrollDate()%></td>
         	<td><%=m.getMemberPoint()%></td>
+
         	<td><button type="button" class="btn btn-primary">조회</button></td>
         	<td>
             	<form action="<%=request.getContextPath()%>/admin/member/memberDelete?memberId=<%=m.getMemberId()%>"
@@ -155,7 +156,7 @@ function confirmDelete(){
             
         	
         </tr>
-     
+
         <%		} 
             }
         %>

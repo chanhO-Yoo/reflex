@@ -240,6 +240,7 @@ public class AdminDAO {
 		return totalContent;
 	}
 
+
 	public int memberDelete(Connection conn, String memberId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -263,6 +264,7 @@ public class AdminDAO {
 		
 		return result;
 	}
+
 
 	
 	
