@@ -148,19 +148,19 @@
                         </div>
                         <div class="row container-fluid border-no-top">
                             <div class="subtitle col-md-6">서브이미지1</div>
-                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageSub1" name="inputItemImageSub1">
+                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageSub1" name="inputItemImageSub1" required>
                         </div>
 						<div class="row container-fluid border-no-top">
                             <div class="subtitle col-md-6">서브이미지2</div>
-                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageSub2" name="inputItemImageSub2">
+                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageSub2" name="inputItemImageSub2" required>
                         </div>
                         <div class="row container-fluid border-no-top">
                             <div class="subtitle col-md-6">서브이미지3</div>
-                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageSub3" name="inputItemImageSub3">
+                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageSub3" name="inputItemImageSub3" required>
                         </div>
                         <div class="row container-fluid border-no-top">
                             <div class="subtitle col-md-6">상세이미지</div>
-                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageDetail" name="inputItemImageDetail">
+                            <input type="file" class="shadow-none no-round-border height-45 col-md-6" id="inputItemImageDetail" name="inputItemImageDetail" required>
                         </div>  
                     </div>
 

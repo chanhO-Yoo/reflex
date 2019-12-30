@@ -86,6 +86,7 @@ public class ItemDAO {
 				img.setItemImageRenamed(rset.getString("item_image_renamed"));
 				list.add(img);
 			}
+			System.out.println("ListImg@DAO="+list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new ItemException("상품이미지조회 실패!", e);
@@ -282,6 +283,29 @@ public class ItemDAO {
 			
 			result = pstmt.executeUpdate();
 			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public int deleteItem(Connection conn, int itemNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteItem");
+		try {
+			//1. prepareStatment객체 생성
+			pstmt = conn.prepareStatement(query);
+			
+			//2.쿼리 실행
+			pstmt.setInt(1, itemNo);
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

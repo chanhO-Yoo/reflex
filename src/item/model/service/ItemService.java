@@ -24,6 +24,7 @@ public class ItemService {
 	public List<ItemImage> selectItemImageList(int itemNo) {
 		Connection conn = getConnection();
 		List<ItemImage> list = new ItemDAO().selectItemImageList(conn, itemNo);
+		System.out.println("ListImg@Service="+list);
 		close(conn);
 		return list;
 	}
@@ -88,6 +89,18 @@ public class ItemService {
 	public int updateImage(ItemImage itemImg) {
 		Connection conn = getConnection();
 		int result = new ItemDAO().updateImage(conn, itemImg);
+		if(result>0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	public int deleteItem(int itemNo) {
+		Connection conn = getConnection();
+		int result = new ItemDAO().deleteItem(conn, itemNo);
 		if(result>0)
 			commit(conn);
 		else 

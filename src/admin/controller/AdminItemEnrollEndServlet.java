@@ -39,6 +39,7 @@ public class AdminItemEnrollEndServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			System.out.println("======start======");
 			int result=0;
 			//파일 저장 경로 설정하기
 			String saveImgDirectory = getServletContext().getRealPath("/images/");
@@ -49,7 +50,6 @@ public class AdminItemEnrollEndServlet extends HttpServlet {
 			//파일명 재지정 정책 객체
 			FileRenamePolicy reflexRileRenamePolicy = new ReflexFileRenamePolicy();
 			MultipartRequest multiReq = new MultipartRequest(request, saveImgDirectory, maxImageSize, "utf-8", reflexRileRenamePolicy);
-			
 			
 			//1.parameter handling
 			String categoryNo = multiReq.getParameter("category");
