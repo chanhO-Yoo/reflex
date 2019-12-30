@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
+import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
@@ -92,7 +93,7 @@ public class AdminMemberSearchServlet extends HttpServlet {
 					pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberSearch?cPage="+pageNo+"'>[다음]</a>\n";							
 				}
 		
-				//3.업무로직
+				
 				List<Member> list = new AdminService().selectMemberList(cPage, numPerPage);
 				request.setAttribute("list",list);
 				request.setAttribute("pageBar", pageBar);

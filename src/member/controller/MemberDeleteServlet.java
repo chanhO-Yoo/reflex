@@ -1,27 +1,29 @@
-package mypage.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.model.service.AdminService;
 import member.model.service.MemberService;
 import member.model.vo.Member;
-import mypage.model.service.MyPageService;
-import mypage.model.vo.MyPage;
 
 /**
- * Servlet implementation class MypagePointServlet
+ * Servlet implementation class MemberDeleteServlet
  */
-@WebServlet("/mypage/mypagePoint")
-public class MypagePointServlet extends HttpServlet {
+@WebServlet("/member/memberDelete")
+public class MemberDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public MemberDeleteServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,34 +33,29 @@ public class MypagePointServlet extends HttpServlet {
 				String memberId = request.getParameter("memberId");
 				
 				//3.business logic
-				MyPage m = new MyPageService().selectOne(memberId);
-				System.out.println("MyPage@MyPagePointViewServlet="+m);
+				Member m = new MemberService().selectOne(memberId);
+				System.out.println("member@MemberViewServlet="+m);
 				
 				//4.view단
 				String view = "";
 				
 				//조회된 회원이 있는 경우
 				if(m != null) {
-					view = "/WEB-INF/views/mypage/mypagePoint.jsp";
+					view = "/WEB-INF/views/member/memberDelete.jsp";
 					//조회된 회원 속성으로 저장
-					request.setAttribute("mypage", m);
+					request.setAttribute("member", m);
 				}
 				//조회된 회원이 없는 경우
 				else {
-					view = "/WEB-INF/views/common/msg.jsp";
-					
 					String loc = "/";
 					String msg = "해당회원이 없습니다.";
+					view = "/WEB-INF/views/common/msg.jsp";
+					
 					request.setAttribute("msg", msg);
+					request.setAttribute("loc", loc);
 				}
 				
-				RequestDispatcher reqDispatcher 
-					= request.getRequestDispatcher(view);
-				reqDispatcher.forward(request, response);
-
-
-		
-		
+				request.getRequestDispatcher(view).forward(request, response);
 	}
 
 	/**

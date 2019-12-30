@@ -1,7 +1,14 @@
+<%@page import="mypage.model.vo.MyPage"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+MyPage m = (MyPage)request.getAttribute("mypage");
 
+
+String pageBar = (String)request.getAttribute("pageBar");	
+%>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -100,11 +107,12 @@
                         </tr>
                     </thead>
                     <tbody>
+       
                         <tr class="row">
-                            <td class="col-md-2">2019/12/22</td>
-                            <td class="col-md-2">적립</td>
-                            <td class="col-md-6">구매시 적립</td>
-                            <td class="col-md-2">+1,050원</td>
+                            <td class="col-md-2"></td>
+                            <td class="col-md-2"></td>
+                            <td class="col-md-6"></td>
+                            <td class="col-md-2"></td>
                         </tr>
                         <tr class="row">
                             <td class="col-md-2">2019/12/22</td>
@@ -122,25 +130,11 @@
                 </table>
             </section>
             <!-- 페이징바 -->
-            <nav class="paging-bar text-center">
-                <ul class="list-unstyled list-inline">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    </a>
-                </li>
-                <li class="cPage"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                    </a>
-                </li>
-                </ul>
-            </nav>
+           
+                 <div  id="pageBar">
+					<%=pageBar%>
+				</div>
+            
         </div>
         <div class="col-md-1"></div>
     </div>
