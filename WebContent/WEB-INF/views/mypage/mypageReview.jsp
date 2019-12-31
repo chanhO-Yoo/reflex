@@ -177,7 +177,7 @@ function showContent(btn, sectionId){
 <script>
 
 function updateBoard(){
- location.href = "<%=request.getContextPath()%>/mypage/mypageReviewForm";	
+ location.href = "<%=request.getContextPath()%>/mypage/mypageReviewUpdate";	
 }
 	
    	function deleteBoard(){

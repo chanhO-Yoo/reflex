@@ -1,4 +1,4 @@
-package board.model.dao;
+   package board.model.dao;
 
 import java.io.FileReader;
 import java.io.IOException;
