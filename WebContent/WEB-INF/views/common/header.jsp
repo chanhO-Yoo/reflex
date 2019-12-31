@@ -131,7 +131,6 @@
                         </button>
                     </header>
                     <ul class="list-unstyled">
-<<<<<<< HEAD
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList?memberId=<%=memberLoggedIn.getMemberId()%>">주문조회</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberLoggedIn.getMemberId()%>">위시리스트</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng?memberId=<%=memberLoggedIn.getMemberId()%>">계약중인 렌탈</a></li>
@@ -139,19 +138,7 @@
                         <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint?memberId=<%=memberLoggedIn.getMemberId()%>">포인트 확인</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageReview?memberId=<%=memberLoggedIn.getMemberId()%>">이용후기 내역</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne?memberId=<%=memberLoggedIn.getMemberId()%>">1:1문의 내역</a></li>
-=======
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList">주문조회</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist">위시리스트</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng">계약중인 렌탈</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalFin">종료중인 렌탈</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint?memberId=<%=memberLoggedIn.getMemberId()%>">포인트 확인</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
-                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
-
-                      
->>>>>>> branch 'master' of https://github.com/chanhO-Yoo/reflex.git
                    		<li><a href="<%=request.getContextPath()%>/member/memberUpdate?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 수정</a></li> 
-
                         <li><a href="<%=request.getContextPath()%>/member/memberDelete?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 탈퇴</a></li>
                     </ul>
                 </nav>
