@@ -5,7 +5,7 @@
    <% 
    		//로그인한 경우
    		Member memberLoggedIn= (Member)session.getAttribute("memberLoggedIn");
-   		
+
    %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -48,12 +48,16 @@
                     <%}
                     else{
                     %>
+
 	                <li><span class="strong"><%=memberLoggedIn.getMemberName()%></span>님</li>                    
+
 	                <li>
 	                	<a href="<%=request.getContextPath()%>/member/logout">로그아웃</a>
 	                </li>
 					<% 	} %>
+
 					
+
 					<%if(memberLoggedIn !=null && !"admin".equals(memberLoggedIn.getMemberId())) {%>
                     <li>
                         <h2 class="sr-only">장바구니</h2>
@@ -75,12 +79,14 @@
                         <li id="recommended" data-target="#level2-recommended"><a href="#">이럴 때 빌려봐<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
                         <% 
                         	//관리자가 로그인한 경우
-                        	if(memberLoggedIn != null && "admin".equals(memberLoggedIn.getMemberId())){ %>
+                        	if(memberLoggedIn != null && "admin".equals(memberLoggedIn.getMemberId())){ 
+                        %>
                         	<li id="adminPage" data-target="#level2-adminPage"><a href="#">관리자페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
 						<% 
 							} 
                         	//로그인한 회원이 있는 경우 마이페이지 메뉴 
-							if(memberLoggedIn!=null){%>
+							if(memberLoggedIn!=null){
+						%>
                         	<li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
                         <%
 	                        }
@@ -124,8 +130,8 @@
                             마이페이지
                         </button>
                     </header>
-                    
                     <ul class="list-unstyled">
+<<<<<<< HEAD
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList?memberId=<%=memberLoggedIn.getMemberId()%>">주문조회</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberLoggedIn.getMemberId()%>">위시리스트</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng?memberId=<%=memberLoggedIn.getMemberId()%>">계약중인 렌탈</a></li>
@@ -133,17 +139,30 @@
                         <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint?memberId=<%=memberLoggedIn.getMemberId()%>">포인트 확인</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageReview?memberId=<%=memberLoggedIn.getMemberId()%>">이용후기 내역</a></li>
                         <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne?memberId=<%=memberLoggedIn.getMemberId()%>">1:1문의 내역</a></li>
+=======
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOrderList">주문조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageWishlist">위시리스트</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalIng">계약중인 렌탈</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageRentalFin">종료중인 렌탈</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypagePoint?memberId=<%=memberLoggedIn.getMemberId()%>">포인트 확인</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기 내역</a></li>
+                        <li><a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의 내역</a></li>
+
+                      
+>>>>>>> branch 'master' of https://github.com/chanhO-Yoo/reflex.git
                    		<li><a href="<%=request.getContextPath()%>/member/memberUpdate?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 수정</a></li> 
+
                         <li><a href="<%=request.getContextPath()%>/member/memberDelete?memberId=<%=memberLoggedIn.getMemberId()%>">회원정보 탈퇴</a></li>
                     </ul>
                 </nav>
                 <%
                 	}
                 %>
+
                 
+
                 <nav id="level2-adminPage" class="sidemenu-wrapper">
                     <header class="text-center">
-                    
                         <button type="button" class="btn-goLevel1">
                             <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                             관리자페이지
@@ -158,10 +177,9 @@
                         <li><a href="#">이용후기관리</a></li>
                         <li><a href="#">1:1문의관리</a></li>
                         <li><a href="<%=request.getContextPath()%>/admin/member/memberSearch">회원조회</a></li>
-                 
+
                     </ul>
                 </nav>
-                
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import item.model.service.ItemService;
 import item.model.vo.Item;
 import item.model.vo.ItemImage;
-import mypage.model.service.MypageService;
+import mypage.model.service.MyPageService;
 import mypage.model.vo.WishlistItem;
 
 /**
@@ -44,7 +44,7 @@ public class MypageWishlistServlet extends HttpServlet {
 		}
 		System.out.println("cPage@Wishlistservlet="+cPage);
 		
-		MypageService myService = new MypageService();
+		MyPageService myService = new MyPageService();
 		try {
 			//페이징: 페이징바영역
 			int pageBarSize = 5;
@@ -77,7 +77,7 @@ public class MypageWishlistServlet extends HttpServlet {
 			
 			
 			//업무로직
-			List<WishlistItem> wishItemList = new MypageService().selectWishlistAll(memberId);
+			List<WishlistItem> wishItemList = new MyPageService().selectWishlistAll(memberId);
 			List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
 			

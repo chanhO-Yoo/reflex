@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import mypage.model.service.MypageService;
+import mypage.model.service.MyPageService;
 import mypage.model.vo.WishlistItem;
 
 /**
@@ -28,10 +27,10 @@ public class MypageWishlistDelAllServlet extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		System.out.println(memberId);
 		
-		MypageService myService = new MypageService();
+		MyPageService myService = new MyPageService();
 		try {
 			//업무로직
-			int result = new MypageService().deleteAllWishlist(memberId);
+			int result = new MyPageService().deleteAllWishlist(memberId);
 			
 			//삭제하고 남은 위시리스트 상품 읽어오기
 			List<WishlistItem> wishItemList = myService.selectWishlistAll(memberId);

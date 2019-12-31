@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
-import mypage.model.service.MypageService;
+import mypage.model.service.MyPageService;
 import mypage.model.vo.Wishlist;
 
 /**
@@ -35,7 +35,7 @@ public class MypageWishlistInsertServlet extends HttpServlet {
 		
 		try {
 			//업무로직
-			MypageService myService = new MypageService();
+			MyPageService myService = new MyPageService();
 			JSONObject resultObj = new JSONObject();
 			Wishlist wish = new Wishlist(0, memberId, itemNo, rentType);
 			int result = 0;

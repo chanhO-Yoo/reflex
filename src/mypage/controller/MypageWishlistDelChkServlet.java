@@ -17,7 +17,7 @@ import org.json.simple.JSONObject;
 
 import item.model.service.ItemService;
 import item.model.vo.ItemImage;
-import mypage.model.service.MypageService;
+import mypage.model.service.MyPageService;
 import mypage.model.vo.WishlistItem;
 
 /**
@@ -68,7 +68,7 @@ public class MypageWishlistDelChkServlet extends HttpServlet {
 		}
 		//System.out.println("cPage@Wishlistservlet="+cPage);
 		
-		MypageService myService = new MypageService();
+		MyPageService myService = new MyPageService();
 		try {
 			//업무로직: 삭제라서 페이징보다 먼저 처리
 			int result = 0;
