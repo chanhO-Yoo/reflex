@@ -130,7 +130,7 @@
                         <p>상품금액</p>
                         <p><span id="totalPrice">0</span>원</p>
                     </li>
-                    <li class="col-md-1">
+                    <li class="col-md-1"> 
                         +
                     </li>
                     <li class="col-md-2">
