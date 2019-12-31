@@ -56,8 +56,6 @@
 	                </li>
 					<% 	} %>
 
-					
-
 					<%if(memberLoggedIn !=null && !"admin".equals(memberLoggedIn.getMemberId())) {%>
                     <li>
                         <h2 class="sr-only">장바구니</h2>
