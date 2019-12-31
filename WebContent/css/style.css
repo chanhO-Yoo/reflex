@@ -344,4 +344,6 @@ footer, footer header{background: #aaaaac;}
 /* 결제수단 */
 #payType-wrapper{padding: 15px 35px; border-right: 1px solid;}
 #payType-wrapper input{margin-right: 5px;}
+#goPay-wrapper{padding: 0;}
+#goPay-wrapper button{width: 100%; padding: 15px 0;}
 
