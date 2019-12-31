@@ -56,6 +56,16 @@ button{padding: 0; background: transparent;}
 #warning-wrapper.content-wrapper{padding: 50px; font-size: 15px;}
 #warning-wrapper p{position:relative;}
 #warning-wrapper p .glyphicon{position: absolute; top: 0; left: 370px; font-size: 20px;}
+/* 컬러 */
+.em-blue{color: #008bcc; font-weight: bold;} 
+.em-purple{color: rebeccapurple; font-weight: bold;}
+.em-pink{color: crimson;}
+/* .bg-purple{background: #7d37c3; color: white;} */
+/* .bg-purple{background:#0F4C81; color: whitesmoke;} */
+.bg-purple{background:#44db5e;}
+.sel{background: #aaaaac;}
+.strong{font-weight: bold;}
+
 
 /* media */
 /* 
@@ -323,13 +333,19 @@ footer, footer header{background: #aaaaac;}
 #price-wrapper li{height: 50px; padding: 0 20px; line-height: 50px;}
 #price-wrapper li:first-of-type{border-bottom: 1px solid #b2b2b2;}
 #price-wrapper li:last-of-type{position: relative; margin-top: 10px;}
+#price-wrapper .point-wrapper li:first-of-type{border-bottom: 0;}
+#price-wrapper .point-inner li:last-of-type{margin-top: 0;}
 .price-text{position: relative; }
-.ship-price, .have-point{color: #666; font-size: 12px;}
+.ship-price {color: #666; font-size: 12px;}
 .ab-right{position: absolute; top: 0; right: 20px;}
-#price-wrapper input{width: 80px; height: 34px; padding: 0 10px; border: 1px solid;}
-.point-wrapper span:last-of-type{right: 40px;}
-.point-text{margin-right: 100px;}
-.have-point{margin-left: 5px; font-size: 13px;}
+#price-wrapper input{width: 80px; height: 30px; padding: 0 10px; border: 1px solid;}
+.point-inner{position: absolute; top: 0; left: 100px;}
+.point-title{margin-right: 100px;}
+.memHave-wrapper{margin-left: 60px;}
+.use-point{margin-right: 20px;}
+#inputPoint{margin-right: 10px;}
+#btn-useAll{line-height: 1.4;}
+#total-point{right: 40px;}
 /* 최종금액정보 */
 .totalP-inner{padding: 0; border-left: 1px solid;}
 .totalP-inner>p:first-of-type{border-top: 0;}
@@ -339,8 +355,9 @@ footer, footer header{background: #aaaaac;}
 #price-wrapper .totalP-inner li:last-of-type{margin-top: 0; border-bottom: 0;}
 .totalP-inner>div:last-of-type{border-bottom: 0;}
 #tt-price{position: relative; padding: 0 35px;}
-#tt-price p{color:crimson;}
+#tt-price p{font-size: 15px;}
 #tt-price .ab-right{right: 35px;}
+#ttPrice-inner{font-size: 16px;}
 /* 결제수단 */
 #payType-wrapper{padding: 15px 35px; border-right: 1px solid;}
 #payType-wrapper input{margin-right: 5px;}

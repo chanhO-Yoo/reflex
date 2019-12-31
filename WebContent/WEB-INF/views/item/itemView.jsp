@@ -90,6 +90,16 @@ $(function(){
 		}
 	});
 	
+	//바로렌탈 버튼 눌렀을 경우
+	$("#btn-goRent").on('click', function(){
+		if(<%=memberLoggedIn==null%>){
+			goLogin();
+		}
+		else{
+			location.href = "<%=request.getContextPath()%>/item/itemOrder";
+		}
+	});
+	
 });
 function goLogin(){
 	if(!confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) return;

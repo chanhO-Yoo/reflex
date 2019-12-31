@@ -8,20 +8,6 @@
     border-radius: 20px;
     font-size: 14px;
 }
-.em-blue{color: #008bcc; font-weight: bold;} 
-.em-purple{color: rebeccapurple; font-weight: bold;}
-.em-pink{color: crimson;}
-/* .bg-purple{background: #7d37c3; color: white;} */
-/* .bg-purple{background: #21de0b} */
-/* .bg-purple{background:rgb(19, 84, 140); color: white;} */
-/* .bg-purple{background:rgb(247, 21, 94);} */
-/* .bg-purple{background:#C997EB;} */
-/* .bg-purple{background:#3C92BA;} */
-.bg-purple{background:#0F4C81; color: whitesmoke;}
-.sel{background: #aaaaac;}
-.strong{font-weight: bold;}
-
-
 
 
 /* 주문현황: my_order_status.jsp */
@@ -185,10 +171,19 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneFrm .memberId-wrapper input[type=text]{width: 25%;}
 #oneToOneFrm .btnForm-wrapper{padding-bottom: 0;}
 .btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px; font-size: 13px;}
-
-
 /* 이용후기 등록 */
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper{padding-top: 20px;}
+
+
+/* 1대1문의 상세보기 */
+#oneToOneView-wrapper>div{padding: 0 10px; border-bottom: 1px solid;}
+#oneToOneView-wrapper>div:last-of-type{border-bottom: 0;}
+#oneToOneView-wrapper>div.qContent-wrapper{padding: 50px 30px; border-bottom: 0;}
+#oneToOneView-wrapper .qContent-wrapper img{margin-top: 10px; padding: 0;}
+/* 버튼 */
+.oneViewBtn-wrapper{height: 50px; padding: 3px 15px; border-top: 1px solid;}
+.oneViewBtn-wrapper button{padding: 3px 40px;}
+.oneViewBtn-wrapper button:last-of-type{margin-right: 15px;}
 
 
 /* 로그인, 회원가입 */
