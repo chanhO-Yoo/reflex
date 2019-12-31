@@ -53,4 +53,11 @@ public class MypageService {
 		return result;
 	}
 
+	public int deleteAllWishlist(String memberId) {
+		Connection conn = getConnection();
+		int result = new MypageDAO().deleteAllWishlist(conn, memberId);
+		close(conn);
+		return result;
+	}
+
 }

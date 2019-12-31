@@ -19,13 +19,37 @@
 %>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-	chkDel(); //선택상품 삭제
+	delChk(); //선택상품 삭제
+	delAll(); //전체상품 삭제
 });
-function chkDel(){
-	let btnDelChk = document.querySelector(".btn-chkDel");
+function delAll(){
+	let delAllFrm = document.querySelector("#delAllFrm");
+	let btnDelAll = document.querySelector(".btn-chkAllDel");
+	
+	//전체삭제 버튼 클릭
+	btnDelAll.addEventListener('click', function(){
+		if(!confirm("위시리스트를 전부 삭제하시겠습니까?")) return;
+		delAllFrm.submit();
+	});
+	
+}
+//상품 한 개 삭제: btn-del에 onclick으로
+function delOne(btn){
+	let delChkFrm = document.querySelector("#delChkFrm");
+	let inputDelInfo = document.querySelector("#delInfo");
+	
+	inputDelInfo.value = btn.value;
+	console.log(inputDelInfo.value);
+	if(!confirm("선택한 상품을 삭제하시겠습니까?")) return;
+	delChkFrm.submit();
+		
+}
+function delChk(){
 	let chkBoxArr = document.querySelectorAll("#chkWishlist");
+	let btnDelChk = document.querySelector(".btn-chkDel");
+	let delChkFrm = document.querySelector("#delChkFrm");
+	let inputDelInfo = document.querySelector("#delInfo");
 	let delInfo = ""; //삭제될 상품정보 담길 변수
-	let cnt = 0; //총 체크된 상품 개수
 	
 	chkBoxArr.forEach(function(obj, idx){
 		obj.addEventListener('change', function(){
@@ -33,53 +57,24 @@ function chkDel(){
 			let idx = delInfo.indexOf(val); //delInfo에 선택한 체크박스의 값이 담겼는지 여부 
 			
 			//체크박스 체크됐고 delInfo에도 없다면 추가
-			if(this.checked===true && idx===-1){
+			if(this.checked===true && idx===-1)
 				delInfo += val+"/";
-				cnt++;
-			}
-			else{
+			else
 				delInfo = delInfo.replace(val+"/", "");
-			}
 			
-			//console.log(delInfo);
+			//input[type=hidden] value값으로 delInfo 넣기
+			inputDelInfo.value = delInfo;
 		});
 	});
+	
 	
 	//선택상품 삭제하기 버튼 클릭
 	btnDelChk.addEventListener('click', function(){
 		if(!confirm("선택한 상품을 삭제하시겠습니까?")) return;
 		
-		$.ajax({
-			url: "<%=request.getContextPath()%>/mypage/mypageWishlistDelChk",
-			type: "post",
-			data: {
-				memberId: "<%=memberId%>",
-				delInfo: delInfo
-			},
-			dataType: "json",
-			success: data => {
-				console.log(data);
-				let result = data.result;
-				
-				//총 체크된 상품개수와 result값이 같으면 전부 삭제된 것
-				if(result===cnt){
-					alert("선택한 상품이 삭제되었습니다.");
-				}
-				else{
-					alert("선택한 상품 삭제를 실패하였습니다!");
-				}
-				
-				$(".wishlist-inner").html("");
-				
-			},
-			error: (jqxhr, textStatus, errorThrown)=>{
-				console.log(jqxhr, textStatus, errorThrown);
-			} 
-			
-		});
+		delChkFrm.submit();
+		
 	});
-	
-	
 	
 }
 </script>
@@ -159,7 +154,7 @@ function chkDel(){
                             <p class="text-left price"><%=dP %> /<span class="rent-period"><%=rentPeriod%>일</p>
                             <p class="pull-left rent-type">일시납</p>
                             <ul class="list-unstyled wishBtn-wrapper">
-                                <li class="btn-del"><button type="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></li>
+                                <li class="btn-del"><button type="button" onclick="delOne(this);" value="<%=item.getItemNo()%>,<%=item.getRentOptNo()%>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></li>
                                 <li class="btn-radius btn-addCart"><button type="button">장바구니</button></li>
                                 <li class="btn-radius btn-rentNow"><button type="button">바로렌탈</button></li>
                             </ul>
@@ -181,6 +176,13 @@ function chkDel(){
                     <button type="button" class="btn-radius btn-chkAll">전체선택</button>
                     <button type="button" class="btn-radius btn-chkAllDel">전체삭제</button>
                 </div>
+                <form action="<%=request.getContextPath()%>/mypage/mypageWishlistDelChk" id="delChkFrm" method="post">
+                	<input type="hidden" name="memberId" value="<%=memberLoggedIn.getMemberId()%>" />
+                	<input type="hidden" name="delInfo" id="delInfo" value="" />
+                </form>
+                <form action="<%=request.getContextPath()%>/mypage/mypageWishlistDelAll" id="delAllFrm" method="post">
+                	<input type="hidden" name="memberId" value="<%=memberLoggedIn.getMemberId()%>" />
+                </form>
             </section>
             <!-- 페이징바 -->
             <nav class="paging-bar text-center">

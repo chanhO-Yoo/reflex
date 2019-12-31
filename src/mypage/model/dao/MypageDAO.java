@@ -72,6 +72,7 @@ public class MypageDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MypageException("위시리스트 중복상품 조회 에러!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -105,6 +106,7 @@ public class MypageDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MypageException("위시리스트 조회 에러!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -128,6 +130,7 @@ public class MypageDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MypageException("위시리스트 총상품개수 조회 에러!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -147,9 +150,29 @@ public class MypageDAO {
 			pstmt.setInt(2, Integer.parseInt(s[0]));
 			pstmt.setString(3, s[1]);
 			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new MypageException("위시리스트 선택상품 삭제 에러!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteAllWishlist(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteAllWishlist");
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			result = pstmt.executeUpdate();
 			System.out.println("result@dao="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MypageException("위시리스트 전체삭제 에러!", e);
 		} finally {
 			close(pstmt);
 		}
