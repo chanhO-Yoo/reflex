@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class ItemImage implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	int itemImageNo;
 	int itemNo;
 	String itemImageTypeNo;
 	String itemImageDefault;
@@ -14,12 +15,21 @@ public class ItemImage implements Serializable{
 		super();
 	}
 
-	public ItemImage(int itemNo, String itemImageTypeNo, String itemImageDefault, String itemImageRenamed) {
+	public ItemImage(int itemImageNo, int itemNo, String itemImageTypeNo, String itemImageDefault, String itemImageRenamed) {
 		super();
+		this.itemImageNo = itemImageNo;
 		this.itemNo = itemNo;
 		this.itemImageTypeNo = itemImageTypeNo;
 		this.itemImageDefault = itemImageDefault;
 		this.itemImageRenamed = itemImageRenamed;
+	}
+
+	public int getItemImageNo() {
+		return itemImageNo;
+	}
+
+	public void setItemImageNo(int itemImageNo) {
+		this.itemImageNo = itemImageNo;
 	}
 
 	public int getItemNo() {
@@ -60,8 +70,10 @@ public class ItemImage implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ItemImage [itemNo=" + itemNo + ", itemImageTypeNo=" + itemImageTypeNo + ", itemImageDefault="
-				+ itemImageDefault + ", itemImageRenamed=" + itemImageRenamed + "]";
+		return "ItemImage [itemImageNo=" + itemImageNo + ", itemNo=" + itemNo + ", itemImageTypeNo=" + itemImageTypeNo
+				+ ", itemImageDefault=" + itemImageDefault + ", itemImageRenamed=" + itemImageRenamed + "]";
 	}
+
+	
 	
 }
