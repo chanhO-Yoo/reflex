@@ -2,6 +2,7 @@ package member.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -20,8 +21,8 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class MemberCartServlet
  */
-@WebServlet("/member/memberCart")
-public class MemberCartServlet extends HttpServlet {
+@WebServlet("/member/memberCart/delete")
+public class MemberCartDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -31,13 +32,21 @@ public class MemberCartServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		request.getRequestDispatcher("/WEB-INF/views/member/memberCart.jsp").forward(request, response);
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String itemsStr = request.getParameter("items");
+		String[] tmpArr = itemsStr.split(",");
+		int[] itemsArr = new int[tmpArr.length];
+		
+		for (int i=0; i < tmpArr.length; i++) {
+			itemsArr[i] = Integer.parseInt(tmpArr[i]);
+		}
+		int delCount = new CartService().delItems(itemsArr);
+		
+		System.out.println("삭제된 개수: " + delCount);
+
 	}
 
 }
