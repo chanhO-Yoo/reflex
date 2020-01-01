@@ -1,7 +1,26 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="item.model.vo.ItemImage"%>
+<%@page import="item.model.vo.Item"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
+<%
+List<List<Item>> itemListList = (List<List<Item>>)request.getAttribute("itemListList");
+List<ItemImage> imgListList = (List<ItemImage>)request.getAttribute("imgListList");
+String[] hobbyArr = (String[])request.getAttribute("hobbyArr");
+if(hobbyArr!=null){
+	System.out.println("hobbyArr = "+hobbyArr.toString());
+	
+}
+int imgNo = 0;
+
+System.out.println("itemListList@index.jsp="+itemListList);
+System.out.println("imgListList@index.jsp="+imgListList);
+%>
 
     <div class="container-fluid contents none-nav">
         <!-- 배너 -->
@@ -43,58 +62,73 @@
             </a>
         </div>
         <div class="row item-list">
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+<% 
+    if(itemListList != null && itemListList.size()==2){
+	    List<Item> itemList1 = itemListList.get(0);
+	    List<Item> itemList2 = itemListList.get(1);
+	    System.out.println("@index="+itemList1.toString());
+	    System.out.println("@index="+itemList2.toString());
+	            	
+	
+		//조회된 상품이 있는 경우
+		if(!itemList1.isEmpty()) {
+			for(int i=0; i<itemList1.size(); i++){
+				/* 상품번호에 맞는 상품이미지리스트 가져오기 */
+				/* 상품번호는 itemNoList로 제어 */
+				/* 상품목록에는 IMG01만 보이면 되니까 imgList.get()의 인덱스는 무조건 0임 */
+				Item item = itemList1.get(i);
+				
+				
+				//가격 콤마찍기
+				int discountedPrice = (int)Math.ceil((item.getItemPrice()*0.95)/240*14)/100*100; //14일기준
+				DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+				String dP = dc.format(discountedPrice);
+%>
+		<div class="col-md-3">
+		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %> &itemNo=<%=item.getItemNo()%>" class="center-block">
+		        <img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo() %>/<%=imgListList.get(imgNo).getItemImageDefault()%>" alt="item" class="center-block">
+		        <div class="ptext-wrapper">
+		            <p class="pbrand"><%=item.getItemBrand() %></p>
+		            <p class="pname"><%=item.getItemName() %></p>
+		            <div class="price-wrapper">
+		                <p class="price"><%=dP %>/<span class="rent-period"> 14일</span></p>
+		                <p class="rent-type">일시납</p>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+	<%	
+			imgNo++;
+		}
+		//상품개수가 4의 배수가 아니면 부족한 만큼 빈 박스로 채움
+		if(itemList1.size()%4!=0){
+			int plus = 4 - (itemList1.size()%4);
+			for(int i=0; i<plus; i++){
+	%>
+				<div class="col-md-3"></div>
+	<% 
+			}
+		}
+	%>
+	<%
+		}
+		//조회된 상품이 없는 경우
+		else{
+	%>
+		</div>
+	</div>
+	<div class="container-fluid">
+	    <div class="row">
+			<div class="col-md-1"></div>
+				<div id="warning-wrapper" class="col-md-10 content-wrapper text-center">
+					<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품이 없습니다.</p> 
+				</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	<%
+		}
+	%>
         </div>
         <!-- 추천상품목록2 -->
         <div class="line-style rcmd-cate-header">
@@ -105,58 +139,66 @@
             </a>
         </div>
         <div class="row item-list">
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <a href="#" class="center-block">
-                    <img src="images/item.png" alt="item" class="center-block">
-                    <div class="ptext-wrapper">
-                        <p class="pbrand">BABYZEN</p>
-                        <p class="pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                        <div class="price-wrapper">
-                            <p class="price">28,490원 /<span class="rent-period"> 14일</span></p>
-                            <p class="rent-type">일시납</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <% 
+	//조회된 상품이 있는 경우
+	if(!itemList2.isEmpty()) {
+		for(int i=0; i<itemList2.size(); i++){
+			/* 상품번호에 맞는 상품이미지리스트 가져오기 */
+			/* 상품번호는 itemNoList로 제어 */
+			/* 상품목록에는 IMG01만 보이면 되니까 imgList.get()의 인덱스는 무조건 0임 */
+			Item item = itemList2.get(i);
+			
+			//가격 콤마찍기
+			int discountedPrice = (int)Math.ceil((item.getItemPrice()*0.95)/240*14)/100*100; //14일기준
+			DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+			String dP = dc.format(discountedPrice);
+%>
+		<div class="col-md-3">
+		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %>&itemNo=<%=item.getItemNo()%>" class="center-block">
+		        <img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo() %>/<%=imgListList.get(imgNo).getItemImageDefault()%>" alt="item" class="center-block">
+		        <div class="ptext-wrapper">
+		            <p class="pbrand"><%=item.getItemBrand() %></p>
+		            <p class="pname"><%=item.getItemName() %></p>
+		            <div class="price-wrapper">
+		                <p class="price"><%=dP %>/<span class="rent-period"> 14일</span></p>
+		                <p class="rent-type">일시납</p>
+		            </div>
+		        </div>
+		    </a>
+		</div>
+	<%			
+	imgNo++;
+		}
+		//상품개수가 4의 배수가 아니면 부족한 만큼 빈 박스로 채움
+		if(itemList2.size()%4!=0){
+			int plus = 4 - (itemList2.size()%4);
+			for(int i=0; i<plus; i++){
+	%>
+				<div class="col-md-3"></div>
+	<% 
+			}
+		}
+	%>
+	<%
+		}
+		//조회된 상품이 없는 경우
+		else{
+	%>
+		</div>
+	</div>
+	<div class="container-fluid">
+	    <div class="row">
+			<div class="col-md-1"></div>
+				<div id="warning-wrapper" class="col-md-10 content-wrapper text-center">
+					<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품이 없습니다.</p> 
+				</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	<%
+		}
+    }
+	%>
         </div>
         <!-- 맨위로 이동 버튼 -->
         <div id="go-to-top" class="btn-bottom">
