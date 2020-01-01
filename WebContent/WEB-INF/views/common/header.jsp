@@ -83,7 +83,7 @@
 						<% 
 							} 
                         	//로그인한 회원이 있는 경우 마이페이지 메뉴 
-							if(memberLoggedIn!=null){
+                        	else if(memberLoggedIn!=null && !("admin".equals(memberLoggedIn.getMemberId()))){
 						%>
                         	<li id="mypage" data-target="#level2-mypage"><a href="#">마이페이지<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>
                         <%
