@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
-import board.model.vo.BoardComment;
+
 
 /**
  * Servlet implementation class BoardViewServlet
@@ -62,10 +62,7 @@ public class BoardViewServlet extends HttpServlet {
 		}
 		
 		//2.업무로직
-		Board board = new BoardService().selectOne(boardNo, hasRead);
-		List<BoardComment> commentList
-			= new BoardService().selectCommentList(boardNo);
-		System.out.println("commentList@servlet="+commentList);
+		Board board = new BoardService().selectOne(boardNo);
 		
 		//3.view단처리:db에서 읽어온 Board객체가 null인 경우, msg.jsp를 통해서
 		//"해당하는 글은 없습니다." 사용자에게 알려주고, 목록페이지로 이동시킬것
@@ -78,7 +75,6 @@ public class BoardViewServlet extends HttpServlet {
 		}
 		else {
 			request.setAttribute("board", board);
-			request.setAttribute("commentList", commentList);
 			
 			view = "/WEB-INF/views/board/boardView.jsp";			
 		}

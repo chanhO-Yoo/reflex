@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Properties;
 
 import board.model.vo.Board;
-import board.model.vo.BoardComment;
-import board.model.vo.BoardWithCommentCnt;
+
 
 import static common.JDBCTemplate.*;
 
@@ -114,14 +113,15 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(query);
 			
 
-			pstmt.setInt(1, b.getReview_no());
-			pstmt.setInt(2, b.getOrder_details_no());
-			pstmt.setString(3, b.getReview_writer());
-		//	pstmt.setDate(4, b.getReview_date());
-			pstmt.setInt(4, b.getReview_star());
-			pstmt.setString(5, b.getReview_content());
-			pstmt.setString(6, b.getReview_image());
-			pstmt.setInt(7, b.getReview_readCount());
+	
+
+			pstmt.setString(1, b.getReview_writer());
+	
+			pstmt.setInt(2, b.getReview_star());
+			pstmt.setString(3, b.getReview_content());
+			pstmt.setString(4, b.getReview_image());
+			pstmt.setString(5, b.getReview_image_rename());
+			
 		
 			
 	
@@ -139,7 +139,7 @@ public class BoardDAO {
 		return result;
 	}
 	
-	 public Board selectOne(Connection conn, int boardNo) {
+	 public Board selectOne(Connection conn, int reviewNo) {
 		Board board = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -149,7 +149,7 @@ public class BoardDAO {
 			//미완성쿼리문을 가지고 객체생성.
 			pstmt = conn.prepareStatement(query);
 			//쿼리문미완성
-			pstmt.setInt(1, boardNo);
+			pstmt.setInt(1, reviewNo);
 			//쿼리문실행
 			//완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
 			rset = pstmt.executeQuery();
@@ -227,11 +227,11 @@ public class BoardDAO {
 			//미완성쿼리문을 가지고 객체생성.
 			pstmt = conn.prepareStatement(query);
 			//쿼리문미완성
-//			pstmt.setString(1, b.getBoardTitle());
-//			pstmt.setString(2, b.getBoardContent());
-//			pstmt.setString(3, b.getOriginalFileName());
-//			pstmt.setString(4, b.getRenamedFileName());
-//			pstmt.setInt(5, b.getBoardNo());
+			pstmt.setInt(1, b.getReview_star());
+			pstmt.setString(2, b.getReview_content());
+			pstmt.setString(3, b.getReview_image());
+			pstmt.setString(4, b.getReview_image_rename());
+			pstmt.setInt(5, b.getReview_no());
 			
 			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
 			//DML은 executeUpdate()
@@ -272,76 +272,9 @@ public class BoardDAO {
 	}
 
 
-	public int insertBoardComment(Connection conn, BoardComment bc) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String query = prop.getProperty("insertBoardComment");
-		
-		try {
-			//1.pstmt객체 생성 및 미완성쿼리 값대입
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bc.getBoardCommentLevel());
-			pstmt.setString(2, bc.getBoardCommentWriter());
-			pstmt.setString(3, bc.getBoardCommentContent());
-			pstmt.setInt(4, bc.getBoardRef());
-//			pstmt.setInt(5, bc.getBoardCommentRef());
-			pstmt.setString(5, bc.getBoardCommentRef()==0?
-								null:
-								String.valueOf(bc.getBoardCommentRef()));
-			//java.sql.SQLIntegrityConstraintViolationException: ORA-02291: integrity constraint (WEB.FK_BOARD_COMMENT_REF) violated - parent key not found
-			
-			//2.실행 결과 처리 DML
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			//3.자원반납
-			close(pstmt);
-		}
-		return result;
-	}
+	
 
-
-	public List<BoardComment> selectCommentList(Connection conn, int boardNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<BoardComment> commentList = null;
-		String query = prop.getProperty("selectCommentList");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, boardNo);
-			
-			rset = pstmt.executeQuery();
-			
-			commentList = new ArrayList<>();
-			
-			while(rset.next()) {
-				BoardComment bc = new BoardComment();
-				bc.setBoardCommentNo(rset.getInt("board_comment_no"));
-				bc.setBoardCommentLevel(rset.getInt("board_comment_level"));
-				bc.setBoardCommentWriter(rset.getString("board_comment_writer"));
-				bc.setBoardCommentContent(rset.getString("board_comment_content"));
-				bc.setBoardRef(rset.getInt("board_ref"));
-				bc.setBoardCommentRef(rset.getInt("board_comment_ref"));
-				bc.setBoardCommentDate(rset.getDate("board_comment_date"));
-				
-				commentList.add(bc);
-			}
-			
-			System.out.println("commentList@dao="+commentList);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return commentList;
-	}
-
+	
 	public int deleteBoardComment(Connection conn, int boardCommentNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;

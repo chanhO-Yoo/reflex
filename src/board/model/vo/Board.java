@@ -22,14 +22,18 @@ public class Board implements Serializable{
 	private int review_star;
 	private String review_content;
 	private String review_image;
+	private String  review_image_rename;
 	private int review_readCount;
 	
 	
 	public Board() {}
 
 
+	
+
+
 	public Board(int review_no, int order_details_no, String review_writer, Date review_date, int review_star,
-			String review_content, String review_image, int review_readCount) {
+			String review_content, String review_image, String review_image_rename, int review_readCount) {
 		super();
 		this.review_no = review_no;
 		this.order_details_no = order_details_no;
@@ -38,8 +42,28 @@ public class Board implements Serializable{
 		this.review_star = review_star;
 		this.review_content = review_content;
 		this.review_image = review_image;
+		this.review_image_rename = review_image_rename;
 		this.review_readCount = review_readCount;
 	}
+
+
+
+
+
+	public String getReview_image_rename() {
+		return review_image_rename;
+	}
+
+
+
+
+
+	public void setReview_image_rename(String review_image_rename) {
+		this.review_image_rename = review_image_rename;
+	}
+
+
+
 
 
 	public int getReview_no() {
@@ -127,12 +151,19 @@ public class Board implements Serializable{
 	}
 
 
+
+
+
 	@Override
 	public String toString() {
 		return "Board [review_no=" + review_no + ", order_details_no=" + order_details_no + ", review_writer="
 				+ review_writer + ", review_date=" + review_date + ", review_star=" + review_star + ", review_content="
-				+ review_content + ", review_image=" + review_image + ", review_readCount=" + review_readCount + "]";
+				+ review_content + ", review_image=" + review_image + ", review_image_rename=" + review_image_rename
+				+ ", review_readCount=" + review_readCount + "]";
 	}
+
+
+	
 	
 	
 

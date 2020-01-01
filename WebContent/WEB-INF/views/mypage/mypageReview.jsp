@@ -114,9 +114,9 @@ function showContent(btn, sectionId){
             </section>
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">
+               <% for(Board b : list){ %>
                 <h3 class="sr-only">작성한 이용후기 리스트</h3>
                 <ul class="list-unstyled wishlist-inner">
-               <% for(Board b : list){ %>
                     <li class="row">
                         <section class="review-header">
                             <div class="item-img col-md-2">
@@ -129,7 +129,7 @@ function showContent(btn, sectionId){
                             </div>
                             <div class="col-md-3 reviewBtn-wrapper">
                                 <ul class="list-unstyled list-inline">
-                                    <li><button type="button" class="btn-radius" onclick="updateBoard()">수정하기</button></li>
+                                    <li><a href = "<%=request.getContextPath()%>/mypage/mypageReviewUpdate?reviewNo=<%=b.getReview_no()%>"><button type="button" class="btn-radius" >수정하기</button></a></li>
                                     <li><button type="button" class="btn-radius" onclick="deleteBoard()">삭제하기</button></li>
                                  
                                 </ul>
@@ -149,8 +149,8 @@ function showContent(btn, sectionId){
                             </div>
                         </section>
                     </li>
-                    <% } %>
                 </ul>
+                    <% } %>
             </section>
        
             <!-- 페이징바 -->
