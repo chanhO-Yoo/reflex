@@ -566,4 +566,30 @@ public class ItemDAO {
 	//============================================
 	//==================<<관리자끝>>==================
 	//============================================
+
+	/////////////////////////////////////////////////////////////주문 임시조회용
+	public int selectMemberUsablePoint(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMemberUsablePoint");
+		int usablePoint = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				usablePoint = rset.getInt("sum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("사용가능한 포인트 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return usablePoint;
+	}
 }
