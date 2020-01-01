@@ -33,7 +33,7 @@
             </div>
             <div id="search" class="col-md-4">
                 <h2 class="sr-only">상품 검색</h2>
-                <form action="">
+                <form action="<%=request.getContextPath()%>/item/itemSearch">
                     <button type="submit" id="btn-search" aria-label="search products">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </button>

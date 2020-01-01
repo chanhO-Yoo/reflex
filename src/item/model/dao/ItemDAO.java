@@ -566,4 +566,109 @@ public class ItemDAO {
 	//============================================
 	//==================<<관리자끝>>==================
 	//============================================
+
+	//========================헤더 검색=================
+	
+	public int selectTotalContentBySearch(Connection conn, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalContentBySearch");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+search+"%");
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("상품 총개수 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+	//========================헤더 검색 끝=================
+
+	public List<Item> selectItemAllBySearch(Connection conn, String search, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectItemAllBySearchByPaging");
+		List<Item> list = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, (cPage-1)*numPerPage + 1); //startNo
+			pstmt.setInt(3, numPerPage*cPage); //endNo
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				Item item = new Item();
+				item.setItemNo(rset.getInt("item_no"));
+				item.setCategoryNo(rset.getString("category_no"));
+				item.setItemStock(rset.getInt("item_stock"));
+				item.setItemBrand(rset.getString("item_brand"));
+				item.setItemName(rset.getString("item_name"));
+				item.setItemPrice(rset.getInt("item_price"));
+				item.setItemDesc(rset.getString("item_desc"));
+				item.setItemEnrollDate(rset.getDate("item_enroll_date"));
+				list.add(item);
+			}
+			System.out.println("listByPaging@dao="+list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("상품목록조회 에러!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<Item> selectItemAllBySearchByLowPrice(Connection conn, String search, int cPage, int numPerPage) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectItemAllBySearchByLowPrice");
+		List<Item> list = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, (cPage-1)*numPerPage + 1); //startNo
+			pstmt.setInt(3, numPerPage*cPage); //endNo
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				Item item = new Item();
+				item.setItemNo(rset.getInt("item_no"));
+				item.setCategoryNo(rset.getString("category_no"));
+				item.setItemStock(rset.getInt("item_stock"));
+				item.setItemBrand(rset.getString("item_brand"));
+				item.setItemName(rset.getString("item_name"));
+				item.setItemPrice(rset.getInt("item_price"));
+				item.setItemDesc(rset.getString("item_desc"));
+				item.setItemEnrollDate(rset.getDate("item_enroll_date"));
+				list.add(item);
+			}
+			System.out.println("listByLowPrice@dao="+list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("낮은가격순 조회 에러!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 }

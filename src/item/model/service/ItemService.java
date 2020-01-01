@@ -177,4 +177,28 @@ public class ItemService {
 	}
 	
 	
+	//========================헤더 검색=================
+	
+	public int selectTotalContentBySearch(String search) {
+		Connection conn = getConnection();
+		int totalContent = new ItemDAO().selectTotalContentBySearch(conn, search);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Item> selectItemAllBySearch(String search, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Item> list = new ItemDAO().selectItemAllBySearch(conn, search, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<Item> selectItemAllBySearchByLowPrice(String search, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Item> list = new ItemDAO().selectItemAllBySearchByLowPrice(conn, search, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+	
+	//========================헤더 검색 끝=================
 }
