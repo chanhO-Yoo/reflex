@@ -51,6 +51,9 @@ public class ItemViewServlet extends HttpServlet {
 				qnaAns = itemService.selectIteQnaAnsOne(q.getItemQnaNo());
 				qnaMap.put(q.getItemQnaNo(), qnaAns);
 			}
+			//상품 Q&A개수 가져오기
+			int qnaTotalContent = itemService.selectItemQnaCount();
+			
 			
 			
 			//뷰단처리
@@ -62,6 +65,7 @@ public class ItemViewServlet extends HttpServlet {
 				request.setAttribute("imgList", imgList);
 				request.setAttribute("qList", qList);
 				request.setAttribute("qnaMap", qnaMap);
+				request.setAttribute("qnaTotalContent", qnaTotalContent);
 			}
 			else {
 				view = "/WEB-INF/views/common/msg.jsp";

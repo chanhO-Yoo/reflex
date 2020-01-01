@@ -164,7 +164,9 @@ public class BoardDAO {
 				board.setReview_content(rset.getString("review_content"));
 				board.setReview_image(rset.getString("review_image"));
 				board.setReview_readCount(rset.getInt("review_readCount"));
+				
 			}
+			System.out.println("board@DAO="+board);
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{

@@ -1,7 +1,83 @@
+<%@page import="mypage.model.vo.WishlistItem"%>
+<%@page import="item.model.vo.ItemImage"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+<%
+	List<WishlistItem> wishItemList = (List<WishlistItem>)request.getAttribute("wishItemList");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
+	String pageBar = (String)request.getAttribute("pageBar");
+	
+	//위시리스트 ajax - 회원아이디 담아놓기
+	String memberId = "";
+	if(memberLoggedIn!=null) memberId = memberLoggedIn.getMemberId();
+	else memberId = "null";
+%>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+	delChk(); //선택상품 삭제
+	delAll(); //전체상품 삭제
+});
+function delAll(){
+	let delAllFrm = document.querySelector("#delAllFrm");
+	let btnDelAll = document.querySelector(".btn-chkAllDel");
+	
+	//전체삭제 버튼 클릭
+	btnDelAll.addEventListener('click', function(){
+		if(!confirm("위시리스트를 전부 삭제하시겠습니까?")) return;
+		delAllFrm.submit();
+	});
+	
+}
+//상품 한 개 삭제: btn-del에 onclick으로
+function delOne(btn){
+	let delChkFrm = document.querySelector("#delChkFrm");
+	let inputDelInfo = document.querySelector("#delInfo");
+	
+	inputDelInfo.value = btn.value;
+	console.log(inputDelInfo.value);
+	if(!confirm("선택한 상품을 삭제하시겠습니까?")) return;
+	delChkFrm.submit();
+		
+}
+function delChk(){
+	let chkBoxArr = document.querySelectorAll("#chkWishlist");
+	let btnDelChk = document.querySelector(".btn-chkDel");
+	let delChkFrm = document.querySelector("#delChkFrm");
+	let inputDelInfo = document.querySelector("#delInfo");
+	let delInfo = ""; //삭제될 상품정보 담길 변수
+	
+	chkBoxArr.forEach(function(obj, idx){
+		obj.addEventListener('change', function(){
+			let val = this.value; //선택한 체크박스의 값
+			let idx = delInfo.indexOf(val); //delInfo에 선택한 체크박스의 값이 담겼는지 여부 
+			
+			//체크박스 체크됐고 delInfo에도 없다면 추가
+			if(this.checked===true && idx===-1)
+				delInfo += val+"/";
+			else
+				delInfo = delInfo.replace(val+"/", "");
+			
+			//input[type=hidden] value값으로 delInfo 넣기
+			inputDelInfo.value = delInfo;
+		});
+	});
+	
+	
+	//선택상품 삭제하기 버튼 클릭
+	btnDelChk.addEventListener('click', function(){
+		if(!confirm("선택한 상품을 삭제하시겠습니까?")) return;
+		
+		delChkFrm.submit();
+		
+	});
+	
+}
+</script>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -27,48 +103,67 @@
             <section class="wishlist-wrapper">
                 <h3 class="sr-only">위시리스트 목록 보기</h3>
                 <ul class="list-unstyled wishlist-inner">
+                <%
+                	//위시리스트에 담긴 상품이 하나도 없을 때
+                	if(wishItemList!=null && wishItemList.isEmpty()){
+                %>
+                	<li id="warning-wrapper content-wrapper text-center" >
+						<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품이 없습니다.</p> 
+                	</li>
+                <%
+                	}
+                	//담긴 상품이 존재할 때
+                	if(wishItemList!=null && !wishItemList.isEmpty()){
+                		for(int i=0; i<wishItemList.size(); i++){
+                			WishlistItem item = wishItemList.get(i);
+                			List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+                			
+                			int rentPeriod = 0; //렌탈기간
+                			double disRate = 0; //할인율
+                			if("RT01".equals(item.getRentOptNo())){
+                				rentPeriod = 7;
+                				disRate = 0.98;
+                			}
+                			else if("RT02".equals(item.getRentOptNo())){
+                				rentPeriod = 14;
+                				disRate = 0.95;
+                			}
+                			else{
+                				rentPeriod = 30;
+                				disRate = 0.90;
+                			}
+                			//렌탈할인 적용된 가격
+                			int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
+                			DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+                			String dP = dc.format(rentPrice);
+                %>
                     <li class="row">
                         <div class="item-chk col-md-1 text-center">
-                            <input type="checkbox" name="delWishlist" id="yoyo(상품번호)">
+                            <input type="checkbox" name="chkWishlist" id="chkWishlist" value="<%=item.getItemNo()%>,<%=item.getRentOptNo()%>">
                         </div>
                         <div class="item-img col-md-2">
-                            <a href="" class="text-center"><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
+                            <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo()%>&itemNo=<%=item.getItemNo()%>" class="text-center">
+                            	<img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo()%>/<%=imgList.get(0).getItemImageDefault()%>" alt="상품 이미지">
+                            </a>
                         </div>
                         <div class="wish-info item-info col-md-9">
-                            <a href="">
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
+                            <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo()%>&itemNo=<%=item.getItemNo()%>">
+                                <p class="text-left pbrand"><%=item.getItemBrand()%></p>
+                                <p class="text-left pname"><%=item.getItemName()%></p>
                             </a>
-                            <p class="text-left price">31,620원 /<span class="rent-period"> 3개월</p>
-                            <p class="pull-left rent-type">월청구</p>
+                            <p class="text-left price"><%=dP %> /<span class="rent-period"><%=rentPeriod%>일</p>
+                            <p class="pull-left rent-type">일시납</p>
                             <ul class="list-unstyled wishBtn-wrapper">
-                                <li class="btn-del"><button type="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></li>
+                                <li class="btn-del"><button type="button" onclick="delOne(this);" value="<%=item.getItemNo()%>,<%=item.getRentOptNo()%>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></li>
                                 <li class="btn-radius btn-addCart"><button type="button">장바구니</button></li>
                                 <li class="btn-radius btn-rentNow"><button type="button">바로렌탈</button></li>
                             </ul>
                         </div>
                     </li>
-                    <li class="row">
-                        <div class="item-chk col-md-1 text-center">
-                            <input type="checkbox" name="delWishlist" id="yoyo(상품번호)">
-                        </div>
-                        <div class="item-img col-md-2">
-                            <a href="" class="text-center"><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
-                        </div>
-                        <div class="wish-info item-info col-md-9">
-                            <a href="">
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                            </a>
-                            <p class="text-left price">31,620원 /<span class="rent-period"> 3개월</p>
-                            <p class="pull-left rent-type">월청구</p>
-                            <ul class="list-unstyled wishBtn-wrapper">
-                                <li class="btn-del"><button type="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></li>
-                                <li class="btn-radius btn-addCart"><button type="button">장바구니</button></li>
-                                <li class="btn-radius btn-rentNow"><button type="button">바로렌탈</button></li>
-                            </ul>
-                        </div>
-                    </li>
+                <%
+                		}
+                	}
+                %>
                 </ul>
             </section>
             <!-- 위시리스트 선택옵션 -->
@@ -81,26 +176,19 @@
                     <button type="button" class="btn-radius btn-chkAll">전체선택</button>
                     <button type="button" class="btn-radius btn-chkAllDel">전체삭제</button>
                 </div>
+                <form action="<%=request.getContextPath()%>/mypage/mypageWishlistDelChk" id="delChkFrm" method="post">
+                	<input type="hidden" name="memberId" value="<%=memberLoggedIn.getMemberId()%>" />
+                	<input type="hidden" name="delInfo" id="delInfo" value="" />
+                </form>
+                <form action="<%=request.getContextPath()%>/mypage/mypageWishlistDelAll" id="delAllFrm" method="post">
+                	<input type="hidden" name="memberId" value="<%=memberLoggedIn.getMemberId()%>" />
+                </form>
             </section>
             <!-- 페이징바 -->
             <nav class="paging-bar text-center">
-                <ul class="list-unstyled list-inline">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    </a>
-                </li>
-                <li class="cPage"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                    </a>
-                </li>
-                </ul>
+                <ol class="list-unstyled list-inline">
+                	<%=pageBar%>
+                </ol>
             </nav>
         </div>
         <div class="col-md-1"></div>

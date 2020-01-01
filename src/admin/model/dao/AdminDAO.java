@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import item.model.vo.Item;
 import member.model.vo.Member;
 //프로젝트 DAO
 public class AdminDAO {
@@ -240,6 +241,302 @@ public class AdminDAO {
 		return totalContent;
 	}
 
+
+	public int memberDelete(Connection conn, String memberId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteMember"); 
+
+		try {
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setString(1, memberId);
+			
+			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			//DML은 executeUpdate()
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//==============================아이템 추가 삭제 수정
+	public int selectTotalItem(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalItem");
+		int totalItem = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalItem = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalItem@dao="+totalItem);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalItem;
+	}
+
+	public List<Item> selectItemList(Connection conn, int cPage, int numPerPage) {
+		List<Item> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectItemListByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+            //cPage, numPerPage
+            //1, 10 => 1, 10 => 0+1
+            //2, 10 => 11, 20 => 10+1
+            //3, 10 => 21, 30 => 20+1
+            //(공식1)시작rownum, 끝rownum
+            pstmt.setInt(1, (cPage-1)*numPerPage+1);
+            pstmt.setInt(2, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+                Item i = new Item();
+                //컬럼명은 대소문자 구분이 없다.
+				i.setItemNo(rset.getInt("item_no"));
+				i.setCategoryNo(rset.getString("category_no"));
+				i.setItemStock(rset.getInt("item_stock"));
+				i.setItemBrand(rset.getString("item_brand"));
+				i.setItemName(rset.getString("item_name"));
+				i.setItemPrice(rset.getInt("item_price"));
+				i.setItemDesc(rset.getString("item_desc"));
+				i.setItemEnrollDate(rset.getDate("item_enroll_date"));
+                
+                list.add(i);
+            }
+            System.out.println("***********"+list+"**********");
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<Item> selectItemByItemName(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<Item> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectItemByItemNameByPaging");
+		System.out.println(searchKeyword+"//"+(cPage-1)*numPerPage+1+"//"+cPage*numPerPage);
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				Item i = new Item();
+                //컬럼명은 대소문자 구분이 없다.
+				i.setItemNo(rset.getInt("item_no"));
+				i.setCategoryNo(rset.getString("category_no"));
+				i.setItemStock(rset.getInt("item_stock"));
+				i.setItemBrand(rset.getString("item_brand"));
+				i.setItemName(rset.getString("item_name"));
+				i.setItemPrice(rset.getInt("item_price"));
+				i.setItemDesc(rset.getString("item_desc"));
+				i.setItemEnrollDate(rset.getDate("item_enroll_date"));
+				
+				list.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<Item> selectItemByCategoryNo(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<Item> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectItemByCategoryNoByPaging");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, searchKeyword);
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				Item i = new Item();
+                //컬럼명은 대소문자 구분이 없다.
+				i.setItemNo(rset.getInt("item_no"));
+				i.setCategoryNo(rset.getString("category_no"));
+				i.setItemStock(rset.getInt("item_stock"));
+				i.setItemBrand(rset.getString("item_brand"));
+				i.setItemName(rset.getString("item_name"));
+				i.setItemPrice(rset.getInt("item_price"));
+				i.setItemDesc(rset.getString("item_desc"));
+				i.setItemEnrollDate(rset.getDate("item_enroll_date"));
+				
+				list.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int selectTotalItemByItemName(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalItemByItemName");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+	public int selectTotalItemByCategoryNo(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalItemByCategoryNo");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+	public int selectSellingItem(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectSellingItem");
+		int sellingItem = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				sellingItem = rset.getInt("cnt");
+			}
+			
+			System.out.println("sellingItem@dao="+sellingItem);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return sellingItem;
+	}
+
+	public int selectSoldoutItem(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectSoldoutItem");
+		int soldoutItem = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				soldoutItem = rset.getInt("cnt");
+			}
+			
+			System.out.println("soldoutItem@dao="+soldoutItem);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return soldoutItem;
+	}
 	
 	
 	
