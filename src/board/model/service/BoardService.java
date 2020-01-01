@@ -10,7 +10,7 @@ import java.util.List;
 
 import board.model.dao.BoardDAO;
 import board.model.vo.Board;
-import board.model.vo.BoardComment;
+
 
 public class BoardService {
 
@@ -45,30 +45,14 @@ public class BoardService {
 		return result;
 	}
 	
-	public Board selectOne(int boardNo) {
+	public Board selectOne(int reviewNo) {
 		Connection conn = getConnection();
-		Board board = new BoardDAO().selectOne(conn, boardNo);
+		Board board = new BoardDAO().selectOne(conn, reviewNo);
 		close(conn);
 		return board;
 	}
 	
-	public Board selectOne(int boardNo, boolean hasRead) {
-		Connection conn = getConnection();
-		int result = 0;
-		
-		if(!hasRead) {
-			result = new BoardDAO().increaseReadCount(conn, boardNo);
-		}
-		
-		Board board = new BoardDAO().selectOne(conn, boardNo);
-		
-		//트랜잭션처리
-		if(result>0) commit(conn);
-		else rollback(conn);
-		
-		close(conn);
-		return board;
-	}
+	
 	
 	 public int deleteBoard(int Review_no) {
 		Connection conn = getConnection();
@@ -97,25 +81,9 @@ public class BoardService {
 		return result;
 	}
 
-	public int insertBoardComment(BoardComment bc) {
-		Connection conn = getConnection();
-		int result = new BoardDAO().insertBoardComment(conn, bc);
-		
-		if(result>0) commit(conn);
-		else rollback(conn);
-		
-		close(conn);
-		return result;
-	}
+	
 
-	public List<BoardComment> selectCommentList(int boardNo) {
-		Connection conn = getConnection();
-		List<BoardComment> commentList
-			= new BoardDAO().selectCommentList(conn, boardNo);
-		close(conn);
-		
-		return commentList;
-	}
+	
 	
 	  public int deleteBoardComment(int boardCommentNo) {
 			Connection conn = getConnection();

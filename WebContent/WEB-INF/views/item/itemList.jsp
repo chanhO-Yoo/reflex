@@ -12,7 +12,6 @@
 	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
 	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
 	String pageBar = (String)request.getAttribute("pageBar");
-	System.out.println("itemList@jsp="+itemList);
 %>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			dataType: "html",
 			success: data=>{
 				console.log(data);
-				//$('#view-list').html("");
+				/* $('#view-list').html(""); */
 				$('#view-list').html(data);
 			},
 			error: (x, s, e) =>{

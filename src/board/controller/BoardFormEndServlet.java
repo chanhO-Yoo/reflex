@@ -56,10 +56,7 @@ public class BoardFormEndServlet extends HttpServlet {
 		
 		
 		//1.parameter handling
-//		String boardTitle = request.getParameter("boardTitle");
-//		String boardWriter = request.getParameter("boardWriter");
-//		String boardContent = request.getParameter("boardContent");
-			int reviewStar =Integer.parseInt(multiReq.getParameter("star"));
+		int reviewStar =Integer.parseInt(multiReq.getParameter("star"));
 		String reviewWriter = multiReq.getParameter("reviewWriter");
 		String reviewContent = multiReq.getParameter("reviewContent");
 		System.out.println("bofomm@servlet="+reviewStar);
@@ -73,10 +70,9 @@ public class BoardFormEndServlet extends HttpServlet {
 		String renamedFileName
 			= multiReq.getFilesystemName("upFile");//실제 저장된 파일명
 		
-		Board b = new Board(0,0,reviewWriter,null,reviewStar,reviewContent,review_image,0);
+		Board b = new Board(0,0,reviewWriter,null,reviewStar,reviewContent,review_image,renamedFileName,0);
 		
 		
-		System.out.println("b@boardFormEnd="+b);
 		
 		//2.business logic
 		int result = new BoardService().insertBoard(b);

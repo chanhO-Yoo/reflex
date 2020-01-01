@@ -42,7 +42,18 @@
 		}
 	}
 %>
-	
+<script type="text/javascript">
+$(()=> {
+	//체크박스 개수 2개로 제한
+	$("input[type='checkbox']").on("click" , function(){
+		var count = $("input:checked[type='checkbox']").length;
+		if(count > 2){
+			$(this).attr("checked" , false);
+			alert("2개까지만 선택할 수 있습니다.");
+		}
+	});
+});
+</script>
 	
 	<!-- page nav -->
     <nav class="line-style page-nav">

@@ -53,7 +53,7 @@
                         <input type="text" name="reviewWriter" id="reviewWriter"  value="<%=memberLoggedIn.getMemberId() %>" readonly>
                     </div>
                     <div class="btnForm-wrapper text-center">
-                        <button type="button" class="btn-radius">취소</button>
+                        <button type="button" class="btn-radius" onclick="exit()">취소</button>
                         <button type="submit" class="btn-radius" onclick="return boardValidate();" >등록</button>
                     </div>
                 </form>
@@ -63,8 +63,12 @@
 	</div>
 </div>
 <script>
+function exit() {
+	location.href = "<%=request.getContextPath()%>/mypage/mypageReview";	
+}
+
 function boardValidate(){
-	//제목검사
+	
 
 	
 	//내용검사

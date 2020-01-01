@@ -85,7 +85,7 @@
                     <tbody>
                         <tr class="row">
                             <td class="col-md-2">배송문의</td>
-                            <td class="col-md-6 qna-title"><a href="">배송 문의 할게요!!</a></td>
+                            <td class="col-md-6 qna-title"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView">배송 문의 할게요!!</a></td>
                             <td class="col-md-2">답변대기</td>
                             <td class="col-md-2">2019/12/22</td>
                         </tr>
