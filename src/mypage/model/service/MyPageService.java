@@ -16,9 +16,9 @@ import mypage.model.vo.MyPage;
 
 public class MyPageService {
 
-	public List<MyPage> selectMemberList(int cPage, int numPerPage) {
+	public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
 		 Connection conn = getConnection();
-	        List<MyPage> list= new MyPageDAO().selectMemberList(conn, cPage, numPerPage);
+	        List<MyPage> list= new MyPageDAO().selectMemberList(conn,memberId, cPage, numPerPage);
 	        close(conn);
 	        return list;
 	}
@@ -32,18 +32,26 @@ public class MyPageService {
 
 	public MyPage selectOne(String memberId) {
 		Connection conn = getConnection();
-		int result = new MyPageDAO().selectOne(conn, memberId);
 		
-		
-		if(result>0)
-			commit(conn);
-		
-		else 
-			rollback(conn);
+		MyPage m = new MyPageDAO().selectOne(conn, memberId);
 		
 		close(conn);
 		
-		return result;
+		return m;
+	}
+
+	public List<MyPage> selectPointPlusList(String memberId, int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	        List<MyPage> list= new MyPageDAO().selectPointPlusList(conn,memberId, cPage, numPerPage);
+	        close(conn);
+	        return list;
+	}
+
+	public List<MyPage> selectPointMinusList(String memberId, int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	        List<MyPage> list= new MyPageDAO().selectPointMinusList(conn,memberId, cPage, numPerPage);
+	        close(conn);
+	        return list;
 	}
 
 
