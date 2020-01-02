@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import admin.model.QnaAns;
 import item.model.vo.Item;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
@@ -611,7 +612,81 @@ public class AdminDAO {
 		
 		return totalContent;
 	}
-	
+
+	public Qna selectOne(Connection conn, int qNo) {
+		Qna q = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("qnaSelectOne");
+		try{
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setInt(1, qNo);
+			//쿼리문실행
+			//완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				/*
+				 * 	p_qna_no	number		NOT NULL,
+	member_id	varchar2(20)		NOT NULL,
+	p_qna_type_no	varchar2(30)			NOT NULL,
+	p_qna_title	varchar2(100)		NOT NULL,
+	p_qna_content	varchar2(3000)		NOT NULL,
+	p_qna_date	date	DEFAULT sysdate	NOT NULL,
+	p_ans_yn	char(1)	DEFAULT 'N'	NOT NULL,
+	p_qna_image	varchar2(300)		NULL,
+				 */
+				
+				q = new Qna();
+				q.setqNo(rset.getInt("p_qna_no"));
+				q.setMemberId(rset.getString("member_id"));
+				q.setqTypeNo(rset.getString("p_qna_type"));
+				q.setqTilte(rset.getString("p_qna_title"));;
+				q.setqContent(rset.getString("p_qna_content"));
+				q.setqDate(rset.getDate("p_qna_date"));
+				q.setqAns(rset.getString("p_ans_yn"));
+				q.setqImage(rset.getString("p_qna_image"));
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return q;
+	}
+
+	public int insertAns(Connection conn, QnaAns a) {
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertQnaAns");
+		int result = 0;
+		//INSERT INTO PERSONAL_QNA_ANS VALUES(seq_personal_qna_ans.nextval,?, ?, default, ?  );
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, a.getaNo());
+			pstmt.setString(2, a.getaWriter());
+			pstmt.setString(2, a.getaContent());
+
+			
+			result = pstmt.executeUpdate();
+			
+			
+			System.out.println("result@dao="+result);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 	
 	
 	

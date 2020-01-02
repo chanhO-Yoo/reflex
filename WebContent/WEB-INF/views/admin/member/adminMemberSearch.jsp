@@ -132,7 +132,7 @@ function confirmDelete(){
                     <tbody>
                     <% if(list==null || list.isEmpty()){ %>
             <tr>
-                <td colspan="9" align="center"> 검색 결과가 없습니다. </td>
+                <td colspan="9" align="center"> 조회된 회원이 없습니다. </td>
             </tr>
         <% 
             } 

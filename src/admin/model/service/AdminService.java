@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import admin.model.QnaAns;
 import admin.model.dao.AdminDAO;
 import item.model.vo.Item;
 import member.model.vo.Member;
@@ -146,6 +147,35 @@ public class AdminService {
 		close(conn);
 		return totalContent;
 	}
+
+	public Qna selectOne(int qNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		Qna q = new AdminDAO().selectOne(conn, qNo);
+		
+		//트랜잭션처리
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return q;
+	}
+
+	public int insertAns(QnaAns a) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().insertAns(conn, a);
+		//트랜잭션 처리
+		if(result>0) {
+			commit(conn);
+		}
+		else 
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
 
 	
 	

@@ -67,7 +67,7 @@ String pageBar = (String)request.getAttribute("pageBar");
                     <th>답변여부</th>
                 </tr>
               	<%if(list==null || list.isEmpty()){ %>
-              		<td>등록된 1:1 문의내역이 없습니다.</td>
+              		<td colspan="9" align="center">등록된 1:1 문의내역이 없습니다.</td>
               	<%}
               	else{
               		for(Qna q : list){
@@ -76,7 +76,7 @@ String pageBar = (String)request.getAttribute("pageBar");
               		<!--  //번호	문의유형	제목	작성자	작성일자	답변여부 -->
               		<td><%=q.getqNo()%></td>
               		<td><%=q.getqTypeNo()%></td>
-              		<td><a href="<%=request.getContextPath()%>/admin/member/memberQnaForm?memberId=<%=q.getMemberId()%>"><%=q.getqTilte()%></a></td>
+              		<td><a href="<%=request.getContextPath()%>/admin/member/memberQnaForm?qNo=<%=q.getqNo()%>"><%=q.getqTilte()%></a></td>
               		<td><%=q.getMemberId()%></td>
               		<td><%=q.getqDate()%></td>
               		<td><%=q.getqAns()%></td>
