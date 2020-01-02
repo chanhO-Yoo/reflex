@@ -24,7 +24,10 @@ public class MypageReviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			BoardService boardService = new BoardService();
+			
+		String memberId = (request.getParameter("memberId"));
+		
+		BoardService boardService = new BoardService();
 		
 		//1.파라미터 핸들링
 		final int numPerPage = 5;
@@ -39,7 +42,9 @@ public class MypageReviewServlet extends HttpServlet {
 		//2.업무로직
 		//a.컨텐츠영역
 		List<Board> list 
-			= boardService.selectBoardList(cPage, numPerPage); 
+			= boardService.selectBoardList(cPage, numPerPage ); 
+		
+	
 //		System.out.println("list@servlet="+list);
 		
 		//b.페이징바영역
@@ -81,9 +86,11 @@ public class MypageReviewServlet extends HttpServlet {
 		}
 		
 		
+	
 		//4.뷰단 포워딩		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageReview.jsp");
 		request.setAttribute("list",list);
+	
 		request.setAttribute("pageBar",pageBar);		
 		reqDispatcher.forward(request, response);
 		

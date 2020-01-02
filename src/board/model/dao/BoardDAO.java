@@ -31,7 +31,7 @@ public class BoardDAO {
 	}
 	
 	
-	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage) {
+	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage ) {
 		Board b = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -301,6 +301,8 @@ public class BoardDAO {
 		return result;
 	}
 
+
+	
 
 }
 

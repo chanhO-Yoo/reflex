@@ -70,6 +70,7 @@ public class MemberLoginEndServlet extends HttpServlet {
 						session.setMaxInactiveInterval(60*30);
 						
 						//아이디저장 쿠키관련
+						
 						//체크된경우:"on", 체크되지 않은 경우:null
 						String saveId = request.getParameter("saveId");
 //						System.out.println("saveId@loginServlet="+saveId);
@@ -90,15 +91,12 @@ public class MemberLoginEndServlet extends HttpServlet {
 						}
 						
 						//로그인후 페이지 리다이렉트
-						String referer = request.getHeader("Referer");
-						System.out.println(referer);
 						
 						
-						//포워딩이아닌 리다이렉트처리
-						//3xx status code를 리턴.
-						//클라이언트에게 해당주소로 재요청하게 함.
-//						response.sendRedirect(request.getContextPath());// "/mvc"
-						response.sendRedirect(referer);// "http://localhost:9090/mvc/board/boardView?boardNo=123
+						response.sendRedirect(request.getContextPath());	
+						
+	
+					
 						
 					}
 					

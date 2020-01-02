@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@page import="itemRentEach.model.vo.*" %>
+
 <%@ page import="java.util.List" %>
 <%
- 	ItemRentEach IE=(ItemRentEach)request.getAttribute("ItemRentEach");
-
-	List<ItemRentEach> list =(List<ItemRentEach>)request.getAttribute("list");
+ 
 %>
 
 <!-- page nav -->
@@ -67,7 +65,7 @@
                         <tr>
                             <td>
                                 <p>CT18010005664</p>
-                                <p><%=IE.getItemNo() %></p>
+                                <p></p>
                             </td>
                             <td class="item-info">
                                 <a href=""><img src="<%=request.getContextPath()%>/images/item.png" class="pull-left" alt=""></a>
@@ -77,7 +75,7 @@
                                 <p class="pull-left rent-type">월청구</p>
                             </td>
                             <td class="rent-period">
-                                <p><%=IE.getItemRentStart() %> ~ <%=IE.getItemRentEnd() %></p>
+                                <p></p>
                                 <p class="em-blue">(11일 남음)</p>
                             </td>
                             <td class="em-purple">

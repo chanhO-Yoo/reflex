@@ -114,7 +114,9 @@ function showContent(btn, sectionId){
             </section>
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">
-               <% for(Board b : list){ %>
+               <% for(Board b : list){ 
+            		
+               %>
                 <h3 class="sr-only">작성한 이용후기 리스트</h3>
                 <ul class="list-unstyled wishlist-inner">
                     <li class="row">
@@ -124,7 +126,7 @@ function showContent(btn, sectionId){
                             </div>
                             <div class="wish-info item-info col-md-7">
                                 <a href="">
-                                    <p class="text-left pname"><%=b.getReview_writer() %></p>
+                                    <p class="text-left pname">작성자: <%=b.getReview_writer() %> ,<%=session.getId() %></p>
                                 </a>
                             </div>
                             <div class="col-md-3 reviewBtn-wrapper">
@@ -145,11 +147,12 @@ function showContent(btn, sectionId){
     							<%} %>
                             </div>
                             <div>
-                                <p><%=b.getReview_content()%></p>
+                                <p>구매후기:<%=b.getReview_content()%></p>
                             </div>
                         </section>
                     </li>
                 </ul>
+                		
                     <% } %>
             </section>
        

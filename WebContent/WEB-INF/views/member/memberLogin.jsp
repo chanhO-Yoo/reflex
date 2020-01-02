@@ -41,7 +41,7 @@
              <%if(memberLoggedIn==null){ %>
                 <form action="<%=request.getContextPath() %>/member/memberLoginEnd " method="post" id="loginFrm">
                     <div class="text-center">
-                        <input type="text" name="memberId" id="memberId" placeholder="아이디를 입력해주세요" required>
+                        <input type="text" name="memberId" id="memberId" value="<%=saveId?memberId:""%>"   placeholder="아이디를 입력해주세요" required  >
                         <input type="password" name="memberPwd" id="memberPwd" placeholder="비밀번호를 입력해주세요" required>
                     </div>
                     <div class="check-wrapper text-center">

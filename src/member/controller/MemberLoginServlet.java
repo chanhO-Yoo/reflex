@@ -27,6 +27,8 @@ public class MemberLoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		request.getRequestDispatcher("/WEB-INF/views/member/memberLogin.jsp").forward(request, response);
 	}
 
