@@ -107,7 +107,7 @@ function showContent(btn, sectionId){
                             <p class="ship-date">렌탈 시작일 2019.12.22일</p>
                         </div>
                         <div class="col-md-2">
-                            <a href="<%=request.getContextPath()%>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기 쓰기</a>
+                            <a href="<%=request.getContextPath()%>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기쓰기</a>
                         </div>
                     </li>
                 </ul>
@@ -115,6 +115,7 @@ function showContent(btn, sectionId){
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">
                <% for(Board b : list){ 
+            	   
             		
                %>
                 <h3 class="sr-only">작성한 이용후기 리스트</h3>
@@ -126,13 +127,13 @@ function showContent(btn, sectionId){
                             </div>
                             <div class="wish-info item-info col-md-7">
                                 <a href="">
-                                    <p class="text-left pname">작성자: <%=b.getReview_writer() %> ,<%=session.getId() %></p>
+                                    <p class="text-left pname">작성자: <%=b.getReview_writer() %></p>
                                 </a>
                             </div>
                             <div class="col-md-3 reviewBtn-wrapper">
                                 <ul class="list-unstyled list-inline">
                                     <li><a href = "<%=request.getContextPath()%>/mypage/mypageReviewUpdate?reviewNo=<%=b.getReview_no()%>"><button type="button" class="btn-radius" >수정하기</button></a></li>
-                                    <li><button type="button" class="btn-radius" onclick="deleteBoard()">삭제하기</button></li>
+                                    <li><button type="button" class="btn-radius" name="boardDelFrm" onclick="deleteBoard()">삭제하기</button></li>
                                  
                                 </ul>
                                 	<form name="boardDelFrm" action="<%=request.getContextPath()%>/board/boardDelete" method="post">
