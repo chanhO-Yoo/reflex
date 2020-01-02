@@ -10,6 +10,7 @@ import java.util.List;
 
 import admin.model.dao.AdminDAO;
 import item.model.vo.Item;
+import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 //프로젝트 Service
 public class AdminService {
@@ -130,6 +131,35 @@ public class AdminService {
 		int totalItem = new AdminDAO().selectSoldoutItem(conn);
 		close(conn);
 		return totalItem;
+	}
+
+	public int selectTotalDetailItem(int itemNo) {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalDetailItem(conn,itemNo);
+		close(conn);
+		return totalItem;
+	}
+
+	public int rentItemYes(int itemNo) {
+		Connection conn = getConnection();
+		int rentItemYes = new AdminDAO().rentItemYes(conn,itemNo);
+		close(conn);
+		return rentItemYes;
+
+	}
+
+	public int rentItemNo(int itemNo) {
+		Connection conn = getConnection();
+		int rentItemYes = new AdminDAO().rentItemNo(conn,itemNo);
+		close(conn);
+		return rentItemYes;
+	}
+
+	public List<ItemRentEach> selectItemEachList(int itemNo, int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	     List<ItemRentEach> list= new AdminDAO().selectItemEachList(conn, itemNo, cPage, numPerPage);
+	     close(conn);
+	     return list;
 	}
 
 	
