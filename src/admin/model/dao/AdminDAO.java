@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import item.model.vo.Item;
 import member.model.vo.Member;
+import mypage.model.vo.Qna;
 //프로젝트 DAO
 public class AdminDAO {
 
@@ -536,6 +537,79 @@ public class AdminDAO {
 		
 		
 		return soldoutItem;
+	}
+
+	public List<Qna> selectQnaList(Connection conn, int cPage, int numPerPage) {
+		 List<Qna> list = new ArrayList<>();
+	        PreparedStatement pstmt = null;
+	        ResultSet rset = null;
+	        
+	        String query = prop.getProperty("selectQnaListByPaging");
+	        
+	        try{
+	            //미완성쿼리문을 가지고 객체생성. 
+	            pstmt = conn.prepareStatement(query);
+	           
+	            pstmt.setInt(1, (cPage-1)*numPerPage+1);
+	            pstmt.setInt(2, cPage*numPerPage);
+	            
+	            
+	            //쿼리문실행
+	            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+	            rset = pstmt.executeQuery();
+	            
+	            while(rset.next()){
+	            	Qna q = new Qna();
+	                //컬럼명은 대소문자 구분이 없다.
+	    //번호	문의유형	제목	작성자	작성일자	답변여부
+					//q.setMemberId(rset.getString("member_id"));
+					q.setqNo(rset.getInt("p_qna_no"));
+					q.setqTypeNo(rset.getString("p_qna_type_no"));
+	                q.setqTilte(rset.getString("p_qna_title"));
+	                q.setMemberId(rset.getString("member_id"));
+	                q.setqDate(rset.getDate("p_qna_date"));
+	                q.setqAns(rset.getString("p_ans_yn"));
+	               
+					
+	                list.add(q);
+	            }
+	        }catch(Exception e){
+	            e.printStackTrace();
+	        }finally{
+	            close(rset);
+	            close(pstmt);
+	        }
+	        
+	        
+	        return list;
+	}
+
+	public int selectTotalContent2(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalContent2");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalContent;
 	}
 	
 	

@@ -197,7 +197,13 @@ public class ItemDAO {
 		
 		return item;
 	}
-
+	
+	
+	
+	//===============================================
+	//==================<<아이템Q&A>>==================
+	//===============================================
+	
 	public int insertItemQna(Connection conn, Map<String, Object> paramMap) {
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("insertItemQna");
@@ -304,6 +310,13 @@ public class ItemDAO {
 		
 		return totalContent;
 	}
+	
+	//===================================================
+	//==================<<아이템Q&A 끝>>==================
+	//===================================================
+	
+	
+	
 	
 		
 	//============================================
@@ -567,7 +580,11 @@ public class ItemDAO {
 	//==================<<관리자끝>>==================
 	//============================================
 
+	
+
+	//================================================
 	//========================헤더 검색=================
+	//================================================
 	
 	public int selectTotalContentBySearch(Connection conn, String search) {
 		PreparedStatement pstmt = null;
@@ -594,7 +611,6 @@ public class ItemDAO {
 		
 		return totalContent;
 	}
-	//========================헤더 검색 끝=================
 
 	public List<Item> selectItemAllBySearch(Connection conn, String search, int cPage, int numPerPage) {
 		PreparedStatement pstmt = null;
@@ -633,7 +649,7 @@ public class ItemDAO {
 		
 		return list;
 	}
-
+	
 	public List<Item> selectItemAllBySearchByLowPrice(Connection conn, String search, int cPage, int numPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -670,5 +686,37 @@ public class ItemDAO {
 		}
 		
 		return list;
+	}
+	
+	//===================================================
+	//========================헤더 검색 끝=================
+	//===================================================
+	
+	
+	
+	/////////////////////////////////////////////////////////////상품주문 임시 포인트조회
+	public int selectMemberUsablePoint(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMemberUsablePoint");
+		int usablePoint = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				usablePoint = rset.getInt("sum");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("사용가능한 포인트 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return usablePoint;
 	}
 }

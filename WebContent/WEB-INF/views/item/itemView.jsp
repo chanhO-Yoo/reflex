@@ -90,13 +90,16 @@ $(function(){
 		}
 	});
 	
-	//바로렌탈 버튼 눌렀을 경우
+	//바로렌탈 버튼 눌렀을 경우: 회원아이디, 상품번호, 렌탈유형, 수량 넘기기
 	$("#btn-goRent").on('click', function(){
+		let rentTypeVal = $("#rent-type option:selected").val();
+		let orderNo = document.querySelector("#orderNo").value;
+
 		if(<%=memberLoggedIn==null%>){
 			goLogin();
 		}
 		else{
-			location.href = "<%=request.getContextPath()%>/item/itemOrder";
+			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberLoggedIn.getMemberId()%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
 		}
 	});
 	

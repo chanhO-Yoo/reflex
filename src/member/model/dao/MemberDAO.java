@@ -14,6 +14,8 @@ import static common.JDBCTemplate.*;
 
 public class MemberDAO {
 	
+	private Properties prop = new Properties();
+	
 	public MemberDAO() {
 		String fileName = MemberDAO.class.getResource("/sql/member/member-query.properties").getPath();
 		try {
@@ -22,8 +24,6 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	private Properties prop = new Properties();
 
 	public Member selectOne(Connection conn, String memberId) {
 		Member m = null;
@@ -59,7 +59,6 @@ public class MemberDAO {
 				m.setMemberQuitYn(rset.getString("member_quit_yn").charAt(0));
 				m.setMemberEnrollDate(rset.getDate("member_enroll_date"));
 			}
-			System.out.println("member@dao = "+m);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

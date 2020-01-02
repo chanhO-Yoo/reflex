@@ -11,6 +11,7 @@ import java.util.List;
 import admin.model.dao.AdminDAO;
 import item.model.vo.Item;
 import member.model.vo.Member;
+import mypage.model.vo.Qna;
 //프로젝트 Service
 public class AdminService {
 
@@ -130,6 +131,20 @@ public class AdminService {
 		int totalItem = new AdminDAO().selectSoldoutItem(conn);
 		close(conn);
 		return totalItem;
+	}
+
+	public List<Qna> selectQnaList(int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	        List<Qna> list= new AdminDAO().selectQnaList(conn, cPage, numPerPage);
+	        close(conn);
+	        return list;
+	}
+
+	public int selectTotalContent2() {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContent2(conn);
+		close(conn);
+		return totalContent;
 	}
 
 	

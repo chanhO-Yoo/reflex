@@ -1,8 +1,13 @@
+<%@page import="mypage.model.vo.Qna"%>
 <%@page import="member.model.vo.Member"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+List<Qna> list = (List<Qna>)request.getAttribute("list");
+String pageBar = (String)request.getAttribute("pageBar");	
+%>
   <div class="container-fluid">
         <div class="row"><p class="col-md-12"><br><br><br><br></p></div>
         <div class="row">
@@ -61,32 +66,31 @@
                     <th>작성일자</th>
                     <th>답변여부</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>배송</td>
-                    <td><a href="#">배송 언제와요</a></td>
-                    <td>gkwls58865</td>
-                    <td>2019-12-14</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>상품</td>
-                    <td><a href="#">카메라 정상 작동하나요</a></td>
-                    <td>dooid821</td>
-                    <td>2019-12-15</td>
-                    <td>N</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>교환/환불</td>
-                    <td><a href="#">환불신청했어요</a></td>
-                    <td>vriq012</td>
-                    <td>2019-12-20</td>
-                    <td>N</td>
-                </tr>
+              	<%if(list==null || list.isEmpty()){ %>
+              		<td>등록된 1:1 문의내역이 없습니다.</td>
+              	<%}
+              	else{
+              		for(Qna q : list){
+              	%>
+              	<tr>
+              		<!--  //번호	문의유형	제목	작성자	작성일자	답변여부 -->
+              		<td><%=q.getqNo()%></td>
+              		<td><%=q.getqTypeNo()%></td>
+              		<td><a href="<%=request.getContextPath()%>/admin/member/memberQnaForm?memberId=<%=q.getMemberId()%>"><%=q.getqTilte()%></a></td>
+              		<td><%=q.getMemberId()%></td>
+              		<td><%=q.getqDate()%></td>
+              		<td><%=q.getqAns()%></td>
+              	</tr>
+              	<%
+              		}
+              	}
+              	%>
+            
             </table>
         </div>
+        <div  id="pageBar">
+		<%=pageBar %>
+	</div>
           <p class="col-md-12"><br><br></p>
     </div>
      <!-- 문의현황 테이블 끝 -->
