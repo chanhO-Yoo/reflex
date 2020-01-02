@@ -403,8 +403,10 @@ public class ItemDAO {
 			System.out.println("itemNo="+itemNo);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
-		
 		
 		return itemNo;
 	}
@@ -462,6 +464,9 @@ public class ItemDAO {
 			System.out.println("item="+item);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
 		
 		
@@ -519,6 +524,9 @@ public class ItemDAO {
 			System.out.println("itemImg="+itemImg);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
 		
 		

@@ -28,8 +28,10 @@ public class OrderDAO {
 	}
 
 	public int insertOrderSheet(Connection conn, OrderSheet os) {
+		System.out.println("333333333333333333333");
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("insertOrderSheet");
+		System.out.println("3444444444444444444444444");
 		int result = 0;
 		
 		try {
@@ -72,6 +74,7 @@ public class OrderDAO {
 			System.out.println("itemInfoNo@dao="+itemInfoNo);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new OrderException("order_sheet_itemInfo_no 조회 실패!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -80,7 +83,7 @@ public class OrderDAO {
 		return itemInfoNo;
 	}
 
-	public int updateOrderSheeetItemInfo(Connection conn, int itemNo, String rentOptNo, int i) {
+	public int updateOrderSheeetItemInfo(Connection conn, int itemNo, String rentOptNo, int itemInfoNo) {
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("updateOrderSheeetItemInfo");
 		int result = 0;
@@ -89,11 +92,12 @@ public class OrderDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, itemNo);
 			pstmt.setString(2, rentOptNo);
-			pstmt.setInt(3, i);
+			pstmt.setInt(3, itemInfoNo);
 			result = pstmt.executeUpdate();
 			System.out.println("result@dao="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new OrderException("order_sheet_itemInfo테이블 업데이트 실패!", e);
 		} finally {
 			close(pstmt);
 		}

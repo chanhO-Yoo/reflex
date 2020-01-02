@@ -99,9 +99,9 @@ $(function(){
 			goLogin();
 		}
 		else{
-			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberLoggedIn.getMemberId()%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
+			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberId%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
 		}
-	});
+	}); 
 	
 });
 function goLogin(){
