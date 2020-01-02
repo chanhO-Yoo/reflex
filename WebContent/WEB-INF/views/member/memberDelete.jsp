@@ -41,7 +41,9 @@ function confirmDelete(){
 	
 	console.log("<%=m.getMemberPassword()%>",pwd_chk);
 	
+
 	if("<%=m.getMemberPassword()%>"!=pwd_chk){
+
 		alert("비밀번호가 틀렸습니다.");
 		return false;
 	}

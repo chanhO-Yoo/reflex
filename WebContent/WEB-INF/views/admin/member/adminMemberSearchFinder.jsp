@@ -31,7 +31,18 @@ $(()=>{
 	});
 	
 });
+function confirmDelete(){
+	
+    var bool = confirm("정말 삭제하시겠습니까?");
+	
+	if(bool==false){
+		return false;
+	}
+	else{
+        return true;
+	}
 
+}
 </script>
         <!-- 메인 컨텐츠 -->
         <div class="container-fluid contents">
@@ -123,24 +134,30 @@ $(()=>{
         	<td><%=m.getMemberEnrollDate()%></td>
         	<td><%=m.getMemberPoint()%></td>
         	<td><button type="button" class="btn btn-primary">수정</button></td>
-            <td><button type="button" class="btn btn-danger">삭제</button></td>
+            <td>
+            	<form action="<%=request.getContextPath()%>/admin/member/memberDelete?memberId=<%=m.getMemberId()%>"
+            	onsubmit="return confirmDelete();">
+					<input type="hidden" name="memberId" value=<%=m.getMemberId()%> />
+					<input type="submit" value="삭제" />
+				</form>
+        	</td>
         </tr>
                     
                     	
-                     <%		} 
+       <%		} 
             }
         %>
-                    </tbody>
+            </tbody>
                     
-                </table>
+        </table>
                
                 
-                <div  id="pageBar">
-		<%=pageBar %>
-	</div>
+        <div  id="pageBar">
+			<%=pageBar %>
+		</div>
               
-            </div>
-        </div>
+       </div>
+     </div>
 
 
 

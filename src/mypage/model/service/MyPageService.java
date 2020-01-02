@@ -1,3 +1,5 @@
+
+
 package mypage.model.service;
 
 import static common.JDBCTemplate.close;
@@ -64,9 +66,9 @@ public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////////////////////////
 	//포인트
-	public List<MyPage> selectMemberList(int cPage, int numPerPage) {
+public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
 		 Connection conn = getConnection();
-	        List<MyPage> list= new MyPageDAO().selectMemberList(conn, cPage, numPerPage);
+	        List<MyPage> list= new MyPageDAO().selectMemberList(conn,memberId, cPage, numPerPage);
 	        close(conn);
 	        return list;
 	}
@@ -78,5 +80,30 @@ public class MyPageService {
 		return totalContent;
 	}
 
+	public MyPage selectOne(String memberId) {
+		Connection conn = getConnection();
+		
+		MyPage m = new MyPageDAO().selectOne(conn, memberId);
+		
+		close(conn);
+		
+		return m;
+	}
+
+	public List<MyPage> selectPointPlusList(String memberId, int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	        List<MyPage> list= new MyPageDAO().selectPointPlusList(conn,memberId, cPage, numPerPage);
+	        close(conn);
+	        return list;
+	}
+
+	public List<MyPage> selectPointMinusList(String memberId, int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	        List<MyPage> list= new MyPageDAO().selectPointMinusList(conn,memberId, cPage, numPerPage);
+	        close(conn);
+	        return list;
+	}
+
 
 }
+

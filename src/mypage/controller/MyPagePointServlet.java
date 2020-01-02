@@ -1,4 +1,4 @@
-package mypage;
+package mypage.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.model.service.AdminService;
-import member.model.vo.Member;
+
 import mypage.model.service.MyPageService;
 import mypage.model.vo.MyPage;
 
@@ -55,10 +54,12 @@ public class MyPagePointServlet extends HttpServlet {
 		//증감변수 pageNo
 		int pageNo = pageStart;
 
-
+		String memberId = request.getParameter("memberId");
+		List<MyPage> list = new MyPageService().selectMemberList(memberId,cPage, numPerPage);
+		System.out.println(list+"$$$$$$$$$$$$$$");
 		//1.이전
 		if(pageNo != 1) {
-			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?cPage="+(pageNo-1)+"'>[이전]</a>\n";
+			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?memberId="+memberId+"&cPage="+(pageNo-1)+"'>[이전]</a>\n";
 		}
 		
 		//2.pageNo
@@ -68,20 +69,26 @@ public class MyPagePointServlet extends HttpServlet {
 				pageBar += "<span class='cPage'>"+pageNo+"</span>\n";
 			}
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?cPage="+pageNo+"'>"+pageNo+"</a>\n";				
+				pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?memberId="+memberId+"&cPage="+pageNo+"'>"+pageNo+"</a>\n";				
 			}
 			
 			pageNo++;
 		}
-		
 		//3.다음
 		if(pageNo <= totalPage) {
-			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?cPage="+pageNo+"'>[다음]</a>\n";							
+			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?memberId="+memberId+"&cPage="+pageNo+"'>[다음]</a>\n";							
 		}
-
 		
-		List<MyPage> list = new MyPageService().selectMemberList(cPage, numPerPage);
+		
+		System.out.println("mypage-memberid-servlet"+memberId);
+		
+		MyPage m = new MyPageService().selectOne(memberId);
+		System.out.println("mypage-member-servlet ####"+m);
+		
+		
+		
 		request.setAttribute("list",list);
+		request.setAttribute("mypage",m);
 		request.setAttribute("pageBar", pageBar);
 
 		System.out.println("mypage-point-servlet"+list);
