@@ -176,6 +176,14 @@ public class ItemService {
 		return result;
 	}
 	
+	//////////////////////////////////////////////////////주문 임시조회용
+	public int selectMemberUsablePoint(String memberId) {
+		Connection conn = getConnection();
+		int usablePoint = new ItemDAO().selectMemberUsablePoint(conn, memberId);
+		close(conn);
+		return usablePoint;
+	}
+	
 	
 	//========================헤더 검색=================
 	

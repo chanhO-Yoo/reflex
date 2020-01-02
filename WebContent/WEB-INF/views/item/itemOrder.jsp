@@ -1,7 +1,159 @@
+<%@page import="java.util.Map"%>
+<%@page import="item.model.vo.ItemImage"%>
+<%@page import="java.util.List"%>
+<%@page import="item.model.vo.Item"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Member m = (Member)request.getAttribute("m");
+	List<Item> itemList = (List<Item>)request.getAttribute("itemList");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
+	int ea = (int)request.getAttribute("ea");
+	String rentOptNo = (String)request.getAttribute("rentOptNo");
+	int usablePoint = (int)request.getAttribute("usablePoint");
+	
+	//핸드폰 번호 - 추가
+	String tel = m.getMemberPhone();
+	String tel1 = tel.substring(0, 3);
+	String tel2 = tel.substring(3, 7);
+	String tel3 = tel.substring(7);
+	tel = tel1+"-"+tel2+"-"+tel3;
+	
+	//보유포인트 , 추가
+	DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+	String uPoint = dc.format(usablePoint);
+%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<script src="<%=request.getContextPath()%>/js/postcode.js"></script>
+<script src="<%=request.getContextPath()%>/js/itemOrder.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+	let btnGoPay = document.querySelector("#btn-goPay"); //결제버튼
+	let userTotalPrice = document.querySelector("#userTotalPrice").innerText.replace(",", "")*1; //총 결제금액
+	
+	btnGoPay.addEventListener('click', function(){
+		let $radioChk = $("input[type=radio]:checked").val();
+		//결제수단 선택 유효성검사
+		if($radioChk===undefined){
+			alert("결제수단을 선택해주세요.");
+			return;
+		}
+		
+		//아임포트 변수 초기화
+		let IMP = window.IMP;
+		IMP.init('imp74518584');
+		
+		//카드 결제요청
+		if($radioChk==="card"){
+			$.ajax({
+				url: "<%=request.getContextPath()%>/order/paymentsComplete",
+				type: "post",
+				data: {
+					merchant_uid: "reflex01",
+					imp_uid: "impUid01",
+					memberId: "<%=m.getMemberId()%>",
+					payMethod: "card",
+					totalPrice: userTotalPrice,
+					/* 상품번호, 렌탈유형, 수량: 일단 하나만 생각하고 만들자 */
+					itemNo: <%=itemList.get(0).getItemNo()%>,
+					rentType: "<%=rentOptNo%>",
+					ea: <%=ea%>
+				},
+				dataType: "json",
+				success: data=>{
+					console.log(data);
+				},
+				error: (jqxhr, textStatus, errorThrown)=>{
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+		}
+			<%--
+			IMP.request_pay({
+				pg : 'inicis', 
+				pay_method : 'card',
+				merchant_uid : 'reflex' + new Date().getTime(),
+				name : '<%=itemList.get(0).getItemName()%>',
+				amount : userTotalPrice,
+				buyer_email : '<%=m.getMemberEmail()%>',
+				buyer_name : '<%=m.getMemberName()%>',
+				buyer_tel : '<%=tel%>',
+				buyer_addr : '<%=m.getMemberAddress()%>',
+				buyer_postcode : '<%=m.getMemberPostcode()%>'
+			}, function(rsp) {
+				//결제 성공 시
+				if ( rsp.success ) {
+					$.ajax({
+						url: "<%=request.getContextPath()%>/order/paymentsComplete",
+						type: "post",
+						data: {
+							merchant_uid: rsp.merchant_uid,
+							imp_uid: rsp.imp_uid,
+							memberId: "<%=m.getMemberId()%>",
+							payMethod: "card",
+							itemList: <%=itemList%>,
+							itemNoList: <%=itemNoList%>,
+							eaMap: <%=eaMap%>,
+							totalPrice: userTotalPrice
+						},
+						dataType: "json"
+					}).done(function(data){
+						var msg = '결제가 완료되었습니다.\n';
+						msg += '고유ID : ' + rsp.imp_uid+"\n";
+						msg += '상점 거래ID : ' + rsp.merchant_uid+"\n";
+						msg += '결제 금액 : ' + rsp.paid_amount+"\n";
+						msg += '카드 승인번호 : ' + rsp.apply_num+"\n";
+						alert(msg);
+					});
+					//성공 시 이동
+					location.href="<%=request.getContextPath()%>/order/orderSuccess";
+				} 
+				//결제 실패 시
+				else {
+					var msg = '결제에 실패하였습니다.\n';
+					msg += '에러내용 : ' + rsp.error_msg;
+					alert(msg);
+					
+					//실패 시 이동
+					location.href="<%=request.getContextPath()%>/order/orderFail";
+				}
+			});
+		} //end of card 
+		
+		//계좌이체 요청
+		if($radioChk==="trans"){
+			IMP.request_pay({
+				pg : 'inicis', 
+				pay_method : 'trans',
+				merchant_uid : 'merchant_' + new Date().getTime(),
+				name : '주문명:결제테스트',
+				amount : 14000,
+				buyer_email : 'iamport@siot.do',
+				buyer_name : '구매자이름',
+				buyer_tel : '010-1234-5678',
+				buyer_addr : '서울특별시 강남구 삼성동',
+				buyer_postcode : '123-456',
+				m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			}, function(rsp) {
+				if ( rsp.success ) {
+					var msg = '결제가 완료되었습니다.';
+					msg += '고유ID : ' + rsp.imp_uid;
+					msg += '상점 거래ID : ' + rsp.merchant_uid;
+					msg += '결제 금액 : ' + rsp.paid_amount;
+					msg += '카드 승인번호 : ' + rsp.apply_num;
+				} else {
+					var msg = '결제에 실패하였습니다.';
+					msg += '에러내용 : ' + rsp.error_msg;
+				}
+				alert(msg);
+			});
+		} //end of trans--%>
+		
+	}); //end of btnGoPay click
+});
+</script>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -31,15 +183,15 @@
             <ul id="orderer-content" class="list-inline list-unstyled row text-center">
                 <li class="col-md-4">
                     <span class="strong">주문자</span>
-                    <span class="dd">홍길동</span>
+                    <span class="dd"><%=m.getMemberName() %></span>
                 </li>
                 <li class="col-md-4">
                     <span class="strong">연락처</span>
-                    <span class="dd">010-1234-5678</span>
+                    <span class="dd"><%=tel%></span>
                 </li>
                 <li class="col-md-4">
                     <span class="strong">이메일</span>
-                    <span class="dd">honggd@naver.com</span>
+                    <span class="dd"><%=m.getMemberEmail() %></span>
                 </li>
             </ul>
         </div>
@@ -50,7 +202,7 @@
 <!-- 결제페이지 - 주문상품 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">주문상품</h3>
-    <p>주문상품 (<span class="em-blue strong">0</span>개)</p>
+    <p>주문상품 (<span class="em-blue strong"><%=itemList.size()%></span>개)</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -75,34 +227,51 @@
                     </tr>
                 </thead>
                 <tbody>
+                <%
+                	if(itemList!=null && !itemList.isEmpty()){
+                		for(int i=0; i<itemList.size(); i++){
+                			Item item = itemList.get(i);
+                			List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+                			
+                			int rentPeriod = 0; //렌탈기간
+                			double disRate = 0; //할인율
+                			if("RT01".equals(rentOptNo)){
+                				rentPeriod = 7;
+                				disRate = 0.98;
+                			}
+                			else if("RT02".equals(rentOptNo)){
+                				rentPeriod = 14;
+                				disRate = 0.95;
+                			}
+                			else{
+                				rentPeriod = 30;
+                				disRate = 0.90;
+                			}
+                			//렌탈할인 적용된 가격
+                			int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
+                			rentPrice = rentPrice*ea;
+                			String dP = dc.format(rentPrice);
+                %>
                     <tr>
                         <td class="item-info">
-                            <a href=""><img src="images/item.png" class="pull-left" alt=""></a>
-                            <a href="">
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
+                            <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %>&itemNo=<%=item.getItemNo()%>">
+                            	<img src="<%=request.getContextPath() %>/images/<%=item.getCategoryNo()%>/<%=imgList.get(0).getItemImageDefault() %>" class="pull-left" alt="상품 이미지">
                             </a>
-                            <p class="text-left price">렌탈료 <span class="em-price">2,170원</span>/일</p>
-                        </td>
-                        <td class="order-no">1개</td>
-                        <td>14일</td>
-                        <td>30,380원</td>
-                        <td>40,000원</td>
-                    </tr>
-                    <tr>
-                        <td class="item-info">
-                            <a href=""><img src="images/item.png" class="pull-left" alt=""></a>
-                            <a href="">
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
+                            <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %>&itemNo=<%=item.getItemNo()%>">
+                                <p class="text-left pbrand"><%=item.getItemBrand() %></p>
+                                <p class="text-left pname"><%=item.getItemName() %></p>
                             </a>
-                            <p class="text-left price">렌탈료 <span class="em-price">2,170원</span>/일</p>
+                            <p class="text-left price">렌탈료 <span class="em-price"><%=dP %></span>/<%=rentPeriod %>일</p>
                         </td>
-                        <td class="order-no">1개</td>
-                        <td>14일</td>
-                        <td>30,380원</td>
-                        <td>40,000원</td>
+                        <td class="order-no"><%=ea %>개</td>
+                        <td><%=rentPeriod %>일</td>
+                        <td class="itemPrice"><%=dP %></td>
+                        <td rowspan="<%=itemList.size() %>" class="shipPrice">4,000원</td>
                     </tr>
+                <%
+                		}
+                	}
+                %>
                 </tbody>
             </table>
         </div>
@@ -124,12 +293,12 @@
                 <form action="" id="orderFrm">
                     <div>
                         <label for="ordererName">수령인</label>
-                        <input type="text" name="ordererName" id="ordererName" placeholder="이름을 입력해주세요" required>
+                        <input type="text" name="ordererName" id="ordererName" value="<%=m.getMemberName()%>" readonly>
                     </div>
                     <div>
                         <label for="tel1">연락처</label>
                         <select name="tel1" id="tel1">
-                            <option value="010">010</option>
+                            <option value="010" selected>010</option>
                             <option value="011">011</option>
                             <option value="016">016</option>
                             <option value="017">017</option>
@@ -137,14 +306,14 @@
                             <option value="019">019</option>
                             <option value="070">070</option>
                         </select>
-                        <input type="text" name="tel2" id="tel2" class="phone" placeholder="'-'제외하고 입력해주세요" required>
+                        <input type="text" name="tel2" id="tel2" class="phone" value="<%=m.getMemberPhone().substring(3)%>" readonly>
                     </div>
                     <div>
                         <label for="postcode">주소</label>
-                        <input type="text" id="postcode" placeholder="우편번호" required readonly>
+                        <input type="text" id="postcode" placeholder="우편번호" value="<%=m.getMemberPostcode()%>" readonly>
                         <input type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()" value="우편번호 찾기"><br>
-                        <input type="text" id="address" placeholder="주소" required readonly><br>
-                        <input type="text" id="detailAddress" placeholder="상세주소" required>
+                        <input type="text" id="address" placeholder="주소" value="<%=m.getMemberAddress()%>" readonly><br>
+                        <input type="text" id="detailAddress" placeholder="상세주소" value="<%=m.getMemberDetailAddress()%>" readonly>
                     </div>
                     <div>
                         <label for="msg">배송메세지</label>
@@ -178,7 +347,7 @@
                         <p class="price-text">
                             주문금액
                             <span class="ship-price">(배송비포함)</span>
-                            <span class="strong em-pink ab-right">￦<span id="showPrice">25,280</span></span>
+                            <span class="strong em-pink ab-right">￦<span id="showPrice"></span></span>
                         </p>
                     </li>
                     <li class="point-wrapper">
@@ -186,15 +355,15 @@
                         <ul class="list-unstyled point-inner">
                             <li>
                                 <span class="have-point">보유포인트</span>
-                                <span class="memHave-wrapper"><span id="memberHavePoint">538</span>원</span>
+                                <span id="memberHavePoint"><%=uPoint %></span>
                             </li>
                             <li>
                                 <span class="use-point">사용포인트</span>
-                                <input type="number" id="inputPoint" class="text-right" value="0" step="10">
+                                <input type="text" id="inputPoint" class="text-right" value="0">
                                 <button type="button" id="btn-useAll" class="btn-radius">전액사용</button>
                             </li>
                         </ul>
-                        <span id="total-point" class="ab-right em-blue">￦<span id="showPoint">0</span></span>
+                        <span id="total-point" class="ab-right em-blue">￦<span id="showUsePoint">0</span></span>
                     </li>
                 </ul>
                 <!-- 최종 금액정보 -->
@@ -202,12 +371,12 @@
                     <h3 class="sr-only">최종결제금액</h3>
                     <p class="line-style text-center">최종결제 금액확인</p>
                     <ul class="list-unstyled">
-                        <li>주문상품<span class="ab-right">￦21,280</span></li>
-                        <li>배송비<span class="ab-right">￦4,000</span></li>
-                        <li>포인트 사용<span class="em-blue ab-right">￦<span id="userPoint">1,000</span></span></li>
+                        <li>주문상품<span class="ab-right">￦<span id="userItemPrice"></span></span></li>
+                        <li>배송비<span class="ab-right">￦<span id="userShipPrice"></span></span></li>
+                        <li>포인트 사용<span class="em-blue ab-right">￦<span id="userPoint">0</span></span></li>
                     </ul>
                     <div id="tt-price" class="line-style">
-                        <p>최종결제금액 <span id="ttPrice-inner" class="ab-right em-pink strong">￦<span>24,280</span></span></p>
+                        <p>최종결제금액 <span id="ttPrice-inner" class="ab-right em-pink strong">￦<span id="userTotalPrice"></span></span></p>
                     </div>
                 </div>
             </div>
@@ -227,10 +396,12 @@
             <!-- 결제수단 -->
             <div id="payType-wrapper" class="col-md-8">
                 <input type="radio" name="payType" id="payType" value="card"> 
-                <label for="payType">신용카드 결제</label>
+                <label for="payType">신용카드</label>
+                <input type="radio" name="payType" id="payType" value="trans"> 
+                <label for="payType">실시간 계좌이체</label>
             </div>
             <div id="goPay-wrapper" class="col-md-4">
-                <button type="button" class="bg-purple">주문하기</button>
+                <button type="button" id="btn-goPay" class="bg-purple">주문하기</button>
             </div>
         </div>
         <div class="col-md-1"></div>

@@ -325,7 +325,7 @@ footer, footer header{background: #aaaaac;}
 #order-item .item-info{padding: 20px;}
 #order-item .item-info .pbrand{font-size: 12px; font-weight: normal;}
 #order-item .item-info .price{font-size: 14px; color: #999;}
-#order-item .item-info .em-price{color: #333; font-weight: bold;}
+#order-item .item-info .em-price{color: #333; font-weight: bold; font-size: 16px;}
 #orderFrm #ordererName{width: 30%;}
 #orderFrm #te1{width: 34%;}
 #orderFrm #msg{width: 65%;}
@@ -341,7 +341,7 @@ footer, footer header{background: #aaaaac;}
 #price-wrapper input{width: 80px; height: 30px; padding: 0 10px; border: 1px solid;}
 .point-inner{position: absolute; top: 0; left: 100px;}
 .point-title{margin-right: 100px;}
-.memHave-wrapper{margin-left: 60px;}
+#memberHavePoint{margin-left: 53px;}
 .use-point{margin-right: 20px;}
 #inputPoint{margin-right: 10px;}
 #btn-useAll{line-height: 1.4;}
