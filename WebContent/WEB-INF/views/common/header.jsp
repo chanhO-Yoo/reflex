@@ -160,7 +160,7 @@
                         <li><a href="#">판매현황</a></li>
                         <li><a href="#">배송관리</a></li>
                         <li><a href="#">이용후기관리</a></li>
-                        <li><a href="#">1:1문의관리</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/member/memberQna">1:1문의관리</a></li>
                         <li><a href="<%=request.getContextPath()%>/admin/member/memberSearch">회원조회</a></li>
 
                     </ul>
