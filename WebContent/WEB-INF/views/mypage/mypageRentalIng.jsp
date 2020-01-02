@@ -2,9 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@page import="itemRentEach.model.vo.*" %>
+<%@ page import="java.util.List" %>
 <%
  	ItemRentEach IE=(ItemRentEach)request.getAttribute("ItemRentEach");
 
+	List<ItemRentEach> list =(List<ItemRentEach>)request.getAttribute("list");
 %>
 
 <!-- page nav -->
@@ -51,6 +53,7 @@
         <div class="col-md-10 content-wrapper">
             <section id="rent-list" class="list-wrapper">
                 <h3 class="sr-only">주문현황 리스트</h3>
+                
                 <table id="contracting-tbl" class="text-center list-tbl">
                     <thead>
                         <tr>
@@ -74,7 +77,7 @@
                                 <p class="pull-left rent-type">월청구</p>
                             </td>
                             <td class="rent-period">
-                                <p><%=IE.getItemRentStart() %>~<%=IE.getItemRentStart() %></p>
+                                <p><%=IE.getItemRentStart() %> ~ <%=IE.getItemRentEnd() %></p>
                                 <p class="em-blue">(11일 남음)</p>
                             </td>
                             <td class="em-purple">
@@ -83,6 +86,7 @@
                         </tr>
                     </tbody>
                 </table>
+               
             </section>
             <!-- 페이징바 -->
             <nav class="paging-bar text-center">
