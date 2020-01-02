@@ -16,7 +16,7 @@ String password = m.getMemberPassword();
             <!-- 탈퇴 전 비밀번호 확인 폼 -->
             <section class="form-wrapper">
                 <p class="text-center">회원탈퇴는 비밀번호 확인 후 가능합니다.</p>
-                <form action="<%=request.getContextPath()%>/memberDeleteEnd" id="leaveFrm">
+                <form id="leaveFrm">
                     <div class="text-center">
                         <input type="password" name="memberPwdChk" id="memberPwdChk" placeholder="비밀번호를 입력해주세요" required>
                     	<input type="hidden" name="memberId" id="memberId" value="<%= m.getMemberId() %>" readonly required>
