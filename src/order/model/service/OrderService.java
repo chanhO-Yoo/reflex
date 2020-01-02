@@ -19,6 +19,24 @@ public class OrderService {
 		close(conn);
 		return result;
 	}
+
+	public int selectItemInfoNo(int itemNo, int i) {
+		Connection conn = getConnection();
+		int itemInfoNo = new OrderDAO().selectItemInfoNo(conn, itemNo, i);
+		if(itemInfoNo>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return itemInfoNo;
+	}
+
+	public int updateOrderSheeetItemInfo(int itemNo, String rentOptNo, int i) {
+		Connection conn = getConnection();
+		int result = new OrderDAO().updateOrderSheeetItemInfo(conn, itemNo, rentOptNo, i);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 	
 }
