@@ -74,7 +74,6 @@ public class MyPagePointServlet extends HttpServlet {
 			
 			pageNo++;
 		}
-		
 		//3.다음
 		if(pageNo <= totalPage) {
 			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?memberId="+memberId+"&cPage="+pageNo+"'>[다음]</a>\n";							

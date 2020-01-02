@@ -37,13 +37,19 @@ String pageBar = (String)request.getAttribute("pageBar");
             <section class="my-header">
                 <h3 class="sr-only">사용할 수 있는 포인트 확인</h3>
                 <div class="line-style text-center">
+           		<%if(m == null) {%>
+                    <p>현재 사용가능한 포인트는 <span class="em-blue strong">0</span>원입니다.</p>
+                    <%} 
+                    else{%>
                     <p>현재 사용가능한 포인트는 <span class="em-blue strong"><%=m.getPointAmount()%></span>원입니다.</p>
+                    <%} %>
                 </div>
             </section>
         </div>
         <div class="col-md-1"></div>
     </div>
 </div>
+
 
 <!-- 기간검색 -->
 <div class="container-fluid line-style text-center">
