@@ -52,7 +52,11 @@ public class MemberUpdateEndServlet extends HttpServlet {
 		String memberHobby1 = null;
 		String memberHobby2 = null;
 
-		if(hobbyArr.length == 1) {
+		if(hobbyArr == null) {
+			memberHobby1 = null;
+			memberHobby2 = null;
+		}
+		else if(hobbyArr.length == 1) {
 			memberHobby1 = hobbyArr[0];
 			memberHobby2 = null;
 		}
@@ -60,9 +64,7 @@ public class MemberUpdateEndServlet extends HttpServlet {
 			memberHobby1 = hobbyArr[0];
 			memberHobby2 = hobbyArr[1];
 		}
-		else {
-			
-		}
+
 		
 		member.setMemberHobby1(memberHobby1);
 		member.setMemberHobby2(memberHobby2);
