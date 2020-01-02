@@ -46,6 +46,7 @@ public class OrderPaymentsCompleteServlet extends HttpServlet {
 			
 			//2. 주문상품정보테이블(order_sheet_itemInfo)에 업데이트
 			//order_sheet_item_info_no 가져오기 
+
 			int[] itemInfoNoArr = new int[ea]; //상품별 주문수량에 따른 itemInfo_no이 담기게 될 배열
 			
 			//Map<Integer, int[]> infoMap = new HashMap<>(); //키: 상품번호, 값: itemInfonoArr(주문수량에 따라 1~)

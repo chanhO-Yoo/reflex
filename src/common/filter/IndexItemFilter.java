@@ -19,7 +19,7 @@ import item.model.vo.Item;
 import item.model.vo.ItemImage;
 import member.model.vo.Member;
 
-@WebFilter("/index.jsp")
+@WebFilter("")
 public class IndexItemFilter implements Filter {
 
     public IndexItemFilter() {
@@ -65,6 +65,7 @@ public class IndexItemFilter implements Filter {
 			hobbyArr[0] = "CT01";
 			hobbyArr[1] = "CT04";
 		}
+		System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
 		for(String str : hobbyArr) {
 			switch(str) {
 			case "반려동물" : str="CT01"; break;
