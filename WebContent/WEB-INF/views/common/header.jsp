@@ -59,7 +59,7 @@
 					<%if(memberLoggedIn !=null && !"admin".equals(memberLoggedIn.getMemberId())) {%>
                     <li>
                         <h2 class="sr-only">장바구니</h2>
-                        <a href="<%=request.getContextPath()%>/member/memberCart" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                        <a href="<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberLoggedIn.getMemberId()%>" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                     </li>
                     <%} %>
                     <li>

@@ -8,30 +8,33 @@ public class OrderSheet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String orderNo;
-	private String impUid; //아임포트에서 발급하는 거래건당 고유번호
 	private String memberId;
 	private Date orderDate;
 	private String orderPayMethod;
 	private String orderPayStatus;
-	private int orderTotalCount;
+	private int orderTotalItemEa;
 	private int orderTotalPrice;
+	private int orderUsePoint;
+	private String impUid; //아임포트에서 발급하는 거래건당 고유번호
 	
 	public OrderSheet() {
 		super();
 	}
-
-	public OrderSheet(String orderNo, String impUid, String memberId, Date orderDate, String orderPayMethod,
-			String orderPayStatus, int orderTotalCount, int orderTotalPrice) {
+	
+	public OrderSheet(String orderNo, String memberId, Date orderDate, String orderPayMethod, String orderPayStatus,
+			int orderTotalItemEa, int orderTotalPrice, int orderUsePoint, String impUid) {
 		super();
 		this.orderNo = orderNo;
-		this.impUid = impUid;
 		this.memberId = memberId;
 		this.orderDate = orderDate;
 		this.orderPayMethod = orderPayMethod;
 		this.orderPayStatus = orderPayStatus;
-		this.orderTotalCount = orderTotalCount;
+		this.orderTotalItemEa = orderTotalItemEa;
 		this.orderTotalPrice = orderTotalPrice;
+		this.orderUsePoint = orderUsePoint;
+		this.impUid = impUid;
 	}
+
 
 	public String getOrderNo() {
 		return orderNo;
@@ -93,19 +96,28 @@ public class OrderSheet implements Serializable{
 		return serialVersionUID;
 	}
 
-	public int getOrderTotalCount() {
-		return orderTotalCount;
+	public int getOrderTotalItemEa() {
+		return orderTotalItemEa;
 	}
 
-	public void setOrderTotalCount(int orderTotalCount) {
-		this.orderTotalCount = orderTotalCount;
+	public void setOrderTotalItemEa(int orderTotalItemEa) {
+		this.orderTotalItemEa = orderTotalItemEa;
+	}
+
+	public int getOrderUsePoint() {
+		return orderUsePoint;
+	}
+
+	public void setOrderUsePoint(int orderUsePoint) {
+		this.orderUsePoint = orderUsePoint;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderSheet [orderNo=" + orderNo + ", impUid=" + impUid + ", memberId=" + memberId + ", orderDate="
-				+ orderDate + ", orderPayMethod=" + orderPayMethod + ", orderPayStatus=" + orderPayStatus
-				+ ", orderTotalCount=" + orderTotalCount + ", orderTotalPrice=" + orderTotalPrice + "]";
+		return "OrderSheet [orderNo=" + orderNo + ", memberId=" + memberId + ", orderDate=" + orderDate
+				+ ", orderPayMethod=" + orderPayMethod + ", orderPayStatus=" + orderPayStatus + ", orderTotalItemEa="
+				+ orderTotalItemEa + ", orderTotalPrice=" + orderTotalPrice + ", orderUsePoint=" + orderUsePoint
+				+ ", impUid=" + impUid + "]";
 	}
-	
+
 }
