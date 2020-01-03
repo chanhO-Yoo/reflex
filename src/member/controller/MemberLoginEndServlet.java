@@ -17,7 +17,10 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class MemberLoginServlet
  */
-@WebServlet("/member/memberLoginEnd")
+
+@WebServlet(name="MemberLoginEndServlet", 
+urlPatterns="/member/memberLoginEnd")
+
 public class MemberLoginEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -16,7 +16,7 @@ public class EncryptWrapper extends HttpServletRequestWrapper{
 		String value = "";
 		
 		//password속성인  경우 -> 암호화 처리
-		if("password".equals(key) || "password_new".equals(key)) {
+		if("memberPwd".equals(key) || "memberPwd_new".equals(key)) {
 //			System.out.println("암호화 전 password=["+super.getParameter(key)+"]");
 			
 			value=Utils.getSha512(super.getParameter(key));
