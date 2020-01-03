@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 Member m = (Member)request.getAttribute("member");
-String password = m.getMemberPassword();
 %>
 <div class="container-fluid line-style text-center contents none-nav form-header">
     <p>회원탈퇴</p>
@@ -43,7 +42,6 @@ function confirmDelete(){
 	
 
 	if("<%=m.getMemberPassword()%>"!=pwd_chk){
-
 		alert("비밀번호가 틀렸습니다.");
 		return false;
 	}

@@ -175,6 +175,51 @@ public class AdminService {
 		return result;
 	}
 
+	public String selectAns(int qNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		String ans = new AdminDAO().selectAns(conn, qNo);
+		
+		//트랜잭션처리
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return ans;
+	}
+
+	public List<Qna> selectqnaType(String qnaSearchword, int cPage, int numPerPage) {
+		List<Qna> list = null;
+		Connection conn = getConnection();
+		list = new AdminDAO().selectqnaType(conn, qnaSearchword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContentByqnaType(String qnaSearchword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContentByqnaType(conn, qnaSearchword);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Qna> selectqnaYN(String qnaSearchword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Qna> list = new AdminDAO().selectqnaYN(conn, qnaSearchword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContentByqnaYN(String qnaSearchword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContentByqnaYN(conn, qnaSearchword);
+		close(conn);
+		return totalContent;
+	}
+
+
+
 
 
 	

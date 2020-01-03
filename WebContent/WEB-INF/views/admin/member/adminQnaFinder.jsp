@@ -127,7 +127,6 @@ $(()=>{
               		<%}
               		else {%>
               		<td><a href="<%=request.getContextPath()%>/admin/member/memberQnaShow?qNo=<%=q.getqNo()%>"><%=q.getqTilte()%></a></td>
-              		
               		<%} %>
               		<td><%=q.getMemberId()%></td>
               		<td><%=q.getqDate()%></td>
@@ -139,10 +138,10 @@ $(()=>{
               	%>
             
             </table>
-        </div>
         <div  id="pageBar">
-		<%=pageBar %>
-	</div>
+			<%=pageBar %>
+		</div>
+        </div>
           <p class="col-md-12"><br><br></p>
     </div>
      <!-- 문의현황 테이블 끝 -->

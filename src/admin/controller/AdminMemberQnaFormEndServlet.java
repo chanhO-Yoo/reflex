@@ -35,7 +35,34 @@ public class AdminMemberQnaFormEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		String aContent = request.getParameter("aContent");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@"+qNo);
 		
+		//XSS공격대비 &문자변환
+		aContent = aContent.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\\n", "<br/>");
+		
+		QnaAns a = new QnaAns(0,qNo,"", null, aContent);
+		
+		System.out.println("qna form ens servlet - QnaAns @@  " + a);
+		
+		int result = new AdminService().insertAns(a);
+		
+		String msg = "";
+		String loc = "/admin/member/memberQna";
+		
+		if(result>0) {
+			msg = "1:1 문의답변 등록 성공!";
+		}
+		else {
+			msg = "1:1 문의답변 등록 실패!";
+		}
+		
+		//3.view단 처리
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp")
+			   .forward(request, response);
 		
 	}
 

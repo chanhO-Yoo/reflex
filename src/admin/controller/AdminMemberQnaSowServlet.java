@@ -17,14 +17,14 @@ import mypage.model.vo.Qna;
 /**
  * Servlet implementation class AdminMemberQnaFromServlet
  */
-@WebServlet("/admin/member/memberQnaForm")
-public class AdminMemberQnaFromServlet extends HttpServlet {
+@WebServlet("/admin/member/memberQnaShow")
+public class AdminMemberQnaSowServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMemberQnaFromServlet() {
+    public AdminMemberQnaSowServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,7 +40,7 @@ public class AdminMemberQnaFromServlet extends HttpServlet {
 				
 				//2.업무로직
 				Qna q = new AdminService().selectOne(qNo);
-			
+				String ans = new AdminService().selectAns(qNo);
 				
 				System.out.println("admin - member QNA Form@servlet="+q);
 				
@@ -54,10 +54,10 @@ public class AdminMemberQnaFromServlet extends HttpServlet {
 				}
 				else {
 					request.setAttribute("q", q);
+					request.setAttribute("ans", ans);
 					
 					
-					
-					view = "/WEB-INF/views/admin/member/admin_member_qnaFrom.jsp";			
+					view = "/WEB-INF/views/admin/member/admin_member_ansYes.jsp";			
 				}
 				request.getRequestDispatcher(view)
 					   .forward(request, response);

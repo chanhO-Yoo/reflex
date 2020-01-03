@@ -4,12 +4,12 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-List<Member> list = (List<Member>)request.getAttribute("list");
+	List<Member> list = (List<Member>)request.getAttribute("list");
 
-String searchType = request.getParameter("searchType");
-String searchKeyword = request.getParameter("searchKeyword");
+	String searchType = request.getParameter("searchType");
+	String searchKeyword = request.getParameter("searchKeyword");
 
-String pageBar = (String)request.getAttribute("pageBar");	
+	String pageBar = (String)request.getAttribute("pageBar");	
 %>
 <style>
 .height-45{
@@ -21,11 +21,8 @@ display:<%="memberId".equals(searchType)||searchType==null?"":"none"%>;
 div#search-memberName {
 display:<%="memberName".equals(searchType)?"":"none"%>;
 }
-
-
-
-
 </style>
+
 <script>
 $(()=>{
 	var $searchMemberId = $("#search-memberId");
@@ -41,17 +38,14 @@ $(()=>{
 
 function confirmDelete(){
 	
-	    var bool = confirm("정말 삭제하시겠습니까?");
-    	
-	    console.log(bool);
-	    
-    	if(bool==false){
-    		return false;
-    	}
-    	else{
-	        return true;
-    	}
-	
+	var bool = confirm("정말 삭제하시겠습니까?");
+ 
+   	if(bool==false){
+   		return false;
+   	}
+   	else{
+        return true;
+   	}
 }
 </script>
 
@@ -76,7 +70,7 @@ function confirmDelete(){
             
             <div id="search-container" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                 
-                <form action="<%=request.getContextPath()%>/admin/member/memberFinder" class="form-inline" >
+                <form action="<%=request.getContextPath()%>/admin/member/memberFinder" class="form-inline" method="get" >
                     <!-- 회원검색 - 검색 종류 선택 -->
                     <div class="form-group">
                         <select id="searchType" class="form-control">
@@ -85,8 +79,7 @@ function confirmDelete(){
                         </select>
                    
                     <!-- 회원검색 - 검색어 입력 -->
-                    
-                    <div id="search-memberId" class="form-group">
+                       <div id="search-memberId" class="form-group">
                     	<form action="<%=request.getContextPath()%>/admin/member/memberFinder">
                       		<input type="hidden" name="searchType" value="memberId"/>
                       		<input type="text" name="searchKeyword"  class="form-control" 
@@ -105,7 +98,8 @@ function confirmDelete(){
                     		<button type="submit" class="btn btn-default">검색</button>
                      	</form>
                     </div>
-                     </div>
+                    
+                   </div>
                 </form>
                 
             </div>

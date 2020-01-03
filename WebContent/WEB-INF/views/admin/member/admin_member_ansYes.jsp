@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	Qna q = (Qna)request.getAttribute("q");
+	String ans = (String)request.getAttribute("ans");
 %>
 <!-- page nav -->
 <nav class="line-style page-nav">
@@ -34,9 +35,7 @@
 	                </div>
 	                <div class="qContent-wrapper">
 	                    <label for="q-content">문의내용</label>
-	                   
 	                    <textarea name="qContent" id="q-content" cols="50" rows="10" readonly><%=q.getqContent()%></textarea>
-	                 
 	                </div>
 	                <div class="file-wrapper">
 	                    <label for="up-file">첨부된 파일</label>
@@ -45,12 +44,11 @@
 	                <div class="memberId-wrapper"></div>
 	                <div class="aContent-wrapper">
 	                    <label for="a-content">문의답변</label>
-	                    <textarea name="aContent" id="a-content" cols="50" rows="5" ></textarea>
+	                    <textarea name="aContent" id="a-content" cols="50" rows="5" readonly><%=ans%></textarea>
 	                </div>
 	                <input type="hidden" value="<%=q.getqNo()%>" name="qNo"/>
                 	<div class="btnForm-wrapper text-center">
-                    	<button type="button" class="btn-radius" onclick="exit();">취소</button>
-                    	<button type="submit" class="btn-radius">등록</button>
+                    	<button type="button" class="btn-radius" onclick="exit();">확인</button>
                 	</div>
 	            </form>
 	        </section>
