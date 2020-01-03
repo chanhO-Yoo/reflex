@@ -12,8 +12,21 @@
 List<List<Item>> itemListList = (List<List<Item>>)request.getAttribute("itemListList");
 List<ItemImage> imgListList = (List<ItemImage>)request.getAttribute("imgListList");
 String[] hobbyArr = (String[])request.getAttribute("hobbyArr");
+String[] hobbyNoArr = {"",""};
 if(hobbyArr!=null){
-	System.out.println("hobbyArr = "+hobbyArr.toString());
+	for(int i=0; i<hobbyArr.length;i++){
+		String str=hobbyArr[i];
+		String hobbyNo = "";
+		switch(str){
+		case "반려동물": hobbyNo = "CT01"; break;
+		case "육아": hobbyNo = "CT02"; break;
+		case "파티": hobbyNo = "CT03"; break;
+		case "운동": hobbyNo = "CT04"; break;
+		case "여행": hobbyNo = "CT05"; break;
+		case "캠핑": hobbyNo = "CT06"; break;
+		}
+		hobbyNoArr[i] = hobbyNo;
+	}
 	
 }
 int imgNo = 0;
@@ -55,8 +68,8 @@ System.out.println("imgListList@index.jsp="+imgListList);
         </div>
         <!-- 추천상품목록1 -->
         <div class="line-style rcmd-cate-header">
-            <a href="#">
-                추천 카테고리1
+            <a href="<%=request.getContextPath()%>/item/itemList?categoryNo=<%=hobbyNoArr[0] %>">
+                추천 카테고리 - <%=hobbyArr[0] %>
                 <span class="glyphicon glyphicon-plus cate-plus" aria-hidden="true"></span>
                 <span class="sr-only">추천 카테고리1로 이동</span>
             </a>
@@ -85,7 +98,7 @@ System.out.println("imgListList@index.jsp="+imgListList);
 				String dP = dc.format(discountedPrice);
 %>
 		<div class="col-md-3">
-		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %> &itemNo=<%=item.getItemNo()%>" class="center-block">
+		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %>&itemNo=<%=item.getItemNo()%>" class="center-block">
 		        <img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo() %>/<%=imgListList.get(imgNo).getItemImageDefault()%>" alt="item" class="center-block">
 		        <div class="ptext-wrapper">
 		            <p class="pbrand"><%=item.getItemBrand() %></p>
@@ -132,8 +145,8 @@ System.out.println("imgListList@index.jsp="+imgListList);
         </div>
         <!-- 추천상품목록2 -->
         <div class="line-style rcmd-cate-header">
-            <a href="#">
-                추천 카테고리2
+            <a href="<%=request.getContextPath()%>/item/itemList?categoryNo=<%=hobbyNoArr[1] %>">
+                추천 카테고리 - <%=hobbyArr[1] %>
                 <span class="glyphicon glyphicon-plus cate-plus" aria-hidden="true"></span>
                 <span class="sr-only">추천 카테고리1로 이동</span>
             </a>
