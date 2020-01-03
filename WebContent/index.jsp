@@ -12,7 +12,7 @@
 List<List<Item>> itemListList = (List<List<Item>>)request.getAttribute("itemListList");
 List<ItemImage> imgListList = (List<ItemImage>)request.getAttribute("imgListList");
 String[] hobbyArr = (String[])request.getAttribute("hobbyArr");
-System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
+//System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
 String[] hobbyNoArr = {"",""};
 if(hobbyArr!=null){
 	for(int i=0; i<hobbyArr.length;i++){
@@ -32,8 +32,8 @@ if(hobbyArr!=null){
 }
 int imgNo = 0;
 
-System.out.println("itemListList@index.jsp="+itemListList);
-System.out.println("imgListList@index.jsp="+imgListList);
+//System.out.println("itemListList@index.jsp="+itemListList);
+//System.out.println("imgListList@index.jsp="+imgListList);
 %>
 
     <div class="container-fluid contents none-nav">
@@ -68,7 +68,7 @@ System.out.println("imgListList@index.jsp="+imgListList);
             <a href="<%=request.getContextPath()%>/faq/faqIndex"><p><span class="eng">re:flex</span>의 렌탈서비스가 궁금하다면?</p></a>
         </div>
         <!-- 추천상품목록1 -->
-        <div class="line-style rcmd-cate-header">
+ <%--        <div class="line-style rcmd-cate-header">
             <a href="<%=request.getContextPath()%>/item/itemList?categoryNo=<%=hobbyNoArr[0] %>">
                 추천 카테고리 - <%=hobbyArr[0] %>
                 <span class="glyphicon glyphicon-plus cate-plus" aria-hidden="true"></span>
@@ -218,7 +218,7 @@ System.out.println("imgListList@index.jsp="+imgListList);
         <div id="go-to-top" class="btn-bottom">
             <button type="button" id="btn-gotop" class="center-block">맨 위로 이동</button>
         </div>
-    </div>
+    </div> --%>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

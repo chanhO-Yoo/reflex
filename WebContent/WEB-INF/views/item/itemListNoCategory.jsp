@@ -43,9 +43,8 @@ document.addEventListener('DOMContentLoaded', function(){
             <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
-        <li class="go-boxmenu">
-            <a href="">이럴 때 빌려봐</a>
-            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        <li>
+        	상품검색
         </li>
         <li class="pull-right">
             <select name="filterType" id="filterType">

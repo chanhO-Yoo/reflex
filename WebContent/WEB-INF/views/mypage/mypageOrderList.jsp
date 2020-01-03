@@ -10,7 +10,7 @@
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
-            <a href="">마이페이지</a>
+            <a href="<%=request.getContextPath()%>/common/boxMenu?level1=mypage">마이페이지</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li>주문현황</li>

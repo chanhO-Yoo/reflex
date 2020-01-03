@@ -106,40 +106,45 @@
 	                </tbody>
 	            </table>
 	        </section>
-        <!-- 장바구니 선택옵션 -->
+        	<!-- 장바구니 선택옵션 -->
 	        <section class="itemChk-wrapper">
 	            <h3 class="sr-only">장바구니 선택옵션</h3>
 	            <p>선택상품을</p>
 	            <button id="deleteBtn" type="button" class="btn-radius btn-chkDel">삭제하기</button>
 	            <div class="btnChkAll-wrapper pull-right">
-	                <button type="button" class="btn-radius btn-chkAllDel">선택주문</button>
-	                <button type="button" class="btn-radius btn-chkAllDel">전체주문</button>
+	                <button type="button" class="btn-radius btn-chkAll">전체선택</button>
+	                <button type="button" class="btn-radius btn-chkAllDel">전체삭제</button>
 	            </div>
 	        </section>
 	        <!-- 장바구니 선택/전체상품 가격보기 -->
-            <section id="view-totalPrice">
+            <section id="cartPrice-wrapper" class="row">
                 <h3 class="sr-only">장바구니 선택/전체상품 가격보기</h3>
-                <ul class="list-unstyled list-inline row">
-                    <li class="col-md-4">선택한 상품 <span id="totalitemCount">0</span>개의</li>
-                    <li class="col-md-2">
-                        <p>상품금액</p>
-                        <p><span id="totalPrice">0</span>원</p>
-                    </li>
-                    <li class="col-md-1"> 
-                        +
-                    </li>
-                    <li class="col-md-2">
-                        <p>배송비</p>
-                        <p><span id="DELprice">0</span>원</p>
-                    </li>
-                    <li class="col-md-1">
-                        =
-                    </li>
-                    <li class="col-md-2">
-                        <p>결제예상금액</p>
-                        <p><span id="realTotalPrice">0</span>원</p>
-                    </li>
-                </ul>
+                <div class="col-md-3">
+                    <p>선택한 상품 <span class="strong em-blue">1</span>개의</p>
+                </div>
+                <div class="col-md-9">
+                    <ul class="list-unstyled list-inline row">
+                        <li class="col-md-4 text-center cartPrice-inner">
+                            <p>상품금액</p>
+                            <p class="strong price">30,380원</p>
+                            <span class="symbol">+</span>
+                        </li>
+                        <li class="col-md-4 text-center cartPrice-inner">
+                            <p>배송비</p>
+                            <p class="strong price">4,000원</p>
+                            <span class="symbol">=</span>
+                        </li>
+                        <li class="col-md-4 text-center cartPrice-inner">
+                            <p>결제예상금액</p>
+                            <p class="strong em-pink price">34,380원</p>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 주문하기 버튼 -->
+                <div class="col-md-12 btnOrder-wrapper text-center">
+                    <button type="button" id="btn-orderChk" class="btn-radius">선택주문</button>
+                    <button type="button" id="btn-orderAll" class="btn-radius">전체주문</button>
+                </div>
             </section>
         </div>
         <div class="col-md-1"></div>

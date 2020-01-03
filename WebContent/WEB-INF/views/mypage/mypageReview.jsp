@@ -39,7 +39,7 @@ function showContent(btn, sectionId){
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
-            <a href="">마이페이지</a>
+            <a href="<%=request.getContextPath()%>/common/boxMenu?level1=mypage">마이페이지</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li>이용후기 내역</li>
@@ -84,14 +84,14 @@ function showContent(btn, sectionId){
                         <div class="item-img col-md-3 text-center">
                             <a href=""><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
                         </div>
-                        <div class="wish-info item-info col-md-7">
+                        <div class="wish-info item-info col-md-6">
                             <a href="">
                                 <p class="text-left pbrand">BABYZEN</p>
                                 <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
                             </a>
                             <p class="ship-date">렌탈 시작일 2019.12.22일</p>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>
@@ -99,14 +99,14 @@ function showContent(btn, sectionId){
                         <div class="item-img col-md-3 text-center">
                             <a href=""><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
                         </div>
-                        <div class="wish-info item-info col-md-7">
+                        <div class="wish-info item-info col-md-6">
                             <a href="">
                                 <p class="text-left pbrand">BABYZEN</p>
                                 <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
                             </a>
                             <p class="ship-date">렌탈 시작일 2019.12.22일</p>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <a href="<%=request.getContextPath()%>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기쓰기</a>
                         </div>
                     </li>

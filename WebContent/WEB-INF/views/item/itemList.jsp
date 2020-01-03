@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
-            <a href="">이럴 때 빌려봐</a>
+            <a href="<%=request.getContextPath()%>/common/boxMenu?level1=when">이럴 때 빌려봐</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <% 

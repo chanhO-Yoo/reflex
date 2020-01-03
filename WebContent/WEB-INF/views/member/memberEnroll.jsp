@@ -160,9 +160,9 @@ function Postcode() {
 	                <div class="row">
 	                    <label for="postcode" class="col-md-3">주소<span class="req">*</span></label>
 	                    <input type="text" name="memberPostcode" id="postcode" placeholder="우편번호" required readonly>
-	                    <input type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()" value="우편번호 찾기"><br>
-	                      <input type="text" name="memberAddress1" id="address" placeholder="주소" required readonly><br>
-	                      <input type="text" name="memberAddress2" id="detailAddress" placeholder="상세주소" required>
+	                    <button type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()">우편번호 찾기</button><br>
+	                    <input type="text" name="memberAddress1" id="address" placeholder="주소" required readonly><br>
+	                    <input type="text" name="memberAddress2" id="detailAddress" placeholder="상세주소" required>
 	                  </div>
 	                  <div class="hobby-wrapper">
 	                      <p class="col-md-3">관심사<span class="req">*최대 2개</span></p>

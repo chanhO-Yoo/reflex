@@ -148,6 +148,11 @@ header{background: white;}
 #header-second li a {padding: 12px 15px;}
 
 
+/* box menu */
+#boxmenu li{height: 120px; padding: 0; border: 1px solid; border-width: 1px 1px 0 0;}
+#boxmenu li:nth-of-type(1), #boxmenu li:nth-of-type(2), #boxmenu li:nth-of-type(3){border-top: 0;}
+#boxmenu li.three-times{border-right: 0;}
+#boxmenu li a{width: 100%; padding: 50px 0;}
 
 
 /* footer.jsp */

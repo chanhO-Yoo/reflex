@@ -102,8 +102,6 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 		} //end of card 
 		
-		
-		
 		<%-- //카드 결제요청
 		if($radioChk==="card"){
 			$.ajax({
