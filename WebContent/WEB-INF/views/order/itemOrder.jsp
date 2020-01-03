@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function(){
 						alert(msg);
 					});
 					//성공 시 이동
-					<%-- location.href="<%=request.getContextPath()%>/order/orderSuccess"; --%>
+					location.href="<%=request.getContextPath()%>/order/orderSuccess?orderNo="+rsp.merchant_uid;
 				} 
 				//결제 실패 시
 				else {
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function(){
 					alert(msg);
 					
 					//실패 시 이동
-					<%-- location.href="<%=request.getContextPath()%>/order/orderFail"; --%>
+					location.href="<%=request.getContextPath()%>/order/orderFail";
 				}
 			});
 		} //end of card 

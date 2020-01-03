@@ -111,8 +111,8 @@
                     <ul class="list-unstyled">
                         <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT01">반려동물과 함께 할 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT02">육아할 때</a></li>
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">파티할 때</a></li>
-                        <li><a href="<%=request.getContextPath()%>/item/itemList">운동할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT03">파티할 때</a></li>
+                        <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT04">운동할 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT05">여행갈 때</a></li>
                         <li><a href="<%=request.getContextPath()%>/item/itemList?categoryNo=CT06">캠핑갈 때</a></li>
                     </ul>

@@ -122,26 +122,26 @@ function Postcode() {
             <!-- 회원가입 폼 -->
           	<section class="form-wrapper">
             	<form action="<%=request.getContextPath()%>/member/memberEnrollEnd" name="memberEnrollFrm" id="signUpFrm" method="post" onsubmit="return enrollValidate();">
-	                <div>
-	                    <label for="memberName">이름<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="memberName" class="col-md-3">이름<span class="req">*</span></label>
 	                    <input type="text" name="memberName" id="memberName" placeholder="이름을 입력해주세요" required>
 	                </div>
-	                <div>
-	                    <label for="memberId">아이디<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="memberId" class="col-md-3">아이디<span class="req">*</span></label>
 	                    <input type="text" name="memberId" id="memberId" placeholder="아이디를 입력해주세요" required>
-	                    <input type="button" id="btn-idcheck" class="btn-radius" value="아이디 중복검사" onclick="checkIdDuplicate();"/>
+	                    <button type="button" id="btn-idcheck" class="btn-radius" onclick="checkIdDuplicate();">아이디 중복검사</button>
 	                    <input type="hidden" id="idValid" value="0" />
 	                </div>
-	                <div>
-	                    <label for="memberPwd">비밀번호<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="memberPwd" class="col-md-3">비밀번호<span class="req">*</span></label>
 	                    <input type="password" name="memberPwd" id="memberPwd" placeholder="비밀번호를 입력해주세요" required>
 	                </div>
-	                <div>
-	                    <label for="memberPwdChk">비밀번호 확인<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="memberPwdChk" class="col-md-3">비밀번호 확인<span class="req">*</span></label>
 	                    <input type="password" name="memberPwdChk" id="memberPwdChk" placeholder="비밀번호를 확인해주세요" required>
 	                </div>
-	                <div>
-	                    <label for="tel1">연락처<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="tel1" class="col-md-3">연락처<span class="req">*</span></label>
 	                    <select name="tel1" id="tel1">
 	                        <option value="010">010</option>
 	                        <option value="011">011</option>
@@ -153,19 +153,19 @@ function Postcode() {
 	                    </select>
 	                    <input type="text" name="tel2" id="tel2" class="phone" placeholder="'-'제외하고 입력해주세요" required>
 	                </div>
-	                <div>
-	                    <label for="memberEmail">이메일<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="memberEmail" class="col-md-3">이메일<span class="req">*</span></label>
 	                    <input type="email" name="memberEmail" id="memberEmail" placeholder="이메일을 입력해주세요" required>
 	                </div>
-	                <div>
-	                    <label for="postcode">주소<span class="req">*</span></label>
+	                <div class="row">
+	                    <label for="postcode" class="col-md-3">주소<span class="req">*</span></label>
 	                    <input type="text" name="memberPostcode" id="postcode" placeholder="우편번호" required readonly>
 	                    <input type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()" value="우편번호 찾기"><br>
 	                      <input type="text" name="memberAddress1" id="address" placeholder="주소" required readonly><br>
 	                      <input type="text" name="memberAddress2" id="detailAddress" placeholder="상세주소" required>
 	                  </div>
 	                  <div class="hobby-wrapper">
-	                      <p>관심사<span class="req">*최대 2개</span></p>
+	                      <p class="col-md-3">관심사<span class="req">*최대 2개</span></p>
 	                      <div class="hobby-inner">
 	                          <input type="checkbox" name="hobby" id="hobby1" value="육아">
 	                          <label for="hobby1">육아</label>
