@@ -12,6 +12,7 @@
 List<List<Item>> itemListList = (List<List<Item>>)request.getAttribute("itemListList");
 List<ItemImage> imgListList = (List<ItemImage>)request.getAttribute("imgListList");
 String[] hobbyArr = (String[])request.getAttribute("hobbyArr");
+System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
 String[] hobbyNoArr = {"",""};
 if(hobbyArr!=null){
 	for(int i=0; i<hobbyArr.length;i++){

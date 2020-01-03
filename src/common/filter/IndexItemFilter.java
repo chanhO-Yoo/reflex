@@ -19,7 +19,7 @@ import item.model.vo.Item;
 import item.model.vo.ItemImage;
 import member.model.vo.Member;
 
-@WebFilter("")
+@WebFilter("/index.jsp")
 public class IndexItemFilter implements Filter {
 
     public IndexItemFilter() {
@@ -49,12 +49,12 @@ public class IndexItemFilter implements Filter {
 		//로그인한 경우
 		if(memberLoggedIn != null) {
 			if(memberLoggedIn.getMemberHobby1() == null) {
-				hobbyArr[0] = "CT01";
-				hobbyArr[1] = "CT04";
+				hobbyArr[0] = "반려동물";
+				hobbyArr[1] = "운동";
 			}
 			else if(memberLoggedIn.getMemberHobby2() == null) {
 				hobbyArr[0] = memberLoggedIn.getMemberHobby1();
-				hobbyArr[1] = "CT04";
+				hobbyArr[1] = "운동";
 			}
 			else {
 				hobbyArr[0] = memberLoggedIn.getMemberHobby1();
@@ -62,8 +62,8 @@ public class IndexItemFilter implements Filter {
 			}
 		}
 		else {
-			hobbyArr[0] = "CT01";
-			hobbyArr[1] = "CT04";
+			hobbyArr[0] = "반려동물";
+			hobbyArr[1] = "운동";
 		}
 		System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
 		for(String str : hobbyArr) {
@@ -110,6 +110,7 @@ public class IndexItemFilter implements Filter {
 		}
 		
 		request.setAttribute("hobbyArr", hobbyArr);
+		System.out.println("hobbyArr@filter"+hobbyArr);
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 				
