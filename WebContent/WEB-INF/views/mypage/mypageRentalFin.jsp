@@ -1,7 +1,24 @@
+<%@page import="rent.model.vo.rent" %>
+<%@page import="java.util.List"%>
+<%@page import="item.model.vo.ItemImage"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+
+<%
+	List<rent>	list= (List<rent>)request.getAttribute("list");
+	int cntfin = (int)request.getAttribute("cntfin");
+
+
+	//위시리스트 ajax - 회원아이디 담아놓기
+	String memberId = "";
+	if(memberLoggedIn!=null) memberId = memberLoggedIn.getMemberId();
+	else memberId = "null";
+
+%>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -17,6 +34,8 @@
     </ul>
 </nav>
 
+
+
 <!-- 종료된 렌탈 헤더-->
 <div class="container-fluid contents">
     <div class="row">
@@ -26,7 +45,7 @@
             <section class="my-header">
                 <h3 class="sr-only">종료된 렌탈 상태 보기</h3>
                 <div class="line-style text-center">
-                    <p>종료된 렌탈 <span class="em-blue">0</span>건</p>
+                    <p>종료된 렌탈 <span class="em-blue"><%=cntfin %></span>건</p>
                 </div>
             </section>
         </div>
@@ -62,6 +81,8 @@
     </div>
 </div>
 
+
+
 <!-- 종료된 렌탈 리스트 -->
 <div class="container-fluid line-style text-center">
     <p>종료된 계약 상품 정보</p>
@@ -79,29 +100,54 @@
                             <th class="text-center">상품정보</th>
                             <th class="text-center">렌탈기간</th>
                             <th class="text-center">상태</th>
+                            
+
                         </tr>
+                        
+
                     </thead>
-                    <tbody>
-                        <tr>
+                     <tbody>
+                     
+<%
+			if (list != null && list.size() > 0) {
+				//for (int i =0; list.size() > i; i++) {
+				for(rent b :list){
+%>
+                       <tr>
                             <td>
-                                <p>CT18010005664</p>
-                                <p>[2019/10/8]</p>
+                                <p><%= b.getItemNo() %></p>
+                                <p><%= b.getItemRentStart() %></p>
                             </td>
                             <td class="item-info">
                                 <a href=""><img src="<%=request.getContextPath()%>/images/item.png" class="pull-left" alt=""></a>
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                                <p class="text-left price">31,620원 /<span class="rent-period"> 3개월</p>
+                                <p class="text-left pbrand"><%=b.getItemBrand() %></p>
+                                <p class="text-left pname"><%=b.getItemName() %></p>
+                                <p class="text-left price"><%=b.getItemPrice() %> <span class="rent-period"> 3개월</p>
                                 <p class="pull-left rent-type">월청구</p>
                             </td>
                             <td class="rent-period">
-                                <p class="finished">2019/10/11~2019/12/11</p>
+                                <p class="finished"><%=b.getItemRentStart() +"~" + b.getItemRentEnd()%></p>
                             </td>
-                            <td class="em-purple">
+                         <td class="em-purple">
                                 <p>계약종료</p>
                             </td>
-                        </tr>
-                    </tbody>
+                            
+                        </tr> 
+                    </tbody> 
+                    
+<%
+						}
+					} else {
+					    out.println("<td>");
+					    out.println("렌탈 종료된 상품이 없습니다.");
+					    out.println("</td>");
+					   
+					}
+%>                   
+
+
+
+
                 </table>
             </section>
             <!-- 페이징바 -->

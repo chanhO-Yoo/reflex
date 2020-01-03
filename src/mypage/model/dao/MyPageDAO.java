@@ -5,6 +5,7 @@ import static common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.catalina.filters.RestCsrfPreventionFilter;
+
+import com.sun.org.glassfish.external.statistics.annotations.Reset;
+
 import member.model.dao.MemberDAO;
 import mypage.model.exception.MypageException;
 import mypage.model.vo.MyPage;
 import mypage.model.vo.Wishlist;
 import mypage.model.vo.WishlistItem;
+import rent.model.vo.rent;
+import member.model.vo.*;
+import item.model.vo.*;
 
 public class MyPageDAO {
 	
@@ -255,10 +263,49 @@ public class MyPageDAO {
 		
 		return totalContent;
 	}
-	
 
+	//종료된 렌탈
+	public List<rent> finishviewList(Connection conn, String itemNo) {
+		
+		List<rent> rentList = new ArrayList<>();
+		
+		rent r = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = " SELECT * FROM ITEM_RENT_EACH WHERE ITEM_RENT_USER = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1 , itemNo );
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				r = new rent();
+				r.setItemNo(rset.getInt("item_no"));
+				r.setItemEachNo(rset.getInt("Item_Each_No("));
+				r.setItemRentEnd(rset.getDate("item_rent_end"));
+				r.setItemRentStart(rset.getDate("item_rent_start"));
+				r.setItemRentUser(rset.getString("item_rent_user"));
+				r.setItemRentYN((rset.getString("item_rent_yn")).charAt(0));
+				r.setRentOptNo(rset.getString("rent_opt_no"));
 
-
-	
-
+				
+				rentList.add(r);
+				
+				System.out.println("@@@DAO"+rentList);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rentList;
+	}
 }
