@@ -13,7 +13,8 @@ import javax.servlet.http.HttpSession;
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
-@WebServlet("/member/memberUpdateEnd")
+@WebServlet(name="MemberUpdateEndServlet", 
+urlPatterns="/member/memberUpdateEnd")
 public class MemberUpdateEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
