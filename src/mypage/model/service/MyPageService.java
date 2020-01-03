@@ -15,6 +15,8 @@ import mypage.model.vo.MyPage;
 import mypage.model.vo.Wishlist;
 import mypage.model.vo.WishlistItem;
 
+
+
 public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////
@@ -79,6 +81,7 @@ public class MyPageService {
 		close(conn);
 		return totalContent;
 	}
+	
 
 	public MyPage selectOne(String memberId) {
 		Connection conn = getConnection();
