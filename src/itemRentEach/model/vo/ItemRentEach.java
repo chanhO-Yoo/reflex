@@ -3,8 +3,12 @@ package itemRentEach.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class ItemRentEach  implements Serializable{
+import item.model.vo.Item;
 
+public class ItemRentEach  extends Item implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private int itemEachNo;
 	private int itemNo;
 	private char itemRentYN;

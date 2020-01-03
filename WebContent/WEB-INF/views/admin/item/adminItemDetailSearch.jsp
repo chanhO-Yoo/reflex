@@ -16,42 +16,11 @@
 	int rentItemNo = (int)request.getAttribute("rentItemNo");
 	
 %>
-<script>
-$(()=>{
-	var $search_item_name = $("#search_item_name");
-	var $search_category_no = $("#search_category_no");
-	
-	$("#searchType").change(function(){
-		$search_item_name.hide();
-		$search_category_no.hide();
-		
-		$("#search_"+$(this).val()).css("display", "inline-block");
-	});
-});
 
-function itemUpdate() {
-	if(!confirm("수정하시겠습니까?")){
-		return false;
-	}
-	location.href="<%=request.getContextPath()%>/admin/updateItem?itemNo="+$("#updateBtn").val();
-}
-
-function itemDelete(){
-	if(!confirm("삭제하시겠습니까?")){
-		return false;
-	}
-	location.href="<%=request.getContextPath()%>/admin/deleteItem?itemNo="+$("#deleteBtn").val();
-}
-
-function itemSearch() {
-	location.href="<%=request.getContextPath()%>/admin/searchDetailItem?itemNo="+$("#searchBtn").val();
-}
-</script>
 <style>
     .height-45{
         height: 45px;
     }
-	
 </style>
 
 		<!-- 메인 컨텐츠 -->
@@ -85,10 +54,16 @@ function itemSearch() {
                 <!-- 한줄 여백 -->
                 <div class="row height-45"></div>
 
+                 <!-- 상품검색 - 검색결과 서브제목 -->
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                        <h4>상품 정보</h4>
+                    </div>
+                </div>
+
                 <!-- 상품검색 - 서브제목 -->
                 <div class="row">
                     <div class="col-md-6 col-sm-8 col-xs-8 col-md-offset-3 ">
-                        <h4>상품 정보</h4>
                         <table class="table ">
                         <tr>
                         	<th>상품번호</th>

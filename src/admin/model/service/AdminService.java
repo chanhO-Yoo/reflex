@@ -150,9 +150,9 @@ public class AdminService {
 
 	public int rentItemNo(int itemNo) {
 		Connection conn = getConnection();
-		int rentItemYes = new AdminDAO().rentItemNo(conn,itemNo);
+		int rentItemNo = new AdminDAO().rentItemNo(conn,itemNo);
 		close(conn);
-		return rentItemYes;
+		return rentItemNo;
 	}
 
 	public List<ItemRentEach> selectItemEachList(int itemNo, int cPage, int numPerPage) {
@@ -161,6 +161,112 @@ public class AdminService {
 	     close(conn);
 	     return list;
 	}
+
+	public int selectTotalDetailItemAll() {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalDetailItemAll(conn);
+		close(conn);
+		return totalItem;
+	}
+
+	public int rentItemYesAll() {
+		Connection conn = getConnection();
+		int rentItemYes = new AdminDAO().rentItemYesAll(conn);
+		close(conn);
+		return rentItemYes;
+	}
+
+	public int rentItemNoAll() {
+		Connection conn = getConnection();
+		int rentItemNo = new AdminDAO().rentItemNoAll(conn);
+		close(conn);
+		return rentItemNo;
+	}
+
+	public List<ItemRentEach> selectItemEachListAll(int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<ItemRentEach> list= new AdminDAO().selectItemEachListAll(conn, cPage, numPerPage);
+	    close(conn);
+	    return list;
+	}
+
+	public List<ItemRentEach> selectItemEachListByItemName(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<ItemRentEach> list= new AdminDAO().selectItemEachListByItemName(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalItemEachByItemName(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalItemEachByItemName(conn, searchKeyword);
+		close(conn);
+		return totalItem;
+	}
+	
+	public int selectYesItemEachByItemName(String searchKeyword) {
+		Connection conn = getConnection();
+		int yesItem = new AdminDAO().selectYesItemEachByItemName(conn, searchKeyword);
+		close(conn);
+		return yesItem;
+	}
+	
+	public int selectNoItemEachByItemName(String searchKeyword) {
+		Connection conn = getConnection();
+		int noItem = new AdminDAO().selectNoItemEachByItemName(conn, searchKeyword);
+		close(conn);
+		return noItem;
+	}
+
+	public List<ItemRentEach> selectItemEachListByCategoryNo(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<ItemRentEach> list= new AdminDAO().selectItemEachListByCategoryNo(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalItemEachByCategoryNo(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalItemEachByCategoryNo(conn, searchKeyword);
+		close(conn);
+		return totalItem;
+	}
+	
+	public int selectYesItemEachByCategoryNo(String searchKeyword) {
+		Connection conn = getConnection();
+		int yesItem = new AdminDAO().selectYesItemEachByCategoryNo(conn, searchKeyword);
+		close(conn);
+		return yesItem;
+	}
+	
+	public int selectNoItemEachByCategoryNo(String searchKeyword) {
+		Connection conn = getConnection();
+		int noItem = new AdminDAO().selectNoItemEachByCategoryNo(conn, searchKeyword);
+		close(conn);
+		return noItem;
+	}
+
+
+	public List<ItemRentEach> selectItemEachListByRentYn(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<ItemRentEach> list= new AdminDAO().selectItemEachListByRentYn(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalItemEachByRent_yn(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalItem = new AdminDAO().selectTotalItemEachByRent_yn(conn, searchKeyword);
+		close(conn);
+		return totalItem;
+	}
+
+
+
+
+
+
+
 
 	
 	

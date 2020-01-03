@@ -671,6 +671,457 @@ public class AdminDAO {
 		return list;
 		
 	}
+
+	public int selectTotalDetailItemAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalDetailItemAll");
+		int totalItem = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalItem = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalItem@dao="+totalItem);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalItem;
+	}
+
+	public int rentItemYesAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("rentItemYesAll");
+		int rentItemYes = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rentItemYes = rset.getInt("cnt");
+			}
+			
+			System.out.println("rentItemYes@dao="+rentItemYes);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return rentItemYes;
+	}
+
+	public int rentItemNoAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("rentItemNoAll");
+		int rentItemNo = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				rentItemNo = rset.getInt("cnt");
+			}
+			
+			System.out.println("rentItemNo@dao="+rentItemNo);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return rentItemNo;
+	}
+
+	public List<ItemRentEach> selectItemEachListAll(Connection conn, int cPage, int numPerPage) {
+		List<ItemRentEach> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectItemEachListAll");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setInt(1,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(2, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				ItemRentEach i = new ItemRentEach();
+                //컬럼명은 대소문자 구분이 없다.
+				
+				i.setItemEachNo(rset.getInt("item_each_no"));
+				i.setItemNo(rset.getInt("item_no"));
+				i.setItemRentYN(rset.getString("item_rent_yn").charAt(0));
+				i.setRentOptNo(rset.getString("rent_opt_no"));
+				i.setItemRentStart(rset.getDate("item_rent_start"));
+				i.setItemRentEnd(rset.getDate("item_rent_end"));
+				i.setItemRentUser(rset.getString("item_rent_user"));
+				i.setItemName(rset.getString("item_name"));
+				i.setCategoryNo(rset.getString("category_no"));
+				
+				list.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<ItemRentEach> selectItemEachListByItemName(Connection conn, String searchKeyword, int cPage,
+			int numPerPage) {
+		List<ItemRentEach> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectItemEachListByItemName");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				ItemRentEach i = new ItemRentEach();
+                //컬럼명은 대소문자 구분이 없다.
+				i.setItemEachNo(rset.getInt("item_each_no"));
+				i.setItemNo(rset.getInt("item_no"));
+				i.setItemRentYN(rset.getString("item_rent_yn").charAt(0));
+				i.setRentOptNo(rset.getString("rent_opt_no"));
+				i.setItemRentStart(rset.getDate("item_rent_start"));
+				i.setItemRentEnd(rset.getDate("item_rent_end"));
+				i.setItemRentUser(rset.getString("item_rent_user"));
+				i.setItemName(rset.getString("item_name"));
+				i.setCategoryNo(rset.getString("category_no"));
+				
+				list.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	
+	}
+
+	public int selectTotalItemEachByItemName(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalItemEachByItemName");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+	
+	public int selectYesItemEachByItemName(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectYesItemEachByItemName");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+	
+	public int selectNoItemEachByItemName(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectNoItemEachByItemName");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+	public List<ItemRentEach> selectItemEachListByCategoryNo(Connection conn, String searchKeyword, int cPage,
+			int numPerPage) {
+		List<ItemRentEach> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectItemEachListByCategoryNo");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, searchKeyword);
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				ItemRentEach i = new ItemRentEach();
+                //컬럼명은 대소문자 구분이 없다.
+				i.setItemEachNo(rset.getInt("item_each_no"));
+				i.setItemNo(rset.getInt("item_no"));
+				i.setItemRentYN(rset.getString("item_rent_yn").charAt(0));
+				i.setRentOptNo(rset.getString("rent_opt_no"));
+				i.setItemRentStart(rset.getDate("item_rent_start"));
+				i.setItemRentEnd(rset.getDate("item_rent_end"));
+				i.setItemRentUser(rset.getString("item_rent_user"));
+				i.setItemName(rset.getString("item_name"));
+				i.setCategoryNo(rset.getString("category_no"));
+				
+				list.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int selectTotalItemEachByCategoryNo(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalItemEachByCategoryNo");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+	
+	public int selectYesItemEachByCategoryNo(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectYesItemEachByCategoryNo");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+	
+	public int selectNoItemEachByCategoryNo(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectNoItemEachByCategoryNo");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+	public List<ItemRentEach> selectItemEachListByRentYn(Connection conn, String searchKeyword, int cPage,
+			int numPerPage) {
+		List<ItemRentEach> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectItemEachListByRentYn");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, searchKeyword);
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				ItemRentEach i = new ItemRentEach();
+                //컬럼명은 대소문자 구분이 없다.
+				i.setItemEachNo(rset.getInt("item_each_no"));
+				i.setItemNo(rset.getInt("item_no"));
+				i.setItemRentYN(rset.getString("item_rent_yn").charAt(0));
+				i.setRentOptNo(rset.getString("rent_opt_no"));
+				i.setItemRentStart(rset.getDate("item_rent_start"));
+				i.setItemRentEnd(rset.getDate("item_rent_end"));
+				i.setItemRentUser(rset.getString("item_rent_user"));
+				i.setItemName(rset.getString("item_name"));
+				i.setCategoryNo(rset.getString("category_no"));
+				
+				list.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int selectTotalItemEachByRent_yn(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalItemEachByRent_yn");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+
+
+	
+	
 	
 	
 	
