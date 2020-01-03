@@ -16,7 +16,8 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class AdminMemberDeleteServlet
  */
-@WebServlet("/member/memberDeleteEnd")
+@WebServlet(name="MemberDeleteEndServlet", 
+urlPatterns="/member/memberDeleteEnd")
 public class MemberDeleteEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,9 +28,10 @@ public class MemberDeleteEndServlet extends HttpServlet {
 		//2.전송값 꺼내서 변수에 기록하기.
 				//String javax.servlet.ServletRequest.getParameter(String arg0)
 				String memberId = request.getParameter("memberId");
+				String memberPwd=request.getParameter("memberPwd");
 				System.out.println(memberId);
 				//3.서비스로직호출
-				int result = new MemberService().memberDelete(memberId);
+				int result = new MemberService().memberDelete(memberId,memberPwd);
 		
 		
 		
