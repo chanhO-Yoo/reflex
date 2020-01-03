@@ -75,7 +75,6 @@ function delChk(){
 		delChkFrm.submit();
 		
 	});
-	
 }
 </script>
 <!-- page nav -->
@@ -97,46 +96,39 @@ function delChk(){
 <div class="container-fluid contents">
     <div class="row">
         <div class="col-md-1"></div>
+        <%
+         //담긴 상품이 존재할 때
+         if(wishItemList!=null && !wishItemList.isEmpty()){
+         	for(int i=0; i<wishItemList.size(); i++){
+         		WishlistItem item = wishItemList.get(i);
+         		List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+         		
+         		int rentPeriod = 0; //렌탈기간
+         		double disRate = 0; //할인율
+         		if("RT01".equals(item.getRentOptNo())){
+         			rentPeriod = 7;
+         			disRate = 0.98;
+         		}
+         		else if("RT02".equals(item.getRentOptNo())){
+         			rentPeriod = 14;
+         			disRate = 0.95;
+         		}
+         		else{
+         			rentPeriod = 30;
+         			disRate = 0.90;
+         		}
+         		//렌탈할인 적용된 가격
+         		int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
+         		DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+         		String dP = dc.format(rentPrice);
+        %>
         <div class="col-md-10 content-wrapper">
             <h2 class="sr-only">위시리스트</h2>
             <!-- 위시리스트 목록 -->
             <section class="wishlist-wrapper">
                 <h3 class="sr-only">위시리스트 목록 보기</h3>
                 <ul class="list-unstyled wishlist-inner">
-                <%
-                	//위시리스트에 담긴 상품이 하나도 없을 때
-                	if(wishItemList!=null && wishItemList.isEmpty()){
-                %>
-                	<li id="warning-wrapper content-wrapper text-center" >
-						<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품이 없습니다.</p> 
-                	</li>
-                <%
-                	}
-                	//담긴 상품이 존재할 때
-                	if(wishItemList!=null && !wishItemList.isEmpty()){
-                		for(int i=0; i<wishItemList.size(); i++){
-                			WishlistItem item = wishItemList.get(i);
-                			List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
-                			
-                			int rentPeriod = 0; //렌탈기간
-                			double disRate = 0; //할인율
-                			if("RT01".equals(item.getRentOptNo())){
-                				rentPeriod = 7;
-                				disRate = 0.98;
-                			}
-                			else if("RT02".equals(item.getRentOptNo())){
-                				rentPeriod = 14;
-                				disRate = 0.95;
-                			}
-                			else{
-                				rentPeriod = 30;
-                				disRate = 0.90;
-                			}
-                			//렌탈할인 적용된 가격
-                			int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
-                			DecimalFormat dc = new DecimalFormat("###,###,###,###원");
-                			String dP = dc.format(rentPrice);
-                %>
+       
                     <li class="row">
                         <div class="item-chk col-md-1 text-center">
                             <input type="checkbox" name="chkWishlist" id="chkWishlist" value="<%=item.getItemNo()%>,<%=item.getRentOptNo()%>">
@@ -161,8 +153,7 @@ function delChk(){
                         </div>
                     </li>
                 <%
-                		}
-                	}
+                		} //end of for
                 %>
                 </ul>
             </section>
@@ -191,6 +182,15 @@ function delChk(){
                 </ol>
             </nav>
         </div>
+        <%
+        	} //end of if(상품 존재할 때)
+        	//위시리스트에 등록된 상품이 없을 때
+        	else{
+        %>
+        	<div id="warning-wrapper" class="col-md-10 content-wrapper text-center">
+				<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품이 없습니다.</p> 
+			</div>
+        <% } %>
         <div class="col-md-1"></div>
     </div>
 </div>

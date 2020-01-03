@@ -109,7 +109,7 @@ public class ItemService {
 	public int selectItemLastNo() {
 		Connection conn = getConnection();
 		int itemNo = new ItemDAO().selectItemLastNo(conn);
-		
+		close(conn);
 		return itemNo;
 	}
 
@@ -128,7 +128,7 @@ public class ItemService {
 	public Item selectOne(int itemNo) {
 		Connection conn = getConnection();
 		Item item = new ItemDAO().selectOne(conn,itemNo);
-		
+		close(conn);
 		return item;
 	}
 
@@ -148,7 +148,7 @@ public class ItemService {
 	public ItemImage selectImageOne(int itemMainImageNo) {
 		Connection conn = getConnection();
 		ItemImage itemImg = new ItemDAO().selectImageOne(conn,itemMainImageNo);
-		
+		close(conn);
 		return itemImg;
 	}
 

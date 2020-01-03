@@ -1,12 +1,11 @@
+<%@page import="item.model.vo.ItemImage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ page import="member.model.vo.*" %>
 <%@ page import="member.model.service.*" %>
 <%@ page import="java.util.*" %>
-
 <script src="<%=request.getContextPath()%>/js/cart.js"></script>
-	
 <%
 	String memberId = "";
 	if (memberLoggedIn == null) {
@@ -15,11 +14,10 @@
 		memberId = memberLoggedIn.getMemberId();	
 	}
 
-	List<Cart> cartList = new CartService().selectList(memberId);
+	List<Cart> cartList = (List<Cart>)request.getAttribute("cartList");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
 	
-	if(" ".equals(memberId)) {
-		pageContext.forward("/WEB-INF/views/member/memberLogin.jsp");
-	}
 %>
 
 <!-- page nav -->
@@ -60,53 +58,49 @@
 	                        <th class="text-center">수량</th>
 	                        <th class="text-center">기간</th>
 	                        <th class="text-center">주문상품금액</th>
-	                        <!-- <th class="text-center">배송비</th> -->
+	                        <th class="text-center">배송비</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
 <% 
 						int totalprice=0;
-					if (cartList != null && cartList.size() > 0) {
-						
-						for (int i =0; cartList.size() > i; i++) {
+						if (cartList != null && cartList.size() > 0) {
+							for (int i=0; i<cartList.size(); i++) {
+								List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
 %>
-	                <tr></tr>
 	                    <tr class ="cartRow">
 	                        <td class="item-chk">
-	                            <input type="checkbox" name="delCartlist" id="<%=cartList.get(i).getItem_no() %>" value="<%=cartList.get(i).getCartProdPrice() * cartList.get(i).getCartProdStock() %>"/>
+	                            <input type="checkbox" name="delCartlist" id="<%=cartList.get(i).getItemNo() %>" value="<%=cartList.get(i).getCartProdPrice() * cartList.get(i).getItemQuantity() %>"/>
 	                        </td>
 	                        <td class="item-info">
-	                            <a href=""><img src="images/item.png" class="pull-left" alt=""></a>
+	                            <a href=""><img src="<%=request.getContextPath()%>/images/<%=cartList.get(i).getCategoryNo()%>/<%=imgList.get(0).getItemImageDefault()%>" class="pull-left" alt=""></a>
 	                            <a href="">
 	                                <p class="text-left pbrand"><%=cartList.get(i).getCartProdBrand() %></p>
 	                                <p class="text-left pname"><%=cartList.get(i).getCartProdName() %></p>
 	                            </a>
-	                            <!-- <p class="text-left pbrand">BABYZEN</p>
-	                            <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p> -->
-	                            <p class="text-left price">렌탈료 <span class="em-price"><%=cartList.get(i).getCartProdRentalPrice() %>원</span>/일</p>
+	                            <p class="text-left price">렌탈료 <span class="em-price"><%=cartList.get(i).getCartProdPrice() %>원</span>/일</p>
 	                        </td>
 	                        <td>
 	                            <div id="sel-amount">
 	                                <label for="" class="sr-only">구매수량</label>
-	                                <button type="button" class="btn-minus-<%=cartList.get(i).getCart_No() %>"><span id="btn-minus" class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-	                                <input type="text" name="orderNo" id="orderNo" class="text-center" value="<%=cartList.get(i).getCartProdStock() %>" disabled />
+	                                <button type="button" class="btn-minus-<%=cartList.get(i).getCartNo() %>"><span id="btn-minus" class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+	                                <input type="text" name="orderNo" id="orderNo" class="text-center" value="<%=cartList.get(i).getItemQuantity() %>" disabled />
 	                                <button type="button" class="btn-plus"><span id="btn-plus" class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 	                            </div>
  	                            <button type="button" class="btn-radius btn-change">변경</button>
 	                        </td>
-	                        <td><%=cartList.get(i).getCartProdRentalTerm() %>일</td>
-	                        <td><span id="price_<%=cartList.get(i).getItem_no() %>"><%=cartList.get(i).getCartProdPrice() * cartList.get(i).getCartProdStock() %>원</span></td>
-	                        <%-- <td><%=cartList.get(i).getCartProdDeliveryFee() %>원</td> --%>
-	                        <input type="hidden" name="cartNo" value="<%=cartList.get(i).getCart_No() %>" />
+	                        <td>일</td>
+	                        <td><span id="price_<%=cartList.get(i).getItemNo() %>"><%=cartList.get(i).getCartProdPrice() * cartList.get(i).getItemQuantity() %>원</span></td>
+	                        <td>4,000원</td>
+	                        <input type="hidden" name="cartNo" value="<%=cartList.get(i).getCartNo() %>" />
 	                    </tr>
 	<%
-						totalprice += cartList.get(i).getCartProdPrice() * cartList.get(i).getCartProdStock();
+						totalprice += cartList.get(i).getCartProdPrice() * cartList.get(i).getItemQuantity();
 						}
 					} else {
-					    out.println("<td>");
-					    out.println("장바구니가 비어있습니다.");
-					    out.println("</td>");
-					   
+	%>
+					    <tr><td>장바구니에 담긴 상품이 없습니다.</td></tr>
+	<%				   
 					}
 	%>
 	                </tbody>
@@ -118,7 +112,8 @@
 	            <p>선택상품을</p>
 	            <button id="deleteBtn" type="button" class="btn-radius btn-chkDel">삭제하기</button>
 	            <div class="btnChkAll-wrapper pull-right">
-	                <button type="button" class="btn-radius btn-chkAllDel">구매하기</button>
+	                <button type="button" class="btn-radius btn-chkAllDel">선택주문</button>
+	                <button type="button" class="btn-radius btn-chkAllDel">전체주문</button>
 	            </div>
 	        </section>
 	        <!-- 장바구니 선택/전체상품 가격보기 -->

@@ -6,6 +6,7 @@ import order.model.vo.OrderSheet;
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.Map;
 
 import mypage.model.dao.MyPageDAO;
 
@@ -20,18 +21,18 @@ public class OrderService {
 		return result;
 	}
 
-	public int selectItemInfoNo(int itemNo, int i) {
+	public int selectorderDetailNo(String orderNo, int i) {
 		Connection conn = getConnection();
-		int itemInfoNo = new OrderDAO().selectItemInfoNo(conn, itemNo, i);
-		if(itemInfoNo>0) commit(conn);
+		int orderDetailNo = new OrderDAO().selectorderDetailNo(conn, orderNo, i);
+		if(orderDetailNo>0) commit(conn);
 		else rollback(conn);
 		close(conn);
-		return itemInfoNo;
+		return orderDetailNo;
 	}
 
-	public int updateOrderSheeetItemInfo(int itemNo, String rentOptNo, int i) {
+	public int updateOrderDetail(Map<String, Object> itemInfoMap, int orderDetailNo) {
 		Connection conn = getConnection();
-		int result = new OrderDAO().updateOrderSheeetItemInfo(conn, itemNo, rentOptNo, i);
+		int result = new OrderDAO().updateOrderDetail(conn, itemInfoMap, orderDetailNo);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);

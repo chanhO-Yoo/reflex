@@ -10,11 +10,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String categoryNo = (String)request.getAttribute("categoryNo");
-	/* String email = m.getEmail()!=null?m.getEmail():""; */
-
-	String memberid = memberLoggedIn != null?memberLoggedIn.getMemberId():"";
-	
-	
 	Item item = (Item)request.getAttribute("item");
 	List<ItemImage> imgList = (List<ItemImage>)request.getAttribute("imgList");
 	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList");
@@ -103,12 +98,11 @@ $(function(){
 		if(<%=memberLoggedIn==null%>){
 			goLogin();
 		}
-		
 		else {
-			
-			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberid%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
+			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberId%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
 		}
-	});
+		
+	}); 
 	
 });
 function goLogin(){

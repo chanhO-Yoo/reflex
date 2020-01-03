@@ -13,9 +13,8 @@ public class CartService {
 
 	public List<Cart> selectList(String memberId) {
 		Connection conn = getConnection();
-
 		List<Cart> cartList = new CartDAO().selectList(conn, memberId);
-
+		close(conn);
 		return cartList;
 	}
 
@@ -28,6 +27,7 @@ public class CartService {
 		else {
 			rollback(conn);
 		}
+		close(conn);
 		return delCount;
 	}
 
