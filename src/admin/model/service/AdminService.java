@@ -8,9 +8,11 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import admin.model.QnaAns;
 import admin.model.dao.AdminDAO;
 import item.model.vo.Item;
 import member.model.vo.Member;
+import mypage.model.vo.Qna;
 //프로젝트 Service
 public class AdminService {
 
@@ -131,6 +133,94 @@ public class AdminService {
 		close(conn);
 		return totalItem;
 	}
+
+	public List<Qna> selectQnaList(int cPage, int numPerPage) {
+		 Connection conn = getConnection();
+	        List<Qna> list= new AdminDAO().selectQnaList(conn, cPage, numPerPage);
+	        close(conn);
+	        return list;
+	}
+
+	public int selectTotalContent2() {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContent2(conn);
+		close(conn);
+		return totalContent;
+	}
+
+	public Qna selectOne(int qNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		Qna q = new AdminDAO().selectOne(conn, qNo);
+		
+		//트랜잭션처리
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return q;
+	}
+
+	public int insertAns(QnaAns a) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().insertAns(conn, a);
+		//트랜잭션 처리
+		if(result>0) {
+			commit(conn);
+		}
+		else 
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public String selectAns(int qNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		String ans = new AdminDAO().selectAns(conn, qNo);
+		
+		//트랜잭션처리
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return ans;
+	}
+
+	public List<Qna> selectqnaType(String qnaSearchword, int cPage, int numPerPage) {
+		List<Qna> list = null;
+		Connection conn = getConnection();
+		list = new AdminDAO().selectqnaType(conn, qnaSearchword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContentByqnaType(String qnaSearchword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContentByqnaType(conn, qnaSearchword);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Qna> selectqnaYN(String qnaSearchword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Qna> list = new AdminDAO().selectqnaYN(conn, qnaSearchword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContentByqnaYN(String qnaSearchword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalContentByqnaYN(conn, qnaSearchword);
+		close(conn);
+		return totalContent;
+	}
+
+
+
+
 
 	
 	

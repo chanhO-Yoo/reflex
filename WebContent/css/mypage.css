@@ -171,6 +171,49 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneFrm .memberId-wrapper input[type=text]{width: 25%;}
 #oneToOneFrm .btnForm-wrapper{padding-bottom: 0;}
 .btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px; font-size: 13px;}
+
+/*1:1 문의 등록 관리자-답변 */
+label{margin-right: 60px;}
+.qSort-wrapper label, .qTitle-wrapper label{margin-right: 51px;}
+textarea{
+    padding: 7px 5px;
+    border: 1px solid;
+    resize: none;
+    outline: none;
+}
+input[type=file]{display: inline; overflow: hidden;}
+#oneToOneQnaFrm>div{padding: 15px 20px 20px;}
+#oneToOneQnaFrm .qContent-wrapper, #oneToOneQnaFrm .file-wrapper, #oneToOneQnaFrm .memberId-wrapper{padding-top: 0;}
+#oneToOneQnaFrm .aContent-wrapper{padding-top: 0;}
+#oneToOneQnaFrm>div:first-of-type{border-bottom: 1px solid;}
+#oneToOneQnaFrm input[type=text]{width: 80%;}
+.qContent-wrapper, .file-wrapper{position: relative;}
+.aContent-wrapper{position: relative;}
+.qContent-wrapper label, .file-wrapper label{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+.aContent-wrapper label{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.qContent-wrapper textarea{margin-left: 112px; width: 80%;}
+.aContent-wrapper textarea{margin-left: 112px; width: 80%; margin-top:20px;}
+.file-wrapper label{top: 3px;}
+.file-wrapper input{margin-left: 111px;}
+#oneToOneQnaFrm>div.memberId-wrapper{padding-bottom: 30px;}
+.memberId-wrapper{border-bottom: 1px solid;}
+.memberId-wrapper label{margin-right: 22px;}
+#oneToOneQnaFrm .memberId-wrapper input[type=text]{width: 25%;}
+#oneToOneQnaFrm .btnForm-wrapper{padding-bottom: 0;}
+.btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px; font-size: 13px;}
+
+
+
+
+
 /* 이용후기 등록 */
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper{padding-top: 20px;}
 

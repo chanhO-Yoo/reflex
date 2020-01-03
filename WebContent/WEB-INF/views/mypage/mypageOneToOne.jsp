@@ -84,14 +84,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <% for(Qna q : list) { %>
+                    <%
+                    if(list ==null || list.isEmpty()){
+                    	
+                    %>
+                    <tr class="row">
+                    		<td>없어</td>
+                    	</tr>
+                    <% }
+                    else {
+                    	for(Qna q : list) { %>
+                    
 						<tr class="row">
                             <td class="col-md-2"><%= q.getqTypeNo() %></td>
                             <td class="col-md-6 qna-title"><a href=""><%= q.getqTilte() %></a></td>
                             <td class="col-md-2"><%=q.getqAns() %></td>
                             <td class="col-md-2"><%=q.getqDate() %></td>
                         </tr>
-                     <% }%>
+                     <% 
+                    }
+                    }%>
                     </tbody>
                 </table>
             </section>

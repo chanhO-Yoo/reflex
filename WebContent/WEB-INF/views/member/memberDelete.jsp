@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 Member m = (Member)request.getAttribute("member");
-String password = m.getMemberPassword();
 %>
 <div class="container-fluid line-style text-center contents none-nav form-header">
     <p>회원탈퇴</p>
@@ -16,7 +15,9 @@ String password = m.getMemberPassword();
             <!-- 탈퇴 전 비밀번호 확인 폼 -->
             <section class="form-wrapper">
                 <p class="text-center">회원탈퇴는 비밀번호 확인 후 가능합니다.</p>
+
                 <form action="<%=request.getContextPath()%>/member/memberDeleteEnd" id="leaveFrm">
+
                     <div class="text-center">
                         <input type="password" name="memberPwd" id="memberPwd" placeholder="비밀번호를 입력해주세요" required>
                     	<input type="hidden" name="memberId" id="memberId" value="<%= m.getMemberId() %>" readonly required>
@@ -44,7 +45,6 @@ function confirmDelete(){
 	
 
 	if("<%=m.getMemberPassword()%>"!=pwd_chk){
-
 		alert("비밀번호가 틀렸습니다.");
 		return false;
 	}
