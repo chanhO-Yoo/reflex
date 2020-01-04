@@ -207,7 +207,9 @@ function itemReview(itemNo){
                 </div>
 
 				<div id="pageBar" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3 text-center">
-					<%= pageBar %>
+					<ul class="pagination">
+						<%= pageBar %>
+					</ul>
 				</div>
 
 

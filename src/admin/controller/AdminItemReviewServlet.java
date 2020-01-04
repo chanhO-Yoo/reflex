@@ -10,23 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
+import board.model.vo.Board;
 import item.model.service.ItemService;
 import item.model.vo.Item;
 import itemRentEach.model.vo.ItemRentEach;
 
-/**
- * Servlet implementation class AdminItemDetailSearchServlet
- */
-@WebServlet("/admin/searchDetailItem")
-public class AdminItemDetailSearchServlet extends HttpServlet {
+@WebServlet("/admin/searchReviewItem")
+public class AdminItemReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AdminItemDetailSearchServlet() {
+    public AdminItemReviewServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. 사용자입력값 처리
 		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
 		int cPage = 1;//초기값 설정
 		final int numPerPage = 10; 
@@ -39,7 +36,7 @@ public class AdminItemDetailSearchServlet extends HttpServlet {
 //		System.out.println("cPage@list="+cPage);
 		
 		//페이징바영역처리
-		int totalContent = new AdminService().selectTotalDetailItem(itemNo);
+		int totalContent = new AdminService().selectTotalDetailReview(itemNo);
 		int totalPage = (int)Math.ceil((double)totalContent/numPerPage);//(공식2)
 //		System.out.printf("totalContent=%s, totalPage=%s%n", totalContent, totalPage);
 		
@@ -67,7 +64,7 @@ public class AdminItemDetailSearchServlet extends HttpServlet {
 
 		//1.이전
 		if(pageNo != 1) {
-			pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchDetailItem?itemNo="+itemNo+"&cPage="+(pageNo-1)+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchReviewItem?cPage="+(pageNo-1)+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";
 		}
 		
 		//2.pageNo
@@ -77,7 +74,7 @@ public class AdminItemDetailSearchServlet extends HttpServlet {
 				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span></li>\n";
 			}
 			else {
-				pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchDetailItem?itemNo="+itemNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";				
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchReviewItem?cPage="+pageNo+"'>"+pageNo+"</a></li>\n";				
 			}
 			
 			pageNo++;
@@ -85,30 +82,28 @@ public class AdminItemDetailSearchServlet extends HttpServlet {
 		
 		//3.다음
 		if(pageNo <= totalPage) {
-			pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchDetailItem?itemNo="+itemNo+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>\n";						
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchReviewItem?cPage="+pageNo+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";							
 		}
-
-		//대여중인 상품수
-		int rentItemYes = new AdminService().rentItemYes(itemNo);
-		
-		//대여가능한 상품수
-		int rentItemNo = new AdminService().rentItemNo(itemNo);
 		
 		//3.업무로직
 		Item item = new ItemService().selectItemOne(itemNo);
-		List<ItemRentEach> list = new AdminService().selectItemEachList(itemNo, cPage, numPerPage);
-
+		List<Board> list = new AdminService().selectItemReviewList(itemNo, cPage, numPerPage);
+		
+		double itemStar=0;
+		for(Board b : list) {
+			itemStar += b.getReview_star();
+		}
+		itemStar = itemStar/list.size();
+		System.out.println(itemStar);
+		
 		request.setAttribute("item",item);
+		request.setAttribute("itemStar", itemStar);
 		request.setAttribute("list",list);
 		request.setAttribute("pageBar", pageBar);
 		
 		request.setAttribute("totalContent", totalContent);
-		request.setAttribute("rentItemYes", rentItemYes);
-		request.setAttribute("rentItemNo", rentItemNo);
-
-		System.out.println(list);
 		
-		request.getRequestDispatcher("/WEB-INF/views/admin/item/adminItemDetailSearch.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/admin/item/adminItemReview.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

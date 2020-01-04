@@ -1,3 +1,4 @@
+<%@page import="board.model.vo.Board"%>
 <%@page import="itemRentEach.model.vo.ItemRentEach"%>
 <%@page import="item.model.vo.Item"%>
 <%@page import="java.util.List"%>
@@ -6,14 +7,13 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	Item item = (Item)request.getAttribute("item");
-
-	List<ItemRentEach> list = (List<ItemRentEach>)request.getAttribute("list");
+	double itemStar = (double)request.getAttribute("itemStar");
+	List<Board> list = (List<Board>)request.getAttribute("list");
 
 	String pageBar = (String)request.getAttribute("pageBar");
 	
 	int totalContent = (int)request.getAttribute("totalContent");
-	int rentItemYes = (int)request.getAttribute("rentItemYes");
-	int rentItemNo = (int)request.getAttribute("rentItemNo");
+	
 	
 %>
 
@@ -28,33 +28,14 @@
                 <!-- 상품검색 - 메뉴제목 -->
                 <div class="row itemTitle">
                     <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
-                        <h3>개별상품현황</h3>
+                        <h3>상품 리뷰</h3>
                     </div>
                 </div>
 
                 <!-- 한줄 여백 -->
                 <div class="row height-45"></div>
 
-                <!-- 상품검색 - 상품 판매 개요 -->
-                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
-                    <table class="table ">
-                        <tr>
-                            <th>전체 상품 수</th>
-                            <th>대여중인 상품수</th>
-                            <th>대여 가능한 상품수</th>
-                        </tr>
-                        <tr>
-                            <td><%=totalContent %></td>
-                            <td><%=rentItemYes %></td>
-                            <td><%=rentItemNo %></td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <!-- 한줄 여백 -->
-                <div class="row height-45"></div>
-
-                 <!-- 상품검색 - 검색결과 서브제목 -->
+                <!-- 상품검색 - 검색결과 서브제목 -->
                 <div class="row">
                     <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
                         <h4>상품 정보</h4>
@@ -72,6 +53,7 @@
                         	<th>상품명</th>
                         	<th>상품가격</th>
                         	<th>상품수량</th>
+                        	<th>상품평점</th>
                         </tr>
                         <tr>
                         	<td><%=item.getItemNo() %></td>
@@ -80,6 +62,7 @@
                         	<td><%=item.getItemName() %></td>
                         	<td><%=item.getItemPrice() %></td>
                         	<td><%=item.getItemStock() %></td>
+                        	<td><%=itemStar %></td>
                         </tr>
                         </table>
                     </div>
@@ -99,13 +82,12 @@
                 <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                     <table class="table ">
                         <tr>
-                            <th>상품개별번호</th>
+                            <th>리뷰번호</th>
                             <th>상품번호</th>
-                            <th>대여여부</th>
-                            <th>렌탈유형</th>
-                            <th>대여시작일</th>
-                            <th>대여종료일</th>
-                            <th>고객아이디</th>
+                            <th>리뷰작성자</th>
+                            <th>리뷰내용</th>
+                            <th>리뷰이미지</th>
+                            <th>리뷰날짜</th>
                         </tr>
                         <% if(list==null || list.isEmpty()){ %>
                         <tr>
@@ -114,31 +96,15 @@
                         <% 
 				            } 
 				            else {
-				                for(ItemRentEach i : list){ 
+				                for(Board b : list){ 
 				        %>
 				        <tr>
-                            <td><%=i.getItemEachNo() %></td>
-                            <td><%=i.getItemNo() %></td>
-                            <td><%=i.getItemRentYN() %></td>
-                            <td>
-                            	<% 
-                            	if(i.getRentOptNo() == null){
-                            	%>
-                            	-
-                            	<%
-                            	}
-                            	else{
-	                            	switch(i.getRentOptNo()){
-	                            	case "RT01": out.println("7일"); break;
-	                            	case "RT02": out.println("14일"); break;
-	                            	case "RT03": out.println("30일"); break;
-	                            	}
-                            	}
-                            	%>
-                            </td>
-                            <td><%=(i.getItemRentStart()==null)?"-":i.getItemRentStart() %></td>
-                            <td><%=(i.getItemRentEnd()==null)?"-":i.getItemRentEnd() %></td>
-                            <td><%=(i.getItemRentUser()==null)?"-":i.getItemRentUser() %></td>
+                            <td><%=b.getReview_no()%></td>
+                            <td><%=b.getItem_no()%></td>
+                            <td><%=b.getReview_writer() %></td>
+                            <td><%=b.getReview_content() %></td>
+                            <td><%=b.getReview_image_rename() %></td>
+                            <td><%=b.getReview_date() %></td>
                         </tr>
                         <%		} 
 				            }

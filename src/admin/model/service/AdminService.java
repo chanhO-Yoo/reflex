@@ -10,6 +10,7 @@ import java.util.List;
 
 import admin.model.QnaAns;
 import admin.model.dao.AdminDAO;
+import board.model.vo.Board;
 import item.model.vo.Item;
 import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
@@ -350,8 +351,26 @@ public int selectTotalDetailItem(int itemNo) {
 		return totalItem;
 	}
 
+	//=====================================
+	//관리자 리뷰 페이지
+	public int selectTotalDetailReview(int itemNo) {
+		Connection conn = getConnection();
+		int reviewCnt = new AdminDAO().selectTotalDetailReview(conn, itemNo);
+		close(conn);
+		return reviewCnt;
+	}
 
-	
+	public List<Board> selectItemReviewList(int itemNo, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<Board> list= new AdminDAO().selectItemReviewList(conn, itemNo, cPage, numPerPage);
+		close(conn);
+		return list;
+		
+		
+	}
+
+
+	//====================================
 	
 	
 	
