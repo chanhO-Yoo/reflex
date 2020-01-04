@@ -6,10 +6,19 @@
 	Qna q = (Qna)request.getAttribute("q");
 	String ans = (String)request.getAttribute("ans");
 %>
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
-       
+        <li class="go-home">
+            <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li>
+        <li class="go-boxmenu">
+            <a href="">관리자페이지</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li> 
+        <li>1:1문의답변 등록</li>
     </ul>
 </nav>
 
@@ -17,7 +26,7 @@
 	<div class="row">
 	    <div class="col-md-1"></div>
 	    <div class="col-md-10 content-wrapper">
-	        <h2 class="sr-only">1:1문의등록</h2>
+	        <h2 class="sr-only">1:1문의답변 등록</h2>
 	        <!-- 문의등록 폼 -->
 	        <section>
 	            <form action="<%=request.getContextPath() %>/admin/member/qnaFormEnd" id="oneToOneQnaFrm" method="post" >

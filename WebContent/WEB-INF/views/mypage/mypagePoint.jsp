@@ -4,13 +4,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
+	MyPage m = (MyPage)request.getAttribute("mypage");
 
-MyPage m = (MyPage)request.getAttribute("mypage");
+	List<MyPage> list = (List<MyPage>)request.getAttribute("list");
 
-
-List<MyPage> list = (List<MyPage>)request.getAttribute("list");
-
-String pageBar = (String)request.getAttribute("pageBar");
+	String pageBar = (String)request.getAttribute("pageBar");
 %>
 
 <!-- page nav -->
@@ -39,10 +37,10 @@ String pageBar = (String)request.getAttribute("pageBar");
                 <div class="line-style text-center">
            		<%if(m == null) {%>
                     <p>현재 사용가능한 포인트는 <span class="em-blue strong">0</span>원입니다.</p>
-                    <%} 
-                    else{%>
+                <%} 
+                else{%>
                     <p>현재 사용가능한 포인트는 <span class="em-blue strong"><%=m.getPointAmount()%></span>원입니다.</p>
-                    <%} %>
+                <%} %>
                 </div>
             </section>
         </div>
@@ -62,7 +60,9 @@ String pageBar = (String)request.getAttribute("pageBar");
             <section class="my-header search-date">
                 <h3 class="sr-only">주문현황 기간검색하기</h3>
                 <ul class="row list-inline list-unstyled">
-                    <li class="col-md-1 text-center"><button type="button">1개월</button></li>
+                    <li class="col-md-1 text-center">
+                    	<button type="button" onclick="location.href='<%=request.getContextPath()%>/mypage/pointOneM?memberId=<%=memberLoggedIn.getMemberId()%>'">1개월</button>
+                    </li>
                     <li class="col-md-1 text-center sel"><button type="button">3개월</button></li>
                     <li class="col-md-1 text-center"><button type="button">6개월</button></li>
                     <li class="col-md-1 text-center"><button type="button">전체</button></li>

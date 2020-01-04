@@ -44,6 +44,22 @@ function confirmDelete(){
 
 }
 </script>
+
+<!-- page nav -->
+<nav class="line-style page-nav">
+    <ul class="list-unstyled list-inline">
+        <li class="go-home">
+            <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li>
+        <li class="go-boxmenu">
+            <a href="">관리자페이지</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li> 
+        <li>회원조회</li>
+    </ul>
+</nav>
+
         <!-- 메인 컨텐츠 -->
         <div class="container-fluid contents">
             <!-- 회원검색 - 메뉴제목 -->
