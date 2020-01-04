@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import admin.model.QnaAns;
 import admin.model.service.AdminService;
+import admin.model.vo.QnaAns;
 import mypage.model.vo.Qna;
 
 /**

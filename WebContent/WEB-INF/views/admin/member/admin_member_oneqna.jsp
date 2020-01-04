@@ -12,15 +12,16 @@
 
 	String pageBar = (String)request.getAttribute("pageBar");	
 %>
+
 <style>
 .height-45{
    height: 45px;
 }
 div#search-qnaType {
-display:<%="qnaType".equals(qnaSearchType)||qnaSearchType==null?"":"none"%>;
+	display:<%="qnaType".equals(qnaSearchType)||qnaSearchType==null?"":"none"%>;
 }
 div#search-qnaYN {
-display:<%="qnaYN".equals(qnaSearchType)?"":"none"%>;
+	display:<%="qnaYN".equals(qnaSearchType)?"":"none"%>;
 }
 </style>
 
@@ -37,6 +38,21 @@ $(()=>{
 	});
 });
 </script>
+
+<!-- page nav -->
+<nav class="line-style page-nav">
+    <ul class="list-unstyled list-inline">
+        <li class="go-home">
+            <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li>
+        <li class="go-boxmenu">
+            <a href="">관리자페이지</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li> 
+        <li>1:1 문의내역</li>
+    </ul>
+</nav>
 
   <div class="container-fluid">
         <div class="row"><p class="col-md-12"><br><br><br><br></p></div>

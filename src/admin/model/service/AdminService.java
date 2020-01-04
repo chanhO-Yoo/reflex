@@ -8,9 +8,10 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
-import admin.model.QnaAns;
 import admin.model.dao.AdminDAO;
+import admin.model.vo.QnaAns;
 import item.model.vo.Item;
+import item.model.vo.ItemQnaAns;
 import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
@@ -348,6 +349,17 @@ public int selectTotalDetailItem(int itemNo) {
 		int totalItem = new AdminDAO().selectTotalItemEachByRent_yn(conn, searchKeyword);
 		close(conn);
 		return totalItem;
+	}
+
+	public int insertItemAns(ItemQnaAns iqn) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().insertItemAns(conn, iqn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
 	}
 
 

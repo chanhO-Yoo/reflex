@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import admin.model.QnaAns;
+import admin.model.vo.QnaAns;
 import item.model.vo.Item;
+import item.model.vo.ItemQnaAns;
 import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
@@ -1437,6 +1438,41 @@ public class AdminDAO {
 		}
 		
 		return totalContent;
+	}
+
+	public int insertItemAns(Connection conn, ItemQnaAns iqn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertItemAns");
+		
+		try {
+			//1.pstmt객체 생성 및 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, iqn.getItemQnaNo());
+			pstmt.setString(2, iqn.getItemQnaAnsContent());
+			
+			//2.실행 결과 처리 DML
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//3.자원반납
+			close(pstmt);
+		}
+		return result;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	
