@@ -46,6 +46,10 @@ function itemDelete(){
 function itemSearch(itemNo) {
 	location.href="<%=request.getContextPath()%>/admin/searchDetailItem?itemNo="+itemNo;
 }
+
+function itemReview(itemNo){
+	location.href="<%=request.getContextPath()%>/admin/searchReviewItem?itemNo="+itemNo;
+}
 </script>
 <style>
     .height-45{
@@ -146,13 +150,14 @@ function itemSearch(itemNo) {
                 <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                     <table class="table ">
                         <tr>
-                            <th>상품번호</th>
+                            <th>번호</th>
                             <th>카테고리</th>
                             <th>브랜드</th>
                             <th>상품명</th>
-                            <th>상품가격</th>
-                            <th>상품수량</th>
-                            <th>상세조회</th>
+                            <th>가격</th>
+                            <th>수량</th>
+                            <th>현황</th>
+                            <th>리뷰</th>
                             <th>수정</th>
                             <th>삭제</th>
                         </tr>
@@ -183,13 +188,16 @@ function itemSearch(itemNo) {
                             <td><%=i.getItemPrice() %></td>
                             <td><%=i.getItemStock() %></td>
                             <td>
-                            	<button type="button" id="searchBtn" class="btn btn-success searchBtn" onclick="itemSearch(<%=i.getItemNo() %>)" value=<%=i.getItemNo() %>>조회</button>
+                            	<button type="button" id="searchBtn" class="btn btn-xs btn-success searchBtn" onclick="itemSearch(<%=i.getItemNo() %>)" value=<%=i.getItemNo() %>>조회</button>
                             </td>
                             <td>
-                            	<button type="button" id="updateBtn" class="btn btn-primary updateBtn" onclick="itemUpdate()" value=<%=i.getItemNo() %>>수정</button>
+                            	<button type="button" id="reviewBtn" class="btn btn-xs btn-info reviewBtn" onclick="itemReview(<%=i.getItemNo() %>)" value=<%=i.getItemNo() %>>리뷰</button>
                             </td>
                             <td>
-                            	<button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" onclick="itemDelete()" value=<%=i.getItemNo() %>>삭제</button>
+                            	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="itemUpdate()" value=<%=i.getItemNo() %>>수정</button>
+                            </td>
+                            <td>
+                            	<button type="button" id="deleteBtn" class="btn btn-xs btn-danger deleteBtn" onclick="itemDelete()" value=<%=i.getItemNo() %>>삭제</button>
                             </td>
                         </tr>
                         <%		} 
