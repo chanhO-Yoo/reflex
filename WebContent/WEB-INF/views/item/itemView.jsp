@@ -99,13 +99,8 @@ $(function(){
 		if(<%=memberLoggedIn==null%>){
 			goLogin();
 		}
-<<<<<<< HEAD
 		else {
 			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberId%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
-=======
-		else{
-			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberid%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
->>>>>>> refs/heads/chanho_admin
 		}
 		
 	}); 
