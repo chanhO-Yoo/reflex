@@ -382,49 +382,49 @@ public int selectTotalDetailItem(int itemNo) {
 
 
 	//====================================
+	//관리자 판매현황 페이지
+	public List<Integer> selectCategorySellCount() {
+		Connection conn = getConnection();
+		List<Integer> categorySellCount = new AdminDAO().selectCategorySellCount(conn);
+		close(conn);
+		return categorySellCount;
+		
+	}
+
+	public List<Integer> selectMontlyIncome() {
+		Connection conn = getConnection();
+		List<Integer> montlyIncome = new AdminDAO().selectMontlyIncome(conn);
+		close(conn);
+		return montlyIncome;
+	}
+
+	public List<Integer> selectMontlySaleAmount() {
+		Connection conn = getConnection();
+		List<Integer> montlySaleAmount = new AdminDAO().selectMontlySaleAmount(conn);
+		close(conn);
+		return montlySaleAmount;
+	}
+
+	public List<Integer> selectYearlyIncome() {
+		Connection conn = getConnection();
+		List<Integer> yearlyIncome = new AdminDAO().selectYearlyIncome(conn);
+		close(conn);
+		return yearlyIncome;
+	}
+
+	public List<Integer> selectYearlySaleAmount() {
+		Connection conn = getConnection();
+		List<Integer> yearlySaleAmount = new AdminDAO().selectYearlySaleAmount(conn);
+		close(conn);
+		return yearlySaleAmount;
+	}
 	
 	
 	
+	//====================================
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

@@ -1558,9 +1558,147 @@ public class AdminDAO {
         return list;
 	
 	}
+	//==========================
+	//판매 현황 페이지
+	public List<Integer> selectCategorySellCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectCategorySellCount");
+		List<Integer> categorySellCount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				categorySellCount.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return categorySellCount;
+		
+	}
+
+	public List<Integer> selectMontlyIncome(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMontly");
+		List<Integer> montlyIncome = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("income");
+				
+				montlyIncome.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return montlyIncome;
+	}
+
+	public List<Integer> selectMontlySaleAmount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMontly");
+		List<Integer> montlySaleAmount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				montlySaleAmount.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return montlySaleAmount;
+	}
+
+	public List<Integer> selectYearlyIncome(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectYearly");
+		List<Integer> yearlyIncome = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("income");
+				
+				yearlyIncome.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return yearlyIncome;
+	}
+
+	public List<Integer> selectYearlySaleAmount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectYearly");
+		List<Integer> yearlySaleAmount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				yearlySaleAmount.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return yearlySaleAmount;
+	}
 	
 	//==========================
-	
 }
 
 	
+
+
