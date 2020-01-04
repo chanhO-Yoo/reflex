@@ -41,7 +41,7 @@ public class BoardUpdateFormServlet extends HttpServlet {
 				System.out.println("saveDirectory="+saveDirectory);
 				
 				//파일최대업로드크기 제한: 10MB까지 제한
-				//10MB = 1024 * 1024 * 10
+				//10MB = 1024 * 1024 * 10 
 				int maxPostSize = 1024 * 1024 * 10; 
 				
 				//파일명 재지정 정책 객체
