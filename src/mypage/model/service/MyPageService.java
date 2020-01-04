@@ -15,6 +15,8 @@ import mypage.model.vo.MyPage;
 import mypage.model.vo.Wishlist;
 import mypage.model.vo.WishlistItem;
 
+
+
 public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////
@@ -66,7 +68,7 @@ public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////////////////////////
 	//포인트
-public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
+	public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
 		 Connection conn = getConnection();
 	        List<MyPage> list= new MyPageDAO().selectMemberList(conn,memberId, cPage, numPerPage);
 	        close(conn);
@@ -79,6 +81,7 @@ public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage)
 		close(conn);
 		return totalContent;
 	}
+	
 
 	public MyPage selectOne(String memberId) {
 		Connection conn = getConnection();

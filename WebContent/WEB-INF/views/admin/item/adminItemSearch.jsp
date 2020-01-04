@@ -33,14 +33,18 @@ function itemUpdate() {
 	if(!confirm("수정하시겠습니까?")){
 		return false;
 	}
-	location.href="<%=request.getContextPath()%>/admin/updateItem?itemNo="+$("#updateBtn").val();
+	location.href="<%=request.getContextPath()%>/admin/updateItem?itemNo="+$(this).val();
 }
 
 function itemDelete(){
 	if(!confirm("삭제하시겠습니까?")){
 		return false;
 	}
-	location.href="<%=request.getContextPath()%>/admin/deleteItem?itemNo="+$("#deleteBtn").val();
+	location.href="<%=request.getContextPath()%>/admin/deleteItem?itemNo="+$(this).val();
+}
+
+function itemSearch(itemNo) {
+	location.href="<%=request.getContextPath()%>/admin/searchDetailItem?itemNo="+itemNo;
 }
 </script>
 <style>
@@ -163,7 +167,9 @@ function itemDelete(){
                             <th>상품명</th>
                             <th>상품가격</th>
                             <th>상품수량</th>
-                            <th>수정/삭제</th>
+                            <th>상세조회</th>
+                            <th>수정</th>
+                            <th>삭제</th>
                         </tr>
                         <% if(list==null || list.isEmpty()){ %>
                         <tr>
@@ -192,8 +198,13 @@ function itemDelete(){
                             <td><%=i.getItemPrice() %></td>
                             <td><%=i.getItemStock() %></td>
                             <td>
-                            	<button type="button" id="updateBtn" class="btn btn-primary" onclick="itemUpdate()" value=<%=i.getItemNo() %>>수정</button> &nbsp; 
-                            	<button type="button" id="deleteBtn" class="btn btn-danger" onclick="itemDelete()" value=<%=i.getItemNo() %>>삭제</button>
+                            	<button type="button" id="searchBtn" class="btn btn-success searchBtn" onclick="itemSearch(<%=i.getItemNo() %>)" value=<%=i.getItemNo() %>>조회</button>
+                            </td>
+                            <td>
+                            	<button type="button" id="updateBtn" class="btn btn-primary updateBtn" onclick="itemUpdate()" value=<%=i.getItemNo() %>>수정</button>
+                            </td>
+                            <td>
+                            	<button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" onclick="itemDelete()" value=<%=i.getItemNo() %>>삭제</button>
                             </td>
                         </tr>
                         <%		} 

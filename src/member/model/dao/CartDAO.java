@@ -2,7 +2,8 @@ package member.model.dao;
 
 import static common.JDBCTemplate.close;
 
-import java.sql.Array;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,21 +12,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import member.model.exception.MemberException;
 import member.model.vo.Cart;
-import oracle.sql.ARRAY;
-import oracle.sql.ArrayDescriptor;
 
 public class CartDAO {
 	
 	private Properties prop = new Properties();
+	
+	public CartDAO() {
+		String fileName = MemberDAO.class.getResource("/sql/cart/cart-query.properties").getPath();
+		try {
+			prop.load(new FileReader(fileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public List<Cart> selectList(Connection conn, String memberId) {
 		List<Cart> cartList = new ArrayList<Cart>();
 		Cart c = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		//String query = prop.getProperty("selectCartList");
-		String query = "SELECT IC.CART_NO, IC.MEMBER_ID, IC.ITEM_NO, IC.STOCK, I.ITEM_BRAND, I.ITEM_NAME, I.ITEM_PRICE FROM ITEM I, ITEM_CART IC WHERE I.ITEM_NO = IC.ITEM_NO AND IC.MEMBER_ID = ?";
+		String query = prop.getProperty("selectList");
 		
 		try {
 			//1. prepareStatment객체 생성
@@ -40,19 +48,20 @@ public class CartDAO {
 			//4. resultSet => List
 			while(rset.next()) {
 				c = new Cart();
-				c.setCart_No(Integer.parseInt(rset.getString("CART_NO")));
-				c.setMember_Id(rset.getString("MEMBER_ID"));
-				c.setItem_no(Integer.parseInt(rset.getString("ITEM_NO")));
-				c.setCartProdStock(Integer.parseInt(rset.getString("STOCK")));
+				c.setCartNo(rset.getInt("CART_NO"));
+				c.setMemberId(rset.getString("MEMBER_ID"));
+				c.setItemNo(rset.getInt("ITEM_NO"));
+				c.setItemQuantity(rset.getInt("ITEM_QUANTITY"));
+				c.setCategoryNo(rset.getString("CATEGORY_NO"));
 				c.setCartProdBrand(rset.getString("ITEM_BRAND"));
 				c.setCartProdName(rset.getString("ITEM_NAME"));
-				c.setCartProdPrice(Integer.parseInt(rset.getString("ITEM_PRICE")));
-				
+				c.setCartProdPrice(rset.getInt("ITEM_PRICE"));
 				cartList.add(c);
 			}
-
+			System.out.println("cartList@dao="+cartList);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new MemberException("장바구니 리스트 조회 실패!", e);
 		} finally {
 			close(rset);
 			close(pstmt);

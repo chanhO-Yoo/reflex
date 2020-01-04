@@ -74,7 +74,7 @@ public class ItemOrderServlet extends HttpServlet {
 			//뷰단처리
 			String view = "";
 			if(m!=null && itemList!=null & imgMap!=null) {
-				view = "/WEB-INF/views/item/itemOrder.jsp";
+				view = "/WEB-INF/views/order/itemOrder.jsp";
 				request.setAttribute("m", m);
 				request.setAttribute("itemList", itemList);
 				request.setAttribute("itemNoList", itemNoList);
@@ -89,7 +89,6 @@ public class ItemOrderServlet extends HttpServlet {
 				request.setAttribute("loc", "/item/itemView?categoryNo="+categoryNo+"&itemNo="+itemNo);
 			}
 			request.getRequestDispatcher(view).forward(request, response);
-			
 			
 		} catch(Exception e) {
 			throw e;

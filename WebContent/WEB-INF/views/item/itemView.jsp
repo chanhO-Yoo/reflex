@@ -10,11 +10,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String categoryNo = (String)request.getAttribute("categoryNo");
-	/* String email = m.getEmail()!=null?m.getEmail():""; */
-
 	String memberid = memberLoggedIn != null?memberLoggedIn.getMemberId():"";
-	
-	
 	Item item = (Item)request.getAttribute("item");
 	List<ItemImage> imgList = (List<ItemImage>)request.getAttribute("imgList");
 	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList");
@@ -103,12 +99,11 @@ $(function(){
 		if(<%=memberLoggedIn==null%>){
 			goLogin();
 		}
-		
 		else {
-			
-			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberid%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
+			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberId%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
 		}
-	});
+		
+	}); 
 	
 });
 function goLogin(){
@@ -426,10 +421,26 @@ function changeOrderNo(num){
 	                    </ul>
 	                </nav>
 	            </section>
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
 	            <!-- 상품QNA -->
 	            <section id="details-qna">
 	                <div class="btn-wrapper">
+	                <!--관리자로 로그인시 문의하기 버튼 안 뜨게 설정-->
+	                <%if(memberLoggedIn!=null && "admin".equals(memberLoggedIn.getMemberId())){ %>
+	                <%} 
+	                else{
+	                %>
 	                    <button type="button" id="btn-goQna" class="btn-radius pull-right">문의하기</button>
+	                <%} %>
 	                </div>
 	                <section id="point-list" class="list-wrapper">
 	                    <h3 class="sr-only">문의내역 리스트</h3>
@@ -480,12 +491,30 @@ function changeOrderNo(num){
 			                                		<p class="center-block"><%=qnaMap.get(q.getItemQnaNo()).getItemQnaAnsContent() %></p>
 			                                <%
 			                                	}
-			                                	else{
+	                                        
+	                                        	/*관리자일 경우 답변대기중일때 답변등록창 뜨게 설정*/
+			                                	else if(memberLoggedIn!=null && "admin".equals(memberLoggedIn.getMemberId())){
 			                                %>
-			                                		<p class="center-block">답변대기 중입니다.</p>
-			                                <%
+			                         
+			                                	<form action="<%=request.getContextPath()%>/admin/item/qnaAnsInsert?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>" 
+			                                		method="post" name="itemQnaCommentFrm">
+			                                		<input type="hidden" name="itemQnaNo" value="<%=q.getItemQnaNo()%>" />
+			                                		<input type="text" name="itemQnaAnsContent" placeholder="상품 QnA 답변" size="80px;"/>
+			                                		<button type="submit" id="btn-ansQna" class="btn-radius">등록</button>
+			                                	</form>	
+				                                		
+			                                		
+			                                <% 	
 			                                	}
-			                                %>
+	                                        	/*관리자가 아닐시 답변대기중 메세지만 뜨게 설정 */
+			                                	else{
+			                                %>		
+			                                		<p class="center-block">답변대기 중입니다.</p>
+			                                <%  
+			                                	}
+	                                        %>	
+			                                		
+			                                
 	                                    </div>
 	                                </td>
 	                            </tr>
@@ -501,7 +530,7 @@ function changeOrderNo(num){
 		                    %>
 	                        </tbody>
 	                    </table>
-	                </section> 
+	                </section>
 	                <!-- 페이징바 -->
 	                <nav class="paging-bar text-center">
 	                    <ul class="list-unstyled list-inline">
@@ -523,6 +552,24 @@ function changeOrderNo(num){
 	                    </ul>
 	                </nav>
 	            </section>
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
 	        </div>
 	        <div class="col-md-1"></div>
 	    </div>

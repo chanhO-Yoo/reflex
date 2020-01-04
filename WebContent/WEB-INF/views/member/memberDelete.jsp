@@ -15,9 +15,13 @@ Member m = (Member)request.getAttribute("member");
             <!-- 탈퇴 전 비밀번호 확인 폼 -->
             <section class="form-wrapper">
                 <p class="text-center">회원탈퇴는 비밀번호 확인 후 가능합니다.</p>
+<<<<<<< HEAD
 
                 <form action="<%=request.getContextPath()%>/member/memberDeleteEnd" id="leaveFrm">
 
+=======
+                <form id="leaveFrm">
+>>>>>>> refs/heads/chanho_admin
                     <div class="text-center">
                         <input type="password" name="memberPwd" id="memberPwd" placeholder="비밀번호를 입력해주세요" required>
                     	<input type="hidden" name="memberId" id="memberId" value="<%= m.getMemberId() %>" readonly required>

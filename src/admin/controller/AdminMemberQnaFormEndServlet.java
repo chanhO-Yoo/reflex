@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
-import admin.model.QnaAns;
 import admin.model.service.AdminService;
+import admin.model.vo.QnaAns;
 import common.MvcFileRenamePolicy;
 import mypage.model.vo.Qna;
 

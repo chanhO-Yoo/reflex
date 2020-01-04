@@ -30,10 +30,12 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-	let btnGoPay = document.querySelector("#btn-goPay"); //결제버튼
-	let userTotalPrice = document.querySelector("#userTotalPrice").innerText.replace(",", "")*1; //총 결제금액
+	let btnGoPay = document.querySelector("#btn-goPay"); //주문하기 버튼
 	
 	btnGoPay.addEventListener('click', function(){
+		let userTotalPrice = document.querySelector("#userTotalPrice").innerText.replace(",", "")*1; //총 결제금액
+		let userPoint = document.querySelector("#userPoint").innerText.replace(",", "")*1; //총 사용포인트
+		
 		let $radioChk = $("input[type=radio]:checked").val();
 		//결제수단 선택 유효성검사
 		if($radioChk===undefined){
@@ -45,32 +47,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		let IMP = window.IMP;
 		IMP.init('imp74518584');
 		
-		//카드 결제요청
 		if($radioChk==="card"){
-			$.ajax({
-				url: "<%=request.getContextPath()%>/order/paymentsComplete",
-				type: "post",
-				data: {
-					merchant_uid: "reflex01",
-					imp_uid: "impUid01",
-					memberId: "<%=m.getMemberId()%>",
-					payMethod: "card",
-					totalPrice: userTotalPrice,
-					/* 상품번호, 렌탈유형, 수량: 일단 하나만 생각하고 만들자 */
-					itemNo: <%=itemList.get(0).getItemNo()%>,
-					rentType: "<%=rentOptNo%>",
-					ea: <%=ea%>
-				},
-				dataType: "json",
-				success: data=>{
-					console.log(data);
-				},
-				error: (jqxhr, textStatus, errorThrown)=>{
-					console.log(jqxhr, textStatus, errorThrown);
-				}
-			});
-		}
-			<%--
 			IMP.request_pay({
 				pg : 'inicis', 
 				pay_method : 'card',
@@ -93,10 +70,13 @@ document.addEventListener('DOMContentLoaded', function(){
 							imp_uid: rsp.imp_uid,
 							memberId: "<%=m.getMemberId()%>",
 							payMethod: "card",
-							itemList: <%=itemList%>,
-							itemNoList: <%=itemNoList%>,
-							eaMap: <%=eaMap%>,
-							totalPrice: userTotalPrice
+							totalItemEa: <%=itemList.size()%>,
+							totalPrice: userTotalPrice,
+							usePoint: userPoint,
+							/* 상품번호, 렌탈유형, 수량: 일단 하나만 생각하고 만들자 */
+							itemNo: <%=itemList.get(0).getItemNo()%>,
+							rentType: "<%=rentOptNo%>",
+							ea: <%=ea%>
 						},
 						dataType: "json"
 					}).done(function(data){
@@ -108,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function(){
 						alert(msg);
 					});
 					//성공 시 이동
-					location.href="<%=request.getContextPath()%>/order/orderSuccess";
+					location.href="<%=request.getContextPath()%>/order/orderSuccess?orderNo="+rsp.merchant_uid;
 				} 
 				//결제 실패 시
 				else {
@@ -122,35 +102,36 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 		} //end of card 
 		
-		//계좌이체 요청
-		if($radioChk==="trans"){
-			IMP.request_pay({
-				pg : 'inicis', 
-				pay_method : 'trans',
-				merchant_uid : 'merchant_' + new Date().getTime(),
-				name : '주문명:결제테스트',
-				amount : 14000,
-				buyer_email : 'iamport@siot.do',
-				buyer_name : '구매자이름',
-				buyer_tel : '010-1234-5678',
-				buyer_addr : '서울특별시 강남구 삼성동',
-				buyer_postcode : '123-456',
-				m_redirect_url : 'https://www.yourdomain.com/payments/complete'
-			}, function(rsp) {
-				if ( rsp.success ) {
-					var msg = '결제가 완료되었습니다.';
-					msg += '고유ID : ' + rsp.imp_uid;
-					msg += '상점 거래ID : ' + rsp.merchant_uid;
-					msg += '결제 금액 : ' + rsp.paid_amount;
-					msg += '카드 승인번호 : ' + rsp.apply_num;
-				} else {
-					var msg = '결제에 실패하였습니다.';
-					msg += '에러내용 : ' + rsp.error_msg;
-				}
-				alert(msg);
-			});
-		} //end of trans--%>
 		
+		
+		<%-- //카드 결제요청
+		if($radioChk==="card"){
+			$.ajax({
+				url: "<%=request.getContextPath()%>/order/paymentsComplete",
+				type: "post",
+				data: {
+					merchant_uid: "rsp.merchant_uid",
+					imp_uid: "rsp.imp_uid",
+					memberId: "<%=m.getMemberId()%>",
+					payMethod: "card",
+					totalItemEa: <%=itemList.size()%>,
+					totalPrice: userTotalPrice,
+					usePoint: userPoint,
+					/* 상품번호, 렌탈유형, 수량: 일단 하나만 생각하고 만들자 */
+					itemNo: <%=itemList.get(0).getItemNo()%>,
+					rentType: "<%=rentOptNo%>",
+					ea: <%=ea%>
+				},
+				dataType: "json",
+				success: data=>{
+					console.log(data);
+				},
+				error: (jqxhr, textStatus, errorThrown) => {
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+		}//end of card  --%>
+			
 	}); //end of btnGoPay click
 });
 </script>
@@ -249,8 +230,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 			}
                 			//렌탈할인 적용된 가격
                 			int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
-                			rentPrice = rentPrice*ea;
                 			String dP = dc.format(rentPrice);
+                			rentPrice = rentPrice*ea;
+                			String dPEa = dc.format(rentPrice);
                 %>
                     <tr>
                         <td class="item-info">
@@ -265,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         </td>
                         <td class="order-no"><%=ea %>개</td>
                         <td><%=rentPeriod %>일</td>
-                        <td class="itemPrice"><%=dP %></td>
+                        <td class="itemPrice"><%=dPEa %></td>
                         <td rowspan="<%=itemList.size() %>" class="shipPrice">4,000원</td>
                     </tr>
                 <%
