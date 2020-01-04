@@ -36,16 +36,18 @@ public class AdminItemFinderServlet extends HttpServlet {
 		
 		String searchType = request.getParameter("searchType");
 		String searchKeyword = request.getParameter("searchKeyword");
+		String keyword="";
     	switch(searchKeyword){
-    	case "반려동물": searchKeyword = "CT01"; break;
-    	case "육아": searchKeyword = "CT02"; break;
-    	case "파티": searchKeyword = "CT03"; break;
-    	case "운동": searchKeyword = "CT04"; break;
-    	case "여행": searchKeyword = "CT05"; break;
-    	case "캠핑": searchKeyword = "CT06"; break;
+    	case "반려동물": keyword = "CT01"; break;
+    	case "육아": keyword = "CT02"; break;
+    	case "파티": keyword = "CT03"; break;
+    	case "운동": keyword = "CT04"; break;
+    	case "여행": keyword = "CT05"; break;
+    	case "캠핑": keyword = "CT06"; break;
+    	default: keyword=searchKeyword;break;
     	}
 		System.out.println("searchType@finder="+searchType);
-		System.out.println("searchKeyword@finder="+searchKeyword);
+		System.out.println("searchKeyword@finder="+keyword);
 		
 		//2.업무로직
 		List<Item> list = null;
@@ -53,16 +55,16 @@ public class AdminItemFinderServlet extends HttpServlet {
 		System.out.println("searchType="+searchType);
 		
 		switch(searchType) {
-		case "item_name": list = adminService.selectItemByItemName(searchKeyword, cPage, numPerPage); break;
-		case "category_no": list = adminService.selectItemByCategoryNo(searchKeyword, cPage, numPerPage); break;
+		case "item_name": list = adminService.selectItemByItemName(keyword, cPage, numPerPage); break;
+		case "category_no": list = adminService.selectItemByCategoryNo(keyword, cPage, numPerPage); break;
 		}
 		System.out.println("---------list@finderSevelt="+list);
 		
 		//페이징바 영역
 		int totalItem = 0;
 		switch (searchType) {
-		case "item_name"	:totalItem = new AdminService().selectTotalItemByItemName(searchKeyword);break;
-		case "category_no" :totalItem = new AdminService().selectTotalItemByCategoryNo(searchKeyword);break;
+		case "item_name"	:totalItem = new AdminService().selectTotalItemByItemName(keyword);break;
+		case "category_no" :totalItem = new AdminService().selectTotalItemByCategoryNo(keyword);break;
 		}
 		//(공식2)totalPage구하기
 		int totalPage = (int)Math.ceil((double)totalItem/numPerPage);
@@ -85,15 +87,15 @@ public class AdminItemFinderServlet extends HttpServlet {
 
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/itemFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'>[이전]</a> ";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/item/itemFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'><span aria-hidden='true'>&laquo;</span></a></li>";
 		}
 		// pageNo section
 		while(pageNo<=pageEnd && pageNo<=totalPage){
 			if(cPage ==  pageNo ){
-				pageBar += "<span class='cPage'>"+pageNo+"</span> ";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span></li>";
 			} 
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/member/itemFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a> ";
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/item/itemFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a></li>";
 			}
 			pageNo++;
 		}
@@ -103,7 +105,7 @@ public class AdminItemFinderServlet extends HttpServlet {
 			
 		} else {
 			
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/itemFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>[다음]</a>";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/item/itemFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>";
 		}
 		
 		
