@@ -18,7 +18,7 @@ public class OrderFailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INf/views/order/orderFail.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/order/orderFail.jsp").forward(request, response);
 	}
 
 	/**

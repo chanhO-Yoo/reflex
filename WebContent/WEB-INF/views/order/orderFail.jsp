@@ -5,7 +5,7 @@
 <!-- 주문실패 헤더 -->
 <div id="order-header" class="container-fluid line-style text-center contents none-nav">
     <h2 class="sr-only">주문실패</h2>
-    <p class="strong">주문 실패</p>
+    <p>주문 실패</p>
 </div>
 <div class="container-fluid">
     <div class="row">

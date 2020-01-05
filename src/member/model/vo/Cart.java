@@ -1,36 +1,32 @@
 package member.model.vo;
 
-public class Cart {
+import java.io.Serializable;
+
+import item.model.vo.Item;
+
+public class Cart implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private int cartNo;
 	private String memberId;
-	private int itemNo;
-	private String categoryNo;
+	private Item item;
 	private String rentOptNo;
 	private int itemQuantity;
-	private String cartProdBrand;
-	private String cartProdName;
-	private int cartProdPrice;
+	private int priceByRentOptNo;
 	
 	public Cart() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Cart(int cartNo, String memberId, int itemNo, String categoryNo, String rentOptNo, int itemQuantity,
-			String cartProdBrand, String cartProdName, int cartProdPrice) {
+	public Cart(int cartNo, String memberId, Item item, String rentOptNo, int itemQuantity, int priceByRentOptNo) {
 		super();
 		this.cartNo = cartNo;
 		this.memberId = memberId;
-		this.itemNo = itemNo;
-		this.categoryNo = categoryNo;
+		this.item = item;
 		this.rentOptNo = rentOptNo;
 		this.itemQuantity = itemQuantity;
-		this.cartProdBrand = cartProdBrand;
-		this.cartProdName = cartProdName;
-		this.cartProdPrice = cartProdPrice;
+		this.priceByRentOptNo = priceByRentOptNo;
 	}
 
 	public int getCartNo() {
@@ -49,12 +45,12 @@ public class Cart {
 		this.memberId = memberId;
 	}
 
-	public int getItemNo() {
-		return itemNo;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setItemNo(int itemNo) {
-		this.itemNo = itemNo;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 	public String getRentOptNo() {
@@ -73,48 +69,22 @@ public class Cart {
 		this.itemQuantity = itemQuantity;
 	}
 
-	public String getCartProdBrand() {
-		return cartProdBrand;
+	public int getPriceByRentOptNo() {
+		return priceByRentOptNo;
 	}
 
-	public void setCartProdBrand(String cartProdBrand) {
-		this.cartProdBrand = cartProdBrand;
-	}
-
-	public String getCartProdName() {
-		return cartProdName;
-	}
-
-	public void setCartProdName(String cartProdName) {
-		this.cartProdName = cartProdName;
-	}
-
-	public int getCartProdPrice() {
-		return cartProdPrice;
-	}
-
-	public void setCartProdPrice(int cartProdPrice) {
-		this.cartProdPrice = cartProdPrice;
+	public void setPriceByRentOptNo(int itemPrice, int rentPeriod, double disRate) {
+		this.priceByRentOptNo = (int)Math.ceil((itemPrice*disRate)/240*rentPeriod)/100*100;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	public String getCategoryNo() {
-		return categoryNo;
-	}
-
-	public void setCategoryNo(String categoryNo) {
-		this.categoryNo = categoryNo;
-	}
 
 	@Override
 	public String toString() {
-		return "Cart [cartNo=" + cartNo + ", memberId=" + memberId + ", itemNo=" + itemNo + ", categoryNo=" + categoryNo
-				+ ", rentOptNo=" + rentOptNo + ", itemQuantity=" + itemQuantity + ", cartProdBrand=" + cartProdBrand
-				+ ", cartProdName=" + cartProdName + ", cartProdPrice=" + cartProdPrice + "]";
+		return "Cart2 [cartNo=" + cartNo + ", memberId=" + memberId + ", item=" + item + ", rentOptNo=" + rentOptNo
+				+ ", itemQuantity=" + itemQuantity + ", priceByRentOptNo=" + priceByRentOptNo + "]";
 	}
-
 
 }

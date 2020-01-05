@@ -16,6 +16,7 @@ import item.model.service.ItemService;
 import item.model.vo.ItemImage;
 import member.model.service.CartService;
 import member.model.vo.Cart;
+import member.model.vo.Cart;
 
 
 /**
@@ -34,7 +35,7 @@ public class MemberCartServlet extends HttpServlet {
 		
 		try {
 			//업무로직
-			List<Cart> cartList = new CartService().selectList(memberId); //장바구니목록 담을 리스트
+			List<Cart> cartList = new CartService().selectCartList(memberId); //장바구니목록 담을 리스트
 			
 			List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
@@ -42,7 +43,7 @@ public class MemberCartServlet extends HttpServlet {
 			if(cartList!=null && !cartList.isEmpty()) {
 				//상품번호 담기
 				for(Cart c: cartList){
-					itemNoList.add(c.getItemNo());
+					itemNoList.add(c.getItem().getItemNo());
 				}
 				
 				for(int i=0; i<itemNoList.size(); i++) {
@@ -51,7 +52,6 @@ public class MemberCartServlet extends HttpServlet {
 					imgMap.put(itemNoList.get(i), imgList);
 				}
 			}
-			
 			
 			//뷰단처리: 장바구니 리스트 비어있을 수 있음
 			String view = "";

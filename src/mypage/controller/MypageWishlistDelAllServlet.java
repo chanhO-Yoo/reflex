@@ -25,28 +25,21 @@ public class MypageWishlistDelAllServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//파라미터 핸들링
 		String memberId = request.getParameter("memberId");
-		System.out.println(memberId);
 		
 		MyPageService myService = new MyPageService();
 		try {
 			//업무로직
 			int result = new MyPageService().deleteAllWishlist(memberId);
 			
-			//삭제하고 남은 위시리스트 상품 읽어오기
-			List<WishlistItem> wishItemList = myService.selectWishlistAll(memberId);
-			
 			//뷰단처리
 			String view = "/WEB-INF/views/common/msg.jsp";
 			String loc = "/mypage/mypageWishlist?memberId="+memberId;
 			String msg = "";
 			
-			if(result>0) {
+			if(result>0) 
 				msg = "위시리스트가 전부 삭제되었습니다.";
-				request.setAttribute("wishItemList", wishItemList);
-			}
-			else {
+			else 
 				msg = "전체삭제가 실패되었습니다.";
-			}
 			
 			request.setAttribute("msg", msg);
 			request.setAttribute("loc", loc);

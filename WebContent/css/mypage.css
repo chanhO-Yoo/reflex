@@ -37,7 +37,6 @@
 .item-change li:first-of-type .btn-radius{margin-top: 0;}
 
 
-
 /* 계약중인 렌탈: my_contracting_rental.jsp */
 #contracting-tbl .em-blue{font-weight: normal;}
 
@@ -89,6 +88,7 @@
 .cart-wrapper td.item-info{padding:15px 0;}
 .cart-wrapper td.item-info a:hover, .cart-wrapper td.item-info a:active, .cart-wrapper td.item-info a:focus{text-decoration: none;} 
 .cart-wrapper .pbrand{font-size: 13px; font-weight: normal;}
+#cart-shipPrice{border-left: 1px solid;}
 .order-no input{width: 10%; border: 1px solid; border-width: 1px 0; background: white;}
 .order-no .glyphicon{padding: 5px 0;font-size: 10px;}
 /* 전체상품 가격보기 */

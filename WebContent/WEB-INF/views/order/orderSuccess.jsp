@@ -5,17 +5,19 @@
 	String orderNo = (String)request.getAttribute("orderNo");
 %>
 <script>
+document.addEventListener('DOMContentLoaded', function(){
 	let btnGoOrderStatus = document.querySelector("#btn-goOrderStatus"); //주문조회하기 버튼
 	
 	btnGoOrderStatus.addEventListener("click", function(){
-		location.href = "<%=request.getContextPath()%>/mypage/mypageOrderList";
+		location.href = "<%=request.getContextPath()%>/mypage/mypageOrderList?memberId=<%=memberLoggedIn.getMemberId()%>";
 	});
+});
 </script>
 
 <!-- 주문성공 헤더 -->
 <div id="order-header" class="container-fluid line-style text-center contents none-nav">
     <h2 class="sr-only">주문성공</h2>
-    <p class="strong">주문 성공</p>
+    <p>주문 성공</p>
 </div>
 <div class="container-fluid">
     <div class="row">

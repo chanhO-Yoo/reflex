@@ -259,6 +259,8 @@ footer, footer header{background: #aaaaac;}
 #btn-wishlist .glyphicon{position: absolute; top: 16px; right: 98px; font-size: 20px;}
 #opt-inner{padding: 0; margin-top: 50px;}
 #opt-inner>section{padding: 30px 20px; border-bottom: 1px solid;}
+#opt-inner>section:last-of-type{border-bottom: 0;}
+#opt-inner>section:last-of-type ul{line-height: 2;}
 #opt-inner .pbrand{margin-bottom: 3px; font-size: 13px; font-weight: normal;}
 #opt-inner #pname{font-size: 18px; font-weight: bold;}
 #sel-rentType>p, #sel-amount>p{margin-bottom: 15px;}
@@ -327,6 +329,7 @@ footer, footer header{background: #aaaaac;}
 #orderer-content li{height: 50px; border-right: 1px solid; line-height: 50px;}
 #orderer-content li:last-of-type{border-right: 0;}
 #orderer-content .dd{margin-left: 5px;}
+.cartRow .shipPrice{border-left: 1px solid;}
 /* 배송지정보 */
 #orderFrm>div:last-of-type{margin-bottom: 0;}
 #order-item .item-info{padding: 20px;}

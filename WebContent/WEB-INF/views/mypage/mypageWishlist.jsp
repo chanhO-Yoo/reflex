@@ -21,7 +21,127 @@
 document.addEventListener('DOMContentLoaded', function(){
 	delChk(); //선택상품 삭제
 	delAll(); //전체상품 삭제
+	chkAll(); //체크박스 전체선택
+	addCartChk(); //선택상품 장바구니 담기
 });
+//장바구니 담기: 여러개
+function addCartChk(){
+	let chkBoxArr = document.querySelectorAll("#chkWishlist"); //체크박스 배열
+	let btnAddCartChk = document.querySelector(".btn-chkAddCart"); //선택상품 장바구니담기 버튼
+	let addInfo = ""; //장바구니 추가될 상품정보 담길 변수
+	
+	chkBoxArr.forEach(function(obj, idx){
+		obj.addEventListener('change', function(){
+			let val = this.value; //선택한 체크박스의 값
+			var idx = addInfo.indexOf(val); //addInfo에 선택한 체크박스의 값이 담겼는지 여부 
+			
+			//체크박스 체크됐고 addInfo에도 없다면 추가
+			if(this.checked===true && idx===-1)
+				addInfo += val+"/";
+			else
+				addInfo = addInfo.replace(val+"/", "");
+		});
+	}); //end of for chkBox
+	
+	btnAddCartChk.addEventListener('click', function(){
+		if(<%=memberLoggedIn!=null%>){
+			$.ajax({
+				url: "<%=request.getContextPath()%>/member/memberCartInsertChk",
+				type: "post",
+				data: {
+					memberId: "<%=memberId%>",
+					addInfo: addInfo
+				},
+				dataType: "json",
+				success: data => {
+					console.log(data);
+					
+					if(data.result===1){
+						if(!confirm("장바구니에 상품이 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
+					}
+					else if(data.count===1){
+						if(!confirm("장바구니에 중복된 상품이 존재합니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
+					}
+					else if(data.stock===0){
+						alert("이 상품은 현재 품절되었습니다!");
+					}
+					//장바구니에 이미 담겨있는 현재 상품의 수량과 재고를 비교해서 할 것! 
+					/* else if(data.stock>0){
+						alert("선택가능한 상품 수보다 더 많이 선택하셨습니다!\n현재 선택가능한 상품 수는 ["+data.stock+"]입니다.");
+						orderNoVal = data.stock;
+					} */
+					else{
+						alert("장바구니에 상품담기를 실패하였습니다!");
+					}
+				},
+				error: (jqxhr, textStatus, errorThrown)=>{
+					console.log(jqxhr, textStatus, errorThrown);
+				} 
+			}); //end of ajax
+		} //end of if
+	});//end of click btn
+
+}
+//장바구니담기: 1개
+function addCartOne(itemNo, optNo){
+	if(<%=memberLoggedIn!=null%>){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/member/memberCartInsert",
+			type: "post",
+			data: {
+				memberId: "<%=memberId%>",
+				itemNo: itemNo,
+				rentType: optNo,
+				itemQuantity: 1
+			},
+			dataType: "json",
+			success: data => {
+				console.log(data);
+				
+				if(data.result===1){
+					if(!confirm("장바구니에 상품이 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+					location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
+				}
+				else if(data.count===1){
+					if(!confirm("이미 장바구니에 존재하는 상품입니다!\n지금 장바구니를 확인하시겠습니까?")) return;
+					location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
+				}
+				else if(data.stock===0){
+					alert("이 상품은 현재 품절되었습니다!");
+				}
+				//장바구니에 이미 담겨있는 현재 상품의 수량과 재고를 비교해서 할 것! 
+				/* else if(data.stock>0){
+					alert("선택가능한 상품 수보다 더 많이 선택하셨습니다!\n현재 선택가능한 상품 수는 ["+data.stock+"]입니다.");
+					orderNoVal = data.stock;
+				} */
+				else{
+					alert("장바구니에 상품담기를 실패하였습니다!");
+				}
+			},
+			error: (jqxhr, textStatus, errorThrown)=>{
+				console.log(jqxhr, textStatus, errorThrown);
+			} 
+		});
+	}
+}
+function chkAll(){
+	let btnChkAll = document.querySelector(".btn-chkAll");
+	let chkboxArr = document.querySelectorAll(".item-chk>input");
+	
+	//전체선택 버튼 클릭
+	btnChkAll.addEventListener("click", function(){
+		chkboxArr.forEach(function(obj, idx){
+			obj.checked = true;
+		});	
+	});
+}
+//바로렌탈
+function rentNow(cateNo, itemNo, optNo){
+	if(<%=memberLoggedIn!=null%>)
+		location.href = "<%=request.getContextPath()%>/order/orderOne?memberId=<%=memberId%>&categoryNo="+cateNo+"&itemNo="+itemNo+"&rentType="+optNo+"&ea=1";
+}
 function delAll(){
 	let delAllFrm = document.querySelector("#delAllFrm");
 	let btnDelAll = document.querySelector(".btn-chkAllDel");
@@ -99,28 +219,6 @@ function delChk(){
         <%
          //담긴 상품이 존재할 때
          if(wishItemList!=null && !wishItemList.isEmpty()){
-         	for(int i=0; i<wishItemList.size(); i++){
-         		WishlistItem item = wishItemList.get(i);
-         		List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
-         		
-         		int rentPeriod = 0; //렌탈기간
-         		double disRate = 0; //할인율
-         		if("RT01".equals(item.getRentOptNo())){
-         			rentPeriod = 7;
-         			disRate = 0.98;
-         		}
-         		else if("RT02".equals(item.getRentOptNo())){
-         			rentPeriod = 14;
-         			disRate = 0.95;
-         		}
-         		else{
-         			rentPeriod = 30;
-         			disRate = 0.90;
-         		}
-         		//렌탈할인 적용된 가격
-         		int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
-         		DecimalFormat dc = new DecimalFormat("###,###,###,###원");
-         		String dP = dc.format(rentPrice);
         %>
         <div class="col-md-10 content-wrapper">
             <h2 class="sr-only">위시리스트</h2>
@@ -128,14 +226,37 @@ function delChk(){
             <section class="wishlist-wrapper">
                 <h3 class="sr-only">위시리스트 목록 보기</h3>
                 <ul class="list-unstyled wishlist-inner">
-       
+       				<%
+       				for(int i=0; i<wishItemList.size(); i++){
+       	         		WishlistItem item = wishItemList.get(i);
+       	         		List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+       	         		
+       	         		int rentPeriod = 0; //렌탈기간
+       	         		double disRate = 0; //할인율
+       	         		if("RT01".equals(item.getRentOptNo())){
+       	         			rentPeriod = 7;
+       	         			disRate = 0.98;
+       	         		}
+       	         		else if("RT02".equals(item.getRentOptNo())){
+       	         			rentPeriod = 14;
+       	         			disRate = 0.95;
+       	         		}
+       	         		else{
+       	         			rentPeriod = 30;
+       	         			disRate = 0.90;
+       	         		}
+       	         		//렌탈할인 적용된 가격
+       	         		int rentPrice = (int)Math.ceil((item.getItemPrice()*disRate)/240*rentPeriod)/100*100;
+       	         		DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+       	         		String dP = dc.format(rentPrice);
+       				%>
                     <li class="row">
                         <div class="item-chk col-md-1 text-center">
                             <input type="checkbox" name="chkWishlist" id="chkWishlist" value="<%=item.getItemNo()%>,<%=item.getRentOptNo()%>">
                         </div>
                         <div class="item-img col-md-2">
                             <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo()%>&itemNo=<%=item.getItemNo()%>" class="text-center">
-                            	<img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo()%>/<%=imgList.get(0).getItemImageDefault()%>" alt="상품 이미지">
+                            	<img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="상품 이미지">
                             </a>
                         </div>
                         <div class="wish-info item-info col-md-9">
@@ -147,8 +268,8 @@ function delChk(){
                             <p class="pull-left rent-type">일시납</p>
                             <ul class="list-unstyled wishBtn-wrapper">
                                 <li class="btn-del"><button type="button" onclick="delOne(this);" value="<%=item.getItemNo()%>,<%=item.getRentOptNo()%>"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></li>
-                                <li class="btn-radius btn-addCart"><button type="button">장바구니</button></li>
-                                <li class="btn-radius btn-rentNow"><button type="button">바로렌탈</button></li>
+                                <li class="btn-radius btn-addCart"><button type="button" onclick="addCartOne('<%=item.getItemNo()%>','<%=item.getRentOptNo()%>');">장바구니</button></li>
+                                <li class="btn-radius btn-rentNow"><button type="button" onclick="rentNow('<%=item.getCategoryNo()%>','<%=item.getItemNo()%>','<%=item.getRentOptNo()%>');">바로렌탈</button></li>
                             </ul>
                         </div>
                     </li>

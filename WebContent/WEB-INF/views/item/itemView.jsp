@@ -29,7 +29,7 @@
 	String desc = item.getItemDesc();
 	String[] descArray = desc.split(",");
 	
-	//위시리스트 ajax - 회원아이디 담아놓기
+	//회원아이디 담아놓기
 	String memberId = "";
 	if(memberLoggedIn!=null) memberId = memberLoggedIn.getMemberId();
 	else memberId = "null";
@@ -46,7 +46,7 @@ $(function(){
 		}
 	});
 	
-	//위시리스트 버튼 눌렀을 경우
+	//위시리스트 버튼 눌렀을 경우: 회원아이디, 상품번호, 렌탈유형 넘기기
 	$("#btn-wishlist").on('click', function(){
 		if(<%=memberLoggedIn==null%>){
 			goLogin();
@@ -54,8 +54,8 @@ $(function(){
 		else{
 			if(!confirm("현재 상품을 위시리스트에 담으시겠습니까?")) return;
 			
-			let rentTypeVal = $("#rent-type option:selected").val();
-			let rentTypePriceVal = $("#rent-type option:selected").text();
+			let rentTypeVal = $("#rent-type option:selected").val(); //렌탈유형
+			let rentTypePriceVal = $("#rent-type option:selected").text(); //가격
 			console.log(rentTypeVal);
 			$.ajax({
 				url: "<%=request.getContextPath()%>/mypage/mypageWishlistInsert",
@@ -72,15 +72,64 @@ $(function(){
 					let result = data.result;
 					
 					if(result===1){
-						if(!confirm("위시리스트에 상품이 담겼습니다.\n위시리스트 페이지로 이동하시겠습니까?")) return;
+						if(!confirm("위시리스트에 상품이 담겼습니다.\n지금 위시리스트를 확인하시겠습니까?")) return;
 						location.href = "<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberId%>";
 					}
 					else if(result===-1){
-						if(!confirm("이미 위시리스트에 존재하는 상품입니다!\n위시리스트 페이지로 이동하시겠습니까?")) return;
+						if(!confirm("이미 위시리스트에 존재하는 상품입니다!\n지금 위시리스트를 확인하시겠습니까?")) return;
 						location.href = "<%=request.getContextPath()%>/mypage/mypageWishlist?memberId=<%=memberId%>";
 					}
 					else{
 						alert("위시리스트에 상품담기를 실패하였습니다!");
+					}
+				},
+				error: (jqxhr, textStatus, errorThrown)=>{
+					console.log(jqxhr, textStatus, errorThrown);
+				} 
+			});
+		}
+	});
+	
+	//장바구니 버튼 눌렀을 경우: 회원아이디, 상품번호, 렌탈유형, 수량 넘기기
+	$("#btn-addCart").on('click', function(){
+		if(<%=memberLoggedIn==null%>){
+			goLogin();
+		}
+		else{
+			let rentTypeVal = $("#rent-type option:selected").val(); //렌탈유형
+			let orderNoVal = $("#orderNo").val(); //수량
+			
+			$.ajax({
+				url: "<%=request.getContextPath()%>/member/memberCartInsert",
+				type: "post",
+				data: {
+					memberId: "<%=memberId%>",
+					itemNo: <%=item.getItemNo()%>,
+					rentType: rentTypeVal,
+					itemQuantity: orderNoVal
+				},
+				dataType: "json",
+				success: data => {
+					console.log(data);
+					
+					if(data.result===1){
+						if(!confirm("장바구니에 상품이 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
+					}
+					else if(data.count===1){
+						if(!confirm("이미 장바구니에 존재하는 상품입니다!\n지금 장바구니를 확인하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
+					}
+					else if(data.stock===0){
+						alert("이 상품은 현재 품절되었습니다!");
+					}
+					//장바구니에 이미 담겨있는 현재 상품의 수량과 재고를 비교해서 할 것! 
+					/* else if(data.stock>0){
+						alert("선택가능한 상품 수보다 더 많이 선택하셨습니다!\n현재 선택가능한 상품 수는 ["+data.stock+"]입니다.");
+						orderNoVal = data.stock;
+					} */
+					else{
+						alert("장바구니에 상품담기를 실패하였습니다!");
 					}
 				},
 				error: (jqxhr, textStatus, errorThrown)=>{
@@ -99,7 +148,7 @@ $(function(){
 			goLogin();
 		}
 		else {
-			location.href = "<%=request.getContextPath()%>/item/itemOrder?memberId=<%=memberId%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
+			location.href = "<%=request.getContextPath()%>/order/orderOne?memberId=<%=memberId%>&categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>&rentType="+rentTypeVal+"&ea="+orderNo;
 		}
 		
 	}); 
@@ -207,13 +256,13 @@ function changeOrderNo(num){
 	<div id="view-wrapper" class="row">
 	    <section id="view-img" class="col-md-6">
 	        <h2 class="sr-only">상품 이미지 보기</h2>
-	        <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageDefault() %>" alt="상품 대표이미지">
+	        <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageRenamed() %>" alt="상품 대표이미지">
 	        <%
 	        	//이미지가 2개 이상이라면(서브이미지가 있다면)
 				if(imgList.size()>2){
 					for(int i=1; i<imgList.size()-1; i++){
 	        %>
-	        			<img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(i).getItemImageDefault() %>" alt="상품 서브이미지">
+	        			<img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(i).getItemImageRenamed() %>" alt="상품 서브이미지">
 	        <%
 					}
 	        	}
@@ -253,7 +302,6 @@ function changeOrderNo(num){
 	            </section>
 	            <div id="opt-footer" class="row">
 	                <div class="col-md-6">
-	                    <!-- 장바구니 페이지로 이동하겠냐는 알림창 띄우기 -->
 	                    <button type="button" id="btn-addCart" class="center-block">장바구니</button>
 	                </div>
 	                <div class="col-md-6">
@@ -519,6 +567,12 @@ function changeOrderNo(num){
 	        <div class="col-md-1"></div>
 	    </div>
 	</div>
+</div>
+
+
+<!-- 맨위로 이동 버튼 -->
+<div id="go-to-top" class="btn-bottom">
+    <button type="button" id="btn-gotop" class="center-block" onclick="window.scrollTo(0,0);">맨 위로 이동</button>
 </div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

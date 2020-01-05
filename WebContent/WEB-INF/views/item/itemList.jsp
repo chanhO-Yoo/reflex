@@ -17,6 +17,7 @@
 document.addEventListener('DOMContentLoaded', function(){
 	let selectFilter = document.querySelector("#filterType");
 	
+	//정렬
 	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
@@ -110,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function(){
 %>
 		<div class="col-md-3">
 		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=categoryNo %>&itemNo=<%=item.getItemNo()%>" class="center-block">
-		        <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageDefault()%>" alt="item" class="center-block">
+		        <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="item" class="center-block">
 		        <div class="ptext-wrapper">
 		            <p class="pbrand"><%=item.getItemBrand() %></p>
 		            <p class="pname"><%=item.getItemName() %></p>

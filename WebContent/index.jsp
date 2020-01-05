@@ -52,6 +52,9 @@ int imgNo = 0;
                 <div class="item">
                     <img src="images/banner2.jfif" alt="banner2">
                 </div>
+                <div class="item">
+                    <img src="images/banner3.jfif" alt="banner3">
+                </div>
             </div>
             <!-- Left and right controls -->
             <a class="left carousel-control" href="#banner" role="button" data-slide="prev">
@@ -68,7 +71,7 @@ int imgNo = 0;
             <a href="<%=request.getContextPath()%>/faq/faqIndex"><p><span class="eng">re:flex</span>의 렌탈서비스가 궁금하다면?</p></a>
         </div>
         <!-- 추천상품목록1 -->
- <%--        <div class="line-style rcmd-cate-header">
+       <div class="line-style rcmd-cate-header">
             <a href="<%=request.getContextPath()%>/item/itemList?categoryNo=<%=hobbyNoArr[0] %>">
                 추천 카테고리 - <%=hobbyArr[0] %>
                 <span class="glyphicon glyphicon-plus cate-plus" aria-hidden="true"></span>
@@ -169,7 +172,7 @@ int imgNo = 0;
 %>
 		<div class="col-md-3">
 		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo() %>&itemNo=<%=item.getItemNo()%>" class="center-block">
-		        <img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo() %>/<%=imgListList.get(imgNo).getItemImageDefault()%>" alt="item" class="center-block">
+		        <img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo() %>/<%=imgListList.get(imgNo).getItemImageRenamed()%>" alt="item" class="center-block">
 		        <div class="ptext-wrapper">
 		            <p class="pbrand"><%=item.getItemBrand() %></p>
 		            <p class="pname"><%=item.getItemName() %></p>
@@ -216,9 +219,9 @@ int imgNo = 0;
         </div>
         <!-- 맨위로 이동 버튼 -->
         <div id="go-to-top" class="btn-bottom">
-            <button type="button" id="btn-gotop" class="center-block">맨 위로 이동</button>
+            <button type="button" id="btn-gotop" class="center-block" onclick="window.scrollTo(0,0);">맨 위로 이동</button>
         </div>
-    </div> --%>
+    </div> 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

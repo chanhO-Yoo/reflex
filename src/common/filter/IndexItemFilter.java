@@ -19,7 +19,7 @@ import item.model.vo.Item;
 import item.model.vo.ItemImage;
 import member.model.vo.Member;
 
-@WebFilter("")
+@WebFilter("/index.jsp")
 public class IndexItemFilter implements Filter {
 
     public IndexItemFilter() {

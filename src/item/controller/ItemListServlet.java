@@ -98,10 +98,9 @@ public class ItemListServlet extends HttpServlet {
 			//뷰단처리
 			String view = "/WEB-INF/views/item/itemListAjax.jsp"; 
 			String loc = "/item/itemList?categoryNo="+categoryNo;
-//			String view = "/WEB-INF/views/common/msg.jsp"; 
-//			String loc = "/";
 			String msg = "";
 			
+			//조회 성공
 			if(itemList!=null) {
 				//상품번호 담기
 				for(Item i: itemList){
@@ -125,6 +124,7 @@ public class ItemListServlet extends HttpServlet {
 				request.setAttribute("pageBar", pageBar);
 				request.getRequestDispatcher(view).forward(request, response);
 			}
+			//조회 실패
 			else {
 				
 				if(filterType==null || "null".equals(filterType)) {

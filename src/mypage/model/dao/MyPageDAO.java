@@ -173,7 +173,6 @@ public class MyPageDAO {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberId);
 			result = pstmt.executeUpdate();
-			System.out.println("result@dao="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new MypageException("위시리스트 전체삭제 에러!", e);

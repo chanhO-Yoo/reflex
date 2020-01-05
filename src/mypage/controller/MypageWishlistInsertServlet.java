@@ -31,7 +31,6 @@ public class MypageWishlistInsertServlet extends HttpServlet {
 		String rentTypePrice = request.getParameter("rentTypePrice");
 		
 		rentType = "7".equals(rentType)?"RT01":"14".equals(rentType)?"RT02":"RT03";
-		System.out.println("rentType@servlet="+rentType);
 		
 		try {
 			//업무로직
