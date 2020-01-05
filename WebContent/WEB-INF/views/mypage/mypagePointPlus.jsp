@@ -7,7 +7,6 @@
 
 MyPage m = (MyPage)request.getAttribute("mypage");
 
-
 List<MyPage> list = (List<MyPage>)request.getAttribute("list");
 
 String pageBar = (String)request.getAttribute("pageBar");
@@ -264,10 +263,7 @@ $(function(){
                 </div>
             </section>
             
-            <!-- 페이징바 -->
-            <div  id="pageBar">
-				<%=pageBar %>
-			</div>
+            
               
         </div>
         <div class="col-md-1"></div>

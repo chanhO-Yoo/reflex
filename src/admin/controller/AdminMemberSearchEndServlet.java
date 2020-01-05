@@ -12,25 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import admin.model.service.AdminService;
 import member.model.vo.Member;
 
-/**
- * Servlet implementation class AdminMemberFinderServlet
- */
+
 @WebServlet("/admin/member/memberFinder")
 public class AdminMemberSearchEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       //프로젝트 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+      
     public AdminMemberSearchEndServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//1.parameter handling
 		int cPage = 1;
 		final int numPerPage = 10;
@@ -43,8 +36,9 @@ public class AdminMemberSearchEndServlet extends HttpServlet {
 		
 		String searchType = request.getParameter("searchType");
 		String searchKeyword = request.getParameter("searchKeyword");
-		System.out.println("searchType@finder="+searchType);
-		System.out.println("searchKeyword@finder="+searchKeyword);
+		
+		System.out.println("searchType-admin-member-membersearchEnd-servlet ="+searchType);
+		System.out.println("searchKeyword-admin-member-membersearchEnd-servlet="+searchKeyword);
 		
 		//2.업무로직
 		List<Member> list = null;
@@ -62,6 +56,7 @@ public class AdminMemberSearchEndServlet extends HttpServlet {
 		case "memberId"	:totalContent = new AdminService().selectTotalContentByMemberId(searchKeyword);break;
 		case "memberName" :totalContent = new AdminService().selectTotalContentByMemberName(searchKeyword);break;
 		}
+		
 		//(공식2)totalPage구하기
 		int totalPage = (int)Math.ceil((double)totalContent/numPerPage);
 		System.out.println("totalMember="+totalContent+", totalPage="+totalPage);
@@ -70,6 +65,7 @@ public class AdminMemberSearchEndServlet extends HttpServlet {
 		String pageBar = "";	
 		//페이지바 길이
 		int pageBarSize = 5;
+		
 		//(공식3)시작페이지 번호 세팅
 		int pageStart = ((cPage - 1)/pageBarSize) * pageBarSize +1;
 		//종료페이지 번호 세팅
@@ -117,11 +113,8 @@ public class AdminMemberSearchEndServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/views/admin/member/adminMemberSearchFinder.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -68,9 +68,9 @@ public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////////////////////////
 	//포인트
-	public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
+	public List<MyPage> selectPointList(String memberId, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<MyPage> list = new MyPageDAO().selectMemberList(conn, memberId, cPage, numPerPage);
+		List<MyPage> list = new MyPageDAO().selectPointList(conn, memberId, cPage, numPerPage);
 		close(conn);
 		return list;
 	}
@@ -189,6 +189,13 @@ public class MyPageService {
 		List<MyPage> list = new MyPageDAO().selectPointMAll(conn, memberId, cPage, numPerPage);
 		close(conn);
 		return list;
+	}
+
+	public int selectPointPTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = new MyPageDAO().selectPointPTotalContent(conn);
+		close(conn);
+		return totalContent;
 	}
 
 

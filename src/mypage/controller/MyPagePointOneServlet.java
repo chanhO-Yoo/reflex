@@ -12,24 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import mypage.model.service.MyPageService;
 import mypage.model.vo.MyPage;
 
-/**
- * Servlet implementation class MyPagePointOneMonthServlet
- */
+
 @WebServlet("/mypage/pointOne")
 public class MyPagePointOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public MyPagePointOneServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1. 사용자입력값 처리
@@ -39,14 +32,12 @@ public class MyPagePointOneServlet extends HttpServlet {
 		try {
 			cPage = Integer.parseInt(request.getParameter("cPage"));
 		} catch (NumberFormatException e) {
-			// cPage입력값이 없거나, 부정입력한 경우 기본값으로 처리된다.
+	
 		}
-//				System.out.println("cPage@list="+cPage);
 
 		// 페이징바영역처리
 		int totalContent = new MyPageService().selectTotalContent();
-		int totalPage = (int) Math.ceil((double) totalContent / numPerPage);// (공식2)
-//				System.out.printf("totalContent=%s, totalPage=%s%n", totalContent, totalPage);
+		int totalPage = (int) Math.ceil((double) totalContent / numPerPage);
 
 		String pageBar = "";
 		int pageBarSize = 5;
@@ -59,11 +50,13 @@ public class MyPagePointOneServlet extends HttpServlet {
 		int pageNo = pageStart;
 
 		String memberId = request.getParameter("memberId");
+		MyPage m = new MyPageService().selectOne(memberId);
+		
 		List<MyPage> list = new MyPageService().selectPointOne(memberId, cPage, numPerPage);
 		
-		System.out.println(list + "$$$$$$$$$$$$$$");
+
 		// 1.이전
-		if (pageNo != 1) {
+		if (pageNo != 1) {							
 			pageBar += "<a href='" + request.getContextPath() + "/mypage/mypagePoint?memberId=" + memberId + "&cPage="
 					+ (pageNo - 1) + "'>[이전]</a>\n";
 		}
@@ -86,11 +79,6 @@ public class MyPagePointOneServlet extends HttpServlet {
 					+ pageNo + "'>[다음]</a>\n";
 		}
 
-		System.out.println("mypage-memberid-servlet" + memberId);
-
-		MyPage m = new MyPageService().selectOne(memberId);
-		System.out.println("mypage-member-servlet ####" + m);
-
 		request.setAttribute("list", list);
 		request.setAttribute("mypage", m);
 		request.setAttribute("pageBar", pageBar);
@@ -100,9 +88,7 @@ public class MyPagePointOneServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/views/mypage/mypagePointAjax.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

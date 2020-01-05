@@ -189,13 +189,13 @@ public class MyPageDAO {
 ///////////////////////////////////////////////////////////////////////////////////////////
 	//포인트
 
-	public List<MyPage> selectMemberList(Connection conn,String memberId, int cPage, int numPerPage) {
+	public List<MyPage> selectPointList(Connection conn,String memberId, int cPage, int numPerPage) {
 		
 		List<MyPage> list = new ArrayList<>();
 	        PreparedStatement pstmt = null;
 	        ResultSet rset = null;
 	        
-	        String query = prop.getProperty("selectMemberListByPaging");
+	        String query = prop.getProperty("selectPointListByPaging");
 	        
 	        try{
 	            //미완성쿼리문을 가지고 객체생성. 
@@ -237,7 +237,7 @@ public class MyPageDAO {
 	public int selectTotalContent(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectTotalContent");
+		String query = prop.getProperty("selectPointOneAllPaging");
 		int totalContent = 0;
 		
 		try {
@@ -248,8 +248,6 @@ public class MyPageDAO {
 			if(rset.next()) {
 				totalContent = rset.getInt("cnt");
 			}
-			
-			System.out.println("totalContent@dao="+totalContent);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -539,7 +537,7 @@ public class MyPageDAO {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         
-        String query = prop.getProperty("selectMemberListByPaging");
+        String query = prop.getProperty("selectPointSixByPaging");
         
         try{
             //미완성쿼리문을 가지고 객체생성. 
@@ -972,6 +970,32 @@ public class MyPageDAO {
         
         
         return list;
+	}
+
+	public int selectPointPTotalContent(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectPointPAllPaging");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalContent;
 	}
 }
 

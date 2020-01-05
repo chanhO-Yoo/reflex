@@ -52,15 +52,12 @@ public class AdminDAO {
 				totalContent = rset.getInt("cnt");
 			}
 			
-			System.out.println("totalContent@dao="+totalContent);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		
 		return totalContent;
 	}
@@ -121,9 +118,8 @@ public class AdminDAO {
 			pstmt.setString(1, "%"+searchKeyword+"%");
 			
 			//(공식1)
-			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
-			pstmt.setInt(3, cPage*numPerPage);//end rownum
-			
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			
 			rset = pstmt.executeQuery();
 			
@@ -156,8 +152,6 @@ public class AdminDAO {
 		ResultSet rset = null;
 		String query = prop.getProperty("selectTotalContentByMemberId");
 		int totalContent = 0;
-
-
 	
 		try {
 			pstmt = conn.prepareStatement(query);
