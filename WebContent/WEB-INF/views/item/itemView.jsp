@@ -5,6 +5,7 @@
 <%@page import="java.util.List"%>
 <%@page import="item.model.vo.Item"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@ page import="board.model.vo.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -15,6 +16,9 @@
 	List<ItemImage> imgList = (List<ItemImage>)request.getAttribute("imgList");
 	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList");
 	Map<Integer, ItemQnaAns> qnaMap = (Map<Integer, ItemQnaAns>)request.getAttribute("qnaMap");
+	List<Board> blist = (List<Board>)request.getAttribute("list");
+	String pageBar = (String)request.getAttribute("pageBar");
+
 	int qnaTotalContent = (int)request.getAttribute("qnaTotalContent");
 	
 	//가격 콤마찍기
@@ -344,26 +348,32 @@ function changeOrderNo(num){
 	            <!-- 이용후기 -->
 	            <section id="details-review">
 	                <section id="writed-review" class="list-wrapper">
+	                           <% 
+               int c=0;
+              
+               for(Board b : blist){ 
+            	   c++;
+           		
+           		
+            	   if(b.getItem_no()==item.getItemNo()){
+               %>
 	                    <h3 class="sr-only">이용후기 리스트</h3>
 	                    <ul class="list-unstyled wishlist-inner">
 	                        <li>
 	                            <section class="dtReview-header">
 	                                <div class="star pull-left">
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                </div>
+										<% for(int i=0; i<b.getReview_star(); i++){ %>
+		                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+		    							<%} %>	                                </div>
 	                                <div class="review-info pull-right">
-	                                    <span class="review-writer">uj9208</span>
+	                                    <span class="review-writer"><%=b.getReview_writer() %></span>
 	                                    <span class="review-slash"> | </span>
-	                                    <span class="review-date">2019.12.22</span>
+	                                    <span class="review-date"><%=b.getReview_date() %></span>
 	                                </div>
 	                            </section>
 	                            <section class="review-content">
 	                                <div>
-	                                    <p>dolor voluptates delectus nemo voluptatem quam nisi impedit es delectus nemo voluptatem quam nisi impe ipsa minus unde, aliquam est? At sapiente necessitatibus corporis beatae?</p>
+	                                    <p><%=b.getReview_content() %></p>
 	                                </div>
 	                                <div class="reviewImg-wrapper row">
 	                                    <img src="<%=request.getContextPath()%>/images/view-img1.jfif" class="col-md-3" alt="">
@@ -372,52 +382,24 @@ function changeOrderNo(num){
 	                                </div>
 	                            </section>
 	                        </li>
-	                        <li>
-	                            <section class="dtReview-header">
-	                                <div class="star pull-left">
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                </div>
-	                                <div class="review-info pull-right">
-	                                    <span class="review-writer">uj9208</span>
-	                                    <span class="review-slash"> | </span>
-	                                    <span class="review-date">2019.12.22</span>
-	                                </div>
-	                            </section>
-	                            <section class="review-content">
-	                                <div>
-	                                    <p>dolor voluptates delectus nemo voluptatem quam nisi impedit es delectus nemo voluptatem quam nisi impe ipsa minus unde, aliquam est? At sapiente necessitatibus corporis beatae?</p>
-	                                </div>
-	                                <div class="reviewImg-wrapper row">
-	                                    <!-- <img src="images/view-img1.jfif" class="col-md-3" alt="">
-	                                    <img src="images/view-img2.jfif" class="col-md-3" alt="">
-	                                    <img src="images/view-img3.jfif" class="col-md-3" alt=""> -->
-	                                </div>
-	                            </section>
-	                        </li>
+	                        <hr>
 	                    </ul>
+	                     
+	                   	 <% } %>
+	                    <% } %>
 	                </section>
 	                <!-- 페이징바 -->
 	                <nav class="paging-bar text-center">
 	                    <ul class="list-unstyled list-inline">
 	                    <li>
-	                        <a href="#" aria-label="Previous">
-	                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-	                        </a>
-	                    </li>
-	                    <li class="cPage"><a href="#">1</a></li>
-	                    <li><a href="#">2</a></li>
-	                    <li><a href="#">3</a></li>
-	                    <li><a href="#">4</a></li>
-	                    <li><a href="#">5</a></li>
-	                    <li>
-	                        <a href="#" aria-label="Next">
-	                            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-	                        </a>
-	                    </li>
+                    <p  aria-label="Previous">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="pageBar" >
+							<%=pageBar %>
+                        
+                        
+                        </span>
+                    </p>
+                </li>
 	                    </ul>
 	                </nav>
 	            </section>

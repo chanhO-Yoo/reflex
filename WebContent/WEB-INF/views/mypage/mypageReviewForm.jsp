@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@page import="item.model.vo.*" %>
+<%
+	int itemNo = (int)request.getAttribute("itemNo");
+	int orderDetailNo = (int)request.getAttribute("orderDetailNo");
+	//Item item = (Item)request.getAttribute("item");
+	System.out.println("servlet@itemno"+itemNo);
+	System.out.println("servlet@orderDetailNo"+orderDetailNo);
 
+%>
 
 <!-- page nav -->
 <nav class="line-style page-nav">
@@ -30,6 +38,8 @@
             <!-- 이용후기 폼 -->
             <section id="reviewFrm-wrapper">
                 <form action="<%=request.getContextPath()%>/board/boardFormEnd" id="oneToOneFrm"  method="post" enctype="multipart/form-data">
+                <input type="hidden" name="orderDetailNo" value="<%=orderDetailNo %>" />
+                   <input type="hidden" name="itemNo" value="<%=itemNo %>" />
                     <div>
                         <label for="review-star">별점</label>
                         <select name="star" id="review-star">

@@ -18,6 +18,14 @@ public class MypageReviewFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+		int orderDetailNo = Integer.parseInt(request.getParameter("orderDetailNo"));
+		
+		System.out.println(itemNo);
+		System.out.println(orderDetailNo);
+		
+		request.setAttribute("itemNo",itemNo);
+		request.setAttribute("orderDetailNo",orderDetailNo);
 		request.getRequestDispatcher("/WEB-INF/views/mypage/mypageReviewForm.jsp").forward(request, response);
 	}
 

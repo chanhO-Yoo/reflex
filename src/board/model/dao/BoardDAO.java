@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Properties;
 
 import board.model.vo.Board;
-
+import order.model.vo.OrderDetail;
 
 import static common.JDBCTemplate.*;
 
@@ -37,10 +37,7 @@ public class BoardDAO {
 		ResultSet rset = null;
 		String query = prop.getProperty("selectBoardList");
 		List<Board> list = new ArrayList<>();
-		System.out.println("cPage@DAO="+cPage);
-		System.out.println("numPerPage@DAO="+numPerPage);
-		System.out.println("cPage@star="+(cPage-1)*numPerPage+1);
-		System.out.println("cPage@end="+cPage*numPerPage);
+
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -53,13 +50,14 @@ public class BoardDAO {
 				Board b1=new Board();
 			
 				b1.setReview_no(rset.getInt("review_no"));
-				b1.setOrder_details_no(rset.getInt("order_details_no"));
+				b1.setOrder_details_no(rset.getInt("order_detail_no"));
 				b1.setReview_writer(rset.getString("review_writer"));
 				b1.setReview_date(rset.getDate("review_date"));
 				b1.setReview_star(rset.getInt("review_star"));
 				b1.setReview_content(rset.getString("review_content"));
 				b1.setReview_image(rset.getString("review_image"));
 				b1.setReview_readCount(rset.getInt("review_readCount"));
+				b1.setItem_no(rset.getInt("item_no"));
 				//댓글수 필드 추가
 				//b.setCommentCnt(rset.getInt("comment_cnt"));
 				
@@ -91,7 +89,7 @@ public class BoardDAO {
 			if(rset.next())
 				totalContent = rset.getInt("cnt");
 			
-			System.out.println("totalContent@dao="+totalContent);
+			//System.out.println("totalContent@dao="+totalContent);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,12 +113,14 @@ public class BoardDAO {
 
 	
 
-			pstmt.setString(1, b.getReview_writer());
-	
-			pstmt.setInt(2, b.getReview_star());
-			pstmt.setString(3, b.getReview_content());
-			pstmt.setString(4, b.getReview_image());
-			pstmt.setString(5, b.getReview_image_rename());
+			pstmt.setInt(1, b.getOrder_details_no());
+			pstmt.setString(2, b.getReview_writer());	
+			pstmt.setInt(3, b.getReview_star());
+			pstmt.setString(4, b.getReview_content());
+			pstmt.setString(5, b.getReview_image());
+			pstmt.setString(6, b.getReview_image_rename());
+			pstmt.setInt(7, b.getItem_no());
+			
 			
 		
 			
@@ -129,7 +129,7 @@ public class BoardDAO {
 			result = pstmt.executeUpdate();
 			
 			
-			System.out.println("result@dao="+result);
+			//System.out.println("result@dao="+result);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,7 +157,7 @@ public class BoardDAO {
 			if(rset.next()){
 				board = new Board();
 				board.setReview_no(rset.getInt("review_no"));
-				board.setOrder_details_no(rset.getInt("order_details_no"));
+				board.setOrder_details_no(rset.getInt("order_detail_no"));
 				board.setReview_writer(rset.getNString("review_writer"));
 				board.setReview_date(rset.getDate("review_date"));
 				board.setReview_star(rset.getInt("review_star"));
@@ -166,7 +166,7 @@ public class BoardDAO {
 				board.setReview_readCount(rset.getInt("review_readCount"));
 				
 			}
-			System.out.println("board@DAO="+board);
+			//System.out.println("board@DAO="+board);
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
@@ -224,7 +224,7 @@ public class BoardDAO {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("updateBoard"); 
-		
+		System.out.println("update@DAO@@Board=="+b);
 		try {
 			//미완성쿼리문을 가지고 객체생성.
 			pstmt = conn.prepareStatement(query);
@@ -238,7 +238,7 @@ public class BoardDAO {
 			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
 			//DML은 executeUpdate()
 			result = pstmt.executeUpdate();
-			
+			System.out.println("update@DAO="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -299,6 +299,49 @@ public class BoardDAO {
 		}
 		
 		return result;
+	}
+
+
+	public List<OrderDetail> selectBoardList2(Connection conn, String memberId) {
+		OrderDetail o = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBoardList2");
+		List<OrderDetail> list2 = new ArrayList<>();
+
+	
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);//start rownum
+		
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				o=new OrderDetail();
+				o.setItemNo(rset.getInt("item_no"));
+				o.setOrderDetailNo(rset.getInt("order_detail_no"));
+				o.setItemBrand(rset.getString("item_brand"));
+				o.setItemName(rset.getString("item_name"));
+			
+				
+				
+				//댓글수 필드 추가
+				//b.setCommentCnt(rset.getInt("comment_cnt"));
+				
+				list2.add(o);
+				
+			}
+		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list2;
 	}
 
 

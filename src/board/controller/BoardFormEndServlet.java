@@ -35,6 +35,11 @@ public class BoardFormEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+
+		
+		
+		
+		
 		//파일이 저장될 절대경로 가져오기
 		String saveDirectory
 			= getServletContext().getRealPath("/upload/board");// / 웹루트 WebContent
@@ -57,9 +62,13 @@ public class BoardFormEndServlet extends HttpServlet {
 		
 		//1.parameter handling
 		int reviewStar =Integer.parseInt(multiReq.getParameter("star"));
+		int itemNo =Integer.parseInt(multiReq.getParameter("itemNo"));
+		int orderDetailNo =Integer.parseInt(multiReq.getParameter("orderDetailNo"));
 		String reviewWriter = multiReq.getParameter("reviewWriter");
 		String reviewContent = multiReq.getParameter("reviewContent");
 		System.out.println("bofomm@servlet="+reviewStar);
+		System.out.println("servlet@itemno:"+itemNo);
+		System.out.println("servlet@orderDetailNo:"+orderDetailNo);
 		//XSS공격대비 &문자변환
 		reviewContent = reviewContent.replaceAll("<", "&lt;")
 								   .replaceAll(">", "&gt;")
@@ -70,7 +79,7 @@ public class BoardFormEndServlet extends HttpServlet {
 		String renamedFileName
 			= multiReq.getFilesystemName("upFile");//실제 저장된 파일명
 		
-		Board b = new Board(0,0,reviewWriter,null,reviewStar,reviewContent,review_image,renamedFileName,0);
+		Board b = new Board(0,orderDetailNo,reviewWriter,null,reviewStar,reviewContent,review_image,renamedFileName,0,itemNo);
 		
 		
 		
@@ -78,7 +87,7 @@ public class BoardFormEndServlet extends HttpServlet {
 		int result = new BoardService().insertBoard(b);
 		
 		String msg = "";
-		String loc = "/mypage/mypageReview";
+		String loc = "/mypage/mypageReview?memberId="+reviewWriter;
 		
 		if(result>0) {
 			msg = "게시글 등록 성공!";

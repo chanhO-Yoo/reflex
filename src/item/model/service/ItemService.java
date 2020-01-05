@@ -33,6 +33,7 @@ public class ItemService {
 		Connection conn = getConnection();
 		int totalContent = new ItemDAO().selectTotalContent(conn, categoryNo);
 		close(conn);
+
 		return totalContent;
 	}
 
