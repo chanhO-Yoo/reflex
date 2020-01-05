@@ -24,8 +24,15 @@ public class Board implements Serializable{
 	private String review_image;
 	private String  review_image_rename;
 	private int review_readCount;
+	private int item_no;
 	
 	
+
+
+
+
+
+
 	public Board() {}
 
 
@@ -33,7 +40,7 @@ public class Board implements Serializable{
 
 
 	public Board(int review_no, int order_details_no, String review_writer, Date review_date, int review_star,
-			String review_content, String review_image, String review_image_rename, int review_readCount) {
+			String review_content, String review_image, String review_image_rename, int review_readCount, int item_no) {
 		super();
 		this.review_no = review_no;
 		this.order_details_no = order_details_no;
@@ -44,6 +51,7 @@ public class Board implements Serializable{
 		this.review_image = review_image;
 		this.review_image_rename = review_image_rename;
 		this.review_readCount = review_readCount;
+		this.item_no = item_no;
 	}
 
 
@@ -150,6 +158,14 @@ public class Board implements Serializable{
 		return serialVersionUID;
 	}
 
+	public int getItem_no() {
+		return item_no;
+	}
+
+	public void setItem_no(int item_no) {
+		this.item_no = item_no;
+	}
+
 
 
 
@@ -159,8 +175,10 @@ public class Board implements Serializable{
 		return "Board [review_no=" + review_no + ", order_details_no=" + order_details_no + ", review_writer="
 				+ review_writer + ", review_date=" + review_date + ", review_star=" + review_star + ", review_content="
 				+ review_content + ", review_image=" + review_image + ", review_image_rename=" + review_image_rename
-				+ ", review_readCount=" + review_readCount + "]";
+				+ ", review_readCount=" + review_readCount + ", item_no=" + item_no + "]";
 	}
+
+	
 
 
 	

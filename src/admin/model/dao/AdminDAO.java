@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import admin.model.vo.QnaAns;
+import board.model.vo.Board;
 import item.model.vo.Item;
 import item.model.vo.ItemQnaAns;
 import itemRentEach.model.vo.ItemRentEach;
@@ -1468,7 +1469,91 @@ public class AdminDAO {
 		
 		
 	}
+	//==========================
+	//상품 리뷰 조회페이지
 	
+	public int selectTotalDetailReview(Connection conn, int itemNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalDetailReview");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalContent;
+	}
+
+	public List<Board> selectItemReviewList(Connection conn, int itemNo, int cPage, int numPerPage) {
+		List<Board> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectItemReviewList");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+            //cPage, numPerPage
+            //1, 10 => 1, 10 => 0+1
+            //2, 10 => 11, 20 => 10+1
+            //3, 10 => 21, 30 => 20+1
+            //(공식1)시작rownum, 끝rownum
+            pstmt.setInt(1, itemNo);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	Board b = new Board();
+                //컬럼명은 대소문자 구분이 없다.
+            	b.setReview_no(rset.getInt("review_no"));
+            	b.setOrder_details_no(rset.getInt("order_detail_no"));
+            	b.setReview_writer(rset.getString("review_writer"));
+            	b.setReview_date(rset.getDate("review_date"));
+            	b.setReview_star(rset.getInt("review_star"));
+            	b.setReview_content(rset.getString("review_content"));
+            	b.setReview_image(rset.getString("review_image"));
+            	b.setReview_image_rename(rset.getString("review_image_rename"));
+            	b.setReview_readCount(rset.getInt("review_readcount"));
+            	b.setItem_no(rset.getInt("item_no"));
+            	                
+                list.add(b);
+            }
+            System.out.println("***********"+list+"**********");
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	
+	}
+	
+	//==========================
 	
 }
 

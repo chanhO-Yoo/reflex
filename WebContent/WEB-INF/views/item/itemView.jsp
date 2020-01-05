@@ -107,10 +107,12 @@ $(function(){
 	}); 
 	
 });
+
 function goLogin(){
 	if(!confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) return;
 	location.href = "<%=request.getContextPath()%>/member/memberLogin";
 }
+
 function changeOrderNo(num){
 	let stockStr = <%=item.getItemStock()%>; //상품 재고
 	let inputOrderNo = document.querySelector("#orderNo");
@@ -126,36 +128,36 @@ function changeOrderNo(num){
 	let totalPrice = document.querySelector("#total-price");
 	let curVal = totalPrice.innerText; //현재 선택된 렌탈유형 가격(수량1기준)
 	let delIdx = curVal.indexOf('원');
-	curVal = curVal.substr(0, delIdx).replace(',','');
-	curVal *= 1; //정수형변환
+	curVal = curVal.substr(0, delIdx).replace(',',''); //현재 선택된 렌탈유형 가격(수량1기준)
+	curVal = curVal * 1; //정수형변환
 	let plusPrice = curVal; //더하고 뺄 가격 
 	
 	let changeVal = 0; //변경될 가격
 	
-	//플러스버튼 누를 때 
-	if(oldNo < newNo){
-		console.log("plus");
-		for(let i=0; i<newNo; i++){
-			changeVal += plusPrice;	
-			//console.log("changeValAfterPlus="+changeVal);
-		}
+	//버튼 누를 때 
+	console.log("plus");
+	var selectOption = document.getElementById("rent-type") // 현재 렌탈옵션 element를 모두 가져옴
+	var selectOptionInnerHTML = selectOption.options[selectOption.selectedIndex].innerHTML; // 현재 렌탈옵션 element에서 글자를 모두 가져옴
+	var replaceSelectOptionInnerHTML = selectOptionInnerHTML.replace(',',''); // replace를 사용해 , 를 없앰
+	console.log("zz"+replaceSelectOptionInnerHTML); // 없앤 , 체크
+	var pattern = /(.*)원(.*)/; // 정규식 정의
+	pattern.test(replaceSelectOptionInnerHTML); // 정규식 실행
+	var RegExp_1 = RegExp.$1; // 실행한 정규식의 첫번째 인자를 RegExp_1에 저장. 두번째 인자를 하려면 RegExp.$2로 하기. 
+	console.log("짠:"+RegExp_1); // 정규식의 첫번째 인자를 확인
+	
+	for(let i=0; i<newNo; i++){
+		console.log("1changeVal:"+changeVal); // 계산된 가격을 log로 찍기
+		changeVal += (RegExp_1*1); // 수량 만큼 가격을 더하기
 		//console.log("changeValAfterPlus="+changeVal);
-		totalPrice.innerText = changeVal.toLocaleString()+"원";
 	}
-	//마이너스버튼 누를 때
-	else{
-		console.log("minus");
-		for(let i=0; i<newNo; i++){
-			changeVal -= plusPrice;	
-		}
-		//console.log("changeValAfterMinus="+changeVal);
-		totalPrice.innerText = changeVal.toLocaleString()+"원";
-	}
-	totalPrice.innerText = changeVal.toLocaleString()+"원";
+	
+	//console.log("changeValAfterPlus="+changeVal);
+	totalPrice.innerText = changeVal.toLocaleString()+"원"; // 마지막에 "원" 글자를 붙이기
 	
 	//totalPrice.innerText = changeVal.toLocaleString()+"원";
 	
 }
+
 </script>
 <!-- page nav -->
 <nav class="line-style page-nav">
@@ -246,7 +248,7 @@ function changeOrderNo(num){
 	                    <option value="30"><span class="rt-price"><%=price30%></span><span class="period">/일시납 30일</option>
 	                </select>
 	            </section>
-	            <section id="sel-amount">
+	             <section id="sel-amount">
 	                <p>수량</p>
 	                <label for="" class="sr-only">구매수량</label>
 	                <button type="button" class="btn-minus" onclick="changeOrderNo(-1);"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>

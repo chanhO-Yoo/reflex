@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import board.model.vo.Board;
 import admin.model.dao.AdminDAO;
 import admin.model.vo.QnaAns;
 import item.model.vo.Item;
@@ -362,8 +363,25 @@ public int selectTotalDetailItem(int itemNo) {
 		return result;
 	}
 
+	//=====================================
+	//관리자 리뷰 페이지
+	public int selectTotalDetailReview(int itemNo) {
+		Connection conn = getConnection();
+		int reviewCnt = new AdminDAO().selectTotalDetailReview(conn, itemNo);
+		close(conn);
+		return reviewCnt;
+	}
+	public List<Board> selectItemReviewList(int itemNo, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<Board> list= new AdminDAO().selectItemReviewList(conn, itemNo, cPage, numPerPage);
+		close(conn);
+		return list;
+		
+		
+	}
 
-	
+
+	//====================================
 	
 	
 	
