@@ -18,13 +18,13 @@ import mypage.model.vo.Qna;
  * Servlet implementation class MypageOneToOneFormEnd
  */
 @WebServlet("/mypage/mypageOneToOneFormEnd")
-public class MypageOneToOneFormEnd extends HttpServlet {
+public class MypageOneToOneFormEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MypageOneToOneFormEnd() {
+    public MypageOneToOneFormEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

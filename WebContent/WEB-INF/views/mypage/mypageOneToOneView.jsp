@@ -1,6 +1,11 @@
+<%@page import="java.util.*" %>
+<%@page import="mypage.model.vo.Qna" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/mypage.css" />
+
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -57,8 +62,8 @@
             </section>
             <div class="oneViewBtn-wrapper">
                 <button type="button" class="btn-radius">목록</button>
-                <button type="button" class="btn-radius pull-right">삭제</button>
-                <button type="button" class="btn-radius pull-right">수정</button>
+                <button type="button" class="btn-radius pull-right" onclick="return deleteQna()">삭제</button>
+                <button type="button" class="btn-radius pull-right" onclick="return updateQna()">수정</button>
             </div>
         </div>
         <div class="col-md-1"></div>

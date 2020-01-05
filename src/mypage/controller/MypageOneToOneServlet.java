@@ -37,22 +37,23 @@ public class MypageOneToOneServlet extends HttpServlet {
 					
 				}
 				
+				qService qService1 =  new qService();
 				//2.업무로직
 				//a.컨텐츠영역
-				List<Qna> list 
-					= qService.selectQnaList(cPage, numPerPage); 
+				String memberId = request.getParameter("memberId");
+				List<Qna> list = qService1.selectQnaList(memberId, cPage, numPerPage); 
 				System.out.println("list@servlet="+list);
 				
 				//b.페이징바영역
 				//전체게시글수, 전체페이지수
-				int totalContent = qService.selectQnaCount();
+				int pageBarSize = 5; 
+				int totalContent = qService1.selectQnaCount();
 				int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);//(공식2)
 				
-				String pageBar = "";
-				int pageBarSize = 5; 
 				int pageStart = ((cPage-1)/pageBarSize)*pageBarSize+1;//(공식3)
 				int pageEnd = pageStart+pageBarSize-1;
 				int pageNo = pageStart;
+				String pageBar = "";
 				
 				//[이전] section
 				if(pageNo == 1 ){
