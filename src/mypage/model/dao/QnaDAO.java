@@ -242,7 +242,40 @@ public class QnaDAO {
 		}
 		return qNo;
 	}
-	
+
+	public Qna selectOne(Connection conn, int qNo) {
+		System.out.println("@@@@@@@@@@dao시작");
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Qna qna = null;
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				qna = new Qna();
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+			}
+			System.out.println("Qna@DAO="+qna);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return qna;
+	}
 	
 	
 	

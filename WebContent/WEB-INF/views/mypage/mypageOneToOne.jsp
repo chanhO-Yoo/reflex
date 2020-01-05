@@ -96,7 +96,7 @@ String pageBar = (String)request.getAttribute("pageBar");
                      for(Qna q : list) { %>
 						<tr class="row">
                             <td class="col-md-2"><%= q.getqTypeNo() %></td>
-                            <td class="col-md-6 qna-title"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView"><%=q.getqTilte() %></a></td>
+                            <td class="col-md-6 qna-title"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView?qNo=<%=q.getqNo()%>"><%=q.getqTilte() %></a></td>
                             <td class="col-md-2"><%=q.getqAns() %></td>
                             <td class="col-md-2"><%=q.getqDate() %></td>
                         </tr> 

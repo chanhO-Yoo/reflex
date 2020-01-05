@@ -77,6 +77,15 @@ public class qService {
 		return null;
 	}
 
+	public Qna selectOne(int qNo) {
+		System.out.println("@@@@@@@@@@service시작");
+		Connection conn = getConnection();
+		Qna q = new QnaDAO().selectOne(conn, qNo);
+		System.out.println("@@@@@q@service = "+q);
+		close(conn);
+		return q;
+	}
+
 
 }
 
