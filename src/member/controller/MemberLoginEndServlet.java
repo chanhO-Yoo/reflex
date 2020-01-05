@@ -17,7 +17,8 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class MemberLoginServlet
  */
-@WebServlet("/member/memberLoginEnd")
+@WebServlet(name="MemberLoginEndServlet", 
+urlPatterns="/member/memberLoginEnd")
 public class MemberLoginEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -90,15 +91,7 @@ public class MemberLoginEndServlet extends HttpServlet {
 						}
 						
 						//로그인후 페이지 리다이렉트
-						String referer = request.getHeader("Referer");
-						System.out.println(referer);
-						
-						
-						//포워딩이아닌 리다이렉트처리
-						//3xx status code를 리턴.
-						//클라이언트에게 해당주소로 재요청하게 함.
-//						response.sendRedirect(request.getContextPath());// "/mvc"
-						response.sendRedirect(referer);// "http://localhost:9090/mvc/board/boardView?boardNo=123
+						response.sendRedirect(request.getContextPath());	
 						
 					}
 					

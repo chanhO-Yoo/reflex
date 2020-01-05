@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -28,7 +29,7 @@
             <h2 class="sr-only">이용후기등록</h2>
             <!-- 이용후기 폼 -->
             <section id="reviewFrm-wrapper">
-                <form action="" id="oneToOneFrm">
+                <form action="<%=request.getContextPath()%>/board/boardFormEnd" id="oneToOneFrm"  method="post" enctype="multipart/form-data">
                     <div>
                         <label for="review-star">별점</label>
                         <select name="star" id="review-star">
@@ -41,19 +42,19 @@
                     </div>
                     <div class="qContent-wrapper">
                         <label for="r-content">내용</label>
-                        <textarea name="reviewContent" id="r-content" cols="50" rows="10" required></textarea>
+                        <textarea name="reviewContent"  id="r-content" cols="50" rows="10" required></textarea>
                     </div>
                     <div class="file-wrapper">
                         <label for="up-file">첨부파일</label>
-                        <input type="file" name="upFile" id="up-file">
+                        <input type="file" name="upFile" id="upFile">
                     </div>
                     <div class="memberId-wrapper">
                         <label for="memberId">아이디</label>
-                        <input type="text" name="memberId" id="memberId" value="회원아이디" readonly>
+                        <input type="text" name="reviewWriter" id="reviewWriter"  value="<%=memberLoggedIn.getMemberId() %>" readonly>
                     </div>
                     <div class="btnForm-wrapper text-center">
-                        <button type="button" class="btn-radius">취소</button>
-                        <button type="submit" class="btn-radius">등록</button>
+                        <button type="button" class="btn-radius" onclick="exit()">취소</button>
+                        <button type="submit" class="btn-radius" onclick="return boardValidate();" >등록</button>
                     </div>
                 </form>
             </section>
@@ -61,5 +62,25 @@
 	    <div class="col-md-1"></div>
 	</div>
 </div>
+<script>
+function exit() {
+	location.href = "<%=request.getContextPath()%>/mypage/mypageReview";	
+}
+
+function boardValidate(){
+	
+
+	
+	//내용검사
+	var $content = $("[name=reviewContent]");
+	if($content.val().trim().length == 0){
+		alert("내용을 입력하세요.");
+		return false;
+	}
+	
+	return true;
+}
+
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

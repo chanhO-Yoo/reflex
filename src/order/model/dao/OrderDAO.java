@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Properties;
 
 import member.model.dao.MemberDAO;
@@ -35,15 +36,14 @@ public class OrderDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, os.getOrderNo());
-			pstmt.setString(2, os.getImpUid());
-			pstmt.setString(3, os.getMemberId());
-			pstmt.setString(4, os.getOrderPayMethod());
-			pstmt.setString(5, os.getOrderPayStatus());
-			pstmt.setInt(6, os.getOrderTotalCount());
-			pstmt.setInt(7, os.getOrderTotalPrice());
+			pstmt.setString(2, os.getMemberId());
+			pstmt.setString(3, os.getOrderPayMethod());
+			pstmt.setInt(4, os.getOrderTotalItemEa());
+			pstmt.setInt(5, os.getOrderTotalPrice());
+			pstmt.setInt(6, os.getOrderUsePoint());
+			pstmt.setString(7, os.getImpUid());
 			
 			result = pstmt.executeUpdate();
-			System.out.println("result@dao="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new OrderException("주문테이블 insert 실패!", e);
@@ -54,46 +54,47 @@ public class OrderDAO {
 		return result;
 	}
 
-	public int selectItemInfoNo(Connection conn, int itemNo, int i) {
+	public int selectorderDetailNo(Connection conn, String orderNo, int i) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectItemInfoNo");
-		int itemInfoNo = 0;
+		String query = prop.getProperty("selectorderDetailNo");
+		int orderDetailNo = 0;
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, itemNo);
+			pstmt.setString(1, orderNo);
 			pstmt.setInt(2, i);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				itemInfoNo = rset.getInt("order_sheet_itemInfo_no");
+				orderDetailNo = rset.getInt("ORDER_DETAIL_NO");
 			}
-			System.out.println("itemInfoNo@dao="+itemInfoNo);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new OrderException("orderDetailNo 조회 실패!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		
-		return itemInfoNo;
+		return orderDetailNo;
 	}
 
-	public int updateOrderSheeetItemInfo(Connection conn, int itemNo, String rentOptNo, int i) {
+	public int updateOrderDetail(Connection conn, Map<String, Object> itemInfoMap, int orderDetailNo) {
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("updateOrderSheeetItemInfo");
 		int result = 0;
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, itemNo);
-			pstmt.setString(2, rentOptNo);
-			pstmt.setInt(3, i);
+			pstmt.setInt(1, (int)itemInfoMap.get("itemNo"));
+			pstmt.setString(2, (String)itemInfoMap.get("rentOptNo"));
+			pstmt.setInt(3, (int)itemInfoMap.get("orderQuantity"));
+			pstmt.setInt(4, orderDetailNo);
 			result = pstmt.executeUpdate();
-			System.out.println("result@dao="+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new OrderException("order_sheet_itemInfo테이블 업데이트 실패!", e);
 		} finally {
 			close(pstmt);
 		}

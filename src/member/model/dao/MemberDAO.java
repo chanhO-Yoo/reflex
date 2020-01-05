@@ -123,13 +123,13 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(conn);
+			close(pstmt);
 		}
 		
 		return result;
 	}
 
-	public int memberDelete(Connection conn, String memberId) {
+	public int memberDelete(Connection conn, String memberId, String memberPwd) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("deleteMember"); 
@@ -139,6 +139,7 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(query);
 			//쿼리문미완성
 			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPwd);
 			
 			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
 			//DML은 executeUpdate()

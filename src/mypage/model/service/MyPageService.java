@@ -15,6 +15,8 @@ import mypage.model.vo.MyPage;
 import mypage.model.vo.Wishlist;
 import mypage.model.vo.WishlistItem;
 
+
+
 public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////
@@ -66,11 +68,11 @@ public class MyPageService {
 	
 ///////////////////////////////////////////////////////////////////////////////////////////
 	//포인트
-public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
-		 Connection conn = getConnection();
-	        List<MyPage> list= new MyPageDAO().selectMemberList(conn,memberId, cPage, numPerPage);
-	        close(conn);
-	        return list;
+	public List<MyPage> selectPointList(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointList(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
 	}
 
 	public int selectTotalContent() {
@@ -79,6 +81,7 @@ public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage)
 		close(conn);
 		return totalContent;
 	}
+	
 
 	public MyPage selectOne(String memberId) {
 		Connection conn = getConnection();
@@ -102,6 +105,97 @@ public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage)
 	        List<MyPage> list= new MyPageDAO().selectPointMinusList(conn,memberId, cPage, numPerPage);
 	        close(conn);
 	        return list;
+	}
+
+	public List<MyPage> selectPointOne(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointOne(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointThree(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointThree(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointSix(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointSix(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointAll(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointPOne(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointPOne(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointPThree(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointPThree(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointPSix(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointPSix(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointPAll(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointPAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointMOne(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointMOne(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointMThree(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointMThree(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointMSix(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointMSix(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<MyPage> selectPointMAll(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<MyPage> list = new MyPageDAO().selectPointMAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectPointPTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = new MyPageDAO().selectPointPTotalContent(conn);
+		close(conn);
+		return totalContent;
 	}
 
 

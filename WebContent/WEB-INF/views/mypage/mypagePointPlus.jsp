@@ -7,7 +7,6 @@
 
 MyPage m = (MyPage)request.getAttribute("mypage");
 
-
 List<MyPage> list = (List<MyPage>)request.getAttribute("list");
 
 String pageBar = (String)request.getAttribute("pageBar");
@@ -21,6 +20,105 @@ String pageBar = (String)request.getAttribute("pageBar");
 	
 }
 </style>
+
+<script>
+$(function(){	
+	
+	
+	
+	/*1개월 클릭시 */
+	$("#btn-one").click(function(){
+	
+		$(this).css('background','#aaaaac')
+		$("#btn-two").css('background','white')
+		$("#btn-three").css('background','white')
+		$("#btn-four").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointPlusOne?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+
+				$("#pointListDiv").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		})
+	});
+	/*3개월 클릭시 */
+	$("#btn-two").click(function(){
+	
+		$(this).css('background','#aaaaac')
+		$("#btn-one").css('background','white')
+		$("#btn-three").css('background','white')
+		$("#btn-four").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointPlusThree?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			
+			$("#pointListDiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	/*6개월 클릭시 */
+	$("#btn-three").click(function(){
+		
+		$(this).css('background','#aaaaac')
+		$("#btn-one").css('background','white')
+		$("#btn-two").css('background','white')
+		$("#btn-four").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointPlusSix?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			
+			$("#pointListDiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	/*전체 클릭시 */
+	$("#btn-four").click(function(){
+		
+		$(this).css('background','#aaaaac')
+		$("#btn-one").css('background','white')
+		$("#btn-two").css('background','white')
+		$("#btn-three").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointPlusAll?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			
+			$("#pointListDiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	
+});
+</script>
+
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -69,16 +167,21 @@ String pageBar = (String)request.getAttribute("pageBar");
             <section class="my-header search-date">
                 <h3 class="sr-only">주문현황 기간검색하기</h3>
                 <ul class="row list-inline list-unstyled">
-                    <li class="col-md-1 text-center"><button type="button">1개월</button></li>
-                    <li class="col-md-1 text-center sel"><button type="button">3개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">6개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">전체</button></li>
-                    <li class="col-md-6 text-center">
-                        <input type="text" id="startDate" class="text-center" value="2019 - 08 - 19" readonly>
-                        <span>-</span>
-                        <input type="text" id="endDate" class="text-center" value="2019 - 12 - 19" readonly>
-                    </li>
-                    <li class="col-md-2 bg-purple"><button type="button">조회</button></li>
+                    <li class="col-md-3 text-center">
+						<button type="button" id="btn-one">1개월</button>
+					</li>
+	
+					<li class="col-md-3 text-center sel">
+						<button type="button" id="btn-two" style="background: white;">3개월</button>
+					</li>
+
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-three">6개월</button>
+					</li>
+
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-four">전체</button>
+					</li>
                 </ul>
             </section>
         </div>
@@ -120,6 +223,7 @@ String pageBar = (String)request.getAttribute("pageBar");
         <div class="col-md-10 content-wrapper">
             <section id="point-list" class="list-wrapper">
                 <h3 class="sr-only">포인트 변동 리스트</h3>
+                 <div id="pointListDiv">
                 <table class="text-center list-tbl">
                     <thead>
                         <tr class="row">
@@ -156,12 +260,10 @@ String pageBar = (String)request.getAttribute("pageBar");
                       
                     </tbody>
                 </table>
+                </div>
             </section>
             
-            <!-- 페이징바 -->
-            <div  id="pageBar">
-				<%=pageBar %>
-			</div>
+            
               
         </div>
         <div class="col-md-1"></div>

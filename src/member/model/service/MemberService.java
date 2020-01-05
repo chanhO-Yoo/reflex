@@ -11,10 +11,8 @@ public class MemberService {
 
 	public Member selectOne(String memberId) {
 		Connection conn = getConnection();
-		
 		Member m = new MemberDAO().selectOne(conn, memberId);
-		
-		
+		close(conn);
 		return m;
 	}
 
@@ -50,9 +48,9 @@ public class MemberService {
 
 
 
-	public int memberDelete(String memberId) {
+	public int memberDelete(String memberId, String memberPwd) {
 		Connection conn = getConnection();
-		int result = new MemberDAO().memberDelete(conn, memberId);
+		int result = new MemberDAO().memberDelete(conn, memberId,memberPwd);
 		
 		
 		if(result>0)
