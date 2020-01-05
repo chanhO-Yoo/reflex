@@ -81,7 +81,7 @@ function deleteQna(){
 	}
 	
 	/* $("[name=boardDelFrm]").submit(); */
-	location.href="<%=request.getContextPath()%>/board/deleteBoard?boardNo="+<%=board.getBoardNo()%>;
+	location.href="<%=request.getContextPath()%>/board/deleteBoard?boardNo="+<%=q.getqNo()%>;
 }
 
 function updateQna(){
