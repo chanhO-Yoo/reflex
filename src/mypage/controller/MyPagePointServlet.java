@@ -94,7 +94,6 @@ public class MyPagePointServlet extends HttpServlet {
 		System.out.println("mypage-point-servlet"+list);
 		
 		request.getRequestDispatcher("/WEB-INF/views/mypage/mypagePoint.jsp").forward(request, response);
-	
 	}
 
 	

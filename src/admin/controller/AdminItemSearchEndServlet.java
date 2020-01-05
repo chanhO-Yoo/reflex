@@ -16,10 +16,10 @@ import item.model.vo.Item;
  * Servlet implementation class AdminItemFinderServlet
  */
 @WebServlet("/admin/item/itemFinder")
-public class AdminItemFinderServlet extends HttpServlet {
+public class AdminItemSearchEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AdminItemFinderServlet() {
+    public AdminItemSearchEndServlet() {
         super();
     }
 

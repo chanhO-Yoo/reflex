@@ -16,13 +16,13 @@ import member.model.vo.Member;
  * Servlet implementation class AdminMemberFinderServlet
  */
 @WebServlet("/admin/member/memberFinder")
-public class AdminMemberFinderServlet extends HttpServlet {
+public class AdminMemberSearchEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        //프로젝트 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMemberFinderServlet() {
+    public AdminMemberSearchEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

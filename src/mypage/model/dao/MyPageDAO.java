@@ -445,5 +445,533 @@ public class MyPageDAO {
 		
 		return rentList;
 	}
+
+	public List<MyPage> selectPointOne(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointOneByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointThree(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointThreeByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointSix(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectMemberListByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointAll(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointSixByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointPOne(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointPOneByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointPThree(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointPThreeByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointPSix(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointPSixByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointPAll(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointPlusListByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointMOne(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointMOneByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointMThree(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointMThreeByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointMSix(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointMSixByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<MyPage> selectPointMAll(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<MyPage> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectPointMinusListByPaging");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+         
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	MyPage m = new MyPage();
+                //컬럼명은 대소문자 구분이 없다.
+            	m.setPointNo(rset.getInt("point_no"));
+            	m.setMemberId(rset.getString("member_id"));
+            	m.setPointStatus(rset.getString("point_status").charAt(0));
+				m.setPointAmount(rset.getInt("point_amount"));
+				m.setPointChangeReason(rset.getString("point_change_reason"));
+				m.setPointChangeDate(rset.getDate("point_change_date"));
+                
+                list.add(m);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
 }
 
