@@ -141,8 +141,8 @@ function orderUpdate(orderNo) {
                             <th>주문번호</th>
                             <th>고객아이디</th>
                             <th>상품수량</th>
-                            <th>주문상태</th>
                             <th>주문금액</th>
+                            <th>주문상태</th>
                             <th></th>
                         </tr>
                         <% if(list==null || list.isEmpty()){ %>
@@ -165,15 +165,15 @@ function orderUpdate(orderNo) {
                             <td><%=od.getOrderNo() %></td>
                             <td><%=od.getMemberId() %></td>
                             <td><%=od.getOrderTotalItemEa() %></td>
-                            <td>
-	                            <select class="form-control " id="orderStatus-<%=od.getOrderNo() %>">
+                            <td><%=od.getOrderTotalPrice() %></td>
+                            <td style="width: 120px;">
+	                            <select class="form-control" id="orderStatus-<%=od.getOrderNo() %>">
 		                            <option value="OS01" <%="주문완료".equals(orderStatus)?"selected":""%>>주문완료</option>
 		                            <option value="OS02" <%="배송준비중".equals(orderStatus)?"selected":""%>>배송준비중</option>
 		                            <option value="OS03" <%="배송중".equals(orderStatus)?"selected":""%>>배송중</option>
 		                            <option value="OS04" <%="배송완료".equals(orderStatus)?"selected":""%>>배송완료</option>
 		                        </select>
 		                    </td>
-                            <td><%=od.getOrderTotalPrice() %></td>
                             <td>
                             	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="orderUpdate(<%=od.getOrderNo() %>)" value="<%=od.getOrderNo() %>">변경</button>
                             </td>

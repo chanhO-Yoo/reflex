@@ -172,16 +172,17 @@ function confirmDelete(){
         <%		} 
             }
         %>
-      </tbody>
+      	</tbody>
                     
-    </table>
+    	</table>
                
                 
-     <div  id="pageBar">
-		<%=pageBar %>
-	</div>
-              
-     </div>
+     	<div id="pageBar" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3 text-center">
+     		<ul class="pagination">
+				<%=pageBar %>
+			</ul>
+		</div>
+    </div>
 </div>
 
 
