@@ -20,12 +20,12 @@ import mypage.model.vo.Qna;
 public class MypageOneToOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/mypage/mypageOneToOne.jsp").forward(request, response);
+		System.out.println("어디까지 왔니");
 		qService qService = new qService();
+		
 		
 		//1.파라미터 핸들링
 				final int numPerPage = 5;
@@ -37,17 +37,17 @@ public class MypageOneToOneServlet extends HttpServlet {
 					
 				}
 				
-				qService qService1 =  new qService();
 				//2.업무로직
 				//a.컨텐츠영역
 				String memberId = request.getParameter("memberId");
-				List<Qna> list = qService1.selectQnaList(memberId, cPage, numPerPage); 
-				System.out.println("list@servlet="+list);
+				System.out.println("MEMBERID@SERVLET="+memberId);
+				List<Qna> list = qService.selectQnaList(memberId, cPage, numPerPage); 
+				System.out.println("list@servletontoone="+list);
 				
 				//b.페이징바영역
 				//전체게시글수, 전체페이지수
 				int pageBarSize = 5; 
-				int totalContent = qService1.selectQnaCount();
+				int totalContent = qService.selectQnaCount(memberId);
 				int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);//(공식2)
 				
 				int pageStart = ((cPage-1)/pageBarSize)*pageBarSize+1;//(공식3)
@@ -84,9 +84,9 @@ public class MypageOneToOneServlet extends HttpServlet {
 				
 				
 				//4.뷰단 포워딩		
-				RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageOneToOne.jsp");
 				request.setAttribute("list",list);
-				request.setAttribute("pageBar",pageBar);		
+//				request.setAttribute("pageBar",pageBar);		
+				RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageOneToOne.jsp");
 				reqDispatcher.forward(request, response);
 				
 			

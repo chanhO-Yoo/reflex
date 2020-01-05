@@ -9,21 +9,22 @@ import java.sql.Connection;
 import java.util.List;
 
 import mypage.model.dao.QnaDAO;
+import mypage.model.vo.MyPage;
 import mypage.model.vo.Qna;
 
 public class qService {
 	
-	public List<Qna> selectQnaList(int cPage, int numPerPage) {
+	public List<Qna> selectQnaList(String memberId, int cPage, int numPerPage) {
 		Connection conn = getConnection();
 		List<Qna> list
-			= new QnaDAO().selectQnaList(conn, cPage, numPerPage);
+			= new QnaDAO().selectQnaList(conn,memberId, cPage, numPerPage);
 		close(conn);
 		return list;
 	}
 
-	public int selectQnaCount() {
+	public int selectQnaCount(String memberId) {
 		Connection conn = getConnection();
-		int totalContent = new QnaDAO().selectQnaCount(conn);
+		int totalContent = new QnaDAO().selectQnaCount(conn,memberId);
 		close(conn);
 		return totalContent;
 	}
@@ -42,25 +43,13 @@ public class qService {
 		close(conn);
 		return result;
 	}
-	public Qna selectOne(int qNo) {
+	public Qna selectQna(String memberId) {
 		Connection conn = getConnection();
-		Qna q = new QnaDAO().selectQna(conn, qNo);
+		Qna q = new QnaDAO().selectQna(conn, memberId);
 		close(conn);
 		return q;
 	}
-	public Qna selectOne(int qNo, boolean hasRead) {
-		Connection conn = getConnection();
-		int result = 0;
-		if(!hasRead) {
-			result = new QnaDAO().increaseReadCount(conn, qNo);
-		}
-		Qna q = new QnaDAO().selectQna(conn, qNo);
-		//트랜잭션처리
-		if(result>0) commit(conn);
-		else rollback(conn);
-		close(conn);
-		return q;
-	}
+
 	 public int deleteQna(String qTypeNo) {
 		Connection conn = getConnection();
 		int result = new QnaDAO().deleteQna(conn, qTypeNo);
@@ -82,6 +71,12 @@ public class qService {
 		close(conn);
 		return result;
 	}
+
+	public List<MyPage> selectMemberList(String memberId, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
 
