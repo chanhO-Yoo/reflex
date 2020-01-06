@@ -10,27 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
-import member.model.vo.Member;
-import mypage.model.vo.Qna;
+import order.model.vo.OrderDetail;
 
-/**
- * Servlet implementation class AdminMemberQna
- */
-@WebServlet("/admin/member/memberQna")
-public class AdminMemberQna extends HttpServlet {
+@WebServlet("/admin/orderList")
+public class AdminOrderListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AdminMemberQna() {
+    public AdminOrderListServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 사용자입력값 처리
 		int cPage = 1;//초기값 설정
@@ -44,13 +33,24 @@ public class AdminMemberQna extends HttpServlet {
 //		System.out.println("cPage@list="+cPage);
 		
 		//페이징바영역처리
-		int totalContent = new AdminService().selectTotalContent2();
+		int totalContent = new AdminService().selectTotalOrderAll();
 		int totalPage = (int)Math.ceil((double)totalContent/numPerPage);//(공식2)
 //		System.out.printf("totalContent=%s, totalPage=%s%n", totalContent, totalPage);
 		
 		String pageBar = "";
 		int pageBarSize = 5;
-
+		// 	   1 2 3 4 5(다음)
+		//(이전)6 7 8 9 10(다음)
+		//(이전)11 12 
+		//cPage, pageBarSize => pageStart
+		//1, 5 => 1 => (5*0)+1
+		//2, 5 => 1
+		//3, 5 => 1
+		//6, 5 => 6 => (5*1)+1
+		//7, 5 => 6
+		//8, 5 => 6
+		//11, 5 => 11 => (5*2)+1
+		//12, 5 => 11
 		//(공식3)
 		int pageStart = ((cPage-1)/pageBarSize)*pageBarSize + 1;
 		int pageEnd = pageStart+pageBarSize-1;
@@ -61,17 +61,17 @@ public class AdminMemberQna extends HttpServlet {
 
 		//1.이전
 		if(pageNo != 1) {
-			pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/memberQna?cPage="+(pageNo-1)+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/orderList?cPage="+(pageNo-1)+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";
 		}
 		
 		//2.pageNo
 		while(pageNo<=pageEnd && pageNo<=totalPage) {
 			//현재페이지인 경우
 			if(cPage == pageNo) {
-				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span>\n";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span></li>\n";
 			}
 			else {
-				pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/memberQna?cPage="+pageNo+"'>"+pageNo+"</a></li>\n";				
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/orderList?cPage="+pageNo+"'>"+pageNo+"</a></li>\n";				
 			}
 			
 			pageNo++;
@@ -79,26 +79,27 @@ public class AdminMemberQna extends HttpServlet {
 		
 		//3.다음
 		if(pageNo <= totalPage) {
-			pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/memberQna?cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>\n";							
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/orderList?cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>\n";							
 		}
 
+		//주문완료인 상품수
+		List<Integer> OSList = new AdminService().OSList();
+
 		
-		List<Qna> list = new AdminService().selectQnaList(cPage, numPerPage);
+		
+		//3.업무로직
+		List<OrderDetail> list = new AdminService().selectOrderSheetList(cPage, numPerPage);
+
 		request.setAttribute("list",list);
 		request.setAttribute("pageBar", pageBar);
+		
+		request.setAttribute("totalContent", totalContent);
+		request.setAttribute("OSList", OSList);
 
-		System.out.println("admin-Qnalist-servlet"+list);
-		
-		
-		request.getRequestDispatcher("/WEB-INF/views/admin/member/admin_member_oneqna.jsp").forward(request, response);
-	
+		request.getRequestDispatcher("/WEB-INF/views/admin/order/adminOrderList.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
