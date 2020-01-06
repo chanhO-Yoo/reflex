@@ -1,4 +1,4 @@
-<%@page import="order.model.vo.OrderDetail"%>
+<%@page import="order.model.vo.OrderDetail2"%>
 <%@page import="order.model.vo.OrderSheet"%>
 <%@page import="itemRentEach.model.vo.ItemRentEach"%>
 <%@page import="java.util.List"%>
@@ -10,7 +10,7 @@
 	String searchType = request.getParameter("searchType");
 	String searchKeyword = request.getParameter("searchKeyword");
 	
-	List<OrderDetail> list = (List<OrderDetail>)request.getAttribute("list");
+	List<OrderDetail2> list = (List<OrderDetail2>)request.getAttribute("list");
 
 	String pageBar = (String)request.getAttribute("pageBar");
 	
@@ -152,7 +152,7 @@ function orderUpdate(orderNo) {
                         <% 
 				            } 
 				            else {
-				                for(OrderDetail od : list){
+				                for(OrderDetail2 od : list){
 				                	String orderStatus = "";
 				                	switch(od.getOrderStatusNo()){
 				                	case "OS01": orderStatus="주문완료";break;

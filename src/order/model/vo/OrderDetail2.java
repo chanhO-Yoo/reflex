@@ -4,7 +4,7 @@ public class OrderDetail2 extends OrderSheet {
 	private static final long serialVersionUID = 1L;
 
 	private int orderDetailsNo;
-	private int orderNo;
+	private String orderNo;
 	private String memberId;
 	private int itemNo;
 	private String rentOptNo;
@@ -17,7 +17,7 @@ public class OrderDetail2 extends OrderSheet {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public OrderDetail2(int orderDetailsNo, int orderNo, String memberId, int itemNo, String rentOptNo,
+	public OrderDetail2(int orderDetailsNo, String orderNo, String memberId, int itemNo, String rentOptNo,
 			int orderQuantity, String orderStatusNo, char reviewYn, String orderCancelNo) {
 		super();
 		this.orderDetailsNo = orderDetailsNo;
@@ -36,10 +36,10 @@ public class OrderDetail2 extends OrderSheet {
 	public void setOrderDetailsNo(int orderDetailsNo) {
 		this.orderDetailsNo = orderDetailsNo;
 	}
-	public int getOrderNo() {
+	public String getOrderNo() {
 		return orderNo;
 	}
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
 	public String getMemberId() {

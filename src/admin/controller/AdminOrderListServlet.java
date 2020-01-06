@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import admin.model.service.AdminService;
 import order.model.vo.OrderDetail;
+import order.model.vo.OrderDetail2;
 
 @WebServlet("/admin/orderList")
 public class AdminOrderListServlet extends HttpServlet {
@@ -88,7 +89,7 @@ public class AdminOrderListServlet extends HttpServlet {
 		
 		
 		//3.업무로직
-		List<OrderDetail> list = new AdminService().selectOrderSheetList(cPage, numPerPage);
+		List<OrderDetail2> list = new AdminService().selectOrderSheetList(cPage, numPerPage);
 
 		request.setAttribute("list",list);
 		request.setAttribute("pageBar", pageBar);

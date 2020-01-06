@@ -7,7 +7,7 @@ public class OrderSheet implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private int orderNo;
+	private String orderNo;
 	private String memberId;
 	private Date orderDate;
 	private String orderPayMethod;
@@ -21,7 +21,7 @@ public class OrderSheet implements Serializable{
 		super();
 	}
 	
-	public OrderSheet(int orderNo, String memberId, Date orderDate, String orderPayMethod, String orderPayStatus,
+	public OrderSheet(String orderNo, String memberId, Date orderDate, String orderPayMethod, String orderPayStatus,
 			int orderTotalItemEa, int orderTotalPrice, int orderUsePoint, String impUid) {
 		super();
 		this.orderNo = orderNo;
@@ -36,11 +36,11 @@ public class OrderSheet implements Serializable{
 	}
 
 
-	public int getOrderNo() {
+	public String getOrderNo() {
 		return orderNo;
 	}
 
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
 

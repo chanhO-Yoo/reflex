@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import admin.model.service.AdminService;
 import item.model.vo.Item;
 import order.model.vo.OrderDetail;
+import order.model.vo.OrderDetail2;
 
 @WebServlet("/admin/orderListFinder")
 public class AdminOrderListFinderServlet extends HttpServlet {
@@ -39,7 +40,7 @@ public class AdminOrderListFinderServlet extends HttpServlet {
 		System.out.println("searchKeyword@finder=" + searchKeyword);
 
 		// 2.업무로직
-		List<OrderDetail> list = null;
+		List<OrderDetail2> list = null;
 		AdminService adminService = new AdminService();
 		System.out.println("searchType=" + searchType);
 

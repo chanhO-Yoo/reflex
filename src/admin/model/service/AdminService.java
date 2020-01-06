@@ -17,6 +17,7 @@ import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
 import order.model.vo.OrderDetail;
+import order.model.vo.OrderDetail2;
 import order.model.vo.OrderSheet;
 //프로젝트 Service
 public class AdminService {
@@ -438,23 +439,23 @@ public int selectTotalDetailItem(int itemNo) {
 		return OSList;
 	}
 
-	public List<OrderDetail> selectOrderSheetList(int cPage, int numPerPage) {
+	public List<OrderDetail2> selectOrderSheetList(int cPage, int numPerPage) {
 		Connection conn = getConnection();
-	    List<OrderDetail> list= new AdminDAO().selectOrderSheetList(conn, cPage, numPerPage);
+	    List<OrderDetail2> list= new AdminDAO().selectOrderSheetList(conn, cPage, numPerPage);
 	    close(conn);
 	    return list;
 	}
 
-	public List<OrderDetail> selectOrderListbyId(String searchKeyword, int cPage, int numPerPage) {
+	public List<OrderDetail2> selectOrderListbyId(String searchKeyword, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-	    List<OrderDetail> list= new AdminDAO().selectOrderListbyId(conn, searchKeyword, cPage, numPerPage);
+	    List<OrderDetail2> list= new AdminDAO().selectOrderListbyId(conn, searchKeyword, cPage, numPerPage);
 		close(conn);
 		return list;
 	}
 
-	public List<OrderDetail> selectOrderListbyOs(String searchKeyword, int cPage, int numPerPage) {
+	public List<OrderDetail2> selectOrderListbyOs(String searchKeyword, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-	    List<OrderDetail> list= new AdminDAO().selectOrderListbyOs(conn, searchKeyword, cPage, numPerPage);
+	    List<OrderDetail2> list= new AdminDAO().selectOrderListbyOs(conn, searchKeyword, cPage, numPerPage);
 		close(conn);
 		return list;
 	}

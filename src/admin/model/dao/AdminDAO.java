@@ -20,7 +20,7 @@ import item.model.vo.ItemQnaAns;
 import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
-import order.model.vo.OrderDetail;
+import order.model.vo.OrderDetail2;
 import order.model.vo.OrderSheet;
 //프로젝트 DAO
 public class AdminDAO {
@@ -1751,8 +1751,8 @@ public class AdminDAO {
 		return OSList;
 	}
 
-	public List<OrderDetail> selectOrderSheetList(Connection conn, int cPage, int numPerPage) {
-		List<OrderDetail> list = new ArrayList<>();
+	public List<OrderDetail2> selectOrderSheetList(Connection conn, int cPage, int numPerPage) {
+		List<OrderDetail2> list = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rset = null;
         
@@ -1775,9 +1775,9 @@ public class AdminDAO {
             rset = pstmt.executeQuery();
             
             while(rset.next()){
-            	OrderDetail od = new OrderDetail();
+            	OrderDetail2 od = new OrderDetail2();
                 //컬럼명은 대소문자 구분이 없다.
-            	od.setOrderNo(rset.getInt("order_no"));
+            	od.setOrderNo(rset.getString("order_no"));
             	od.setMemberId(rset.getString("member_id"));
             	od.setOrderTotalItemEa(rset.getInt("order_total_item_ea"));
             	od.setOrderTotalPrice(rset.getInt("order_total_price"));
@@ -1796,8 +1796,8 @@ public class AdminDAO {
         return list;
 	}
 
-	public List<OrderDetail> selectOrderListbyId(Connection conn, String searchKeyword, int cPage, int numPerPage) {
-		List<OrderDetail> list = null;
+	public List<OrderDetail2> selectOrderListbyId(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<OrderDetail2> list = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectOrderListbyId");
@@ -1815,9 +1815,9 @@ public class AdminDAO {
 			//rset의 결과 list에 옮기기
 			list = new ArrayList<>();
 			while(rset.next()) {
-            	OrderDetail od = new OrderDetail();
+				OrderDetail2 od = new OrderDetail2();
                 //컬럼명은 대소문자 구분이 없다.
-            	od.setOrderNo(rset.getInt("order_no"));
+            	od.setOrderNo(rset.getString("order_no"));
             	od.setMemberId(rset.getString("member_id"));
             	od.setOrderTotalItemEa(rset.getInt("order_total_item_ea"));
             	od.setOrderTotalPrice(rset.getInt("order_total_price"));
@@ -1837,8 +1837,8 @@ public class AdminDAO {
 		return list;
 	}
 
-	public List<OrderDetail> selectOrderListbyOs(Connection conn, String searchKeyword, int cPage, int numPerPage) {
-		List<OrderDetail> list = null;
+	public List<OrderDetail2> selectOrderListbyOs(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<OrderDetail2> list = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectOrderListbyOs");
@@ -1856,9 +1856,9 @@ public class AdminDAO {
 			//rset의 결과 list에 옮기기
 			list = new ArrayList<>();
 			while(rset.next()) {
-            	OrderDetail od = new OrderDetail();
+				OrderDetail2 od = new OrderDetail2();
                 //컬럼명은 대소문자 구분이 없다.
-            	od.setOrderNo(rset.getInt("order_no"));
+            	od.setOrderNo(rset.getString("order_no"));
             	od.setMemberId(rset.getString("member_id"));
             	od.setOrderTotalItemEa(rset.getInt("order_total_item_ea"));
             	od.setOrderTotalPrice(rset.getInt("order_total_price"));
