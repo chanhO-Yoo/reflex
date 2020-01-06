@@ -27,6 +27,7 @@ public class AdminItemDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.parameter handling
 		int itemNo = Integer.parseInt(request.getParameter("itemNo"));
+		String category =request.getParameter("category");
 		
 		//2.business login
 		//파일삭제
@@ -40,7 +41,7 @@ public class AdminItemDeleteServlet extends HttpServlet {
 			System.out.println("=============");
 			if(!"".equals(renamedFileName)) {
 				//파일저장경로
-				String saveDirectory = getServletContext().getRealPath("/images/");
+				String saveDirectory = getServletContext().getRealPath("/images/"+category+"/");
 				
 				File delFile = new File(saveDirectory, renamedFileName);
 				System.out.println("delFile="+delFile);
