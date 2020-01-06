@@ -5,15 +5,20 @@
 <%@page import="java.util.List"%>
 <%@page import="item.model.vo.Item"%>
 <%@page import="java.text.DecimalFormat"%>
+<%@ page import="board.model.vo.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String categoryNo = (String)request.getAttribute("categoryNo");
+	String memberid = memberLoggedIn != null?memberLoggedIn.getMemberId():"";
 	Item item = (Item)request.getAttribute("item");
 	List<ItemImage> imgList = (List<ItemImage>)request.getAttribute("imgList");
 	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList");
 	Map<Integer, ItemQnaAns> qnaMap = (Map<Integer, ItemQnaAns>)request.getAttribute("qnaMap");
+	List<Board> blist = (List<Board>)request.getAttribute("list");
+	String pageBar = (String)request.getAttribute("pageBar");
+	
 	int qnaTotalContent = (int)request.getAttribute("qnaTotalContent");
 	
 	//가격 콤마찍기
@@ -179,29 +184,28 @@ function changeOrderNo(num){
 	
 	let changeVal = 0; //변경될 가격
 	
-	//플러스버튼 누를 때 
-	if(oldNo < newNo){
-		console.log("plus");
-		for(let i=0; i<newNo; i++){
-			changeVal += plusPrice;	
-			//console.log("changeValAfterPlus="+changeVal);
-		}
+	//버튼 누를 때 
+	console.log("plus");
+	var selectOption = document.getElementById("rent-type") // 현재 렌탈옵션 element를 모두 가져옴
+	var selectOptionInnerHTML = selectOption.options[selectOption.selectedIndex].innerHTML; // 현재 렌탈옵션 element에서 글자를 모두 가져옴
+	var replaceSelectOptionInnerHTML = selectOptionInnerHTML.replace(',',''); // replace를 사용해 , 를 없앰
+	console.log("zz"+replaceSelectOptionInnerHTML); // 없앤 , 체크
+	var pattern = /(.*)원(.*)/; // 정규식 정의
+	pattern.test(replaceSelectOptionInnerHTML); // 정규식 실행
+	var RegExp_1 = RegExp.$1; // 실행한 정규식의 첫번째 인자를 RegExp_1에 저장. 두번째 인자를 하려면 RegExp.$2로 하기. 
+	console.log("짠:"+RegExp_1); // 정규식의 첫번째 인자를 확인
+	
+	for(let i=0; i<newNo; i++){
+		console.log("1changeVal:"+changeVal); // 계산된 가격을 log로 찍기
+		changeVal += (RegExp_1*1); // 수량 만큼 가격을 더하기
 		//console.log("changeValAfterPlus="+changeVal);
 		totalPrice.innerText = changeVal.toLocaleString()+"원";
 	}
-	//마이너스버튼 누를 때
-	else{
-		console.log("minus");
-		for(let i=0; i<newNo; i++){
-			changeVal -= plusPrice;	
-		}
-		//console.log("changeValAfterMinus="+changeVal);
-		totalPrice.innerText = changeVal.toLocaleString()+"원";
-	}
-	totalPrice.innerText = changeVal.toLocaleString()+"원";
+	
+	//console.log("changeValAfterPlus="+changeVal);
+	totalPrice.innerText = changeVal.toLocaleString()+"원"; // 마지막에 "원" 글자를 붙이기
 	
 	//totalPrice.innerText = changeVal.toLocaleString()+"원";
-	
 }
 </script>
 <!-- page nav -->
@@ -389,26 +393,32 @@ function changeOrderNo(num){
 	            <!-- 이용후기 -->
 	            <section id="details-review">
 	                <section id="writed-review" class="list-wrapper">
+	                           <% 
+               int c=0;
+              
+               for(Board b : blist){ 
+            	   c++;
+           		
+           		
+            	   if(b.getItem_no()==item.getItemNo()){
+               %>
 	                    <h3 class="sr-only">이용후기 리스트</h3>
 	                    <ul class="list-unstyled wishlist-inner">
 	                        <li>
 	                            <section class="dtReview-header">
 	                                <div class="star pull-left">
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                </div>
+										<% for(int i=0; i<b.getReview_star(); i++){ %>
+		                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+		    							<%} %>	                                </div>
 	                                <div class="review-info pull-right">
-	                                    <span class="review-writer">uj9208</span>
+	                                    <span class="review-writer"><%=b.getReview_writer() %></span>
 	                                    <span class="review-slash"> | </span>
-	                                    <span class="review-date">2019.12.22</span>
+	                                    <span class="review-date"><%=b.getReview_date() %></span>
 	                                </div>
 	                            </section>
 	                            <section class="review-content">
 	                                <div>
-	                                    <p>dolor voluptates delectus nemo voluptatem quam nisi impedit es delectus nemo voluptatem quam nisi impe ipsa minus unde, aliquam est? At sapiente necessitatibus corporis beatae?</p>
+	                                    <p><%=b.getReview_content() %></p>
 	                                </div>
 	                                <div class="reviewImg-wrapper row">
 	                                    <img src="<%=request.getContextPath()%>/images/view-img1.jfif" class="col-md-3" alt="">
@@ -417,59 +427,46 @@ function changeOrderNo(num){
 	                                </div>
 	                            </section>
 	                        </li>
-	                        <li>
-	                            <section class="dtReview-header">
-	                                <div class="star pull-left">
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-	                                </div>
-	                                <div class="review-info pull-right">
-	                                    <span class="review-writer">uj9208</span>
-	                                    <span class="review-slash"> | </span>
-	                                    <span class="review-date">2019.12.22</span>
-	                                </div>
-	                            </section>
-	                            <section class="review-content">
-	                                <div>
-	                                    <p>dolor voluptates delectus nemo voluptatem quam nisi impedit es delectus nemo voluptatem quam nisi impe ipsa minus unde, aliquam est? At sapiente necessitatibus corporis beatae?</p>
-	                                </div>
-	                                <div class="reviewImg-wrapper row">
-	                                    <!-- <img src="images/view-img1.jfif" class="col-md-3" alt="">
-	                                    <img src="images/view-img2.jfif" class="col-md-3" alt="">
-	                                    <img src="images/view-img3.jfif" class="col-md-3" alt=""> -->
-	                                </div>
-	                            </section>
-	                        </li>
 	                    </ul>
+	                     
+	                   	 <% } %>
+	                    <% } %>
 	                </section>
 	                <!-- 페이징바 -->
 	                <nav class="paging-bar text-center">
 	                    <ul class="list-unstyled list-inline">
 	                    <li>
-	                        <a href="#" aria-label="Previous">
-	                            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-	                        </a>
-	                    </li>
-	                    <li class="cPage"><a href="#">1</a></li>
-	                    <li><a href="#">2</a></li>
-	                    <li><a href="#">3</a></li>
-	                    <li><a href="#">4</a></li>
-	                    <li><a href="#">5</a></li>
-	                    <li>
-	                        <a href="#" aria-label="Next">
-	                            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-	                        </a>
-	                    </li>
+                    <p  aria-label="Previous">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="pageBar" >
+							<%=pageBar %>
+                        
+                        
+                        </span>
+                    </p>
+                </li>
 	                    </ul>
 	                </nav>
 	            </section>
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
 	            <!-- 상품QNA -->
 	            <section id="details-qna">
 	                <div class="btn-wrapper">
+	                <!--관리자로 로그인시 문의하기 버튼 안 뜨게 설정-->
+	                <%if(memberLoggedIn!=null && "admin".equals(memberLoggedIn.getMemberId())){ %>
+	                <%} 
+	                else{
+	                %>
 	                    <button type="button" id="btn-goQna" class="btn-radius pull-right">문의하기</button>
+	                <%} %>
 	                </div>
 	                <section id="point-list" class="list-wrapper">
 	                    <h3 class="sr-only">문의내역 리스트</h3>
@@ -520,12 +517,29 @@ function changeOrderNo(num){
 			                                		<p class="center-block"><%=qnaMap.get(q.getItemQnaNo()).getItemQnaAnsContent() %></p>
 			                                <%
 			                                	}
+	                                        
+	                                        	/*관리자일 경우 답변대기중일때 답변등록창 뜨게 설정*/
+			                                	else if(memberLoggedIn!=null && "admin".equals(memberLoggedIn.getMemberId())){
+			                                %>
+			                         
+			                                	<form action="<%=request.getContextPath()%>/admin/item/qnaAnsInsert?categoryNo=<%=categoryNo%>&itemNo=<%=item.getItemNo()%>" 
+			                                		method="post" name="itemQnaCommentFrm">
+			                                		<input type="hidden" name="itemQnaNo" value="<%=q.getItemQnaNo()%>" />
+			                                		<input type="text" name="itemQnaAnsContent" placeholder="상품 QnA 답변" size="80px;"/>
+			                                		<button type="submit" id="btn-ansQna" class="btn-radius">등록</button>
+			                                	</form>	
+				                                		
+			                                		
+			                                <% 	
+			                                	}
+	                                        	/*관리자가 아닐시 답변대기중 메세지만 뜨게 설정 */
 			                                	else{
 			                                %>
 			                                		<p class="center-block">답변대기 중입니다.</p>
-			                                <%
+			                                <%  
 			                                	}
-			                                %>
+	                                        %>	
+			                                	
 	                                    </div>
 	                                </td>
 	                            </tr>

@@ -67,17 +67,17 @@ public class AdminItemDetailSearchServlet extends HttpServlet {
 
 		//1.이전
 		if(pageNo != 1) {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/searchDetailItem?cPage="+(pageNo-1)+"'>[이전]</a>\n";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchDetailItem?itemNo="+itemNo+"&cPage="+(pageNo-1)+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";
 		}
 		
 		//2.pageNo
 		while(pageNo<=pageEnd && pageNo<=totalPage) {
 			//현재페이지인 경우
 			if(cPage == pageNo) {
-				pageBar += "<span class='cPage'>"+pageNo+"</span>\n";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span></li>\n";
 			}
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/searchDetailItem?cPage="+pageNo+"'>"+pageNo+"</a>\n";				
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchDetailItem?itemNo="+itemNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";				
 			}
 			
 			pageNo++;
@@ -85,7 +85,7 @@ public class AdminItemDetailSearchServlet extends HttpServlet {
 		
 		//3.다음
 		if(pageNo <= totalPage) {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/searchDetailItem?cPage="+pageNo+"'>[다음]</a>\n";							
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/searchDetailItem?itemNo="+itemNo+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>\n";						
 		}
 
 		//대여중인 상품수

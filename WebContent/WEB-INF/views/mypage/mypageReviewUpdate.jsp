@@ -34,6 +34,8 @@
                 <form action="<%=request.getContextPath()%>/board/boardUpdateForm" id="oneToOneFrm"  method="post" enctype="multipart/form-data">
                 <input type="hidden" name="reviewNo" value="<%=b.getReview_no() %>" />
                 <input type="hidden" name="order_details_no" value="<%=b.getOrder_details_no() %>" />
+                 <input type="hidden" name="orderDetailNo" value="<%=b.getOrder_details_no() %>" />
+                   <input type="hidden" name="itemNo" value="<%=b.getItem_no() %>" />
                     <div>
                         <label for="review-star">별점</label>
                         <select name="star" id="review-star">

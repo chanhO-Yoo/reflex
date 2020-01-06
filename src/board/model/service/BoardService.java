@@ -10,6 +10,7 @@ import java.util.List;
 
 import board.model.dao.BoardDAO;
 import board.model.vo.Board;
+import order.model.vo.OrderDetail3;
 
 
 public class BoardService {
@@ -96,6 +97,15 @@ public class BoardService {
 			
 			return result;
 		}
+
+	public List<OrderDetail3> selectBoardList2(String memberId) {
+		Connection conn = getConnection();
+		List<OrderDetail3> list2 
+			= new BoardDAO().selectBoardList2(conn,memberId);
+		close(conn);
+//		System.out.println("BoardService@+="+list);
+		return list2;
+	}
 
 	
 

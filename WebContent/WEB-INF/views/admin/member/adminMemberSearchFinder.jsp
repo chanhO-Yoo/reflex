@@ -44,6 +44,22 @@ function confirmDelete(){
 
 }
 </script>
+
+<!-- page nav -->
+<nav class="line-style page-nav">
+    <ul class="list-unstyled list-inline">
+        <li class="go-home">
+            <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li>
+        <li class="go-boxmenu">
+            <a href="">관리자페이지</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li> 
+        <li>회원조회</li>
+    </ul>
+</nav>
+
         <!-- 메인 컨텐츠 -->
         <div class="container-fluid contents">
             <!-- 회원검색 - 메뉴제목 -->
@@ -113,7 +129,6 @@ function confirmDelete(){
                         <th>이름</th>
                         <th>주소</th>
                         <th>가입일</th>
-                        <th>포인트</th>
                         <th>구매내역</th>
                         <th>삭제</th>
                     </tr>
@@ -132,7 +147,6 @@ function confirmDelete(){
         	<td><%=m.getMemberName()%></td>
         	<td><%=m.getMemberAddress()%></td>
         	<td><%=m.getMemberEnrollDate()%></td>
-        	<td><%=m.getMemberPoint()%></td>
         	<td><button type="button" class="btn btn-primary">수정</button></td>
             <td>
             	<form action="<%=request.getContextPath()%>/admin/member/memberDelete?memberId=<%=m.getMemberId()%>"

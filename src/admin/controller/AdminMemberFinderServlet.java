@@ -1,3 +1,4 @@
+
 package admin.controller;
 
 import java.io.IOException;
@@ -83,7 +84,7 @@ public class AdminMemberFinderServlet extends HttpServlet {
 
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'>[이전]</a> ";
+			pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'><span aria-hidden='true'>&laquo;</span></a> ";
 		}
 		// pageNo section
 		while(pageNo<=pageEnd && pageNo<=totalPage){
@@ -101,7 +102,7 @@ public class AdminMemberFinderServlet extends HttpServlet {
 			
 		} else {
 			
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>[다음]</a>";
+			pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a>";
 		}
 		
 		

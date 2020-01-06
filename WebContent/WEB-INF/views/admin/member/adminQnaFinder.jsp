@@ -37,73 +37,80 @@ $(()=>{
 	});
 });
 </script>
+<!-- page nav -->
+<nav class="line-style page-nav">
+    <ul class="list-unstyled list-inline">
+        <li class="go-home">
+            <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li>
+        <li class="go-boxmenu">
+            <a href="">관리자페이지</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li> 
+        <li>1:1문의내역</li>
+    </ul>
+</nav>
 
-  <div class="container-fluid">
-        <div class="row"><p class="col-md-12"><br><br><br><br></p></div>
-        <div class="row">
-            <p class="col-md-2"></p>
-            <h1 class="col-md-3">
-                1:1문의 내역
-            </h1> 
+
+  <div class="container-fluid contents">
+        <!-- 회원검색 - 메뉴제목 -->
+        <div class="row itemTitle">
+          	<div class="col-md"></div>
+            <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                <h3>1:1문의 내역</h3>
+            </div>
         </div>
-    </div>
+        <!-- 한줄 여백 -->
+        <div class="row height-45"></div>
+        <!-- 회원검색 - 서브제목 -->
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                <h4>문의 검색</h4>
+            </div>
+        </div>
       
     <!-- 문의현황 검색창 -->
-    <div class="container-fluid">
-            <div class="row"><p class="col-md-12 col-xs-2"><br></p></div>
-        <div class="row">
-            <p class="col-md-4 col-xs-2"></p>
+    	<div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
             <!-- 문의검색창 폼 -->
-            <form action="<%=request.getContextPath()%>/admin/member/qnaSearch" style="margin-left: 70px;" id="member-qna-srch" class="form-inline" method="get">
-                <div class="form-group" style="margin-left: 70px;">
-                    <select id="qnaSearchType" style="margin-right: 15px;">
+                <div class="form-group col-xs-3" style="padding-top: 7px;">
+                    <select id="qnaSearchType" class="form-control">
                         <option value="qnaType" <%="qnaType".equals(qnaSearchType)?"selected":"" %>>문의유형</option>
-                        <option value="qnaYN" value="qnaYN" <%="qnaYN".equals(qnaSearchType)?"selected":"" %>>답변여부</option>
+                        <option value="qnaYN" <%="qnaYN".equals(qnaSearchType)?"selected":"" %>>답변여부</option>
                     </select>
-                    
-                   	<div id="search-qnaType" class="form-group">
-                    	<form action="<%=request.getContextPath()%>/admin/member/qnaSearch">
-                    		<input type="hidden" name="qnaSearchType" value="qnaType"/>
-                    		<input style="margin-right: 10px;" type="text" name="qnaSearchword" class="form-control" 
-							value="<%="qnaType".equals(qnaSearchType)?qnaSearchword:""%>" placeholder="문의유형 검색" >
-                    		<button type="submit" class="btn btn-default">검색</button>
-                    	</form>
-                    </div>
-                      
-                    <div id="search-qnaYN" class="form-group">
-                    	<form action="<%=request.getContextPath()%>/admin/member/qnaSearch">
-                    		<input type="hidden" name="qnaSearchType" value="qnaYN"/>
-                    		<input style="margin-right: 10px;" name="qnaSearchword" type="text" class="form-control" 
-							value="<%="qnaYN".equals(qnaSearchType)?qnaSearchword:""%>" placeholder="답변여부 검색" >
-                    		<button type="submit" class="btn btn-default">검색</button>
-                    	</form>
-                    </div>  
                 </div>
-            </form>
-            
-            <p class="col-md-12"><br><br></p>
-        </div>
-    </div>
+                    
+               	<form class="form-inline" action="<%=request.getContextPath()%>/admin/member/qnaSearch">
+                  	<div id="search-qnaType" class="form-group">
+                   		<input type="hidden" name="qnaSearchType" value="qnaType"/>
+                   		<input style="margin-right: 10px;" type="text" name="qnaSearchword" class="form-control" 
+						value="<%="qnaType".equals(qnaSearchType)?qnaSearchword:""%>" placeholder="문의유형 검색" >
+                   		<button type="submit" class="btn btn-default">검색</button>
+                    </div>
+               	</form>
+                      
+               	<form class="form-inline" action="<%=request.getContextPath()%>/admin/member/qnaSearch">
+                    <div id="search-qnaYN" class="form-group">
+                   		<input type="hidden" name="qnaSearchType" value="qnaYN"/>
+                   		<input style="margin-right: 10px;" name="qnaSearchword" type="text" class="form-control" 
+						value="<%="qnaYN".equals(qnaSearchType)?qnaSearchword:""%>" placeholder="답변여부 검색" >
+                   		<button type="submit" class="btn btn-default">검색</button>
+	                </div>  
+               	</form>
+            </div>
     <!-- 문의현황 검색창 끝-->
-
-
-    <!-- 문의현황 테이블 css -->
-    <style>
-    #member-qna-tbl {
-      border-top: 1px solid #444444;
-      border-collapse: collapse;
-    }
-    #member-qna-tbl th, td {
-      border-bottom: 1px solid #444444;
-      padding: 10px;
-      text-align: center;
-    }
-    </style>
-    <!-- 문의현황 테이블 -->
-    <div class="container-fluid">
+	<!-- 한줄 여백 -->
+        <div class="row height-45"></div>
+        <!-- 회원검색 - 검색결과 서브제목 -->
         <div class="row">
-            <div class="col-md-3"></div>
-            <table id="member-qna-tbl" class="col-md-6">
+            <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
+                <h4>문의 목록</h4>
+            </div>
+        </div>
+
+    <!-- 문의현황 테이블 -->
+    	<div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+            <table class="table">
                 <tr>
                     <th>번호</th>
                     <th>문의유형</th>
@@ -121,7 +128,14 @@ $(()=>{
               	<tr>
               		<!--  //번호	문의유형	제목	작성자	작성일자	답변여부 -->
               		<td><%=q.getqNo()%></td>
-              		<td><%=q.getqTypeNo()%></td>
+              		<td>
+              		<% switch(q.getqTypeNo()){
+                           case "QT01": out.println("상품문의"); break;
+                           case "QT02": out.println("배송문의"); break;
+                           case "QT03": out.println("기타문의"); break;
+                       }
+                    %>
+              		</td>
               		<%if("N".equals(q.getqAns())){ %>
               		<td><a href="<%=request.getContextPath()%>/admin/member/memberQnaForm?qNo=<%=q.getqNo()%>"><%=q.getqTilte()%></a></td>
               		<%}
@@ -138,11 +152,14 @@ $(()=>{
               	%>
             
             </table>
-        <div  id="pageBar">
-			<%=pageBar %>
-		</div>
+            
+	        <div id="pageBar" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3 text-center">
+				<ul class="pagination">
+					<%=pageBar %>
+				</ul>
+			</div>
+		
         </div>
-          <p class="col-md-12"><br><br></p>
     </div>
      <!-- 문의현황 테이블 끝 -->
      

@@ -41,7 +41,7 @@ public class BoardUpdateFormServlet extends HttpServlet {
 				System.out.println("saveDirectory="+saveDirectory);
 				
 				//파일최대업로드크기 제한: 10MB까지 제한
-				//10MB = 1024 * 1024 * 10
+				//10MB = 1024 * 1024 * 10 
 				int maxPostSize = 1024 * 1024 * 10; 
 				
 				//파일명 재지정 정책 객체
@@ -58,7 +58,8 @@ public class BoardUpdateFormServlet extends HttpServlet {
 				//1.parameter handling
 				int reviewStar =Integer.parseInt(multiReq.getParameter("star"));
 				int reviewNo =Integer.parseInt(multiReq.getParameter("reviewNo"));
-				int orderDetailsNo =Integer.parseInt(multiReq.getParameter("order_details_no"));
+				int itemNo =Integer.parseInt(multiReq.getParameter("itemNo"));
+				int orderDetailNo =Integer.parseInt(multiReq.getParameter("orderDetailNo"));
 				String reviewWriter = multiReq.getParameter("reviewWriter");
 				String reviewContent = multiReq.getParameter("reviewContent");
 		
@@ -98,7 +99,7 @@ public class BoardUpdateFormServlet extends HttpServlet {
 					}
 				}
 				
-				Board b = new Board(reviewNo,orderDetailsNo,reviewWriter,null,reviewStar,reviewContent,review_image,renamedFileName,0);
+				Board b = new Board(reviewNo,orderDetailNo,reviewWriter,null,reviewStar,reviewContent,review_image,renamedFileName,0,itemNo);
 				
 				
 				
@@ -106,7 +107,7 @@ public class BoardUpdateFormServlet extends HttpServlet {
 				int result = new BoardService().updateBoard(b);
 				
 				String msg = "";
-				String loc = "/mypage/mypageReview";
+				String loc = "/mypage/mypageReview?memberId="+reviewWriter;
 				
 				if(result>0) {
 					msg = "게시글 수정 성공!";
