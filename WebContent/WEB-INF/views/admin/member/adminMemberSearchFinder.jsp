@@ -43,6 +43,9 @@ function confirmDelete(){
 	}
 
 }
+function orderListSearch(memberId) {
+	location.href="<%=request.getContextPath()%>/admin/orderListFinder?searchType=member_id&searchKeyword="+memberId;
+}
 </script>
 
 <!-- page nav -->
@@ -147,12 +150,12 @@ function confirmDelete(){
         	<td><%=m.getMemberName()%></td>
         	<td><%=m.getMemberAddress()%></td>
         	<td><%=m.getMemberEnrollDate()%></td>
-        	<td><button type="button" class="btn btn-primary">수정</button></td>
+        	<td><button type="button" class="btn btn-primary btn-sm" onclick="orderListSearch('<%=m.getMemberId() %>')" value='<%=m.getMemberId() %>'>조회</button></td>
             <td>
             	<form action="<%=request.getContextPath()%>/admin/member/memberDelete?memberId=<%=m.getMemberId()%>"
             	onsubmit="return confirmDelete();">
 					<input type="hidden" name="memberId" value=<%=m.getMemberId()%> />
-					<input type="submit" value="삭제" />
+					<input type="submit" class="btn btn-danger btn-sm" value="삭제" />
 				</form>
         	</td>
         </tr>
@@ -166,8 +169,10 @@ function confirmDelete(){
         </table>
                
                 
-        <div  id="pageBar">
-			<%=pageBar %>
+        <div  id="pageBar" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3 text-center">
+	        <ul class="pagination">
+				<%=pageBar %>
+			</ul>
 		</div>
               
        </div>

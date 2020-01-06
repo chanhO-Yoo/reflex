@@ -84,15 +84,15 @@ public class AdminMemberFinderServlet extends HttpServlet {
 
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'><span aria-hidden='true'>&laquo;</span></a> ";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'><span aria-hidden='true'>&laquo;</span></a></li> ";
 		}
 		// pageNo section
 		while(pageNo<=pageEnd && pageNo<=totalPage){
 			if(cPage ==  pageNo ){
-				pageBar += "<span class='cPage'>"+pageNo+"</span> ";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span></li> ";
 			} 
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a> ";
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a></li> ";
 			}
 			pageNo++;
 		}
@@ -102,7 +102,7 @@ public class AdminMemberFinderServlet extends HttpServlet {
 			
 		} else {
 			
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a>";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/memberFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>";
 		}
 		
 		

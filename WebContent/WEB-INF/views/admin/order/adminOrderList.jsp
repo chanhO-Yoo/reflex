@@ -82,6 +82,7 @@ function orderUpdate(orderNo) {
                             <td><%=OSArr[1]%></td>
                             <td><%=OSArr[2]%></td>
                             <td><%=OSArr[3]%></td>
+                            <td><%=OSArr[4]%></td>
                         </tr>
                     </table>
                 </div>
