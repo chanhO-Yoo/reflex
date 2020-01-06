@@ -5,10 +5,19 @@
 <%
 	Qna q = (Qna)request.getAttribute("q");
 %>
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
-       
+        <li class="go-home">
+            <a href="<%=request.getContextPath()%>/index.jsp">메인</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li>
+        <li class="go-boxmenu">
+            <a href="">관리자페이지</a>
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+        </li> 
+        <li>1:1문의답변 등록</li>
     </ul>
 </nav>
 

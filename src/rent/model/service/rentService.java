@@ -62,6 +62,48 @@ public class rentService {
 			
 			return cntfin;	
 		}
+		//1개월
+		public List<rent> MypageRentalFinOne(String itemrentuser) {
+			
+			Connection conn = getConnection();
+			
+			List<rent> list = new rentDAO().MypageRentalFinOne(conn, itemrentuser);
+			
+			close(conn);
+			
+			return list;
+		}
+		//3개월
+		public List<rent> MypageRentalFinThree(String itemrentuser) {
+			
+			Connection conn = getConnection();
+			
+			List<rent> list = new rentDAO().MypageRentalFinThree(conn, itemrentuser);
+			
+			close(conn);
+			
+			return list;
+		}
+		public List<rent> MypageRentalFinSix(String itemrentuser) {
+			
+			Connection conn = getConnection();
+			
+			List<rent> list = new rentDAO().MypageRentalFinSix(conn, itemrentuser);
+			
+			close(conn);
+			
+			return list;
+		}
+		public List<rent> MypageRentalFinAll(String itemrentuser) {
+			
+			Connection conn = getConnection();
+			
+			List<rent> list = new rentDAO().MypageRentalFinAll(conn, itemrentuser);
+			
+			close(conn);
+			
+			return list;
+		}
 	
 
 

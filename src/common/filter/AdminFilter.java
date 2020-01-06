@@ -17,7 +17,9 @@ import member.model.vo.Member;
 /**
  * Servlet Filter implementation class AdminFilter
  */
-@WebFilter("/admin/*")
+@WebFilter(urlPatterns = {"/mypage/*",
+		   "/admin/*"
+		  })
 public class AdminFilter implements Filter {
 
     /**
@@ -42,7 +44,7 @@ public class AdminFilter implements Filter {
 		HttpSession session = httpReq.getSession();
 		Member memberLoggedIn = (Member)session.getAttribute("memberLoggedIn");
 		
-		if(memberLoggedIn == null || !"admin".equals(memberLoggedIn.getMemberId())) {
+		if(memberLoggedIn == null ) {
 			request.setAttribute("msg", "잘못된 경로로 접근하셨습니다.");
 			request.setAttribute("loc", "/");
 			

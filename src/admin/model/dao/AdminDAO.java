@@ -13,11 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import admin.model.QnaAns;
+import admin.model.vo.QnaAns;
+import board.model.vo.Board;
 import item.model.vo.Item;
+import item.model.vo.ItemQnaAns;
 import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
+import order.model.vo.OrderDetail2;
+import order.model.vo.OrderSheet;
 //프로젝트 DAO
 public class AdminDAO {
 
@@ -51,15 +55,12 @@ public class AdminDAO {
 				totalContent = rset.getInt("cnt");
 			}
 			
-			System.out.println("totalContent@dao="+totalContent);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		
 		return totalContent;
 	}
@@ -120,9 +121,8 @@ public class AdminDAO {
 			pstmt.setString(1, "%"+searchKeyword+"%");
 			
 			//(공식1)
-			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
-			pstmt.setInt(3, cPage*numPerPage);//end rownum
-			
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			
 			rset = pstmt.executeQuery();
 			
@@ -155,8 +155,6 @@ public class AdminDAO {
 		ResultSet rset = null;
 		String query = prop.getProperty("selectTotalContentByMemberId");
 		int totalContent = 0;
-
-
 	
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -1438,7 +1436,526 @@ public class AdminDAO {
 		
 		return totalContent;
 	}
+
+	public int insertItemAns(Connection conn, ItemQnaAns iqn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertItemAns");
+		
+		try {
+			//1.pstmt객체 생성 및 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, iqn.getItemQnaNo());
+			pstmt.setString(2, iqn.getItemQnaAnsContent());
+			
+			//2.실행 결과 처리 DML
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//3.자원반납
+			close(pstmt);
+		}
+		return result;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	//==========================
+	//상품 리뷰 조회페이지
 	
+	public int selectTotalDetailReview(Connection conn, int itemNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalDetailReview");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalContent;
+	}
+
+	public List<Board> selectItemReviewList(Connection conn, int itemNo, int cPage, int numPerPage) {
+		List<Board> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectItemReviewList");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+            //cPage, numPerPage
+            //1, 10 => 1, 10 => 0+1
+            //2, 10 => 11, 20 => 10+1
+            //3, 10 => 21, 30 => 20+1
+            //(공식1)시작rownum, 끝rownum
+            pstmt.setInt(1, itemNo);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	Board b = new Board();
+                //컬럼명은 대소문자 구분이 없다.
+            	b.setReview_no(rset.getInt("review_no"));
+            	b.setOrder_details_no(rset.getInt("order_detail_no"));
+            	b.setReview_writer(rset.getString("review_writer"));
+            	b.setReview_date(rset.getDate("review_date"));
+            	b.setReview_star(rset.getInt("review_star"));
+            	b.setReview_content(rset.getString("review_content"));
+            	b.setReview_image(rset.getString("review_image"));
+            	b.setReview_image_rename(rset.getString("review_image_rename"));
+            	b.setReview_readCount(rset.getInt("review_readcount"));
+            	b.setItem_no(rset.getInt("item_no"));
+            	                
+                list.add(b);
+            }
+            System.out.println("***********"+list+"**********");
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	
+	}
+	//==========================
+	//판매 현황 페이지
+	public List<Integer> selectCategorySellCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectCategorySellCount");
+		List<Integer> categorySellCount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				categorySellCount.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return categorySellCount;
+		
+	}
+
+	public List<Integer> selectMontlyIncome(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMontly");
+		List<Integer> montlyIncome = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("income");
+				
+				montlyIncome.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return montlyIncome;
+	}
+
+	public List<Integer> selectMontlySaleAmount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMontly");
+		List<Integer> montlySaleAmount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				montlySaleAmount.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return montlySaleAmount;
+	}
+
+	public List<Integer> selectYearlyIncome(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectYearly");
+		List<Integer> yearlyIncome = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("income");
+				
+				yearlyIncome.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return yearlyIncome;
+	}
+
+	public List<Integer> selectYearlySaleAmount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectYearly");
+		List<Integer> yearlySaleAmount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				yearlySaleAmount.add(i);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return yearlySaleAmount;
+	}
+
+	//==========================
+	public int selectTotalOrderAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalOrderAll");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return totalContent;
+	}
+
+	public List<Integer> OSList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Integer> OSList = new ArrayList<>();
+		String query = prop.getProperty("OSList");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int i = rset.getInt("cnt");
+				
+				OSList.add(i);
+			}
+			
+			System.out.println("OS01@dao="+OSList);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return OSList;
+	}
+
+	public List<OrderDetail2> selectOrderSheetList(Connection conn, int cPage, int numPerPage) {
+		List<OrderDetail2> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        
+        String query = prop.getProperty("selectOrderSheetList");
+        
+        try{
+            //미완성쿼리문을 가지고 객체생성. 
+            pstmt = conn.prepareStatement(query);
+            //cPage, numPerPage
+            //1, 10 => 1, 10 => 0+1
+            //2, 10 => 11, 20 => 10+1
+            //3, 10 => 21, 30 => 20+1
+            //(공식1)시작rownum, 끝rownum
+            pstmt.setInt(1, (cPage-1)*numPerPage+1);
+            pstmt.setInt(2, cPage*numPerPage);
+            
+            
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            
+            while(rset.next()){
+            	OrderDetail2 od = new OrderDetail2();
+                //컬럼명은 대소문자 구분이 없다.
+            	od.setOrderNo(rset.getString("order_no"));
+            	od.setMemberId(rset.getString("member_id"));
+            	od.setOrderTotalItemEa(rset.getInt("order_total_item_ea"));
+            	od.setOrderTotalPrice(rset.getInt("order_total_price"));
+            	od.setOrderStatusNo(rset.getString("order_status_no"));
+            	
+                list.add(od);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        
+        
+        return list;
+	}
+
+	public List<OrderDetail2> selectOrderListbyId(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<OrderDetail2> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectOrderListbyId");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, searchKeyword);
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				OrderDetail2 od = new OrderDetail2();
+                //컬럼명은 대소문자 구분이 없다.
+            	od.setOrderNo(rset.getString("order_no"));
+            	od.setMemberId(rset.getString("member_id"));
+            	od.setOrderTotalItemEa(rset.getInt("order_total_item_ea"));
+            	od.setOrderTotalPrice(rset.getInt("order_total_price"));
+            	od.setOrderStatusNo(rset.getString("order_status_no"));
+            	
+                list.add(od);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<OrderDetail2> selectOrderListbyOs(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<OrderDetail2> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectOrderListbyOs");
+		
+		try {
+			//statement객체 생성. 미완성 쿼리 전달
+			pstmt = conn.prepareStatement(sql);
+			//미완성쿼리에 데이터 전달
+			pstmt.setString(1, searchKeyword);
+			pstmt.setInt(2,(cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			//쿼리실행
+			rset = pstmt.executeQuery();
+			//rset의 결과 list에 옮기기
+			list = new ArrayList<>();
+			while(rset.next()) {
+				OrderDetail2 od = new OrderDetail2();
+                //컬럼명은 대소문자 구분이 없다.
+            	od.setOrderNo(rset.getString("order_no"));
+            	od.setMemberId(rset.getString("member_id"));
+            	od.setOrderTotalItemEa(rset.getInt("order_total_item_ea"));
+            	od.setOrderTotalPrice(rset.getInt("order_total_price"));
+            	od.setOrderStatusNo(rset.getString("order_status_no"));
+            	
+                list.add(od);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int selectTotalListById(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalListById");
+		int totalContent = 0;
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+	public int selectTotalListByOs(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTotalListByOs");
+		int totalContent = 0;
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, searchKeyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
+			
+			System.out.println("totalContent@dao="+totalContent);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
+	}
+
+	public int updateOrder(Connection conn, int orderNo, String orderStatus) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateOrder"); 
+
+		try {
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setString(1, orderStatus);
+			pstmt.setInt(2, orderNo);
+			
+			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			//DML은 executeUpdate()
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 }
 

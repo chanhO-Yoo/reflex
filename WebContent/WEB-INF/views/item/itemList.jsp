@@ -17,18 +17,15 @@
 document.addEventListener('DOMContentLoaded', function(){
 	let selectFilter = document.querySelector("#filterType");
 	
-	//정렬
- 	selectFilter.addEventListener('change', function(){
+	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
-		
 		$.ajax({
-			url: "<%=request.getContextPath()%>/item/itemList?categoryNo=<%=categoryNo%>&filterType="+optionVal,
+			url: "<%=request.getContextPath()%>/item/itemListAjax?categoryNo=<%=categoryNo%>&filterType="+optionVal,
 			type: "get",
 			dataType: "html",
 			success: data=>{
 				console.log(data);
-				/* $('#view-list').html(""); */
 				$('#view-list').html(data);
 			},
 			error: (x, s, e) =>{

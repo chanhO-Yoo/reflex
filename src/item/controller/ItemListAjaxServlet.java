@@ -59,9 +59,9 @@ public class ItemListAjaxServlet extends HttpServlet {
 			//cPage=1이거나 cPage=pageNo일 때도 전부 클릭 가능하게 함.  
 			//1.이전
 			if(pageNo!=1) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='pageBarAjax("+(pageNo-1)+");' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			//2.pageNo
 			while(pageNo<=pageEnd && pageNo<=totalPage) {
 				if(cPage==pageNo)

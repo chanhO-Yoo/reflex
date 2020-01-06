@@ -44,25 +44,31 @@ public class AdimMemberQnaSerarchServlet extends HttpServlet {
 		
 		String qnaSearchType = request.getParameter("qnaSearchType");
 		String qnaSearchword = request.getParameter("qnaSearchword");
-		
+		String keyword="";
+    	switch(qnaSearchword){
+    	case "상품문의": keyword = "QT01"; break;
+    	case "배송문의": keyword = "QT02"; break;
+    	case "기타문의": keyword = "QT03"; break;
+    	default: keyword=qnaSearchword;break;
+    	}
 		System.out.println("qna search Servlet 검색타입 %% = "+qnaSearchType);
-		System.out.println("qna search Servlet 키워드 %% = "+qnaSearchword);
+		System.out.println("qna search Servlet 키워드 %% = "+keyword);
 		
 		//2.업무로직
 		List<Qna> list = null;
 		AdminService adminService = new AdminService();
 		
 		switch(qnaSearchType) {
-		case "qnaType": list = adminService.selectqnaType(qnaSearchword, cPage, numPerPage); break;
-		case "qnaYN": list = adminService.selectqnaYN(qnaSearchword, cPage, numPerPage); break;
+		case "qnaType": list = adminService.selectqnaType(keyword, cPage, numPerPage); break;
+		case "qnaYN": list = adminService.selectqnaYN(keyword, cPage, numPerPage); break;
 		}
 		
 		
 		//페이징바 영역
 		int totalContent = 0;
 		switch (qnaSearchType) {
-		case "qnaType"	:totalContent = new AdminService().selectTotalContentByqnaType(qnaSearchword);break;
-		case "qnaYN" :totalContent = new AdminService().selectTotalContentByqnaYN(qnaSearchword);break;
+		case "qnaType"	:totalContent = new AdminService().selectTotalContentByqnaType(keyword);break;
+		case "qnaYN" :totalContent = new AdminService().selectTotalContentByqnaYN(keyword);break;
 		}
 		//(공식2)totalPage구하기
 		int totalPage = (int)Math.ceil((double)totalContent/numPerPage);
@@ -85,15 +91,15 @@ public class AdimMemberQnaSerarchServlet extends HttpServlet {
 
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/qnaFinder?searchType="+qnaSearchType+"&searchKeyword="+qnaSearchword+"&cPage="+(pageNo-pageBarSize)+"'>[이전]</a> ";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/qnaFinder?searchType="+qnaSearchType+"&searchKeyword="+qnaSearchword+"&cPage="+(pageNo-pageBarSize)+"'>[이전]</a></li>";
 		}
 		// pageNo section
 		while(pageNo<=pageEnd && pageNo<=totalPage){
 			if(cPage ==  pageNo ){
-				pageBar += "<span class='cPage'>"+pageNo+"</span> ";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span> ";
 			} 
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/member/qnaFinder?searchType="+qnaSearchType+"&searchKeyword="+qnaSearchword+"&cPage="+pageNo+"'>"+pageNo+"</a> ";
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/qnaFinder?searchType="+qnaSearchType+"&searchKeyword="+qnaSearchword+"&cPage="+pageNo+"'>"+pageNo+"</a></li>";
 			}
 			pageNo++;
 		}
@@ -103,7 +109,7 @@ public class AdimMemberQnaSerarchServlet extends HttpServlet {
 			
 		} else {
 			
-			pageBar += "<a href='"+request.getContextPath()+"/admin/member/qnaFinder?searchType="+qnaSearchType+"&searchKeyword="+qnaSearchword+"&cPage="+pageNo+"'>[다음]</a>";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/member/qnaFinder?searchType="+qnaSearchType+"&searchKeyword="+qnaSearchword+"&cPage="+pageNo+"'>[다음]</a></li>";
 		}
 		
 		

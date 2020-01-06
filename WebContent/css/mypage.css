@@ -116,11 +116,11 @@
 .review-wrapper>section{display:none;}
 .review-wrapper>section.active{display: block;}
 /* 작성가능한 이용후기 */
-#writable-review .wishlist-inner>li, #writed-review .wishlist-inner>li{height: 140px;}
+#writable-review .wishlist-inner>li, #writed-review .wishlist-inner>li{height: 150px;}
 #writable-review .wishlist-inner>li>div, #writed-review .wishlist-inner>li>div{border-left: 0;}
-#writable-review ul>li:last-of-type{padding-left: 30px;}
-#writable-review .item-img img{width: 37%;}
-#writable-review .btn-radius.btn-qna{margin-top: 35px;}
+/* #writable-review ul>li:last-of-type{padding-left: 30px;} */
+#writable-review .item-img img{width: 30%;}
+#writable-review .btn-radius.btn-qna{margin-top: 45px;}
 #writable-review .item-info{padding-top: 20px;}
 .ship-date{margin-top: 30px; color: gray; font-size: 14px;}
 /* 작성한 이용후기 */
@@ -262,6 +262,7 @@ input[type=file]{display: inline; overflow: hidden;}
 #loginFrm .btn-signup{padding: 5px 108px;}
 /* 회원정보수정: my_edit_memberInfo.jsp */
 #editInfoFrm #memberName, #editInfoFrm #memberId{padding: 7px 0; border: 0;}
+.form-wrapper #editInfoFrm label{margin-right: 50px;}
 .form-wrapper #editInfoFrm #memberName, .form-wrapper #editInfoFrm #memberId{font-size: 14px;}
 .form-wrapper #editInfoFrm #memberPwd{width: 62%;}
 /* 회원탈퇴 */

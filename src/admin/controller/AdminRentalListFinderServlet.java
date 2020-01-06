@@ -34,17 +34,19 @@ public class AdminRentalListFinderServlet extends HttpServlet {
 		
 		String searchType = request.getParameter("searchType");
 		String searchKeyword = request.getParameter("searchKeyword");
+		String keyword="";
 		switch(searchKeyword) {
-		case "반려동물":searchKeyword="CT01";break;
-		case "육아":searchKeyword="CT02";break;
-		case "파티":searchKeyword="CT03";break;
-		case "운동":searchKeyword="CT04";break;
-		case "여행":searchKeyword="CT05";break;
-		case "캠핑":searchKeyword="CT06";break;
+		case "반려동물":keyword="CT01";break;
+		case "육아":keyword="CT02";break;
+		case "파티":keyword="CT03";break;
+		case "운동":keyword="CT04";break;
+		case "여행":keyword="CT05";break;
+		case "캠핑":keyword="CT06";break;
+		default: keyword=searchKeyword;break;
 		}
 		
 		System.out.println("searchType@finder="+searchType);
-		System.out.println("searchKeyword@finder="+searchKeyword);
+		System.out.println("searchKeyword@finder="+keyword);
 		
 		//대여중인 상품수
 		int rentItemYes = 0;
@@ -57,9 +59,9 @@ public class AdminRentalListFinderServlet extends HttpServlet {
 		AdminService adminService = new AdminService();
 		
 		switch(searchType) {
-		case "item_name": list = adminService.selectItemEachListByItemName(searchKeyword, cPage, numPerPage); break;
-		case "category_no": list = adminService.selectItemEachListByCategoryNo(searchKeyword, cPage, numPerPage); break;
-		case "rent_yn": list = adminService.selectItemEachListByRentYn(searchKeyword, cPage, numPerPage); break;
+		case "item_name": list = adminService.selectItemEachListByItemName(keyword, cPage, numPerPage); break;
+		case "category_no": list = adminService.selectItemEachListByCategoryNo(keyword, cPage, numPerPage); break;
+		case "rent_yn": list = adminService.selectItemEachListByRentYn(keyword, cPage, numPerPage); break;
 		}
 		
 		
@@ -67,17 +69,17 @@ public class AdminRentalListFinderServlet extends HttpServlet {
 		int totalContent = 0;
 		switch (searchType) {
 		case "item_name"	:
-			totalContent = new AdminService().selectTotalItemEachByItemName(searchKeyword);
-			rentItemYes = new AdminService().selectYesItemEachByItemName(searchKeyword);
-			rentItemNo = new AdminService().selectNoItemEachByItemName(searchKeyword);
+			totalContent = new AdminService().selectTotalItemEachByItemName(keyword);
+			rentItemYes = new AdminService().selectYesItemEachByItemName(keyword);
+			rentItemNo = new AdminService().selectNoItemEachByItemName(keyword);
 			break;
 		case "category_no" :
-			totalContent = new AdminService().selectTotalItemEachByCategoryNo(searchKeyword);
-			rentItemYes = new AdminService().selectYesItemEachByCategoryNo(searchKeyword);
-			rentItemNo = new AdminService().selectNoItemEachByCategoryNo(searchKeyword);
+			totalContent = new AdminService().selectTotalItemEachByCategoryNo(keyword);
+			rentItemYes = new AdminService().selectYesItemEachByCategoryNo(keyword);
+			rentItemNo = new AdminService().selectNoItemEachByCategoryNo(keyword);
 			break;
 		case "rent_yn"	:
-			totalContent = new AdminService().selectTotalItemEachByRent_yn(searchKeyword);
+			totalContent = new AdminService().selectTotalItemEachByRent_yn(keyword);
 			rentItemYes = 0;
 			rentItemNo = totalContent;
 			break;
@@ -103,15 +105,15 @@ public class AdminRentalListFinderServlet extends HttpServlet {
 
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/rentalListFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'>[이전]</a> ";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/rentalListFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"'><span aria-hidden='true'>&laquo;</span></a></li>";
 		}
 		// pageNo section
 		while(pageNo<=pageEnd && pageNo<=totalPage){
 			if(cPage ==  pageNo ){
-				pageBar += "<span class='cPage'>"+pageNo+"</span> ";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span> ";
 			} 
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/rentalListFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a> ";
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/rentalListFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>"+pageNo+"</a></li>";
 			}
 			pageNo++;
 		}
@@ -121,7 +123,7 @@ public class AdminRentalListFinderServlet extends HttpServlet {
 			
 		} else {
 			
-			pageBar += "<a href='"+request.getContextPath()+"/admin/rentalListFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'>[다음]</a>";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/rentalListFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a></li>";
 		}
 		
 		

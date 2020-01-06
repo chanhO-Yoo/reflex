@@ -40,18 +40,7 @@ public class AdminItemSearchServlet extends HttpServlet {
 		
 		String pageBar = "";
 		int pageBarSize = 5;
-		// 	   1 2 3 4 5(다음)
-		//(이전)6 7 8 9 10(다음)
-		//(이전)11 12 
-		//cPage, pageBarSize => pageStart
-		//1, 5 => 1 => (5*0)+1
-		//2, 5 => 1
-		//3, 5 => 1
-		//6, 5 => 6 => (5*1)+1
-		//7, 5 => 6
-		//8, 5 => 6
-		//11, 5 => 11 => (5*2)+1
-		//12, 5 => 11
+	
 		//(공식3)
 		int pageStart = ((cPage-1)/pageBarSize)*pageBarSize + 1;
 		int pageEnd = pageStart+pageBarSize-1;
@@ -62,17 +51,17 @@ public class AdminItemSearchServlet extends HttpServlet {
 
 		//1.이전
 		if(pageNo != 1) {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/itemSearch?cPage="+(pageNo-1)+"'>[이전]</a>\n";
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/itemSearch?cPage="+(pageNo-1)+"'><span aria-hidden='true'>&laquo;</span></a></li>\n";
 		}
 		
 		//2.pageNo
 		while(pageNo<=pageEnd && pageNo<=totalPage) {
 			//현재페이지인 경우
 			if(cPage == pageNo) {
-				pageBar += "<span class='cPage'>"+pageNo+"</span>\n";
+				pageBar += "<li class='active'><span class='cPage'>"+pageNo+"</span></li>\n";
 			}
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/itemSearch?cPage="+pageNo+"'>"+pageNo+"</a>\n";				
+				pageBar += "<li><a href='"+request.getContextPath()+"/admin/itemSearch?cPage="+pageNo+"'>"+pageNo+"</a></li>\n";				
 			}
 			
 			pageNo++;
@@ -80,7 +69,7 @@ public class AdminItemSearchServlet extends HttpServlet {
 		
 		//3.다음
 		if(pageNo <= totalPage) {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/itemSearch?cPage="+pageNo+"'>[다음]</a>\n";							
+			pageBar += "<li><a href='"+request.getContextPath()+"/admin/itemSearch?cPage="+pageNo+"'><span aria-hidden='true'>&raquo;</span></a><li>\n";							
 		}
 
 		//판매중인 상품수

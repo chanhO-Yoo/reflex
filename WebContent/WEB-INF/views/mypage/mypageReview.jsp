@@ -1,13 +1,19 @@
+<%@page import="order.model.vo.OrderDetail3"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.Map"%>
+<%@page import="item.model.vo.ItemImage"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <%@page import="java.util.List"%>
 <%@ page import="board.model.vo.*" %>
+<%@ page import="order.model.vo.OrderDetail" %>
 
 <%
 	List<Board> list = (List<Board>)request.getAttribute("list");
+	List<OrderDetail3> list2= (List<OrderDetail3>)request.getAttribute("list2");
 	String pageBar = (String)request.getAttribute("pageBar");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
 %>
 
 <script>
@@ -39,7 +45,7 @@ function showContent(btn, sectionId){
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
-            <a href="<%=request.getContextPath()%>/common/boxMenu?level1=mypage">마이페이지</a>
+            <a href="">마이페이지</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li>이용후기 내역</li>
@@ -70,7 +76,7 @@ function showContent(btn, sectionId){
 
 <!-- 작성가능한 이용후기: 전체 개수 -->
 <div class="container-fluid line-style text-center">
-    <p>전체 <span class="em-blue strong">0</span>개</p>
+    <p>전체 <span class="em-blue strong"><%=list2.size()%></span>개</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -80,47 +86,38 @@ function showContent(btn, sectionId){
             <section id="writable-review" class="list-wrapper active">
                 <h3 class="sr-only">이용후기 작성가능한 상품 리스트</h3>
                 <ul class="list-unstyled wishlist-inner">
+                <%
+                 for(int i=0; i<list2.size(); i++){ 
+                	 OrderDetail3 o = list2.get(i);   	 
+                	 List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+                %>
                     <li class="row">
                         <div class="item-img col-md-3 text-center">
-                            <a href=""><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
+                            <a href=""><img src="<%=request.getContextPath()%>/images/<%=o.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="상품이미지"></a>
                         </div>
-                        <div class="wish-info item-info col-md-6">
+                        <div class="wish-info item-info col-md-7">
                             <a href="">
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
+                                <p class="text-left pbrand"><%=o.getItemBrand() %></p>
+                                <p class="text-left pname"><%=o.getItemName() %></p>
                             </a>
-                            <p class="ship-date">렌탈 시작일 2019.12.22일</p>
+                           
                         </div>
-                        <div class="col-md-3">
-                            <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기 쓰기</a>
+                        <div class="col-md-2">
+                            <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm?itemNo=<%=o.getItemNo()%>&orderDetailNo=<%=o.getOrderDetailNo()%>" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
-                    </li>
-                    <li class="row">
-                        <div class="item-img col-md-3 text-center">
-                            <a href=""><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
-                        </div>
-                        <div class="wish-info item-info col-md-6">
-                            <a href="">
-                                <p class="text-left pbrand">BABYZEN</p>
-                                <p class="text-left pname">요요플러스 6+ A형(기본형) 블랙프레임(에어프랑스블루)</p>
-                            </a>
-                            <p class="ship-date">렌탈 시작일 2019.12.22일</p>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="<%=request.getContextPath()%>/mypage/mypageReviewForm" class="btn-radius btn-qna">구매후기쓰기</a>
-                        </div>
-                    </li>
+                    </li>       
+                <%} %>
                 </ul>
             </section>
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">
                <% 
                int c=0;
-               System.out.println(list.toString()+"toto");
+               //System.out.println(list.toString()+"toto");
                for(Board b : list){ 
-            	   System.out.println(c++);
+            	  // System.out.println(c++);
             	 if((memberLoggedIn.getMemberId()).equals(b.getReview_writer())){
-            		System.out.println(memberLoggedIn.getMemberId()+"/"+b.getReview_writer());
+            		//System.out.println(memberLoggedIn.getMemberId()+"/"+b.getReview_writer());
                %>
                 <h3 class="sr-only">작성한 이용후기 리스트</h3>
                 <ul class="list-unstyled wishlist-inner">

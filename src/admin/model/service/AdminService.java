@@ -8,12 +8,17 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
-import admin.model.QnaAns;
+import board.model.vo.Board;
 import admin.model.dao.AdminDAO;
+import admin.model.vo.QnaAns;
 import item.model.vo.Item;
+import item.model.vo.ItemQnaAns;
 import itemRentEach.model.vo.ItemRentEach;
 import member.model.vo.Member;
 import mypage.model.vo.Qna;
+import order.model.vo.OrderDetail;
+import order.model.vo.OrderDetail2;
+import order.model.vo.OrderSheet;
 //프로젝트 Service
 public class AdminService {
 
@@ -25,10 +30,10 @@ public class AdminService {
 	}
 
 	public List<Member> selectMemberList(int cPage, int numPerPage) {
-		 Connection conn = getConnection();
-	        List<Member> list= new AdminDAO().selectMemberList(conn, cPage, numPerPage);
-	        close(conn);
-	        return list;
+		Connection conn = getConnection();
+	    List<Member> list= new AdminDAO().selectMemberList(conn, cPage, numPerPage);
+	    close(conn);
+	    return list;
 	}
 
 	public List<Member> selectMemberByMemberId(String searchKeyword, int cPage, int numPerPage) {
@@ -350,51 +355,134 @@ public int selectTotalDetailItem(int itemNo) {
 		return totalItem;
 	}
 
+	public int insertItemAns(ItemQnaAns iqn) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().insertItemAns(conn, iqn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+	//=====================================
+	//관리자 리뷰 페이지
+	public int selectTotalDetailReview(int itemNo) {
+		Connection conn = getConnection();
+		int reviewCnt = new AdminDAO().selectTotalDetailReview(conn, itemNo);
+		close(conn);
+		return reviewCnt;
+	}
+	public List<Board> selectItemReviewList(int itemNo, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<Board> list= new AdminDAO().selectItemReviewList(conn, itemNo, cPage, numPerPage);
+		close(conn);
+		return list;
+		
+		
+	}
+
+
+	//====================================
+	//관리자 판매현황 페이지
+	public List<Integer> selectCategorySellCount() {
+		Connection conn = getConnection();
+		List<Integer> categorySellCount = new AdminDAO().selectCategorySellCount(conn);
+		close(conn);
+		return categorySellCount;
+		
+	}
+
+	public List<Integer> selectMontlyIncome() {
+		Connection conn = getConnection();
+		List<Integer> montlyIncome = new AdminDAO().selectMontlyIncome(conn);
+		close(conn);
+		return montlyIncome;
+	}
+
+	public List<Integer> selectMontlySaleAmount() {
+		Connection conn = getConnection();
+		List<Integer> montlySaleAmount = new AdminDAO().selectMontlySaleAmount(conn);
+		close(conn);
+		return montlySaleAmount;
+	}
+
+	public List<Integer> selectYearlyIncome() {
+		Connection conn = getConnection();
+		List<Integer> yearlyIncome = new AdminDAO().selectYearlyIncome(conn);
+		close(conn);
+		return yearlyIncome;
+	}
+
+	public List<Integer> selectYearlySaleAmount() {
+		Connection conn = getConnection();
+		List<Integer> yearlySaleAmount = new AdminDAO().selectYearlySaleAmount(conn);
+		close(conn);
+		return yearlySaleAmount;
+	}
 
 	
+	//====================================
+	//관리자 배송관리 페이지
+	public int selectTotalOrderAll() {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalOrderAll(conn);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Integer> OSList() {
+		Connection conn = getConnection();
+		List<Integer> OSList = new AdminDAO().OSList(conn);
+		close(conn);
+		return OSList;
+	}
+
+	public List<OrderDetail2> selectOrderSheetList(int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<OrderDetail2> list= new AdminDAO().selectOrderSheetList(conn, cPage, numPerPage);
+	    close(conn);
+	    return list;
+	}
+
+	public List<OrderDetail2> selectOrderListbyId(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<OrderDetail2> list= new AdminDAO().selectOrderListbyId(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<OrderDetail2> selectOrderListbyOs(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+	    List<OrderDetail2> list= new AdminDAO().selectOrderListbyOs(conn, searchKeyword, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalListById(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalListById(conn, searchKeyword);
+		close(conn);
+		return totalContent;
+	}
+
+	public int selectTotalListByOs(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalContent = new AdminDAO().selectTotalListByOs(conn, searchKeyword);
+		close(conn);
+		return totalContent;
+	}
+
+	public int updateOrder(int orderNo, String orderStatus) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().updateOrder(conn, orderNo, orderStatus);
+		close(conn);
+		return result;
+	}
+		
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }
