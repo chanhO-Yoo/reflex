@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import mypage.model.vo.MyPage;
 import mypage.model.vo.Qna;
 
 public class QnaDAO {
@@ -27,20 +28,37 @@ public class QnaDAO {
 		}
 	}
 
-	public List<Qna> selectQnaList(Connection conn, int cPage, int numPerPage) {
+	public List<Qna> selectQnaList(Connection conn, String memberId, int cPage, int numPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectQnaListByPaging");
-		
+		System.out.println("cPage = " + cPage +", numPerPage="+numPerPage+", memberId="+memberId);
 		List<Qna> list = new ArrayList<>();
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, cPage*numPerPage -(numPerPage-1));
-			pstmt.setInt(2, cPage*numPerPage);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, cPage*numPerPage -(numPerPage-1));
+			pstmt.setInt(3, cPage*numPerPage);
+			
 			
 			rset = pstmt.executeQuery();
 			
+            while(rset.next()){
+            	Qna qna = new Qna();
+                //컬럼명은 대소문자 구분이 없다.
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+                
+                list.add(qna);
+            }
+            
 			} catch(SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -51,7 +69,7 @@ public class QnaDAO {
 		return list;
 	}
 
-	public int selectQnaCount(Connection conn) {
+	public int selectQnaCount(Connection conn, String memberId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectQnaCount");
@@ -60,6 +78,7 @@ public class QnaDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -107,7 +126,7 @@ public class QnaDAO {
 		return result;
 	}
 
-	public Qna selectQna(Connection conn, int qNo) {
+	public Qna selectQna(Connection conn, String memberId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Qna qna = new Qna();
@@ -115,7 +134,8 @@ public class QnaDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, qNo);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberId);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -185,14 +205,15 @@ public class QnaDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(1, q.getqNo());
-			pstmt.setString(2, q.getMemberId());
-			pstmt.setString(3, q.getqTypeNo());
-			pstmt.setString(4, q.getqTilte());
-			pstmt.setString(5, q.getqContent());
-			pstmt.setDate(6, q.getqDate());
-			pstmt.setString(7, q.getqAns());
-			pstmt.setString(8, q.getqImage());
+//			pstmt.setString(2, q.getMemberId());
+//			pstmt.setString(3, q.getqTypeNo());
+			pstmt.setString(1, q.getqTilte());
+			pstmt.setString(2, q.getqContent());
+//			pstmt.setDate(6, q.getqDate());
+//			pstmt.setString(7, q.getqAns());
+			pstmt.setString(3, q.getqImage());
+			pstmt.setInt(4, q.getqNo());
+			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -222,7 +243,40 @@ public class QnaDAO {
 		}
 		return qNo;
 	}
-	
+
+	public Qna selectOne(Connection conn, int qNo) {
+		System.out.println("@@@@@@@@@@dao시작");
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Qna qna = null;
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				qna = new Qna();
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+			}
+			System.out.println("Qna@DAO="+qna);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return qna;
+	}
 	
 	
 	

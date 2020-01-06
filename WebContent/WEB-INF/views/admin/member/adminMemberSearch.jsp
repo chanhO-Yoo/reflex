@@ -47,6 +47,10 @@ function confirmDelete(){
         return true;
    	}
 }
+
+function orderListSearch(memberId) {
+	location.href="<%=request.getContextPath()%>/admin/orderListFinder?searchType=member_id&searchKeyword="+memberId;
+}
 </script>
 
 <!-- page nav -->
@@ -155,12 +159,12 @@ function confirmDelete(){
         	<td><%=m.getMemberAddress()%></td>
         	<td><%=m.getMemberEnrollDate()%></td>
 
-        	<td><button type="button" class="btn btn-primary">조회</button></td>
+        	<td><button type="button" class="btn btn-primary btn-sm" onclick="orderListSearch('<%=m.getMemberId() %>')" value='<%=m.getMemberId() %>'>조회</button></td>
         	<td>
             	<form action="<%=request.getContextPath()%>/admin/member/memberDelete?memberId=<%=m.getMemberId()%>"
             	onsubmit="return confirmDelete();">
 					<input type="hidden" name="memberId" value=<%=m.getMemberId()%> />
-					<input type="submit" value="삭제" />
+					<input class="btn btn-danger btn-sm" type="submit" value="삭제" />
 				</form>
         	</td>
             
