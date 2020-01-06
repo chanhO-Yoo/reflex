@@ -55,24 +55,31 @@ function addCartChk(){
 				dataType: "json",
 				success: data => {
 					console.log(data);
+					let itemListSize = data.itemListSize; //선택한 상품수 
+					let result = data.result; //장바구니에 담긴 수
+					let count = data.count; //중복 수
 					
-					if(data.result===1){
-						if(!confirm("장바구니에 상품이 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+					//모두 담긴 경우
+					if(itemListSize===result){
+						if(!confirm("장바구니에 선택한 상품이 모두 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
 						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
 					}
-					else if(data.count===1){
-						if(!confirm("장바구니에 중복된 상품이 존재합니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+					//중복이 존재한 경우 
+					else if(count>0 && result+count===itemListSize){
+						if(!confirm("장바구니에 중복된 상품을 제외한 상품이 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
 						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
 					}
-					else if(data.stock===0){
-						alert("이 상품은 현재 품절되었습니다!");
+					//중복이 없는데 result가 더 작다면 품절된 상품 존재
+					else if(count!==0 && result<itemListSize){
+						if(!confirm("장바구니에 품절된 상품을 제외한 상품이 담겼습니다.\n지금 장바구니를 확인하시겠습니까?")) return;
+						location.href = "<%=request.getContextPath()%>/member/memberCart?memberId=<%=memberId%>";
 					}
 					//장바구니에 이미 담겨있는 현재 상품의 수량과 재고를 비교해서 할 것! 
 					/* else if(data.stock>0){
 						alert("선택가능한 상품 수보다 더 많이 선택하셨습니다!\n현재 선택가능한 상품 수는 ["+data.stock+"]입니다.");
 						orderNoVal = data.stock;
 					} */
-					else{
+					else if(result===-1){
 						alert("장바구니에 상품담기를 실패하였습니다!");
 					}
 				},
@@ -82,7 +89,6 @@ function addCartChk(){
 			}); //end of ajax
 		} //end of if
 	});//end of click btn
-
 }
 //장바구니담기: 1개
 function addCartOne(itemNo, optNo){

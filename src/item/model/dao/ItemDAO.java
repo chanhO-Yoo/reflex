@@ -461,7 +461,6 @@ public class ItemDAO {
 				item.setItemDesc(rset.getString("item_desc"));
 				item.setItemEnrollDate(rset.getDate("item_enroll_date"));
 			}
-			System.out.println("item="+item);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
+import item.model.service.ItemService;
+import item.model.vo.Item;
 import member.model.service.CartService;
+import member.model.vo.Cart;
 
 /**
  * Servlet implementation class MemberCartInsertChk
@@ -45,13 +48,55 @@ public class MemberCartInsertChk extends HttpServlet {
 			//업무로직
 			CartService cartService = new CartService();
 			JSONObject resultObj = new JSONObject();
-			int result = 0;
+			int result = 0; //insert결과 확인용
+			int count = 0; //중복 확인용: 1이면 이미 있는 상품
+			int stock = 0; //재고 확인용
+			
+			//상품, 장바구니 담길 리스트
+			List<Item> itemList = new ArrayList<>();
+			List<Cart> cartList = new ArrayList<>();
+			
+			for(int i=0; i<strList.size(); i++) {
+				//상품 객체 가져오기
+				Item item = new ItemService().selectOne(Integer.parseInt(strList.get(i)[0]));
+				itemList.add(item);
+				
+				//장바구니 객체 만들기
+				Cart cart = new Cart(0, memberId, item, strList.get(i)[1], 1, 0); //인자: 아이디, 상품, 렌탈유형, 수량(고정값1)
+				
+				//중복 아니고, 재고가 1개 이상이면 리스트에 추가
+				count += cartService.selectCartCount(cart); 
+				stock = item.getItemStock();
+				if(count==0 && stock>0) {
+					cartList.add(cart); 
+				}
+			}
+			
+			//장바구니에 상품 추가
+			for(Cart cart: cartList) {
+				result += cartService.insertCart(cart);
+			}
+			
+			//추가 성공한 경우
+			if(result>0) {
+				resultObj.put("itemListSize", itemList.size()); //선택한 상품수
+				resultObj.put("result", result); //insert성공한 수
+				resultObj.put("count", count); //중복된 게 있으면 선택한 상품수=result+count 가 될 것. 
+				//resultObj.put("stock", stock); //재고
+			}
+			//추가 실패한 경우
+			else {
+				resultObj.put("result", -1);
+			}
 			
 			//뷰단처리
+			response.setContentType("application/json; charset=utf-8");
+			response.getWriter().print(resultObj);
 			
 		} catch(Exception e) {
-			
+			throw e;
 		}
+		
 	}
 
 	/**
