@@ -29,8 +29,6 @@ public class ItemListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//파라미터 핸들링
 		String categoryNo = request.getParameter("categoryNo");
-		String filterType = request.getParameter("filterType");
-		System.out.println("filterType="+filterType);
 		
 		//페이징: 컨텐츠영역
 		//사용자 입력값 처리
@@ -59,41 +57,29 @@ public class ItemListServlet extends HttpServlet {
 			//cPage=1이거나 cPage=pageNo일 때도 전부 클릭 가능하게 함.  
 			//1.이전
 			if(pageNo!=1) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			//2.pageNo
 			while(pageNo<=pageEnd && pageNo<=totalPage) {
 				if(cPage==pageNo)
-					pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+					pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 				else
-					pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+					pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 				pageNo++;
 			}
 			//3.다음
 			if(pageNo<=totalPage) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
 			
 			
 			
 			//업무로직
-			List<Item> itemList = null; //상품 담을 리스트
+			List<Item> itemList = itemList = itemService.selectItemAll(categoryNo, cPage, numPerPage); //상품 담을 리스트
 			List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
-			
-			if(filterType==null || "null".equals(filterType) || "upToDate".equals(filterType)) {
-				itemList = itemService.selectItemAll(categoryNo, cPage, numPerPage);
-			}
-			else if("reviewCnt".equals(filterType)) {
-			}
-			else if("lowPrice".equals(filterType)) {
-				itemList = itemService.selectItemAllByLowPrice(categoryNo, cPage, numPerPage);
-			}
-			else if("highPrice".equals(filterType)) {
-			}
-			
 			
 			//뷰단처리
 			String view = "/WEB-INF/views/item/itemListAjax.jsp"; 
@@ -113,10 +99,6 @@ public class ItemListServlet extends HttpServlet {
 					imgMap.put(itemNoList.get(i), imgList);
 				}
 				
-				if(filterType==null || "null".equals(filterType)) {
-					view = "/WEB-INF/views/item/itemList.jsp";
-				}
-				
 				request.setAttribute("categoryNo", categoryNo);
 				request.setAttribute("itemList", itemList);
 				request.setAttribute("itemNoList", itemNoList);
@@ -126,23 +108,6 @@ public class ItemListServlet extends HttpServlet {
 			}
 			//조회 실패
 			else {
-				
-				if(filterType==null || "null".equals(filterType)) {
-					msg = "상품목록 조회 실패!";
-					loc = "/";
-				}
-				else if("upToDate".equals(filterType)) {
-					msg = "신상품순 조회 실패!";
-				}
-				else if("reviewCnt".equals(filterType)) {
-					msg = "상품평순 조회 실패!";
-				}
-				else if("lowPrice".equals(filterType)) {
-					msg = "낮은가격순 조회 실패!";
-				}
-				else if("highPrice".equals(filterType)) {
-					msg = "높은가격순 조회 실패!";
-				}
 				request.setAttribute("msg", msg);
 				request.setAttribute("loc", loc);
 				request.getRequestDispatcher(view).forward(request, response);

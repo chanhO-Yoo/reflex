@@ -1,8 +1,9 @@
 <%@page import="order.model.vo.OrderDetail3"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.Map"%>
+<%@page import="item.model.vo.ItemImage"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <%@page import="java.util.List"%>
 <%@ page import="board.model.vo.*" %>
 <%@ page import="order.model.vo.OrderDetail" %>
@@ -11,6 +12,8 @@
 	List<Board> list = (List<Board>)request.getAttribute("list");
 	List<OrderDetail3> list2= (List<OrderDetail3>)request.getAttribute("list2");
 	String pageBar = (String)request.getAttribute("pageBar");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
 %>
 
 <script>
@@ -73,7 +76,7 @@ function showContent(btn, sectionId){
 
 <!-- 작성가능한 이용후기: 전체 개수 -->
 <div class="container-fluid line-style text-center">
-    <p>전체 <span class="em-blue strong">0</span>개</p>
+    <p>전체 <span class="em-blue strong"><%=list2.size()%></span>개</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -81,19 +84,21 @@ function showContent(btn, sectionId){
         <div class="col-md-10 content-wrapper review-wrapper">
             <!-- 작성가능한 이용후기 -->
             <section id="writable-review" class="list-wrapper active">
-                <%
-                 for(OrderDetail3 o : list2){ 
-                %>
                 <h3 class="sr-only">이용후기 작성가능한 상품 리스트</h3>
                 <ul class="list-unstyled wishlist-inner">
+                <%
+                 for(int i=0; i<list2.size(); i++){ 
+                	 OrderDetail3 o = list2.get(i);   	 
+                	 List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+                %>
                     <li class="row">
                         <div class="item-img col-md-3 text-center">
-                            <a href=""><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
+                            <a href=""><img src="<%=request.getContextPath()%>/images/<%=o.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="상품이미지"></a>
                         </div>
                         <div class="wish-info item-info col-md-7">
                             <a href="">
-                                <p class="text-left pbrand">브랜드:<%=o.getItemBrand() %></p>
-                                <p class="text-left pname">상품명:<%=o.getItemName() %></p>
+                                <p class="text-left pbrand"><%=o.getItemBrand() %></p>
+                                <p class="text-left pname"><%=o.getItemName() %></p>
                             </a>
                            
                         </div>
@@ -101,10 +106,8 @@ function showContent(btn, sectionId){
                             <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm?itemNo=<%=o.getItemNo()%>&orderDetailNo=<%=o.getOrderDetailNo()%>" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>       
-                               
-                </ul>
-                <hr style="board:solid 2px black">
                 <%} %>
+                </ul>
             </section>
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">

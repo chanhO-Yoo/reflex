@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	let selectFilter = document.querySelector("#filterType");
 	
 	//정렬
-	<%-- selectFilter.addEventListener('change', function(){
+	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
 		$.ajax({
@@ -27,15 +27,14 @@ document.addEventListener('DOMContentLoaded', function(){
 			dataType: "html",
 			success: data=>{
 				console.log(data);
-				/* $('#view-list').html(""); */
 				$('#view-list').html(data);
 			},
 			error: (x, s, e) =>{
 				console.log("ajax처리실패!!!", x, s, e);
 			} 
 		});
-	}); --%>
- 	selectFilter.addEventListener('change', function(){
+	});
+ 	<%-- selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
 		$.ajax({
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				console.log("ajax처리실패!!!", x, s, e);
 			} 
 		});
-	});
+	}); --%>
 });
 </script>
 <!-- page nav -->

@@ -1,7 +1,10 @@
 package mypage.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
+import item.model.service.ItemService;
+import item.model.vo.ItemImage;
 import order.model.vo.OrderDetail3;
 
 /**
@@ -25,7 +30,7 @@ public class MypageReviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			String memberId = (request.getParameter("memberId"));
+		String memberId = (request.getParameter("memberId"));
 		
 		BoardService boardService = new BoardService();
 		
@@ -45,8 +50,22 @@ public class MypageReviewServlet extends HttpServlet {
 			= boardService.selectBoardList(cPage, numPerPage ); 
 		
 		List<OrderDetail3> list2=boardService.selectBoardList2(memberId);
-	
-//		System.out.println("list@servlet="+list);
+		
+		//상품 이미지 가져오기
+		List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
+		Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
+		
+		//상품번호 담기
+		for(OrderDetail3 o: list2){
+			itemNoList.add(o.getItemNo());
+		}
+		
+		for(int i=0; i<itemNoList.size(); i++) {
+			//상품이미지 담기
+			List<ItemImage> imgList = new ItemService().selectItemImageList(itemNoList.get(i));
+			imgMap.put(itemNoList.get(i), imgList);
+		}
+		
 		
 		//b.페이징바영역
 		//전체게시글수, 전체페이지수
@@ -86,17 +105,16 @@ public class MypageReviewServlet extends HttpServlet {
 			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+pageNo+"'>[다음]</a>";
 		}
 		
-		
 	
 		//4.뷰단 포워딩		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageReview.jsp");
 		request.setAttribute("list",list);
 		request.setAttribute("list2",list2);
-	
-		request.setAttribute("pageBar",pageBar);		
+		request.setAttribute("pageBar",pageBar);
+		request.setAttribute("itemNoList",itemNoList);
+		request.setAttribute("imgMap",imgMap);
+		
 		reqDispatcher.forward(request, response);
-		
-		
 		
 	}
 

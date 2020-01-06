@@ -324,6 +324,7 @@ public class BoardDAO {
 				o.setOrderDetailNo(rset.getInt("order_detail_no"));
 				o.setItemBrand(rset.getString("item_brand"));
 				o.setItemName(rset.getString("item_name"));
+				o.setCategoryNo(rset.getString("category_no"));
 			
 				
 				

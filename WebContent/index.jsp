@@ -43,6 +43,7 @@ int imgNo = 0;
             <ul class="carousel-indicators">
               <li data-target="#banner" data-slide-to="0" class="active"></li>
               <li data-target="#banner" data-slide-to="1"></li>
+              <li data-target="#banner" data-slide-to="2"></li>
             </ul>
             <!-- The slideshow -->
             <div class="carousel-inner">
@@ -94,7 +95,6 @@ int imgNo = 0;
 				/* 상품번호는 itemNoList로 제어 */
 				/* 상품목록에는 IMG01만 보이면 되니까 imgList.get()의 인덱스는 무조건 0임 */
 				Item item = itemList1.get(i);
-				
 				
 				//가격 콤마찍기
 				int discountedPrice = (int)Math.ceil((item.getItemPrice()*0.95)/240*14)/100*100; //14일기준
