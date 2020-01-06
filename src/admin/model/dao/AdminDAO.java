@@ -1721,24 +1721,23 @@ public class AdminDAO {
 		return totalContent;
 	}
 
-	public List<Integer> OSList(Connection conn) {
+	public int orderstatus(Connection conn, String os) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		List<Integer> OSList = new ArrayList<>();
-		String query = prop.getProperty("OSList");
+		int osCnt = 0;
+		String query = prop.getProperty("osCnt");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, os);
 			
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()) {
-				int i = rset.getInt("cnt");
-				
-				OSList.add(i);
+			if(rset.next()) {
+				osCnt= rset.getInt("cnt");
 			}
 			
-			System.out.println("OS01@dao="+OSList);
+			System.out.println("OSCount@dao="+osCnt);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1748,7 +1747,7 @@ public class AdminDAO {
 		}
 		
 		
-		return OSList;
+		return osCnt;
 	}
 
 	public List<OrderDetail2> selectOrderSheetList(Connection conn, int cPage, int numPerPage) {
