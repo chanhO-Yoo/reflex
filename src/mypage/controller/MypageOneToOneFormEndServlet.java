@@ -18,13 +18,13 @@ import mypage.model.vo.Qna;
  * Servlet implementation class MypageOneToOneFormEnd
  */
 @WebServlet("/mypage/mypageOneToOneFormEnd")
-public class MypageOneToOneFormEnd extends HttpServlet {
+public class MypageOneToOneFormEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MypageOneToOneFormEnd() {
+    public MypageOneToOneFormEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -71,7 +71,7 @@ public class MypageOneToOneFormEnd extends HttpServlet {
 		//2.business logic
 		int result = new qService().insertQna(q);
 		String msg = "";
-		String loc = "/mypage/mypageOneToOne";
+		String loc = "/mypage/mypageOneToOne?memberId="+memberId;
 		if(result>0) {
 			msg = "게시글 등록 성공!";
 		}

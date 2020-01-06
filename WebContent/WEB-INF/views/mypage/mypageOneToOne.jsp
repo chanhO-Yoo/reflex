@@ -1,11 +1,14 @@
+<%@page import="mypage.model.vo.Qna"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@page import="mypage.model.vo.Qna, java.util.*" %>
 <%
-	List<Qna> list = (List<Qna>)request.getAttribute("list");
-	String pageBar = (String)request.getAttribute("pageBar");
+List<Qna> list = (List<Qna>)request.getAttribute("list");
+
+String pageBar = (String)request.getAttribute("pageBar");
 %>
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -84,26 +87,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <%
-                    if(list ==null || list.isEmpty()){
-                    	
-                    %>
-                    <tr class="row">
-                    		<td>없어</td>
+                          <%if(list==null || list.isEmpty()) { %>
+                    	<tr class="row">
+                    	<td>등록된 1대1 문의 내역이 없습니다.</td>
                     	</tr>
                     <% }
                     else {
-                    	for(Qna q : list) { %>
-                    
+                     for(Qna q : list) { %>
 						<tr class="row">
                             <td class="col-md-2"><%= q.getqTypeNo() %></td>
-                            <td class="col-md-6 qna-title"><a href=""><%= q.getqTilte() %></a></td>
+                            <td class="col-md-6"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView?memberId=<%=memberLoggedIn.getMemberId()%>&qNo=<%=q.getqNo()%>"><%=q.getqTilte() %></a></td>
                             <td class="col-md-2"><%=q.getqAns() %></td>
                             <td class="col-md-2"><%=q.getqDate() %></td>
-                        </tr>
-                     <% 
-                    }
-                    }%>
+                        </tr> 
+                     <% }
+                     }
+                     %>
+                       
                     </tbody>
                 </table>
             </section>

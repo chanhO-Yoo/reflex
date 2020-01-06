@@ -19,6 +19,104 @@
 	else memberId = "null";
 
 %>
+
+              
+
+<script>
+
+$(function(){	
+	/*1개월 클릭시 */
+	$("#btn-one").click(function(){
+		
+		$(this).css('background','#aaaaac')
+		$("#btn-two").css('background','white')
+		$("#btn-three").css('background','white')
+		$("#btn-four").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/MypageRentalFinOne?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+
+				$("#rentlistdiv").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		})
+	});
+	/*3개월 클릭시 */
+	$("#btn-two").click(function(){
+	
+		$(this).css('background','#aaaaac')
+		$("#btn-one").css('background','white')
+		$("#btn-three").css('background','white')
+		$("#btn-four").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/MypageRentalFinThree?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			
+			$("#rentlistdiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	/*6개월 클릭시 */
+	$("#btn-three").click(function(){
+		
+		$(this).css('background','#aaaaac')
+		$("#btn-one").css('background','white')
+		$("#btn-two").css('background','white')
+		$("#btn-four").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/MypageRentalFinSix?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			
+			$("#rentlistdiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	/*전체 클릭시 */
+	$("#btn-four").click(function(){
+		
+		$(this).css('background','#aaaaac')
+		$("#btn-one").css('background','white')
+		$("#btn-two").css('background','white')
+		$("#btn-three").css('background','white')
+		
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/MypageRentalFinAll?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			
+			$("#rentlistdiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	
+});
+</script>
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -45,7 +143,7 @@
             <section class="my-header">
                 <h3 class="sr-only">종료된 렌탈 상태 보기</h3>
                 <div class="line-style text-center">
-                    <p>종료된 렌탈 <span class="em-blue"><%=cntfin %></span>건</p>
+                    <p>전체 종료된 렌탈 <span class="em-blue"><%=cntfin %></span>건</p>
                 </div>
             </section>
         </div>
@@ -62,21 +160,26 @@
         <div class="col-md-1"></div>
         <div class="col-md-10 content-wrapper">
             <section class="my-header search-date">
-                <h3 class="sr-only">주문현황 기간검색하기</h3>
-                <ul class="row list-inline list-unstyled">
-                    <li class="col-md-1 text-center"><button type="button">1개월</button></li>
-                    <li class="col-md-1 text-center sel"><button type="button">3개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">6개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">전체</button></li>
-                    <li class="col-md-6 text-center">
-                        <input type="text" id="startDate" class="text-center" value="2019 - 08 - 19" readonly>
-                        <span>-</span>
-                        <input type="text" id="endDate" class="text-center" value="2019 - 12 - 19" readonly>
-                    </li>
-                    <li class="col-md-2 bg-purple"><button type="button">조회</button></li>
-                </ul>
-            </section>
-        </div>
+               <h3 class="sr-only">주문현황 기간검색하기</h3>
+				<ul class="row list-inline list-unstyled">
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-one">1개월</button>
+					</li>
+	
+					<li class="col-md-3 text-center sel">
+						<button type="button" id="btn-two" style="background:  white;">3개월</button>
+					</li>
+
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-three">6개월</button>
+					</li>
+
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-four"  style="background : #aaaaac">전체</button>
+					</li>
+				</ul>
+			</section>
+		</div>
         <div class="col-md-1"></div>
     </div>
 </div>
@@ -90,9 +193,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-10 content-wrapper">
+        <div class="col-md-10 content-wrapper" >
             <section id="rent-list" class="list-wrapper">
                 <h3 class="sr-only">종료된 렌탈 리스트</h3>
+                <div id="rentlistdiv">
                 <table class="text-center list-tbl">
                     <thead>
                         <tr>
@@ -113,6 +217,8 @@
 				//for (int i =0; list.size() > i; i++) {
 				for(rent b :list){
 %>
+
+
                        <tr>
                             <td>
                                 <p><%= b.getItemNo() %></p>
@@ -134,7 +240,6 @@
                             
                         </tr> 
                     </tbody> 
-                    
 <%
 						}
 					} else {
@@ -143,15 +248,13 @@
 					    out.println("</td>");
 					   
 					}
-%>                   
-
-
-
+%>
 
                 </table>
+                </div>
             </section>
             <!-- 페이징바 -->
-            <nav class="paging-bar text-center">
+           <!--  <nav class="paging-bar text-center">
                 <ul class="list-unstyled list-inline">
                 <li>
                     <a href="#" aria-label="Previous">
@@ -169,10 +272,10 @@
                     </a>
                 </li>
                 </ul>
-            </nav>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
+            </nav> -->
+        
+        	<div class="col-md-1"></div>
+    	</div>
+	</div>
 </div>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
