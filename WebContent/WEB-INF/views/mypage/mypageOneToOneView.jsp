@@ -86,9 +86,9 @@ function deleteQna(){
 
 function updateQna(){
 	if(!confirm("수정하시겠습니까?")){
-		return false;
+		return ;
 	}
-	location.href="<%=request.getContextPath()%>/mypage/updateQna?qNo="+<%=q.getqNo()%>;
+	location.href="<%=request.getContextPath()%>/mypage/mypageOneToOneUpdate?qNo="+<%=q.getqNo()%>;
 }
 </script>
 

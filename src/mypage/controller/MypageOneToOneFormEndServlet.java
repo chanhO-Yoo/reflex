@@ -71,7 +71,7 @@ public class MypageOneToOneFormEndServlet extends HttpServlet {
 		//2.business logic
 		int result = new qService().insertQna(q);
 		String msg = "";
-		String loc = "/mypage/mypageOneToOne";
+		String loc = "/mypage/mypageOneToOne?memberId="+memberId;
 		if(result>0) {
 			msg = "게시글 등록 성공!";
 		}

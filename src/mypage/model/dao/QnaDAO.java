@@ -205,14 +205,15 @@ public class QnaDAO {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(1, q.getqNo());
-			pstmt.setString(2, q.getMemberId());
-			pstmt.setString(3, q.getqTypeNo());
-			pstmt.setString(4, q.getqTilte());
-			pstmt.setString(5, q.getqContent());
-			pstmt.setDate(6, q.getqDate());
-			pstmt.setString(7, q.getqAns());
-			pstmt.setString(8, q.getqImage());
+//			pstmt.setString(2, q.getMemberId());
+//			pstmt.setString(3, q.getqTypeNo());
+			pstmt.setString(1, q.getqTilte());
+			pstmt.setString(2, q.getqContent());
+//			pstmt.setDate(6, q.getqDate());
+//			pstmt.setString(7, q.getqAns());
+			pstmt.setString(3, q.getqImage());
+			pstmt.setInt(4, q.getqNo());
+			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
