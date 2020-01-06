@@ -18,8 +18,7 @@ import member.model.vo.Member;
  * Servlet Filter implementation class AdminFilter
  */
 @WebFilter(urlPatterns = {"/mypage/*",
-		   "/admin/*",
-		   "/member/*"
+		   "/admin/*"
 		  })
 public class AdminFilter implements Filter {
 
