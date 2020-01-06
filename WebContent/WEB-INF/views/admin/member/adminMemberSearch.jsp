@@ -134,7 +134,6 @@ function confirmDelete(){
                         <th>이름</th>
                         <th>주소</th>
                         <th>가입일</th>
-                        <th>포인트</th>
                         <th>구매내역</th>
                         <th>삭제</th>
                     </tr>
@@ -155,7 +154,6 @@ function confirmDelete(){
         	<td><%=m.getMemberName()%></td>
         	<td><%=m.getMemberAddress()%></td>
         	<td><%=m.getMemberEnrollDate()%></td>
-        	<td><%=m.getMemberPoint()%></td>
 
         	<td><button type="button" class="btn btn-primary">조회</button></td>
         	<td>
