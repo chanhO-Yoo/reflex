@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
+import order.model.vo.OrderDetail;
 
 /**
  * Servlet implementation class MypageReviewServlet
@@ -24,7 +25,7 @@ public class MypageReviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String memberId = (request.getParameter("memberId"));
+			String memberId = (request.getParameter("memberId"));
 		
 		BoardService boardService = new BoardService();
 		
@@ -43,6 +44,7 @@ String memberId = (request.getParameter("memberId"));
 		List<Board> list 
 			= boardService.selectBoardList(cPage, numPerPage ); 
 		
+		List<OrderDetail> list2=boardService.selectBoardList2(memberId);
 	
 //		System.out.println("list@servlet="+list);
 		
@@ -89,6 +91,7 @@ String memberId = (request.getParameter("memberId"));
 		//4.뷰단 포워딩		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageReview.jsp");
 		request.setAttribute("list",list);
+		request.setAttribute("list2",list2);
 	
 		request.setAttribute("pageBar",pageBar);		
 		reqDispatcher.forward(request, response);
