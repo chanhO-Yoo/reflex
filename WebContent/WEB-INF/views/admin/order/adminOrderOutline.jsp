@@ -116,7 +116,8 @@
             seriesType: 'bars',
             series: {1: {type: 'line'}},
             'width':1000,
-            'height':750};
+            'height':750,
+            chartArea:{left:'15%',width:'50%',height:'75%'}};
 
           var chart = new google.visualization.ComboChart(document.getElementById('montly_chart'));
           chart.draw(data, options);
@@ -135,8 +136,9 @@
             title : '최근 5년간 연도별 매출액/판매량 변화',
             seriesType: 'bars',
             series: {1: {type: 'line'}},
-            'width':800,
-            'height':600};
+            'width':1000,
+            'height':750,
+            chartArea:{left:'15%',width:'50%',height:'75%'}};
           
           var chart = new google.visualization.ComboChart(document.getElementById('yearly_chart'));
           chart.draw(data, options);
@@ -163,13 +165,13 @@
 		  <!-- Tab panes -->
 		  <div class="tab-content">
 		    <div role="tabpanel" class="tab-pane active" id="category">
-		    	<div id="category_chart"></div>
+		    	<div id="category_chart" style="display: block; margin: 0 atuo !important; width: auto"></div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="monthly">
-		    	<div id="montly_chart"></div>
+		    	<div id="montly_chart" style="display: block; margin: 0 atuo !important; width: auto"></div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="yearly">
-				<div id="yearly_chart"></div>
+				<div id="yearly_chart" style="display: block; margin: 0 atuo !important; width: auto"></div>
 			</div>
 		  </div>
 		
