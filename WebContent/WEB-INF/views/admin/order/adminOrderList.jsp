@@ -15,7 +15,9 @@
 	String pageBar = (String)request.getAttribute("pageBar");
 	
 	int totalContent = (int)request.getAttribute("totalContent");
-	List<Integer> OSList = (List<Integer>)request.getAttribute("OSList");
+	int[] OSArr = (int[])request.getAttribute("OSArr");
+
+	
 
 %>
 
@@ -72,13 +74,14 @@ function orderUpdate(orderNo) {
                             <th>배송준비중</th>
                             <th>배송중</th>
                             <th>배송완료</th>
+                            <th>구매확정</th>
                         </tr>
                         <tr>
                             <td><%=totalContent %></td>
-                            <td><%=OSList.get(0)%></td>
-                            <td><%=OSList.get(1)%></td>
-                            <td><%=OSList.get(2)%></td>
-                            <td><%=OSList.get(3)%></td>
+                            <td><%=OSArr[0]%></td>
+                            <td><%=OSArr[1]%></td>
+                            <td><%=OSArr[2]%></td>
+                            <td><%=OSArr[3]%></td>
                         </tr>
                     </table>
                 </div>
