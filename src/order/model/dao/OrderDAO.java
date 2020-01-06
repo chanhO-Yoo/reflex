@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -192,7 +193,88 @@ public class OrderDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new OrderException("주문번호 조회 실패!", e);
+			throw new OrderException("주문번호 3개월치 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return orderNoList;
+	}
+	
+	public List<String> selectOrderNoByOneM(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectOrderNoByOneM");
+		List<String> orderNoList = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			orderNoList = new ArrayList<>();
+			while(rset.next()) {
+				String orderNo = rset.getString("order_no");
+				orderNoList.add(orderNo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new OrderException("주문번호 1개월치 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return orderNoList;
+	}
+	
+	public List<String> selectOrderNoBySixM(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectOrderNoBySixM");
+		List<String> orderNoList = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			orderNoList = new ArrayList<>();
+			while(rset.next()) {
+				String orderNo = rset.getString("order_no");
+				orderNoList.add(orderNo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new OrderException("주문번호 6개월치 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return orderNoList;
+	}
+	
+	public List<String> selectOrderNoByAll(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectOrderNoByAll");
+		List<String> orderNoList = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			orderNoList = new ArrayList<>();
+			while(rset.next()) {
+				String orderNo = rset.getString("order_no");
+				orderNoList.add(orderNo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new OrderException("주문번호 전체 조회 실패!", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -365,4 +447,57 @@ public class OrderDAO {
 		return totalContent;
 	}
 	
+	public int selectRentEachNoOne(Connection conn, Map<String, Object> paramMap) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectRentEachNoOne");
+		int eachNo = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, (int)paramMap.get("itemNo"));
+			pstmt.setString(2, String.valueOf(paramMap.get("rentOptNo")));
+			pstmt.setString(3, String.valueOf(paramMap.get("memberId")));
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				eachNo = rset.getInt("ITEM_EACH_NO");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new OrderException("item_rent_each_no 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return eachNo;
+	}
+
+	public Date[] selectRentStartEndDate(Connection conn, int eachNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectRentStartEndDate");
+		Date[] dArr = new Date[2];
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, eachNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				dArr[0] = rset.getDate("ITEM_RENT_START"); 
+				dArr[1] = rset.getDate("ITEM_RENT_END"); 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new OrderException("대여 시작일, 반납일 조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return dArr;
+	}
+
 }

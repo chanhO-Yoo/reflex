@@ -21,6 +21,20 @@ public class ItemService {
 		close(conn);
 		return list;
 	}
+	
+	public List<Item> selectItemAllByLowPrice(Map<String, Object> paramMap) {
+		Connection conn = getConnection();
+		List<Item> list = new ItemDAO().selectItemAllByLowPrice(conn, paramMap);
+		close(conn);
+		return list;
+	}
+	
+	public List<Item> selectItemAllByHighPrice(Map<String, Object> paramMap) {
+		Connection conn = getConnection();
+		List<Item> list = new ItemDAO().selectItemAllByHighPrice(conn, paramMap);
+		close(conn);
+		return list;
+	}
 
 	public List<ItemImage> selectItemImageList(int itemNo) {
 		Connection conn = getConnection();
@@ -60,9 +74,9 @@ public class ItemService {
 		return result;
 	}
 
-	public List<ItemQna> selectItemQnaAll() {
+	public List<ItemQna> selectItemQnaList(int itemNo, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<ItemQna> qnaList = new ItemDAO().selectItemQnaAll(conn);
+		List<ItemQna> qnaList = new ItemDAO().selectItemQnaList(conn, itemNo, cPage, numPerPage);
 		close(conn);
 		return qnaList;
 	}
@@ -74,9 +88,9 @@ public class ItemService {
 		return qnaAns;
 	}
 	
-	public int selectItemQnaCount() {
+	public int selectItemQnaCount(int itemNo) {
 		Connection conn = getConnection();
-		int totalContent = new ItemDAO().selectItemQnaCount(conn);
+		int totalContent = new ItemDAO().selectItemQnaCount(conn, itemNo);
 		close(conn);
 		return totalContent;
 	}
@@ -208,6 +222,10 @@ public class ItemService {
 		close(conn);
 		return list;
 	}
+
 	
 	//========================헤더 검색 끝=================
+	
+	
+	
 }

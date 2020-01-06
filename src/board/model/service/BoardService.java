@@ -14,19 +14,33 @@ import order.model.vo.OrderDetail3;
 
 
 public class BoardService {
-
-	public List<Board> selectBoardList(int cPage, int numPerPage) {
+	
+	public List<Board> selectBoardListAll(int cPage, int numPerPage) {
 		Connection conn = getConnection();
 		List<Board> list 
-			= new BoardDAO().selectBoardList(conn, cPage, numPerPage);
+			= new BoardDAO().selectBoardListAll(conn, cPage, numPerPage);
 		close(conn);
-//		System.out.println("BoardService@+="+list);
 		return list;
 	}
 
-	public int selectBoardCount() {
+	public List<Board> selectBoardList(int itemNo, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		int totalContent = new BoardDAO().selectBoardCount(conn);
+		List<Board> list 
+			= new BoardDAO().selectBoardList(conn, itemNo, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+	
+	public int selectBoardCountAll() {
+		Connection conn = getConnection();
+		int totalContent = new BoardDAO().selectBoardCountAll(conn);
+		close(conn);
+		return totalContent;
+	}
+
+	public int selectBoardCount(int itemNo) {
+		Connection conn = getConnection();
+		int totalContent = new BoardDAO().selectBoardCount(conn, itemNo);
 		close(conn);
 		return totalContent;
 	}

@@ -31,12 +31,11 @@ public class BoardDAO {
 		}
 	}
 	
-	
-	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage ) {
+	public List<Board> selectBoardListAll(Connection conn, int cPage, int numPerPage) {
 		Board b = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectBoardList");
+		String query = prop.getProperty("selectBoardListAll");
 		List<Board> list = new ArrayList<>();
 
 		
@@ -75,12 +74,56 @@ public class BoardDAO {
 		
 		return list;
 	}
-
-
-	public int selectBoardCount(Connection conn) {
+	
+	public List<Board> selectBoardList(Connection conn, int itemNo, int cPage, int numPerPage) {
+		Board b = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectBoardCount");
+		String query = prop.getProperty("selectBoardList");
+		List<Board> list = new ArrayList<>();
+
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);//start rownum
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);//start rownum
+			pstmt.setInt(3, cPage*numPerPage);//end rownum
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Board b1=new Board();
+			
+				b1.setReview_no(rset.getInt("review_no"));
+				b1.setOrder_details_no(rset.getInt("order_detail_no"));
+				b1.setReview_writer(rset.getString("review_writer"));
+				b1.setReview_date(rset.getDate("review_date"));
+				b1.setReview_star(rset.getInt("review_star"));
+				b1.setReview_content(rset.getString("review_content"));
+				b1.setReview_image(rset.getString("review_image"));
+				b1.setReview_readCount(rset.getInt("review_readCount"));
+				b1.setItem_no(rset.getInt("item_no"));
+				//댓글수 필드 추가
+				//b.setCommentCnt(rset.getInt("comment_cnt"));
+				
+				list.add(b1);
+			}
+//			System.out.println("list@dao="+list);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int selectBoardCountAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBoardCountAll");
 		int totalContent = 0;
 		
 		try {
@@ -90,7 +133,28 @@ public class BoardDAO {
 			if(rset.next())
 				totalContent = rset.getInt("cnt");
 			
-			//System.out.println("totalContent@dao="+totalContent);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContent;
+	}
+
+	public int selectBoardCount(Connection conn, int itemNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBoardCount");
+		int totalContent = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next())
+				totalContent = rset.getInt("cnt");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -346,8 +410,6 @@ public class BoardDAO {
 		return list2;
 	}
 
-
-	
 
 }
 

@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="java.sql.Date"%>
 <%@page import="item.model.vo.Item"%>
 <%@page import="item.model.vo.ItemImage"%>
@@ -8,10 +9,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	//주문번호
 	List<String> orderNoList = (List<String>)request.getAttribute("orderNoList");
+	//주문번호에 담긴 상품내역들
 	Map<String, List<OrderDetail>> orderListByOrderNo = (Map<String, List<OrderDetail>>)request.getAttribute("orderListByOrderNo");
+	//상품내역들의 대여 시작일, 반납일
+	Map<String, List<Date[]>> rentDateMap = (Map<String, List<Date[]>>)request.getAttribute("rentDateMap");
+	
+	//상품 사진
 	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
 	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
+	
 	int totalPage = (int)request.getAttribute("totalPage");
 	
 	//js tr태그 추가용: 주문번호당 몇 개 상품 들어있는지
@@ -61,20 +69,18 @@ function plusTdTag(){
 		}
 	});
 }
-function goReview(btn, yn){
+function goReview(btn, yn, odNo, itemNo){
 	let val = btn.value;
 	
 	//구매후기 버튼 클릭: 주문상태 OS04일 경우만
-	if(val==="OS04" && yn==="N"){
+	if(yn!=="N" || val==="OS05") alert("이미 구매후기를 작성한 상품입니다.");
+	else if(val==="OS04" && yn==="N"){
 		if(!confirm("구매후기를 작성하시겠습니까? ")) return;
 		
-		location.href = "<%=request.getContextPath()%>";
+		location.href = "<%=request.getContextPath()%>/mypage/mypageReviewForm?itemNo="+itemNo+"&orderDetailNo="+odNo;
 	}
 	else if(val==="OS01" || val==="OS02" || val==="OS03"){
 		alert("구매후기는 배송완료일 때만 작성가능합니다.");
-	}
-	else if(val==="OS05"){
-		alert("이미 구매후기를 작성한 상품입니다.");
 	}
 }
 function cancelOrder(btn, odNo, itemNo, optNo, memId){
@@ -96,13 +102,12 @@ function cancelOrder(btn, odNo, itemNo, optNo, memId){
 			dataType: "json",
 			success: data => {
 				console.log(data);
-				if(data.result===1){
+				if(data.result===1)
 					alert("주문이 정상적으로 취소되었습니다.");
-					changeTd(odNo, "주문취소");
-				}
-				else{
+				else
 					alert("주문이 취소되지 않았습니다.\n다시 시도해 주세요.");
-				}
+				
+				window.location.reload();
 			},
 			error: (jqxhr, textStatus, errorThrown)=>{
 				console.log(jqxhr, textStatus, errorThrown);
@@ -132,13 +137,12 @@ function exchangeItem(btn, odNo, itemNo, optNo, memId){
 			dataType: "json",
 			success: data => {
 				console.log(data);
-				if(data.result===1){
+				if(data.result===1)
 					alert("상품교환 신청이 정상적으로 접수되었습니다.\n반납일이 10일 추가되었으니 확인해 주세요.");
-					changeTd(odNo, "상품교환");
-				}
-				else{
+				else
 					alert("상품교환 신청이 접수되지 않았습니다.\n다시 시도해 주세요.");
-				}
+				
+				window.location.reload();
 			},
 			error: (jqxhr, textStatus, errorThrown)=>{
 				console.log(jqxhr, textStatus, errorThrown);
@@ -169,13 +173,12 @@ function cancelRent(btn, odNo, itemNo, optNo, memId){
 			dataType: "json",
 			success: data => {
 				console.log(data);
-				if(data.result===1){
+				if(data.result===1)
 					alert("렌탈해지 신청이 정상적으로 접수되었습니다.\n반납일이 오늘로부터 5일 뒤 종료됩니다.");
-					changeTd(odNo, "렌탈해지");
-				}
-				else{
+				else 
 					alert("렌탈해지 신청이 접수되지 않았습니다.\n다시 시도해 주세요.");
-				}
+				
+				window.location.reload();
 			},
 			error: (jqxhr, textStatus, errorThrown)=>{
 				console.log(jqxhr, textStatus, errorThrown);
@@ -186,14 +189,84 @@ function cancelRent(btn, odNo, itemNo, optNo, memId){
 		alert("렌탈해지는 배송완료 후부터 가능합니다.");
 	}
 }
-function changeTd(odNo, msg){
-	let tdArr = document.querySelectorAll(".item-change");
-	tdArr.forEach(function(obj, idx){
-		if(obj.className.indexOf(odNo)!=-1){
-			$(obj).html("");
-			$(obj).html(msg);
-		}
+function checkByPeriod(btn, val){
+	let btnLiArr = document.querySelectorAll(".btn-li");
+	let parentLi = btn.parentNode;
+
+	//.sel을 갖고 있으면 삭제 
+	btnLiArr.forEach(function(obj, idx){
+		if(obj.className.indexOf('sel')){
+			obj.classList.remove('sel');
+		};
 	});
+	//현재 클릭한 버튼에만 .sel 추가
+	parentLi.classList.toggle('sel');
+	
+	//1개월 검색
+	if(val===1){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/mypageOrderListByOneM?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+
+				$("#order-list").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		});
+	}
+	//3개월 검색
+	else if(val===3){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/mypageOrderListByThreeM?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+
+				$("#order-list").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		});
+	}
+	//6개월 검색
+	else if(val===6){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/mypageOrderListBySixM?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+
+				$("#order-list").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		});
+	}
+	//전체 검색
+	else{
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/mypageOrderListByAll?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+
+				$("#order-list").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		});
+	}
+
 }
 </script>
 
@@ -244,16 +317,10 @@ function changeTd(odNo, msg){
             <section class="my-header">
                 <h3 class="sr-only">주문현황 기간검색하기</h3>
                 <ul class="row list-inline list-unstyled">
-                    <li class="col-md-1 text-center"><button type="button">1개월</button></li>
-                    <li class="col-md-1 text-center sel"><button type="button">3개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">6개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">전체</button></li>
-                    <li class="col-md-7 text-center">
-                        <input type="date" value="2019-12-19">
-                        <span>-</span>
-                        <input type="date" value="2019-12-19">
-                    </li>
-                    <li class="col-md-1 bg-purple"><button type="button">조회</button></li>
+                    <li class="col-md-3 text-center btn-li"><button type="button" onclick="checkByPeriod(this, 1);">1개월</button></li>
+                    <li class="col-md-3 text-center btn-li sel"><button type="button" onclick="checkByPeriod(this, 3);">3개월</button></li>
+                    <li class="col-md-3 text-center btn-li"><button type="button" onclick="checkByPeriod(this, 6);">6개월</button></li>
+                    <li class="col-md-3 text-center btn-li"><button type="button" onclick="checkByPeriod(this, all);">전체</button></li>
                 </ul>
             </section>
         </div>
@@ -298,7 +365,8 @@ function changeTd(odNo, msg){
                     			
                     			//한 건의 주문안에 담겨있는 주문상품내역리스트
                     			List<OrderDetail> odList = orderListByOrderNo.get(orderNo);
-                    			System.out.println("orderNo="+orderNo+"::: odList="+odList);
+                    			//대여기간 리스트
+                    			List<Date[]> dateList = rentDateMap.get(orderNo);
 
                     			for(int j=0; j<odList.size(); j++){
                     				OrderDetail od = odList.get(j); //하나의 주문상품내역
@@ -316,6 +384,7 @@ function changeTd(odNo, msg){
                     				String dpEa = dc.format(od.getPriceByRentOptNo()*od.getItemQuantity());
                     				
                     				//대여기간
+                    				Date[] dArr = dateList.get(j);
                     				
                     				//주문상태
                     				String orderStatus = "주문완료";
@@ -340,10 +409,17 @@ function changeTd(odNo, msg){
                                 <p class="pull-left rent-type">일시납</p>
                             </td>
                             <td><%=od.getItemQuantity()%></td>
-                            <td class="">2019/10/11~2019/12/11</td>
-                            <td class="">
+                            <% if(dArr[0]==null || dArr[1]==null){ %>
+                            	<td>-</td>
+                            <% 
+                            	}
+                            	else{
+                            %>
+                           		<td class=""><%=dArr[0]%>~<%=dArr[1]%></td>
+                            <% } %>
+                            <td class="order-status <%=od.getOrderDetailNo()%>">
                                 <p class="ship-status"><%=orderStatus%></p>
-                                <button type="button" id="btn-goReview" class="btn-radius" value="<%=od.getOrderStatusNo()%>" onclick="goReview(this,'<%=od.getReviewYn()%>');">구매후기</button>
+                                <button type="button" id="btn-goReview" class="btn-radius" value="<%=od.getOrderStatusNo()%>" onclick="goReview(this,'<%=od.getReviewYn()%>','<%=od.getOrderDetailNo()%>','<%=item.getItemNo()%>');">구매후기</button>
                             </td>
                             <td class="item-change <%=od.getOrderDetailNo()%>">
                             	<% if(od.getOrderCancelNo()==null){ %>

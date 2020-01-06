@@ -26,7 +26,7 @@
             <a href="<%=request.getContextPath()%>/mypage/mypageReview">이용후기내역</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
-        <li>1:1문의등록</li>
+        <li>이용후기등록</li>
     </ul>
 </nav>
 

@@ -19,16 +19,17 @@ import item.model.vo.ItemImage;
 /**
  * Servlet implementation class ItemListServlet
  */
-@WebServlet("/item/itemList")
-public class ItemListServlet extends HttpServlet {
+@WebServlet("/item/itemListByHighPrice")
+public class ItemListByHighPriceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//파라미터 핸들링
 		String categoryNo = request.getParameter("categoryNo");
+		String filterType = request.getParameter("filterType");
 		
 		//페이징: 컨텐츠영역
 		//사용자 입력값 처리
@@ -40,7 +41,6 @@ public class ItemListServlet extends HttpServlet {
 		} catch(NumberFormatException e) {
 			
 		}
-		System.out.println("cPage@servlet="+cPage);
 		
 		ItemService itemService = new ItemService();
 		try {
@@ -57,27 +57,32 @@ public class ItemListServlet extends HttpServlet {
 			//cPage=1이거나 cPage=pageNo일 때도 전부 클릭 가능하게 함.  
 			//1.이전
 			if(pageNo!=1) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemListByHighPrice?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemListByHighPrice?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
 			//2.pageNo
 			while(pageNo<=pageEnd && pageNo<=totalPage) {
 				if(cPage==pageNo)
-					pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+					pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/item/itemListByHighPrice?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 				else
-					pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+					pageBar += "<li><a href='"+request.getContextPath()+"/item/itemListByHighPrice?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 				pageNo++;
 			}
 			//3.다음
 			if(pageNo<=totalPage) 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemListByHighPrice?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
 			else 
-				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemList?categoryNo="+categoryNo+"&cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
-			
-			
+				pageBar += "<li><a href='"+request.getContextPath()+"/item/itemListByHighPrice?categoryNo="+categoryNo+"&filterType="+filterType+"&cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
+
 			
 			//업무로직
-			List<Item> itemList = itemService.selectItemAll(categoryNo, cPage, numPerPage); //상품 담을 리스트
+			//파라미터 맵
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("categoryNo", categoryNo);
+			paramMap.put("cPage", cPage);
+			paramMap.put("numPerPage", numPerPage);
+			
+			List<Item> itemList = itemService.selectItemAllByHighPrice(paramMap); //상품 담을 리스트
 			List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
 			
@@ -90,15 +95,17 @@ public class ItemListServlet extends HttpServlet {
 				List<ItemImage> imgList = itemService.selectItemImageList(itemNoList.get(i));
 				imgMap.put(itemNoList.get(i), imgList);
 			}
+		
 			
 			//뷰단처리
 			String view = "";
 			
-			//조회 성공
+			//조회 성공: 상품목록 비어있을 수 있음!
 			if(itemList!=null) {
 				view = "/WEB-INF/views/item/itemList.jsp";
 				
 				request.setAttribute("categoryNo", categoryNo);
+				request.setAttribute("filterType", filterType);
 				request.setAttribute("itemList", itemList);
 				request.setAttribute("itemNoList", itemNoList);
 				request.setAttribute("imgMap", imgMap);
@@ -119,7 +126,7 @@ public class ItemListServlet extends HttpServlet {
 		}
 		
 	}
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

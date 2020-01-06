@@ -59,12 +59,14 @@ button{padding: 0; background: transparent;}
 /* .bg-purple{background: #7d37c3; color: white;} */
 /* .bg-purple{background:#0F4C81; color: whitesmoke;} */
 .bg-purple{background:#44db5e;}
+.color-reflex{background:#1b52eb; color: black;}
 .sel{background: #aaaaac;}
 .strong{font-weight: bold;}
 /* 조회된 것이 없을 때 */
 #warning-wrapper.content-wrapper{padding: 50px; font-size: 15px;}
 #warning-wrapper p{position:relative; display:inline-block;}
 #warning-wrapper p .glyphicon{position: absolute; top: 0; left: -30px; font-size: 25px;}
+#warning-wrapper.content-wrapper.table-warning{border: 0; border-top: 1px solid;}
 
 
 /* media */
@@ -286,10 +288,13 @@ footer, footer header{background: #aaaaac;}
 #details-img img{width: 100%;}
 /* 이용후기 */
 #details-review, #details-qna{padding: 0;}
-#details-review #writed-review li{margin-top: 30px; padding: 0 30px;}
-.dtReview-header{padding: 15px 20px; margin-bottom: 15px;}
-.review-info{position: relative; color: gray;}
-.review-slash{position: absolute; top: 2px; left: 49px; color:lightgray; font-size: 11px;}
+#details-review #writed-review li{padding: 0 30px;}
+.dtReview-header{padding: 15px 20px;}
+#details-review .dtReview-header .star{margin-left: 20px;}
+#details-review .dtReview-header .star .glyphicon{font-size: 18px;}
+.review-info{position:relative; color: gray;}
+.dtReview-header .review-content{padding: 15px 50px;}
+.review-slash{position: absolute; left: 60px; color:lightgray; font-size: 11px;}
 .review-date{margin-left: 10px;}
 .reviewImg-wrapper{width: 100%; margin: 20px 0;}
 .reviewImg-wrapper img{padding: 0 15px;}
@@ -298,8 +303,7 @@ footer, footer header{background: #aaaaac;}
 /* Q&A */
 #details-qna .list-tbl{border-top: 1px solid;}
 #details-qna .btn-wrapper{position: relative; height: 50px;}
-#details-qna .btn-wrapper a{position: absolute; top: 5px; right: 20px; padding: 3px 20px;}
-#details-qna .btn-wrapper a:hover, #details-qna .btn-wrapper a:focus, #details-qna .btn-wrapper a:active{text-decoration: none;}
+#details-qna .btn-wrapper button{margin: 11px 20px; padding: 3px 50px;}
 #details-qna .qna-title a{width: 80%; padding: 14px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
 .qna-view{background: #f7f7f7;}
 .qna-view td{padding: 0 20px;}

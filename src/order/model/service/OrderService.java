@@ -53,6 +53,27 @@ public class OrderService {
 		close(conn);
 		return orderNoList;
 	}
+	
+	public List<String> selectOrderNoByOneM(String memberId) {
+		Connection conn = getConnection();
+		List<String> orderNoList = new OrderDAO().selectOrderNoByOneM(conn, memberId);
+		close(conn);
+		return orderNoList;
+	}
+	
+	public List<String> selectOrderNoBySixM(String memberId) {
+		Connection conn = getConnection();
+		List<String> orderNoList = new OrderDAO().selectOrderNoBySixM(conn, memberId);
+		close(conn);
+		return orderNoList;
+	}
+	
+	public List<String> selectOrderNoByAll(String memberId) {
+		Connection conn = getConnection();
+		List<String> orderNoList = new OrderDAO().selectOrderNoByAll(conn, memberId);
+		close(conn);
+		return orderNoList;
+	}
 
 	public List<Integer> selectItemNo() {
 		Connection conn = getConnection();
@@ -108,6 +129,19 @@ public class OrderService {
 		close(conn);
 		return totalContent;
 	}
+
+	public int selectRentEachNoOne(Map<String, Object> paramMap) {
+		Connection conn = getConnection();
+		int eachNo = new OrderDAO().selectRentEachNoOne(conn, paramMap);
+		close(conn);
+		return eachNo;
+	}
 	
-	
+	public Date[] selectRentStartEndDate(int eachNo) {
+		Connection conn = getConnection();
+		Date[] dArr = new OrderDAO().selectRentStartEndDate(conn, eachNo);
+		close(conn);
+		return dArr;
+	}
+
 }

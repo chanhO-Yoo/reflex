@@ -69,6 +69,84 @@ public class ItemDAO {
 		
 		return list;
 	}
+	
+	public List<Item> selectItemAllByLowPrice(Connection conn, Map<String, Object> paramMap) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectItemAllByLowPrice");
+		List<Item> list = null;
+		int cPage = (int)paramMap.get("cPage");
+		int numPerPage = (int)paramMap.get("numPerPage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, (String)paramMap.get("categoryNo"));
+			pstmt.setInt(2, (cPage-1)*numPerPage + 1); //startNo
+			pstmt.setInt(3, numPerPage*cPage); //endNo
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				Item item = new Item();
+				item.setItemNo(rset.getInt("item_no"));
+				item.setCategoryNo("category_no");
+				item.setItemStock(rset.getInt("item_stock"));
+				item.setItemBrand(rset.getString("item_brand"));
+				item.setItemName(rset.getString("item_name"));
+				item.setItemPrice(rset.getInt("item_price"));
+				item.setItemDesc(rset.getString("item_desc"));
+				item.setItemEnrollDate(rset.getDate("item_enroll_date"));
+				list.add(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("상품목록 낮은가격순 조회 에러!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public List<Item> selectItemAllByHighPrice(Connection conn, Map<String, Object> paramMap) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectItemAllByHighPrice");
+		List<Item> list = null;
+		int cPage = (int)paramMap.get("cPage");
+		int numPerPage = (int)paramMap.get("numPerPage");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, (String)paramMap.get("categoryNo"));
+			pstmt.setInt(2, (cPage-1)*numPerPage + 1); //startNo
+			pstmt.setInt(3, numPerPage*cPage); //endNo
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				Item item = new Item();
+				item.setItemNo(rset.getInt("item_no"));
+				item.setCategoryNo("category_no");
+				item.setItemStock(rset.getInt("item_stock"));
+				item.setItemBrand(rset.getString("item_brand"));
+				item.setItemName(rset.getString("item_name"));
+				item.setItemPrice(rset.getInt("item_price"));
+				item.setItemDesc(rset.getString("item_desc"));
+				item.setItemEnrollDate(rset.getDate("item_enroll_date"));
+				list.add(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("상품목록 높은가격순 조회 에러!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 
 	public List<ItemImage> selectItemImageList(Connection conn, int itemNo) {
 		PreparedStatement pstmt = null;
@@ -225,14 +303,17 @@ public class ItemDAO {
 		return result;
 	}
 
-	public List<ItemQna> selectItemQnaAll(Connection conn) {
+	public List<ItemQna> selectItemQnaList(Connection conn, int itemNo, int cPage, int numPerPage) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectItemQnaAll");
+		String query = prop.getProperty("selectItemQnaList");
 		List<ItemQna> qnaList = null;
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			rset = pstmt.executeQuery();
 			
 			qnaList = new ArrayList<>();
@@ -287,7 +368,7 @@ public class ItemDAO {
 		return qnaAns;
 	}
 
-	public int selectItemQnaCount(Connection conn) {
+	public int selectItemQnaCount(Connection conn, int itemNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectItemQnaCount");
@@ -295,6 +376,7 @@ public class ItemDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -726,4 +808,7 @@ public class ItemDAO {
 		
 		return usablePoint;
 	}
+
+
+	
 }

@@ -45,6 +45,8 @@
 /* 포인트 확인: my_point.jsp */
 #point-selOpt li{border-bottom: 1px solid;}
 #point-list .list-tbl th, #point-list .list-tbl td{border-left: 0;}
+#point-list .list-tbl th{padding: 0;}
+#point-list .list-tbl td{height: 50px; padding: 0 15px;}
 #point-list .em-blue{font-weight: normal;}
 #point-list .em-purple{font-weight: normal;}
 

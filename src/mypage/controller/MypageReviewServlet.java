@@ -47,7 +47,7 @@ public class MypageReviewServlet extends HttpServlet {
 		//2.업무로직
 		//a.컨텐츠영역
 		List<Board> list 
-			= boardService.selectBoardList(cPage, numPerPage ); 
+			= boardService.selectBoardListAll(cPage, numPerPage); 
 		
 		List<OrderDetail3> list2=boardService.selectBoardList2(memberId);
 		
@@ -69,7 +69,7 @@ public class MypageReviewServlet extends HttpServlet {
 		
 		//b.페이징바영역
 		//전체게시글수, 전체페이지수
-		int totalContent = boardService.selectBoardCount();
+		int totalContent = boardService.selectBoardCountAll();
 		int totalPage =  (int)Math.ceil((double)totalContent/numPerPage);//(공식2)
 		
 		String pageBar = "";

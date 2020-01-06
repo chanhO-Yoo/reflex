@@ -19,12 +19,12 @@ import order.model.service.OrderService;
 import order.model.vo.OrderDetail;
 
 /**
- * Servlet implementation class MypageOrderListServlet
+ * Servlet implementation class MypageOrderListByOneMServlet
  */
-@WebServlet("/mypage/mypageOrderList")
-public class MypageOrderListServlet extends HttpServlet {
+@WebServlet("/mypage/mypageOrderListByThreeM")
+public class MypageOrderListByThreeMServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -34,12 +34,6 @@ public class MypageOrderListServlet extends HttpServlet {
 		
 		OrderService orderService = new OrderService();
 		try {
-			//더보기 처리
-			int totalContent = orderService.selectOrderListTotalContent(memberId);
-			final int numPerPage = 7;
-			int totalPage = (int)Math.ceil((double)totalContent/numPerPage);
-
-			
 			//업무로직
 			//주문번호 담은 리스트
 			List<String> orderNoList = orderService.selectOrderNo(memberId);
@@ -104,27 +98,27 @@ public class MypageOrderListServlet extends HttpServlet {
 				}
 			}
 			
-			
 			//뷰단처리: 주문내역 비어있을 수 있음. 
 			String view = "";
 			if(orderNoList!=null && orderListByOrderNo!=null) {
-				view = "/WEB-INF/views/mypage/mypageOrderList.jsp";
+				view = "/WEB-INF/views/mypage/mypageOrderListAjax.jsp";
 				request.setAttribute("orderNoList", orderNoList);
 				request.setAttribute("orderListByOrderNo", orderListByOrderNo);
 				request.setAttribute("rentDateMap", rentDateMap);
 				request.setAttribute("itemNoList", itemNoList);
 				request.setAttribute("imgMap", imgMap);
-				request.setAttribute("totalPage", totalPage);
+				
 			}
 			else {
 				view = "/WEB-INF/views/common/msg.jsp";
-				request.setAttribute("msg", "주문내역 조회 실패!");
+				request.setAttribute("msg", "주문내역 1개월치 조회 실패!");
 				request.setAttribute("loc", "/");
 			}
 			request.getRequestDispatcher(view).forward(request, response);
 		} catch(Exception e) {
 			throw e;
 		}
+		
 		
 	}
 
