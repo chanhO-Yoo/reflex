@@ -22,8 +22,37 @@ public class MypageOneToOneUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //	
-
-		request.getRequestDispatcher("/WEB-INF/views/mypage/mypageOneToOneUpdate.jsp").forward(request, response);
+		System.out.println("@@@@@@@@서블릿 실행");
+		
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		
+		System.out.println("@@@@@@@@qno="+qNo);
+		
+		//2.업무로직
+		Qna q = new qService().selectOne(qNo);
+	
+		System.out.println("mypage - Mypage OneToOne Update@servlet="+q);
+		
+		
+		//게시글 가져오기에 실패한경우
+		String msg = "";//RequestDispatcher객체에 전달한 view단 주소
+		String loc="/";
+		
+		if(q == null){
+			msg="해당 글 없습니다.";
+			loc="/mypage/mypageOneToOne";
+			
+			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+			
+		}
+		else {
+			request.setAttribute("q", q);
+			
+			request.getRequestDispatcher("/WEB-INF/views/mypage/mypageOneToOneUpdate.jsp").forward(request, response);
+			
+						
+		}
+		
 
 
 }

@@ -50,7 +50,7 @@ public class MyPagePointOneServlet extends HttpServlet {
 		int pageNo = pageStart;
 
 		String memberId = request.getParameter("memberId");
-		MyPage m = new MyPageService().selectOne(memberId);
+		
 		
 		List<MyPage> list = new MyPageService().selectPointOne(memberId, cPage, numPerPage);
 		
@@ -80,7 +80,7 @@ public class MyPagePointOneServlet extends HttpServlet {
 		}
 
 		request.setAttribute("list", list);
-		request.setAttribute("mypage", m);
+
 		request.setAttribute("pageBar", pageBar);
 
 		System.out.println("mypage-point-servlet" + list);

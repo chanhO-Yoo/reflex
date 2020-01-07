@@ -69,10 +69,11 @@ public class BoardFormEndServlet extends HttpServlet {
 		System.out.println("bofomm@servlet="+reviewStar);
 		System.out.println("servlet@itemno:"+itemNo);
 		System.out.println("servlet@orderDetailNo:"+orderDetailNo);
+		
 		//XSS공격대비 &문자변환
 		reviewContent = reviewContent.replaceAll("<", "&lt;")
-								   .replaceAll(">", "&gt;")
-								   .replaceAll("\\n", "<br/>");//개행문자처리
+				   .replaceAll(">", "&gt;")
+				   .replaceAll("\\n", "<br/>");//개행문자처리
 		
 		String review_image 
 			= multiReq.getOriginalFileName("upFile");//사용자 업로드한 파일명

@@ -77,27 +77,26 @@ public class ItemListServlet extends HttpServlet {
 			
 			
 			//업무로직
-			List<Item> itemList = itemList = itemService.selectItemAll(categoryNo, cPage, numPerPage); //상품 담을 리스트
+			List<Item> itemList = itemService.selectItemAll(categoryNo, cPage, numPerPage); //상품 담을 리스트
 			List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
 			Map<Integer, List<ItemImage>> imgMap = new HashMap<>(); //키:상품번호, 값:해당 상품 이미지리스트
 			
+			//상품번호 담기
+			for(Item i: itemList){
+				itemNoList.add(i.getItemNo());
+			}
+			//상품이미지 담기
+			for(int i=0; i<itemNoList.size(); i++) {
+				List<ItemImage> imgList = itemService.selectItemImageList(itemNoList.get(i));
+				imgMap.put(itemNoList.get(i), imgList);
+			}
+			
 			//뷰단처리
-			String view = "/WEB-INF/views/item/itemListAjax.jsp"; 
-			String loc = "/item/itemList?categoryNo="+categoryNo;
-			String msg = "";
+			String view = "";
 			
 			//조회 성공
 			if(itemList!=null) {
-				//상품번호 담기
-				for(Item i: itemList){
-					itemNoList.add(i.getItemNo());
-				}
-				
-				for(int i=0; i<itemNoList.size(); i++) {
-					//상품이미지 담기
-					List<ItemImage> imgList = itemService.selectItemImageList(itemNoList.get(i));
-					imgMap.put(itemNoList.get(i), imgList);
-				}
+				view = "/WEB-INF/views/item/itemList.jsp";
 				
 				request.setAttribute("categoryNo", categoryNo);
 				request.setAttribute("itemList", itemList);
@@ -108,8 +107,10 @@ public class ItemListServlet extends HttpServlet {
 			}
 			//조회 실패
 			else {
-				request.setAttribute("msg", msg);
-				request.setAttribute("loc", loc);
+				view = "/WEB-INF/views/common/msg.jsp";
+				
+				request.setAttribute("msg", "상품목록 조회에 실패했습니다!");
+				request.setAttribute("loc", "/");
 				request.getRequestDispatcher(view).forward(request, response);
 			}
 			

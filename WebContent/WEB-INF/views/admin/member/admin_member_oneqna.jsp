@@ -74,7 +74,7 @@ $(()=>{
         </div>
       
     	<!-- 문의현황 검색창 -->
-    	<div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+    	<div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
             <!-- 문의검색창 폼 -->
                 <div class="form-group col-xs-3" style="padding-top: 7px;">
                     <select id="qnaSearchType" class="form-control">
@@ -114,7 +114,7 @@ $(()=>{
 
 
 	    <!-- 문의현황 테이블 -->
-	    <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+	    <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
 	        <table class="table">
                 <tr>
                     <th>번호</th>

@@ -63,7 +63,7 @@
 
                 <!-- 상품검색 - 서브제목 -->
                 <div class="row">
-                    <div class="col-md-6 col-sm-8 col-xs-8 col-md-offset-3 ">
+                    <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-1 ">
                         <table class="table ">
                         <tr>
                         	<th>상품번호</th>
@@ -96,7 +96,7 @@
                 </div>
 
                 <!-- 상품검색 - 상품 검색 결과 -->
-                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+                <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
                     <table class="table ">
                         <tr>
                             <th>상품개별번호</th>

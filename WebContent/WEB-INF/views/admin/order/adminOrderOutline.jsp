@@ -153,7 +153,7 @@
 	        </div>
 	    </div>
 	
-		<div role="tabpanel" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+		<div role="tabpanel" class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
 		
 		  <!-- Nav tabs -->
 		  <ul class="nav nav-tabs nav-justified" role="tablist">

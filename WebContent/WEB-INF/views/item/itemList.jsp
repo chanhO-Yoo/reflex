@@ -8,6 +8,8 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String categoryNo = (String)request.getAttribute("categoryNo");
+	String filterType = (String)request.getAttribute("filterType");
+	filterType = (filterType==null)?"null":filterType;
 	List<Item> itemList = (List<Item>)request.getAttribute("itemList");
 	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
 	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
@@ -15,43 +17,43 @@
 %>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
+	listFilter(); //목록 정렬
+	setFilter(); //정렬값에 따라 option값 selected유지
+});
+function listFilter(){
 	let selectFilter = document.querySelector("#filterType");
 	
-	<%-- //정렬
+	//정렬
 	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
-		$.ajax({
-			url: "<%=request.getContextPath()%>/item/itemListAjax?categoryNo=<%=categoryNo%>&filterType="+optionVal,
-			type: "get",
-			dataType: "html",
-			success: data=>{
-				console.log(data);
-				$('#view-list').html(data);
-			},
-			error: (x, s, e) =>{
-				console.log("ajax처리실패!!!", x, s, e);
-			} 
-		});
-	}); --%>
- 	selectFilter.addEventListener('change', function(){
-		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
-		console.log(optionVal);
-		$.ajax({
-			url: "<%=request.getContextPath()%>/item/itemList?categoryNo=<%=categoryNo%>&filterType="+optionVal,
-			type: "get",
-			dataType: "html",
-			success: data=>{
-				console.log(data);
-				/* $('#view-list').html(""); */
-				$('#view-list').html(data);
-			},
-			error: (x, s, e) =>{
-				console.log("ajax처리실패!!!", x, s, e);
-			} 
-		});
+		
+		//신상품순
+		if(optionVal==="upToDate")
+			location.href = "<%=request.getContextPath()%>/item/itemList?categoryNo=<%=categoryNo%>";
+		//후기순
+		else if(optionVal==="reviewCnt")
+			location.href = "<%=request.getContextPath()%>/item/itemListByReviewCnt?categoryNo=<%=categoryNo%>&filterType=reviewCnt"; 
+		//낮은 가격순
+		else if(optionVal==="lowPrice")
+			location.href = "<%=request.getContextPath()%>/item/itemListByLowPrice?categoryNo=<%=categoryNo%>&filterType=lowPrice";
+		//높은 가격순
+		else if(optionVal==="highPrice")
+			location.href = "<%=request.getContextPath()%>/item/itemListByHighPrice?categoryNo=<%=categoryNo%>&filterType=highPrice";
 	});
-});
+}
+function setFilter(){
+	let options = document.querySelectorAll("#filterType option");
+	
+	options.forEach(function(obj, idx){
+		let val = obj.value;
+		if(val==="<%=filterType%>"){
+			console.log(val);
+			obj.selected = true;
+		}
+	});
+	
+}
 </script>
 <!-- page nav -->
 <nav class="line-style page-nav">

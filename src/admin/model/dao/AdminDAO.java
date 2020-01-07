@@ -1931,7 +1931,7 @@ public class AdminDAO {
 		return totalContent;
 	}
 
-	public int updateOrder(Connection conn, int orderNo, String orderStatus) {
+	public int updateOrder(Connection conn, String orderNo, String orderStatus) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("updateOrder"); 
@@ -1941,7 +1941,7 @@ public class AdminDAO {
 			pstmt = conn.prepareStatement(query);
 			//쿼리문미완성
 			pstmt.setString(1, orderStatus);
-			pstmt.setInt(2, orderNo);
+			pstmt.setString(2, orderNo);
 			
 			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
 			//DML은 executeUpdate()

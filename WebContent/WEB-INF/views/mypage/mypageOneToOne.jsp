@@ -9,6 +9,87 @@ List<Qna> list = (List<Qna>)request.getAttribute("list");
 String pageBar = (String)request.getAttribute("pageBar");
 %>
 
+<script>
+$(function(){	
+	/*1개월 클릭시 */
+	$("#btn-one").click(function(){
+		$(this).css('background','#AAAAAC')
+		$("#btn-two").css('background','white')
+		$("#btn-three").css('background','white')
+		$("#btn-four").css('background','white')
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointOne?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				console.log(data)
+				$("#pointListDiv").html(data);
+			},
+			error: function(jqxhr,textStatus,errorThrown){
+				console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+			}
+		})
+	});
+	/*3개월 클릭시 */
+	$("#btn-two").click(function(){
+		$(this).css('background','#AAAAAC')
+		$("#btn-one").css('background','white')
+		$("#btn-three").css('background','white')
+		$("#btn-four").css('background','white')
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointThree?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			$("#pointListDiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	/*6개월 클릭시 */
+	$("#btn-three").click(function(){
+		$(this).css('background','#AAAAAC')
+		$("#btn-one").css('background','white')
+		$("#btn-two").css('background','white')
+		$("#btn-four").css('background','white')
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointSix?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			$("#pointListDiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+	/*전체 클릭시 */
+	$("#btn-four").click(function(){
+		$(this).css('background','#AAAAAC')
+		$("#btn-one").css('background','white')
+		$("#btn-two").css('background','white')
+		$("#btn-three").css('background','white')
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/pointAll?memberId=<%=memberLoggedIn.getMemberId()%>",
+			type: "get",
+			dataType: "html",
+			success: function(data){
+			console.log(data)
+			$("#pointListDiv").html(data);
+		},
+		error: function(jqxhr,textStatus,errorThrown){
+			console.log("ajax처리실패",jqxhr, textStatus, errorThrown);
+		}
+		})
+	});
+});
+</script>
+
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -17,7 +98,7 @@ String pageBar = (String)request.getAttribute("pageBar");
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
-            <a href="<%=request.getContextPath()%>/common/boxMenu?level1=mypage">마이페이지</a>
+            <a href="">마이페이지</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li>1:1문의내역</li>
@@ -50,20 +131,22 @@ String pageBar = (String)request.getAttribute("pageBar");
         <div class="col-md-10 content-wrapper">
             <section class="my-header search-date">
                 <h3 class="sr-only">주문현황 기간검색하기</h3>
-                <ul class="row list-inline list-unstyled">
-                    <li class="col-md-1 text-center"><button type="button">1개월</button></li>
-                    <li class="col-md-1 text-center sel"><button type="button">3개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">6개월</button></li>
-                    <li class="col-md-1 text-center"><button type="button">전체</button></li>
-                    <li class="col-md-6 text-center">
-                        <input type="text" id="startDate" class="text-center" value="2019 - 08 - 19" readonly>
-                        <span>-</span>
-                        <input type="text" id="endDate" class="text-center" value="2019 - 12 - 19" readonly>
-                    </li>
-                    <li class="col-md-2 bg-purple"><button type="button">조회</button></li>
-                </ul>
-            </section>
-        </div>
+				<ul class="row list-inline list-unstyled">
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-one">1개월</button>
+					</li>
+					<li class="col-md-3 text-center sel">
+						<button type="button" id="btn-two" style="background:  white;">3개월</button>
+					</li>
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-three">6개월</button>
+					</li>
+					<li class="col-md-3 text-center">
+						<button type="button" id="btn-four">전체</button>
+					</li>
+				</ul>
+			</section>
+		</div>
         <div class="col-md-1"></div>
     </div>
 </div>
@@ -96,7 +179,7 @@ String pageBar = (String)request.getAttribute("pageBar");
                      for(Qna q : list) { %>
 						<tr class="row">
                             <td class="col-md-2"><%= q.getqTypeNo() %></td>
-                            <td class="col-md-6"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView?memberId=<%=memberLoggedIn.getMemberId()%>&qNo=<%=q.getqNo()%>"><%=q.getqTilte() %></a></td>
+                            <td class="col-md-6"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView?qNo=<%=q.getqNo()%>"><%=q.getqTilte() %></a></td>
                             <td class="col-md-2"><%=q.getqAns() %></td>
                             <td class="col-md-2"><%=q.getqDate() %></td>
                         </tr> 

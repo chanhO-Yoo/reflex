@@ -87,7 +87,7 @@ function orderListSearch(memberId) {
             </div>
             <!-- 회원검색 - 검색 폼 -->
             
-            <div id="search-container" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+            <div id="search-container" class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
                 
                 <form action="<%=request.getContextPath()%>/admin/member/memberFinder" class="form-inline" method="get" >
                     <!-- 회원검색 - 검색 종류 선택 -->
@@ -131,7 +131,7 @@ function orderListSearch(memberId) {
                 </div>
             </div>
             <!-- 회원검색 - 회원 검색 결과 -->
-            <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+            <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
                 <table class="table ">
                     <tr>
                         <th>회원아이디</th>

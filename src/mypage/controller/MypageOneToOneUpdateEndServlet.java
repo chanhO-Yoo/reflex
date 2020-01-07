@@ -41,6 +41,7 @@ public class MypageOneToOneUpdateEndServlet extends HttpServlet {
 																 maxPostSize,
 																 "utf-8",
 																 mvcFileRenamePolicy);
+				
 				//1.parameter handling
 				int qNo =Integer.parseInt(multiReq.getParameter("qNo"));
 				System.out.println("qNo="+qNo);
@@ -65,7 +66,7 @@ public class MypageOneToOneUpdateEndServlet extends HttpServlet {
 				//2.business logic
 				int result = new qService().updateQna(q);
 				String msg = "";
-				String loc = "/mypage/mypageOneToOne?memberId="+memberId;
+				String loc = "/mypage/mypageOneToOneUpdate?qNo="+qNo;
 				if(result>0) {
 					msg = "게시글 수정 성공!";
 				}

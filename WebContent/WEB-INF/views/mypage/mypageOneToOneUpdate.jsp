@@ -6,7 +6,7 @@
 <%
 	Qna q = (Qna)request.getAttribute("q");
 
-	System.out.println("q="+q);
+	
 %>
 
 <!-- page nav -->
@@ -35,22 +35,22 @@
 	        <!-- 문의등록 폼 -->
 	        <section>
 	            <form action="<%=request.getContextPath() %>/mypage/mypageOneToOneUpdateEnd" id="oneToOneFrm" method="post" enctype="multipart/form-data">
-	                 <input type="hidden" name="qNo" value="<%=q.getqNo() %>" />
+	                 <input type="hidden" name="qNo" value="<%=q.getqNo()%>" /> 
 	                <div class="qSort-wrapper">
 	                    <label for="q-sort">문의유형</label>
 	                    <select name="q-sort" id="q-sort">
-	                        <option value="QT01">상품문의</option>
-	                        <option value="QT02">배송문의</option>
-	                        <option value="QT03">기타문의</option>
+	                        <option value="QT01" <%="QT01".equals(q.getqTypeNo())?"selected":"type='hidden'" %>>상품문의</option>
+	                        <option value="QT02" <%="QT02".equals(q.getqTypeNo())?"selected":"type='hidden'" %>>배송문의</option>
+	                        <option value="QT03" <%="QT03".equals(q.getqTypeNo())?"selected":"type='hidden'" %>>기타문의</option>
 	                    </select>
 	                </div>
 	                <div class="qTitle-wrapper">
 	                    <label for="q-title">문의제목</label>
-	                    <input type="text" name="qTitle" id="q-title" required>
+	                    <input type="text" name="qTitle" id="q-title" value="<%=q.getqTilte() %>" required>
 	                </div>
 	                <div class="qContent-wrapper">
 	                    <label for="q-content">문의내용</label>
-	                    <textarea name="qContent" id="q-content" cols="50" rows="10" required></textarea>
+	                    <textarea name="qContent" id="q-content" cols="50" rows="10" required><%=q.getqContent() %></textarea>
 	                </div>
 	                <div class="file-wrapper">
 	                    <label for="up-file">첨부파일</label>
@@ -69,7 +69,7 @@
 	    </div>
 	    <script type="text/javascript">
  	    function exit(){
-	    	location.href="<%=request.getContextPath()%>/mypage/mypageOneToOne";	
+	    	location.href="<%=request.getContextPath()%>/mypage/mypageOneToOneView?qNo=<%=q.getqNo()%>";	
 	    }
 		function boardValidate(){
 			//제목검사

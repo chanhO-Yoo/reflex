@@ -18,7 +18,7 @@ public class AdminOrderUpdateServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+		String orderNo = request.getParameter("orderNo");
 		String orderStatus = request.getParameter("orderStatus");
 		
 		int result = new AdminService().updateOrder(orderNo, orderStatus);

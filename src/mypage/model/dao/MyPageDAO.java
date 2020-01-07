@@ -236,7 +236,7 @@ public class MyPageDAO {
 	public int selectTotalContent(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectPointOneAllPaging");
+		String query = prop.getProperty("selectTotalContent");
 		int totalContent = 0;
 		
 		try {
@@ -259,39 +259,39 @@ public class MyPageDAO {
 		return totalContent;
 	}
 
-	public MyPage selectOne(Connection conn, String memberId) {
-		MyPage m = null;
+	public int selectOne(Connection conn, String memberId) {
+		int point = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = prop.getProperty("selectOne");
-		
+		String query = prop.getProperty("selectPointOne");
+		System.out.println("dkddk @@" + query);
 		try {
 			//1.Statement객체생성
 			pstmt = conn.prepareStatement(query);//미완성 쿼리 전달
 			
 			//2.미완성 쿼리 값대입
 			pstmt.setString(1, memberId);
-			pstmt.setString(2, memberId);
+			/*pstmt.setString(2, memberId);*/
 			
 			//3.쿼리실행 => ResultSet
 			rset = pstmt.executeQuery();
 			
 			//4.ResultSet => Member
 			if(rset.next()) {
-				m = new MyPage();
+				point = rset.getInt("total");
 				
-				m.setMemberId(rset.getString("member_id"));
+				/*m.setMemberId(rset.getString("member_id"));*/
 				
 //				m.setPointChangeDate(rset.getDate("point_change_date"));;
 //				m.setPointChangeReason(rset.getString("point_change_reason"));
-				m.setPointAmount(rset.getInt("total"));
+//				m.setPointAmount(rset.getInt("total"));
 //				m.setPointStatus(rset.getString("point_status").charAt(0));
 				
 				
 				
 			}
 			
-			System.out.println("MyPage@dao.selectOne="+m);
+			System.out.println("point@dao.selectOne="+point);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -301,7 +301,7 @@ public class MyPageDAO {
 			close(pstmt);
 		}
 		
-		return m;
+		return point;
 	}
 
 	public List<MyPage> selectPointPlusList(Connection conn, String memberId, int cPage, int numPerPage) {

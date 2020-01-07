@@ -5,6 +5,7 @@ import static common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class rentDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			
-			String query = "SELECT * FROM ITEM_RENT_EACH IRE JOIN  ITEM I ON IRE.ITEM_NO = I.ITEM_NO WHERE ITEM_RENT_USER = ? AND ITEM_RENT_YN = 'N' ";
+			String query = "SELECT * FROM ITEM_RENT_EACH IRE JOIN ITEM I ON IRE.ITEM_NO = I.ITEM_NO WHERE ITEM_RENT_USER = ? AND ITEM_RENT_YN = 'N' ";
 			
 			System.out.println("DAO@@="+query);
 			System.out.println("DAO@@user="+itemrentuser);
@@ -63,6 +64,7 @@ public class rentDAO {
 					r.setItemPrice(rset.getInt("item_price"));
 					r.setItemEnrollDate(rset.getDate("item_enroll_date"));
 					r.setItemName(rset.getString("item_name"));
+					r.setCategoryNo(rset.getString("category_no"));
 					
 
 					
@@ -115,8 +117,7 @@ public class rentDAO {
 							r.setItemPrice(rset.getInt("item_price"));
 							r.setItemEnrollDate(rset.getDate("item_enroll_date"));
 							r.setItemName(rset.getString("item_name"));
-							
-
+							r.setCategoryNo(rset.getString("category_no"));
 							
 							list.add(r);
 						}
@@ -402,5 +403,50 @@ public class rentDAO {
 					
 					return list;
 				}
+				//디데이
+				public List<Integer> rentingdday(Connection conn, String itemrentuser) {
+					
+					List<Integer> list = new ArrayList<>();
+					
+					int r = 0;
+					
+					PreparedStatement pstmt = null;
+					ResultSet rset = null;
+					
+					String query = " SELECT TRUNC(ITEM_RENT_END - SYSDATE) AS DDAY FROM ITEM_RENT_EACH WHERE ITEM_RENT_USER = ? AND ITEM_RENT_YN = 'Y' ";
+					
+					System.out.println("DAO@@="+query);
+					System.out.println("DAO@@RENT="+itemrentuser);
+					try {
+						pstmt = conn.prepareStatement(query);
+						pstmt.setString(1, itemrentuser);
+				
+						
+						rset = pstmt.executeQuery();
+						
+						while(rset.next()) {
+							r = rset.getInt("DDAY");
+							
+							
+
+							
+							list.add(r);
+						}
+							System.out.println("@@@DAO44444444444"+list);
+						
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}finally {
+						close(rset);
+						close(pstmt);
+					}
+					
+					return list;
+				}
+				
+				
+				
+		
 
 	}

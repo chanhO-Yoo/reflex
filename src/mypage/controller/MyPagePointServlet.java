@@ -50,8 +50,8 @@ public class MyPagePointServlet extends HttpServlet {
 		int pageNo = pageStart;
 
 		String memberId = request.getParameter("memberId");
-		MyPage m = new MyPageService().selectOne(memberId);
-		
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"+memberId);
+	
 		List<MyPage> list = new MyPageService().selectPointList(memberId,cPage, numPerPage);
 
 		//1.이전
@@ -76,8 +76,12 @@ public class MyPagePointServlet extends HttpServlet {
 			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypagePoint?memberId="+memberId+"&cPage="+pageNo+"'>[다음]</a>\n";							
 		}	
 		
+		int point = new MyPageService().selectOne(memberId);
+		
+		System.out.println("dddddd"+memberId);
+		
 		request.setAttribute("list",list);
-		request.setAttribute("mypage",m);
+		request.setAttribute("point",point);
 		request.setAttribute("pageBar", pageBar);
 		
 		request.getRequestDispatcher("/WEB-INF/views/mypage/mypagePoint.jsp").forward(request, response);

@@ -50,8 +50,7 @@ public class MypagePointPlusServlet extends HttpServlet {
 		int pageNo = pageStart;
 
 		String memberId = request.getParameter("memberId");
-		MyPage m = new MyPageService().selectOne(memberId);
-		
+	
 		List<MyPage> list = new MyPageService().selectPointPlusList(memberId, cPage, numPerPage);
 
 
@@ -82,7 +81,7 @@ public class MypagePointPlusServlet extends HttpServlet {
 		
 
 		request.setAttribute("list", list);
-		request.setAttribute("mypage", m);
+	
 		request.setAttribute("pageBar", pageBar);
 
 		request.getRequestDispatcher("/WEB-INF/views/mypage/mypagePointPlus.jsp").forward(request, response);

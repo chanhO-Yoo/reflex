@@ -10,16 +10,20 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
+	String memberId = memberLoggedIn != null?memberLoggedIn.getMemberId():"";
 	String categoryNo = (String)request.getAttribute("categoryNo");
-	String memberid = memberLoggedIn != null?memberLoggedIn.getMemberId():"";
 	Item item = (Item)request.getAttribute("item");
 	List<ItemImage> imgList = (List<ItemImage>)request.getAttribute("imgList");
-	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList");
-	Map<Integer, ItemQnaAns> qnaMap = (Map<Integer, ItemQnaAns>)request.getAttribute("qnaMap");
-	List<Board> blist = (List<Board>)request.getAttribute("list");
-	String pageBar = (String)request.getAttribute("pageBar");
 	
-	int qnaTotalContent = (int)request.getAttribute("qnaTotalContent");
+	List<Board> blist = (List<Board>)request.getAttribute("list"); //이용후기 리스트
+	List<ItemQna> qList = (List<ItemQna>)request.getAttribute("qList"); //qna 리스트
+	Map<Integer, ItemQnaAns> qnaMap = (Map<Integer, ItemQnaAns>)request.getAttribute("qnaMap"); //qna+답변
+	
+	String reviewPageBar = (String)request.getAttribute("reviewPageBar"); //이용후기 페이지바
+	String qnaPageBar = (String)request.getAttribute("qnaPageBar"); //qna 페이지바
+	
+	int reviewTotalContent = (int)request.getAttribute("reviewTotalContent"); //이용후기 총 게시글 수
+	int qnaTotalContent = (int)request.getAttribute("qnaTotalContent"); //qna 총 게시글 수
 	
 	//가격 콤마찍기
 	int discountedPrice7 = (int)Math.ceil((item.getItemPrice()*0.98)/240*7)/100*100; //14일기준
@@ -34,10 +38,6 @@
 	String desc = item.getItemDesc();
 	String[] descArray = desc.split(",");
 	
-	//회원아이디 담아놓기
-	String memberId = "";
-	if(memberLoggedIn!=null) memberId = memberLoggedIn.getMemberId();
-	else memberId = "null";
 %>
 <script src="<%=request.getContextPath()%>/js/itemView.js"></script>
 <script>
@@ -169,8 +169,14 @@ function changeOrderNo(num){
 	let oldNo = inputOrderNo.value;
 	let newNo = (inputOrderNo.value*1)+num; //수량(정수형)
 	
-	if(newNo < 1) newNo = 1;
-	if(newNo > stockStr) newNo = stockStr;
+	if(newNo < 1) {
+		newNo = 1;
+		alert("수량은 반드시 1개 이상 선택되어야 합니다.");
+	}
+	if(newNo > stockStr) {
+		newNo = stockStr;
+		alert("수량은 상품재고보다 더 많이 선택될 수 없습니다.\n현재 상품의 수량은 ["+stockStr+"]입니다.");
+	}
 	
 	inputOrderNo.value = newNo;
 	
@@ -309,7 +315,7 @@ function changeOrderNo(num){
 	                    <button type="button" id="btn-addCart" class="center-block">장바구니</button>
 	                </div>
 	                <div class="col-md-6">
-	                    <button type="button" id="btn-goRent" class="center-block">바로렌탈</button>
+	                    <button type="button" id="btn-goRent" class="center-block color-reflex">바로렌탈</button>
 	                </div>
 	            </div>
 	            <section id="opt-desc">
@@ -333,7 +339,7 @@ function changeOrderNo(num){
 	        <ul class="list-unstyled list-inline row">
 	            <li class="col-md-3 active"><button type="button" onclick="showContent(this, 'details-img')">상품상세</button></li>
 	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-infoShip');">배송/반품</button></li>
-	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-review');">이용후기(<span class="board-cnt">10</span>)</button></li>
+	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-review');">이용후기(<span class="board-cnt"><%=reviewTotalContent %></span>)</button></li>
 	            <li class="col-md-3"><button type="button" onclick="showContent(this, 'details-qna');">상품Q&A(<span class="board-cnt"><%=qnaTotalContent %></span>)</button></li>
 	        </ul>
 	    </section>
@@ -343,7 +349,7 @@ function changeOrderNo(num){
 	            <!-- 상품상세 -->
 	            <section id="details-img" class="active">
 	                <h3 class="sr-only">상품상세이미지</h3>
-	                <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(imgList.size()-1).getItemImageDefault()%>" alt="상품정보이미지">
+	                <img src="<%=request.getContextPath()%>/images/<%=categoryNo%>/<%=imgList.get(imgList.size()-1).getItemImageRenamed()%>" alt="상품정보이미지">
 	            </section>
 	            <!-- 배송반품 -->
                 <section id="details-infoShip" class="center-block">
@@ -392,84 +398,72 @@ function changeOrderNo(num){
                 </section>
 	            <!-- 이용후기 -->
 	            <section id="details-review">
+	           		<%
+	                  if(blist!=null && !qList.isEmpty()){
+	                %>
 	                <section id="writed-review" class="list-wrapper">
-	                           <% 
-               int c=0;
-              
-               for(Board b : blist){ 
-            	   c++;
-           		
-           		
-            	   if(b.getItem_no()==item.getItemNo()){
-               %>
 	                    <h3 class="sr-only">이용후기 리스트</h3>
 	                    <ul class="list-unstyled wishlist-inner">
+				           <% 
+				               int c=0;
+				              
+				               for(Board b : blist){ 
+				            	   c++;
+				            	   if(b.getItem_no()==item.getItemNo()){
+			               %>
 	                        <li>
-	                            <section class="dtReview-header">
-	                                <div class="star pull-left">
+	                            <section class="dtReview-header row">
+	                                <div class="star col-md-2">
 										<% for(int i=0; i<b.getReview_star(); i++){ %>
 		                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-		    							<%} %>	                                </div>
-	                                <div class="review-info pull-right">
+		    							<%} %>	                                
+		    						</div>
+		    						<div class="review-content col-md-7">
+	                                    <p><%=b.getReview_content() %></p>
+	                                </div>
+	                                <div class="review-info col-md-2">
 	                                    <span class="review-writer"><%=b.getReview_writer() %></span>
 	                                    <span class="review-slash"> | </span>
 	                                    <span class="review-date"><%=b.getReview_date() %></span>
 	                                </div>
 	                            </section>
-	                            <section class="review-content">
-	                                <div>
-	                                    <p><%=b.getReview_content() %></p>
-	                                </div>
-	                                <div class="reviewImg-wrapper row">
-	                                    <img src="<%=request.getContextPath()%>/images/view-img1.jfif" class="col-md-3" alt="">
-	                                    <img src="<%=request.getContextPath()%>/images/view-img2.jfif" class="col-md-3" alt="">
-	                                    <img src="<%=request.getContextPath()%>/images/view-img3.jfif" class="col-md-3" alt="">
-	                                </div>
-	                            </section>
 	                        </li>
-	                    </ul>
-	                     
 	                   	 <% } %>
 	                    <% } %>
+	                    </ul>
 	                </section>
 	                <!-- 페이징바 -->
 	                <nav class="paging-bar text-center">
-	                    <ul class="list-unstyled list-inline">
-	                    <li>
-                    <p  aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="pageBar" >
-							<%=pageBar %>
-                        
-                        
-                        </span>
-                    </p>
-                </li>
-	                    </ul>
+	                    <ol class="list-unstyled list-inline">
+							<%=reviewPageBar %>
+	                    </ol>
 	                </nav>
+	                <%
+			        	} //end of if(글이 존재할 때)
+			        	//등록된 글 없을때
+			        	else{
+			        %>
+			        	<div id="warning-wrapper" class="content-wrapper text-center">
+							<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 이용후기가 없습니다.</p> 
+						</div>
+			        <% } %>
 	            </section>
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
 	            <!-- 상품QNA -->
 	            <section id="details-qna">
 	                <div class="btn-wrapper">
-	                <!--관리자로 로그인시 문의하기 버튼 안 뜨게 설정-->
-	                <%if(memberLoggedIn!=null && "admin".equals(memberLoggedIn.getMemberId())){ %>
-	                <%} 
-	                else{
-	                %>
-	                    <button type="button" id="btn-goQna" class="btn-radius pull-right">문의하기</button>
-	                <%} %>
+		                <!--관리자로 로그인시 문의하기 버튼 안 뜨게 설정-->
+		                <%if(memberLoggedIn!=null && "admin".equals(memberLoggedIn.getMemberId())){ %>
+		                <%} 
+		                else{
+		                %>
+		                    <button type="button" id="btn-goQna" class="btn-radius pull-right">문의하기</button>
+		                <%} %>
 	                </div>
 	                <section id="point-list" class="list-wrapper">
 	                    <h3 class="sr-only">문의내역 리스트</h3>
+	                    <%
+	                       if(qList!=null && !qList.isEmpty()){
+	                     %>
 	                    <table class="text-center list-tbl">
 	                        <thead>
 	                            <tr class="row">
@@ -481,7 +475,6 @@ function changeOrderNo(num){
 	                        </thead>
 	                        <tbody>
 	                        <%
-	                        	if(qList!=null && !qList.isEmpty()){
 	                        		for(ItemQna q: qList){
 	                        %>
 	                            <tr class="row qna-header">
@@ -545,38 +538,26 @@ function changeOrderNo(num){
 	                            </tr>
 	                        <%
 		                        	}
-		                        }
-	                        	//상품Q&A가 없을 경우
-	                        	else{
-		                    %>
-		                    		<tr><td colspan="4">상품Q&A가 존재하지 않습니다.</td></tr>
-		                    <%
-	                        	}
-		                    %>
+	                        %>
 	                        </tbody>
 	                    </table>
 	                </section> 
 	                <!-- 페이징바 -->
 	                <nav class="paging-bar text-center">
-	                    <ul class="list-unstyled list-inline">
-	                        <li>
-	                            <a href="#" aria-label="Previous">
-	                                <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-	                            </a>
-	                        </li>
-	                        <li class="cPage"><a href="#">1</a></li>
-	                        <li><a href="#">2</a></li>
-	                        <li><a href="#">3</a></li>
-	                        <li><a href="#">4</a></li>
-	                        <li><a href="#">5</a></li>
-	                        <li>
-	                            <a href="#" aria-label="Next">
-	                                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-	                            </a>
-	                        </li>
-	                    </ul>
+	                    <ol class="list-unstyled list-inline">
+	                        <%=qnaPageBar %>
+	                    </ol>
 	                </nav>
 	            </section>
+	        <%
+	        	} //end of if(글이 존재할 때)
+	        	//등록된 글이 없을때
+	        	else{
+	        %>
+	        	<div id="warning-wrapper" class="content-wrapper table-warning text-center">
+					<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>등록된 상품Q&A가 없습니다.</p> 
+				</div>
+	        <% } %>
 	        </div>
 	        <div class="col-md-1"></div>
 	    </div>
