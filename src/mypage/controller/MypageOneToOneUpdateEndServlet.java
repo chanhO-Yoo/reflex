@@ -58,7 +58,7 @@ public class MypageOneToOneUpdateEndServlet extends HttpServlet {
 										   .replaceAll(">", "&gt;")
 										   .replaceAll("\\n", "<br/>");//개행문자처리
 				String qImage
-					= multiReq.getOriginalFileName("upFile");//사용자 업로드한 파일명
+					= multiReq.getFilesystemName("upFile");//사용자 업로드한 파일명
 //				String renamedFileName
 //					= multiReq.getFilesystemName("upFile");//실제 저장된 파일명
 				Qna q = new Qna(qNo,memberId,qTypeNo,qTitle,qContent,null,null,qImage);
