@@ -8,7 +8,13 @@
 
 	String ans = (String)request.getAttribute("ans");
 %>
-
+<style>
+.viewimage{
+   display: inline-block;
+    margin-left: 112px;
+    width: 30%;
+}
+</style>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
