@@ -432,11 +432,11 @@ public int selectTotalDetailItem(int itemNo) {
 		return totalContent;
 	}
 
-	public List<Integer> OSList() {
+	public int orderstatus(String os) {
 		Connection conn = getConnection();
-		List<Integer> OSList = new AdminDAO().OSList(conn);
+		int osCnt= new AdminDAO().orderstatus(conn,os);
 		close(conn);
-		return OSList;
+		return osCnt;
 	}
 
 	public List<OrderDetail2> selectOrderSheetList(int cPage, int numPerPage) {

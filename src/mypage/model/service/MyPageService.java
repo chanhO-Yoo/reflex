@@ -83,14 +83,14 @@ public class MyPageService {
 	}
 	
 
-	public MyPage selectOne(String memberId) {
+	public int selectOne(String memberId) {
 		Connection conn = getConnection();
 		
-		MyPage m = new MyPageDAO().selectOne(conn, memberId);
+		int point = new MyPageDAO().selectOne(conn, memberId);
 		
 		close(conn);
 		
-		return m;
+		return point;
 	}
 
 	public List<MyPage> selectPointPlusList(String memberId, int cPage, int numPerPage) {

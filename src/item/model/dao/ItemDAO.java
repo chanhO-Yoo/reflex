@@ -653,7 +653,6 @@ public class ItemDAO {
 			
 			//2.쿼리 실행
 			pstmt.setInt(1, itemNo);
-			
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {

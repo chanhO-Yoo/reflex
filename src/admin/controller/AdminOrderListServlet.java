@@ -84,7 +84,12 @@ public class AdminOrderListServlet extends HttpServlet {
 		}
 
 		//주문완료인 상품수
-		List<Integer> OSList = new AdminService().OSList();
+		int[] OSArr = {0,0,0,0,0};
+		OSArr[0] = new AdminService().orderstatus("OS01");
+		OSArr[1] = new AdminService().orderstatus("OS02");
+		OSArr[2] = new AdminService().orderstatus("OS03");
+		OSArr[3] = new AdminService().orderstatus("OS04");
+		OSArr[4] = new AdminService().orderstatus("OS05");
 
 		
 		
@@ -95,7 +100,7 @@ public class AdminOrderListServlet extends HttpServlet {
 		request.setAttribute("pageBar", pageBar);
 		
 		request.setAttribute("totalContent", totalContent);
-		request.setAttribute("OSList", OSList);
+		request.setAttribute("OSArr", OSArr);
 
 		request.getRequestDispatcher("/WEB-INF/views/admin/order/adminOrderList.jsp").forward(request, response);
 	}

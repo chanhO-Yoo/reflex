@@ -113,7 +113,12 @@ public class AdminOrderListFinderServlet extends HttpServlet {
 		System.out.println("pageBar@finder=" + pageBar);
 
 		//주문완료인 상품수
-		List<Integer> OSList = new AdminService().OSList();
+		int[] OSArr = {0,0,0,0,0};
+		OSArr[0] = new AdminService().orderstatus("OS01");
+		OSArr[1] = new AdminService().orderstatus("OS02");
+		OSArr[2] = new AdminService().orderstatus("OS03");
+		OSArr[3] = new AdminService().orderstatus("OS04");
+		OSArr[4] = new AdminService().orderstatus("OS05");
 		
 		//전체 주문수
 		int totalContent = new AdminService().selectTotalOrderAll();
@@ -124,13 +129,13 @@ public class AdminOrderListFinderServlet extends HttpServlet {
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("cPage", cPage);
 		request.setAttribute("totalContent", totalContent);
-		request.setAttribute("OSList", OSList);
+		request.setAttribute("OSArr", OSArr);
 
 		System.out.println("-=-=-=-=-=-=-=-="+list);
 		System.out.println(pageBar);
 		System.out.println(cPage);
 		System.out.println(totalContent);
-		System.out.println(OSList);
+		System.out.println(OSArr);
 		
 		
 		request.getRequestDispatcher("/WEB-INF/views/admin/order/adminOrderList.jsp").forward(request, response);

@@ -34,6 +34,7 @@
 	    for(int i=0; i<orderNoList.size(); i++){
 	    	String orderNo = orderNoList.get(i); //주문번호
 	    	List<OrderDetail> odList = orderListByOrderNo.get(orderNo); //한 건의 주문안에 담겨있는 주문상품내역리스트
+	    	System.out.println("odList"+odList);
 	    	eaArr[i] = odList.get(0).getOrderTotalItemEa(); //한 건의 주문에 담겨있는 상품 수 
 	    	
 	    	for(int j=0; j<odList.size(); j++){
