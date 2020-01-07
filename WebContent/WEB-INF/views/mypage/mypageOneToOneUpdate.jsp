@@ -8,7 +8,13 @@
 
 	
 %>
-
+<style>
+.viewimage{
+   display: inline-block;
+    margin-left: 112px;
+    width: 30%;
+}
+</style>
 <!-- page nav -->
 <nav class="line-style page-nav">
     <ul class="list-unstyled list-inline">
@@ -54,7 +60,7 @@
 	                </div>
 	                <div class="file-wrapper">
 	                    <label for="up-file">첨부파일</label>
-	                    <input type="file" name="upFile" id="up-file">
+	                    <img src="<%=request.getContextPath()%>/upload/board/<%=q.getqImage() %>" alt="" class="viewimage"/>
 	                </div>
 	                
 	                <div class="memberId-wrapper">
