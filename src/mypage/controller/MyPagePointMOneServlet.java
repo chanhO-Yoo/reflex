@@ -87,11 +87,10 @@ public class MyPagePointMOneServlet extends HttpServlet {
 
 				System.out.println("mypage-memberid-servlet" + memberId);
 
-				MyPage m = new MyPageService().selectOne(memberId);
-				System.out.println("mypage-member-servlet ####" + m);
+	
 
 				request.setAttribute("list", list);
-				request.setAttribute("mypage", m);
+			
 				request.setAttribute("pageBar", pageBar);
 
 				System.out.println("mypage-point-servlet" + list);
