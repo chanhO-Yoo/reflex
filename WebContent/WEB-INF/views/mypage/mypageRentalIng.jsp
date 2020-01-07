@@ -137,7 +137,6 @@ if (list != null && list.size() > 0) {
 					<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>렌탈종료된 상품이 없습니다.</p> 
 				</div>
 <%
-					   
 					}
 %>
             </section>
