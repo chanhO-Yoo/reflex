@@ -124,6 +124,7 @@ function orderUpdate(orderNo) {
 							<input type="radio" name="searchKeyword" value="OS02" <%= "OS02".equals(searchKeyword)?"checked":"" %>/>배송준비중 &nbsp;&nbsp;
 							<input type="radio" name="searchKeyword" value="OS03" <%= "OS03".equals(searchKeyword)?"checked":"" %>/>배송중 &nbsp;&nbsp;
 							<input type="radio" name="searchKeyword" value="OS04" <%= "OS04".equals(searchKeyword)?"checked":"" %>/>배송완료 &nbsp;&nbsp;
+							<input type="radio" name="searchKeyword" value="OS05" <%= "OS05".equals(searchKeyword)?"checked":"" %>/>구매확정 &nbsp;&nbsp;
 	                        <button type="submit" class="btn btn-default">검색</button>
                         </div>
                         
@@ -163,6 +164,7 @@ function orderUpdate(orderNo) {
 				                	case "OS02": orderStatus="배송준비중";break;
 				                	case "OS03": orderStatus="배송중";break;
 				                	case "OS04": orderStatus="배송완료";break;
+				                	case "OS05": orderStatus="구매확정";break;
 				                	}
 				        %>
 				        <tr>
@@ -170,8 +172,23 @@ function orderUpdate(orderNo) {
                             <td><%=od.getMemberId() %></td>
                             <td><%=od.getOrderTotalItemEa() %></td>
                             <td><%=od.getOrderTotalPrice() %></td>
+                            <%
+                            	if("OS05".equals(od.getOrderStatusNo())){
+                            %>
                             <td style="width: 120px;">
-	                            <select class="form-control" id="orderStatus-<%=od.getOrderNo() %>">
+  		                        <select class="form-control input-sm" disabled style="margin-top: -3px;margin-bottom: -3px;">
+                            		<option value="OS05" selected >구매확정</option>	
+                            	</select>
+                            </td>
+                            <td>
+                            	<button type="button" class="btn btn-xs btn-primary updateBtn" disabled="disabled" >변경</button>
+                            </td>
+                            <%
+                            	}
+                            	else{
+                            %>
+                            <td style="width: 120px;">
+	                            <select class="form-control input-sm" id="orderStatus-<%=od.getOrderNo() %>" style="margin-top: -3px;margin-bottom: -3px;">
 		                            <option value="OS01" <%="주문완료".equals(orderStatus)?"selected":""%>>주문완료</option>
 		                            <option value="OS02" <%="배송준비중".equals(orderStatus)?"selected":""%>>배송준비중</option>
 		                            <option value="OS03" <%="배송중".equals(orderStatus)?"selected":""%>>배송중</option>
@@ -181,6 +198,9 @@ function orderUpdate(orderNo) {
                             <td>
                             	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="orderUpdate('<%=od.getOrderNo() %>')" value="<%=od.getOrderNo() %>">변경</button>
                             </td>
+                            <%
+                            	}
+                            %>
                         </tr>
                         <%		} 
 				            }
