@@ -296,7 +296,7 @@ function checkByPeriod(btn, val){
             <section id="parcel" class="my-header">
                 <h3 class="sr-only">주문상태 보기</h3>
                 <ul class="row list-unstyled list-inline">
-                    <li class="col-md-3 text-center">배송준비 <span class="em-blue"><%=os02 %></span></li>
+                    <li class="col-md-3 text-center">배송준비중 <span class="em-blue"><%=os02 %></span></li>
                     <li class="col-md-3 text-center">배송중 <span class="em-blue"><%=os03 %></span></li>
                     <li class="col-md-3 text-center">배송완료 <span class="em-blue"><%=os04 %></span></li>
                     <li class="col-md-3 text-center">취소/반품/교환 <span class="em-blue"><%=ocNum %></span></li>

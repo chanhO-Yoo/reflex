@@ -123,7 +123,8 @@
 #writable-review .wishlist-inner>li>div, #writed-review .wishlist-inner>li>div{border-left: 0;}
 #writable-review .wishlist-inner>li>div:last-of-type{padding-left: 50px;}
 /* #writable-review ul>li:last-of-type{padding-left: 30px;} */
-#writable-review .item-img img{width: 30%;}
+#writable-review .item-img a{height: 100%;}
+#writable-review .item-img img{width: 40%; margin-top: 10px;}
 #writable-review .btn-radius.btn-qna{margin-top: 45px;}
 #writable-review .item-info{padding-top: 20px;}
 .ship-date{margin-top: 30px; color: gray; font-size: 14px;}
@@ -135,7 +136,10 @@
 .reviewBtn-wrapper{padding: 6px 0 0 40px;}
 .reviewBtn-wrapper li:first-of-type{margin-right: 8px;}
 .review-content{padding: 20px 100px;}
-
+.review-content .star{padding: 0; margin-left: 50px;}
+.review-content .star img{width: 30%; margin-right: 20px;}
+.review-content .star p{display: inline-block;}
+#writable-review #warning-wrapper.content-wrapper{border: 0;}
 
 
 /* 1:1문의글 등록: my_oneToOne_form */

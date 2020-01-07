@@ -10,6 +10,7 @@
 
 <%
 	List<Board> list = (List<Board>)request.getAttribute("list");
+	System.out.println("list="+list);
 	List<OrderDetail3> list2= (List<OrderDetail3>)request.getAttribute("list2");
 	String pageBar = (String)request.getAttribute("pageBar");
 	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
@@ -85,15 +86,18 @@ function showContent(btn, sectionId){
             <!-- 작성가능한 이용후기 -->
             <section id="writable-review" class="list-wrapper active">
                 <h3 class="sr-only">이용후기 작성가능한 상품 리스트</h3>
+                <% if(list2!=null && !list2.isEmpty()) { %>
                 <ul class="list-unstyled wishlist-inner">
-                <%
-                 for(int i=0; i<list2.size(); i++){ 
-                	 OrderDetail3 o = list2.get(i);   	 
-                	 List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
-                %>
+	                <%
+	                 for(int i=0; i<list2.size(); i++){ 
+	                	 OrderDetail3 o = list2.get(i);   	 
+	                	 List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+	                %>
                     <li class="row">
                         <div class="item-img col-md-3 text-center">
-                            <a href=""><img src="<%=request.getContextPath()%>/images/<%=o.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="상품이미지"></a>
+                            <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=o.getCategoryNo()%>&itemNo=<%=o.getItemNo()%>">
+                            	<img src="<%=request.getContextPath()%>/images/<%=o.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="상품이미지">
+                            </a>
                         </div>
                         <div class="wish-info item-info col-md-6">
                             <a href="">
@@ -106,8 +110,19 @@ function showContent(btn, sectionId){
                             <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm?itemNo=<%=o.getItemNo()%>&orderDetailNo=<%=o.getOrderDetailNo()%>" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>       
-                <%} %>
+                	<%} %>
                 </ul>
+                <!-- 페이징바 -->
+	            <nav class="paging-bar text-center">
+	                <ol class="list-unstyled list-inline">
+						<%=pageBar %>
+	                </ol>
+	            </nav>
+                <%} else{%>
+                	<div id="warning-wrapper" class="content-wrapper text-center">
+						<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>작성가능한 이용후기가 없습니다</p> 
+					</div>
+                <%} %>
             </section>
             
             
@@ -115,6 +130,7 @@ function showContent(btn, sectionId){
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">
                 <h3 class="sr-only">작성한 이용후기 리스트</h3>
+                <% if(list!=null && !list.isEmpty()) { %>
                 <ul class="list-unstyled wishlist-inner">
                <% 
                int c=0;
@@ -153,37 +169,34 @@ function showContent(btn, sectionId){
 
 						<!-- 별 자리랑 구매후기내용 -->
                         <section class="review-content">
-                        	<div class="item-img col-md-5 offset ">
+                        	<%-- <div class="item-img col-md-5 offset ">
                         	 <img src="<%=request.getContextPath()%>/upload/board/<%=b.getReview_image_rename() %>" alt="">
-                        	</div>
-                        
-                           
+                        	</div> --%>
                             
                             <div class="star col-md-5 ">
+                            	<img src="<%=request.getContextPath()%>/upload/board/<%=b.getReview_image_rename() %>" alt="">
                                 <p>구매후기:<%=b.getReview_content()%></p>
                             </div>
                         </section>
                     </li>
-                		<% } %>
-                <% } %>
+                <% 
+                		}
+               		}
+                %>
                 </ul>
+                <!-- 페이징바 -->
+            	<nav class="paging-bar text-center">
+	                <ol class="list-unstyled list-inline">
+						<%=pageBar %>
+	                </ol>
+	            </nav>
+	            <%} else{%>
+                	<div id="warning-wrapper" class="content-wrapper text-center">
+						<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>작성가능한 이용후기가 없습니다</p> 
+					</div>
+                <%} %>
             </section>
        
-            <!-- 페이징바 -->
-            <nav class="paging-bar text-center">
-                <ul class="list-unstyled list-inline">
-                <li>
-                    <p  aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="pageBar" >
-							<%=pageBar %>
-                        
-                        </span>
-                    </p>
-                </li>
-          
-                </ul>
-            </nav>
-            	
         </div>
            
         <div class="col-md-1"></div>

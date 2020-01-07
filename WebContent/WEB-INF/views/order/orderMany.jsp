@@ -124,6 +124,61 @@ document.addEventListener('DOMContentLoaded', function(){
 			}); //end of ajax
 		} //end of card click
 		
+		//계좌이체 요청
+		if($radioChk==="trans"){
+			IMP.request_pay({
+				pg : 'inicis', 
+				pay_method : 'trans',
+				merchant_uid : 'reflex' + new Date().getTime(),
+				name : '<%=cartList.get(0).getItem().getItemName()%> 외...',
+				amount : userTotalPrice,
+				buyer_email : '<%=m.getMemberEmail()%>',
+				buyer_name : '<%=m.getMemberName()%>',
+				buyer_tel : '<%=tel%>',
+				buyer_addr : '<%=m.getMemberAddress()%>',
+				buyer_postcode : '<%=m.getMemberPostcode()%>'
+			}, function(rsp) {
+				//결제 성공 시
+				if ( rsp.success ) {
+					$.ajax({
+						url: "<%=request.getContextPath()%>/order/manyPaymentsComplete",
+						type: "post",
+						data: {
+							merchant_uid: rsp.merchant_uid,
+							imp_uid: rsp.imp_uid,
+							memberId: "<%=m.getMemberId()%>",
+							payMethod: "card",
+							totalItemEa: <%=cartList.size()%>,
+							totalPrice: userTotalPrice,
+							usePoint: userPoint,
+							itemNo: itemNoArr.join(","),
+							rentType: rentOptArr.join(","),
+							ea: quantityArr.join(",")
+						},
+						dataType: "json"
+					}).done(function(data){
+						var msg = '결제가 완료되었습니다.\n';
+						msg += '고유ID : ' + rsp.imp_uid+"\n";
+						msg += '상점 거래ID : ' + rsp.merchant_uid+"\n";
+						msg += '결제 금액 : ' + rsp.paid_amount+"\n";
+						msg += '카드 승인번호 : ' + rsp.apply_num+"\n";
+						alert(msg);
+					});
+					//성공 시 이동
+					location.href="<%=request.getContextPath()%>/order/orderSuccess?orderNo="+rsp.merchant_uid;
+				} 
+				//결제 실패 시
+				else {
+					var msg = '결제에 실패하였습니다.\n';
+					msg += '에러내용 : ' + rsp.error_msg;
+					alert(msg);
+					
+					//실패 시 이동
+					location.href="<%=request.getContextPath()%>/order/orderFail";
+				}
+			});
+		} //end of trans
+		
 	}); //end of btnGoPay click
 	
 	plusShipPrice(); //배송비td 추가하기
@@ -382,7 +437,7 @@ function plusShipPrice(){
                 <label for="payType">실시간 계좌이체</label>
             </div>
             <div id="goPay-wrapper" class="col-md-4">
-                <button type="button" id="btn-goPay" class="bg-purple">주문하기</button>
+                <button type="button" id="btn-goPay" class="color-reflex">주문하기</button>
             </div>
         </div>
         <div class="col-md-1"></div>

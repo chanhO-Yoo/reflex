@@ -196,7 +196,7 @@ footer, footer header{background: #aaaaac;}
     font-size: 15px;
 }
 .rcmd-cate-header .cate-plus{position: absolute; top: 17px; right: 15px;}
-.item-list{height: 525px;}
+.item-list{height: 460px;}
 .item-list>div{position: relative; height: 100%; padding: 0; border-left: 1px solid;}
 .item-list>div:first-of-type{border:0;}
 .item-list a{padding: 50px 0 150px;}
