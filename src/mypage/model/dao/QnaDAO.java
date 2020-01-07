@@ -177,7 +177,7 @@ public class QnaDAO {
 		return result;
 	}
 
-	public int deleteQna(Connection conn, String qTypeNo) {
+	public int deleteQna(Connection conn, int qNo) {
 		
 		PreparedStatement pstmt = null;
 		int result=0;
@@ -185,7 +185,7 @@ public class QnaDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, qTypeNo);
+			pstmt.setInt(1, qNo);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -206,13 +206,13 @@ public class QnaDAO {
 			pstmt = conn.prepareStatement(query);
 			
 //			pstmt.setString(2, q.getMemberId());
-//			pstmt.setString(3, q.getqTypeNo());
-			pstmt.setString(1, q.getqTilte());
-			pstmt.setString(2, q.getqContent());
+			pstmt.setString(1, q.getqTypeNo());
+			pstmt.setString(2, q.getqTilte());
+			pstmt.setString(3, q.getqContent());
 //			pstmt.setDate(6, q.getqDate());
 //			pstmt.setString(7, q.getqAns());
-			pstmt.setString(3, q.getqImage());
-			pstmt.setInt(4, q.getqNo());
+			pstmt.setString(4, q.getqImage());
+			pstmt.setInt(5, q.getqNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -277,10 +277,180 @@ public class QnaDAO {
 		}
 		return qna;
 	}
-	
-	
-	
-	
 
+	public int selectTotalContent(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectPointOneAllPaging");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalContent = rset.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContent;
+	}
+
+	public List<Qna> selectOneToOneAll(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<Qna> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = prop.getProperty("selectOneToOneSixByPaging");
+        try{
+            //미완성쿼리문을 가지고 객체생성.
+            pstmt = conn.prepareStatement(query);
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            while(rset.next()){
+            	Qna qna = new Qna();
+                //컬럼명은 대소문자 구분이 없다.
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+                list.add(qna);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        return list;
+	}
+	
+	public List<Qna> selectOneToOneOne(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<Qna> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = prop.getProperty("selectOneToOneOneByPaging");
+        try{
+            //미완성쿼리문을 가지고 객체생성.
+            pstmt = conn.prepareStatement(query);
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            while(rset.next()){
+            	Qna qna = new Qna();
+                //컬럼명은 대소문자 구분이 없다.
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+                list.add(qna);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        return list;
+	}
+	
+	public List<Qna> selectOneToOneThree(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<Qna> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = prop.getProperty("selectOneToOneThreeByPaging");
+        try{
+            //미완성쿼리문을 가지고 객체생성.
+            pstmt = conn.prepareStatement(query);
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            while(rset.next()){
+            	Qna qna = new Qna();
+                //컬럼명은 대소문자 구분이 없다.
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+                list.add(qna);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        return list;
+	}
+	
+	public List<Qna> selectOneToOneSix(Connection conn, String memberId, int cPage, int numPerPage) {
+		List<Qna> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = prop.getProperty("selectOneToOneSixByPaging");
+        try{
+            //미완성쿼리문을 가지고 객체생성.
+            pstmt = conn.prepareStatement(query);
+            //(공식1)시작rownum, 끝rownum
+        	pstmt.setString(1, memberId);
+            pstmt.setInt(2, (cPage-1)*numPerPage+1);
+            pstmt.setInt(3, cPage*numPerPage);
+            //쿼리문실행
+            //완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+            rset = pstmt.executeQuery();
+            while(rset.next()){
+            	Qna qna = new Qna();
+                //컬럼명은 대소문자 구분이 없다.
+				qna.setqNo(rset.getInt("p_qna_no"));
+				qna.setMemberId(rset.getString("member_id"));
+				qna.setqTypeNo(rset.getString("p_qna_type_no"));
+				qna.setqTilte(rset.getString("p_qna_title"));
+				qna.setqContent(rset.getString("p_qna_content"));
+				qna.setqDate(rset.getDate("p_qna_date"));
+				qna.setqAns(rset.getString("p_ans_yn"));
+				qna.setqImage(rset.getString("p_qna_image"));
+                list.add(qna);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(rset);
+            close(pstmt);
+        }
+        return list;
+	}
 
 }
+	
+	
+	
+	
+
+
+

@@ -58,12 +58,15 @@ public class MypageOneToOneFormEndServlet extends HttpServlet {
 		System.out.println("qTitle="+qTitle);
 		System.out.println("qContent="+qContent);
 		System.out.println("memberId="+memberId);
+		
+		
 		//XSS공격대비 &문자변환
 		qContent = qContent.replaceAll("<", "&lt;")
 								   .replaceAll(">", "&gt;")
 								   .replaceAll("\\n", "<br/>");//개행문자처리
 		String qImage
-			= multiReq.getOriginalFileName("upFile");//사용자 업로드한 파일명
+			= multiReq.getFilesystemName("upFile");//사용자 업로드한 파일명
+		System.out.println("@@@@@@이미지이름:"+qImage);
 //		String renamedFileName
 //			= multiReq.getFilesystemName("upFile");//실제 저장된 파일명
 		Qna q = new Qna(0,memberId,qTypeNo,qTitle,qContent,null,null,qImage);

@@ -34,7 +34,7 @@ public class MypageOneToOneViewServlet extends HttpServlet {
 		//1.파라미터핸들링
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
-		int qNo = Integer.parseInt(request.getParameter("qNo"));
+				int qNo = Integer.parseInt(request.getParameter("qNo"));
 				
 				System.out.println("@@@@@@@@qno="+qNo);
 				

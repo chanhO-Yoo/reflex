@@ -50,9 +50,9 @@ public class qService {
 		return q;
 	}
 
-	 public int deleteQna(String qTypeNo) {
+	 public int deleteQna(int qNo) {
 		Connection conn = getConnection();
-		int result = new QnaDAO().deleteQna(conn, qTypeNo);
+		int result = new QnaDAO().deleteQna(conn, qNo);
 		if(result>0)
 			commit(conn);
 		else
@@ -85,6 +85,43 @@ public class qService {
 		close(conn);
 		return q;
 	}
+
+	public int selectTotalContent() {
+		Connection conn = getConnection();
+		int totalContent = new QnaDAO().selectTotalContent(conn);
+		close(conn);
+		return totalContent;
+	}
+
+
+	public List<Qna> selectOneToOneAll(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Qna> list = new QnaDAO().selectOneToOneAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<Qna> selectOneToOneOne(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Qna> list = new QnaDAO().selectOneToOneAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<Qna> selectOneToOneThree(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Qna> list = new QnaDAO().selectOneToOneAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<Qna> selectOneToOneSix(String memberId, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Qna> list = new QnaDAO().selectOneToOneAll(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
 
 
 }

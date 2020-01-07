@@ -9,7 +9,7 @@
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
-            <a href="<%=request.getContextPath()%>/common/boxMenu?level1=mypage">마이페이지</a>
+            <a href="">마이페이지</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
         <li class="go-boxmenu">
@@ -30,7 +30,7 @@
 	                <div class="qSort-wrapper">
 	                    <label for="q-sort">문의유형</label>
 	                    <select name="q-sort" id="q-sort">
-	                        <option value="QT01">상품문의</option>
+	                        <option value="QT01" selected>상품문의</option>
 	                        <option value="QT02">배송문의</option>
 	                        <option value="QT03">기타문의</option>
 	                    </select>
