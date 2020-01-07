@@ -11,6 +11,8 @@
 <%
 	List<rent>	list= (List<rent>)request.getAttribute("list");
 	int cntfin = (int)request.getAttribute("cntfin");
+	/* List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap"); */
 
 
 	//위시리스트 ajax - 회원아이디 담아놓기
@@ -210,25 +212,29 @@ $(function(){
                      <tbody>
                      
 <%
-				//for (int i =0; list.size() > i; i++) {
-				for(rent b :list){
+				for (int i =0; list.size() > i; i++) {
+					//렌탈기간
+					int rentPeriod = 0;
+					if("RT01".equals(list.get(i).getRentOptNo())) rentPeriod = 7;
+					else if("RT02".equals(list.get(i).getRentOptNo())) rentPeriod = 14;
+					else rentPeriod = 30;
 %>
 
 
                        <tr>
                             <td>
-                                <p><%= b.getItemNo() %></p>
-                                <p><%= b.getItemRentStart() %></p>
+                                <p><%= list.get(i).getItemNo() %></p>
+                                <p><%= list.get(i).getItemRentStart() %></p>
                             </td>
                             <td class="item-info">
                                 <a href=""><img src="<%=request.getContextPath()%>/images/item.png" class="pull-left" alt=""></a>
-                                <p class="text-left pbrand"><%=b.getItemBrand() %></p>
-                                <p class="text-left pname"><%=b.getItemName() %></p>
-                                <p class="text-left price"><%=b.getItemPrice() %> <span class="rent-period"> 3개월</p>
+                                <p class="text-left pbrand"><%=list.get(i).getItemBrand() %></p>
+                                <p class="text-left pname"><%=list.get(i).getItemName() %></p>
+                                <p class="text-left price"><%=list.get(i).getItemPrice() %> <span class="rent-period"> 3개월</p>
                                 <p class="pull-left rent-type">월청구</p>
                             </td>
                             <td class="rent-period">
-                                <p class="finished"><%=b.getItemRentStart() +"~" + b.getItemRentEnd()%></p>
+                                <p class="finished"><%=list.get(i).getItemRentStart() +"~" + list.get(i).getItemRentEnd()%></p>
                             </td>
                          <td class="em-purple">
                                 <p>계약종료</p>
@@ -252,6 +258,26 @@ $(function(){
 
                 </div>
             </section>
+            <!-- 페이징바 -->
+             <nav class="paging-bar text-center">
+                <ul class="list-unstyled list-inline">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li class="cPage"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                    </a>
+                </li>
+                </ul>
+            </nav> 
         </div>
         <div class="col-md-1"></div>
 	</div>

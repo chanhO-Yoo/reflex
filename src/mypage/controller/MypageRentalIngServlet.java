@@ -1,6 +1,7 @@
 package mypage.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +33,11 @@ public class MypageRentalIngServlet extends HttpServlet {
 	request.setCharacterEncoding("utf-8");
 		
 		String itemrentuser = request.getParameter("memberId");
+		Date itemrentend = setTimestamp(request.getParameter("item_rent_end"));
 		
 		List<rent> list = new rentService().rentingviewList(itemrentuser);
 		int cnt = new rentService().rentingcnt(itemrentuser);
+		List<Integer> dday = new rentService().rentingdday(itemrentuser);
 		
 		//상품이미지 가져오기
 		List<Integer> itemNoList = new ArrayList<>(); //상품번호 담을 리스트
@@ -53,6 +56,7 @@ public class MypageRentalIngServlet extends HttpServlet {
 		//4.뷰단 포워딩		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageRentalIng.jsp");
 		request.setAttribute("list",list);
+		request.setAttribute("dday",dday);
 		request.setAttribute("cnt", cnt);	
 		request.setAttribute("itemNoList", itemNoList);	
 		request.setAttribute("imgMap", imgMap);	
@@ -60,6 +64,11 @@ public class MypageRentalIngServlet extends HttpServlet {
 		
 	}
 	 
+	private Date setTimestamp(String parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

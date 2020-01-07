@@ -13,6 +13,7 @@
 	int cnt = (int)request.getAttribute("cnt");
 	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
 	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
+	List<Integer> dday = (List<Integer>)request.getAttribute("dday");
 
 	//위시리스트 ajax - 회원아이디 담아놓기
 	String memberId = "";
@@ -86,11 +87,27 @@
 <%
 					for (int i =0; list.size() > i; i++) {
 						List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
+						
+//리스트에 담기
+if (list != null && list.size() > 0) {
+	for (int i =0; list.size() > i; i++) {
+
+	
+	//렌탈기간
+	int rentPeriod = 0;
+	if("RT01".equals(list.get(i).getRentOptNo())) rentPeriod = 7;
+	else if("RT02".equals(list.get(i).getRentOptNo())) rentPeriod = 14;
+	else rentPeriod = 30;
+	
+	/* //가격 , 붙이기
+	DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+	String pbyRentOptNo = dc.format(cart.getPriceByRentOptNo()); //1개가격
+	String pEa = dc.format(cart.getPriceByRentOptNo()*cart.getItemQuantity()); // *수량 */
 %>
                         <tr>
                             <td>
                                 <p><%= list.get(i).getItemNo() %> </p>
-                                <p><%= list.get(i).getItemRentStart() %></p>
+                                <p><%= "["+list.get(i).getItemRentStart() +"]" %></p>
                             </td>
                             <td class="item-info">
                                 <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=list.get(i).getCategoryNo()%>&itemNo=<%=list.get(i).getItemNo()%>">
@@ -98,45 +115,12 @@
                                 </a>
                                 <p class="text-left pbrand"><%= list.get(i).getItemBrand() %></p>
                                 <p class="text-left pname"><%= list.get(i).getItemName() %></p>
-                                <p class="text-left price"><%= list.get(i).getItemPrice() %><span class="rent-period"> 3개월</p>
-                                <p class="pull-left rent-type">월청구</p>
+                                <p class="text-left price"><%= list.get(i).getItemPrice() %><span class="rent-period"> / <%=rentPeriod %> 일 </p>
+                              <p class="pull-left rent-type">일시납</p> 
                             </td>
                             <td class="rent-period">
                                 <p><%=list.get(i).getItemRentStart() +"~" + list.get(i).getItemRentEnd()%></p>
-                                <p class="em-blue" id="dday"></p>
-
-<script>
-// Set the date we're counting down to
-var end = new Date(<%=list.get(i).getItemRentEnd()%>).getTime();
-
-console.log(end); 
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-console.log(x);
-                                  // Get today's date and time
-var start = new Date(<%=list.get(i).getItemRentStart()%>).getTime();
-
-console.log(start);
-// Find the distance between now and the count down date
-var distance = (end - start);
-
-console.log(distance);
-// Time calculations for days, hours, minutes and seconds
-var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-console.log(days);
-// Output the result in an element with id="dday"
-document.getElementById("dday").innerHTML = days + "일";
-
-//If the count down is over, write some text 
-
-if (distance < 0) {
-/*   clearInterval(x); */
-  document.getElementById("dday").innerHTML = "EXPIRED";
-}
-}, 1000);
-</script>
+                                <p class="em-blue" id="dday"> 종료일까지 :  <%=dday.get(i) %> 일 </p>
                             </td>
                             <td class="em-purple">
                                 <p>계약중</p>

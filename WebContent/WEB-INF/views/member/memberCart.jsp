@@ -33,9 +33,12 @@
 %>
 <script src="<%=request.getContextPath()%>/js/memberCart.js"></script>
 <script>
+
+
 document.addEventListener('DOMContentLoaded', function(){
 	plusShipPrice(); //배송비 td 추가하기
 	showTotalPrice(); //전체상품 가격보기
+	chkAll(); //체크박스 전체선택
 	
 	//선택주문 버튼 클릭한 경우
 	$("#btn-orderChk").click(function(){
@@ -101,6 +104,18 @@ function showTotalPrice(){
 	
 	totalPrice.innerText = sum.toLocaleString()+"원"; //결제예상금액 변경
 }
+
+function chkAll(){
+	let btnChkAll = document.querySelector(".btn-chkAll");
+	let chkboxArr = document.querySelectorAll(".item-chk>input");
+	
+	//전체선택 버튼 클릭
+	btnChkAll.addEventListener("click", function(){
+		chkboxArr.forEach(function(obj, idx){
+			obj.checked = true;
+		});	
+	});
+}
 </script>
 <!-- page nav -->
 <nav class="line-style page-nav">
@@ -164,6 +179,7 @@ function showTotalPrice(){
 							String pbyRentOptNo = dc.format(cart.getPriceByRentOptNo()); //1개가격
 							String pEa = dc.format(cart.getPriceByRentOptNo()*cart.getItemQuantity()); // *수량
 					%>
+					
 	                    <tr class ="cartRow">
 	                        <td class="item-chk">
 	                            <input type="checkbox" name="delCartlist" id="<%=item.getItemNo() %>" value="<%=cart.getPriceByRentOptNo() * cart.getItemQuantity() %>"/>
@@ -203,7 +219,7 @@ function showTotalPrice(){
 	            <p>선택상품을</p>
 	            <button type="button" class="btn-radius btn-chkDel">삭제하기</button>
 	            <div class="btnChkAll-wrapper pull-right">
-	                <button type="button" class="btn-radius btn-chkAll">전체선택</button>
+	                <button type="button" class="btn-radius btn-chkAll" >전체선택</button>
 	                <button type="button" class="btn-radius btn-chkAllDel">전체삭제</button>
 					<form action="<%=request.getContextPath()%>/member/memberCartDeleteAll" id="delAllFrm" method="post">
 	                	<input type="hidden" name="memberId" value="<%=memberId%>" class="input-cartNo"/>
@@ -214,7 +230,7 @@ function showTotalPrice(){
             <section id="cartPrice-wrapper" class="row">
                 <h3 class="sr-only">장바구니 선택/전체상품 가격보기</h3>
                 <div class="col-md-3">
-                    <p>선택한 상품 <span class="strong em-blue"><%=cartList.size() %></span>개의</p>
+                    <p>장바구니 상품 <span class="strong em-blue"><%=cartList.size() %></span>개의</p>
                 </div>
                 <div class="col-md-9">
                     <ul class="list-unstyled list-inline row">
