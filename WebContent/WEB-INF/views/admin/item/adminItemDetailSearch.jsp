@@ -36,7 +36,7 @@
                 <div class="row height-45"></div>
 
                 <!-- 상품검색 - 상품 판매 개요 -->
-                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
+                <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2">
                     <table class="table ">
                         <tr>
                             <th>전체 상품 수</th>
@@ -63,7 +63,7 @@
 
                 <!-- 상품검색 - 서브제목 -->
                 <div class="row">
-                    <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-1 ">
+                    <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 ">
                         <table class="table ">
                         <tr>
                         	<th>상품번호</th>
@@ -96,7 +96,7 @@
                 </div>
 
                 <!-- 상품검색 - 상품 검색 결과 -->
-                <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
+                <div class="col-md-8 col-sm-8 col-xs-8 col-md-offset-2">
                     <table class="table ">
                         <tr>
                             <th>상품개별번호</th>
@@ -146,7 +146,7 @@
                     </table>
                 </div>
 
-				<div id="pageBar" class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3 text-center">
+				<div id="pageBar" class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2 text-center">
 					<ul class="pagination">
 						<%= pageBar %>
 					</ul>
