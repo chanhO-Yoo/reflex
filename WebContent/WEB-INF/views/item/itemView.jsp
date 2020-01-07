@@ -399,7 +399,7 @@ function changeOrderNo(num){
 	            <!-- 이용후기 -->
 	            <section id="details-review">
 	           		<%
-	                  if(blist!=null && !qList.isEmpty()){
+	                  if(blist!=null && !blist.isEmpty()){
 	                %>
 	                <section id="writed-review" class="list-wrapper">
 	                    <h3 class="sr-only">이용후기 리스트</h3>
