@@ -175,9 +175,7 @@ input[type=file]{display: inline; overflow: hidden;}
 .memberId-wrapper label{margin-right: 22px;}
 #oneToOneFrm .memberId-wrapper input[type=text]{width: 25%; padding: 0; border: 0;}
 #oneToOneFrm .btnForm-wrapper{padding-bottom: 0;}
-.btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px; 
-/* font-size: 13px; */
-}
+.btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px;}
 
 /*1:1 문의 등록 관리자-답변 */
 label{margin-right: 60px;}
