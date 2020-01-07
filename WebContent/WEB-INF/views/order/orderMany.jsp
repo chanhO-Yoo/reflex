@@ -270,13 +270,13 @@ function plusShipPrice(){
         <div class="col-md-1"></div>
         <div class="col-md-10 content-wrapper">
             <!-- 배송지정보 -->
-            <section class="form-wrapper">
+            <section id="order-section" class="form-wrapper">
                 <form action="" id="orderFrm">
-                    <div>
-                        <label for="ordererName">수령인</label>
+                    <div class="row">
+                        <label for="ordererName" class="col-md-3">수령인</label>
                         <input type="text" name="ordererName" id="ordererName" value="<%=m.getMemberName()%>" readonly>
                     </div>
-                    <div>
+                    <div class="row">
                         <label for="tel1">연락처</label>
                         <select name="tel1" id="tel1">
                             <option value="010" selected>010</option>
@@ -289,14 +289,14 @@ function plusShipPrice(){
                         </select>
                         <input type="text" name="tel2" id="tel2" class="phone" value="<%=m.getMemberPhone().substring(3)%>" readonly>
                     </div>
-                    <div>
+                    <div class="row">
                         <label for="postcode">주소</label>
                         <input type="text" id="postcode" placeholder="우편번호" value="<%=m.getMemberPostcode()%>" readonly>
                         <input type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()" value="우편번호 찾기"><br>
                         <input type="text" id="address" placeholder="주소" value="<%=m.getMemberAddress()%>" readonly><br>
                         <input type="text" id="detailAddress" placeholder="상세주소" value="<%=m.getMemberDetailAddress()%>" readonly>
                     </div>
-                    <div>
+                    <div class="row">
                         <label for="msg">배송메세지</label>
                         <select name="msg" id="msg">
                             <option value="배송 전에 미리 연락바랍니다.">배송 전에 미리 연락바랍니다.</option>
