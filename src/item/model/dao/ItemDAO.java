@@ -694,6 +694,38 @@ public class ItemDAO {
 		return list;
 	}
 	
+	public List<ItemImage> selectItemMainImageList(Connection conn, Integer itemNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectItemMainImageList");
+		List<ItemImage> list = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, itemNo);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<>();
+			while(rset.next()) {
+				ItemImage img = new ItemImage();
+				img.setItemImageNo(rset.getInt("item_image_no"));
+				img.setItemNo(itemNo);
+				img.setItemImageTypeNo(rset.getString("item_image_type_no"));
+				img.setItemImageDefault(rset.getString("item_image_default"));
+				img.setItemImageRenamed(rset.getString("item_image_renamed"));
+				list.add(img);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new ItemException("상품이미지조회 실패!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 	//===================================================
 	//========================헤더 검색 끝=================
 	//===================================================
@@ -725,4 +757,6 @@ public class ItemDAO {
 		
 		return usablePoint;
 	}
+
+	
 }

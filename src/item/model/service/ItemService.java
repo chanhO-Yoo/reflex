@@ -208,6 +208,13 @@ public class ItemService {
 		close(conn);
 		return list;
 	}
+
+	public List<ItemImage> selectItemMainImageList(Integer itemNo) {
+		Connection conn = getConnection();
+		List<ItemImage> list = new ItemDAO().selectItemMainImageList(conn, itemNo);
+		close(conn);
+		return list;
+	}
 	
 	//========================헤더 검색 끝=================
 }

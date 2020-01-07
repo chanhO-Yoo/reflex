@@ -17,7 +17,7 @@
 document.addEventListener('DOMContentLoaded', function(){
 	let selectFilter = document.querySelector("#filterType");
 	
-	//정렬
+	<%-- //정렬
 	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function(){
 				console.log("ajax처리실패!!!", x, s, e);
 			} 
 		});
-	});
- 	<%-- selectFilter.addEventListener('change', function(){
+	}); --%>
+ 	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
 		console.log(optionVal);
 		$.ajax({
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				console.log("ajax처리실패!!!", x, s, e);
 			} 
 		});
-	}); --%>
+	});
 });
 </script>
 <!-- page nav -->

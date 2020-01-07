@@ -62,8 +62,8 @@ public class IndexItemFilter implements Filter {
 			}
 		}
 		else {
-			hobbyArr[0] = "반려동물";
-			hobbyArr[1] = "운동";
+			hobbyArr[0] = "여행";
+			hobbyArr[1] = "파티";
 		}
 		System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
 		for(String str : hobbyArr) {
@@ -94,8 +94,8 @@ public class IndexItemFilter implements Filter {
 				}
 				for(int i=0; i<itemNoList.size(); i++) {
 					//상품이미지 담기
-					imgList = new ItemService().selectItemImageList(itemNoList.get(i));
-					imgListList.add(imgList.get(1));
+					imgList = new ItemService().selectItemMainImageList(itemNoList.get(i));
+					imgListList.add(imgList.get(0));
 				}
 				//초기화
 				itemList2 = new ArrayList<>();
