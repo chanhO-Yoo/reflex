@@ -90,12 +90,9 @@ public class MemberLoginEndServlet extends HttpServlet {
 							response.addCookie(c);
 						}
 						
-						//로그인후 페이지 리다이렉트
-						String referer = request.getHeader("Referer");
-						System.out.println("referr="+referer);
 						
-						//response.sendRedirect(request.getContextPath());
-						response.sendRedirect(referer);
+						//로그인후 페이지 리다이렉트
+						response.sendRedirect(request.getContextPath());	
 						
 						
 					}
