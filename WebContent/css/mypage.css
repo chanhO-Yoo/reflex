@@ -167,7 +167,7 @@ input[type=file]{display: inline; overflow: hidden;}
     top: 10px;
     left: 20px;
 }
-.qContent-wrapper textarea{margin-left: 125px; width: 80%;}
+.qContent-wrapper textarea{margin-left: 112px; width: 80%;}
 .file-wrapper label{top: 3px;}
 .file-wrapper input{margin-left: 111px;}
 #oneToOneFrm>div.memberId-wrapper{padding-bottom: 30px;}
@@ -218,6 +218,7 @@ input[type=file]{display: inline; overflow: hidden;}
 #reviewFrm-wrapper #oneToOneFrm label{padding: 0 0 0 10px; margin: 0;}
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper label{margin-top: 10px;}
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper{padding-top: 20px;}
+#reviewFrm-wrapper .qContent-wrapper textarea{margin-left: 125px;}
 
 
 /* 1대1문의 상세보기 */
