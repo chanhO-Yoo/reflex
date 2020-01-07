@@ -109,53 +109,64 @@ function showContent(btn, sectionId){
                 <%} %>
                 </ul>
             </section>
+            
+            
+            
             <!-- 작성한 이용후기 -->
             <section id="writed-review" class="list-wrapper">
+                <h3 class="sr-only">작성한 이용후기 리스트</h3>
+                <ul class="list-unstyled wishlist-inner">
                <% 
                int c=0;
                //System.out.println(list.toString()+"toto");
                for(Board b : list){ 
             	  // System.out.println(c++);
             	 if((memberLoggedIn.getMemberId()).equals(b.getReview_writer())){
-            		//System.out.println(memberLoggedIn.getMemberId()+"/"+b.getReview_writer());
-               %>
-                <h3 class="sr-only">작성한 이용후기 리스트</h3>
-                <ul class="list-unstyled wishlist-inner">
+
+            		 %>
                     <li class="row">
-                        <section class="review-header">
-                            <div class="item-img col-md-2">
-                                <a href="" class="text-center"><img src="<%=request.getContextPath()%>/images/item.png" alt=""></a>
+                        <section class="review">
+                        	<!--이미지 -->
+                         	<div class="item-img col-md-2 text-center">
+                         		<% for(int i=0; i<b.getReview_star(); i++){ %>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    							<%} %>
                             </div>
+                            
+                            <!-- 상품명자리 우리는 공백 넣어둠 -->
                             <div class="wish-info item-info col-md-7">
-                                <a href="">
-                                    <p class="text-left pname">작성자: <%=b.getReview_writer() %></p>
-                                </a>
+                            
                             </div>
+                            
+                            <!-- 수정하기/삭제하기버튼 -->
                             <div class="col-md-3 reviewBtn-wrapper">
                                 <ul class="list-unstyled list-inline">
                                     <li><a href = "<%=request.getContextPath()%>/mypage/mypageReviewUpdate?reviewNo=<%=b.getReview_no()%>"><button type="button" class="btn-radius" >수정하기</button></a></li>
                                     <li><button type="button" class="btn-radius" name="boardDelFrm" onclick="deleteBoard()">삭제하기</button></li>
-                                 
                                 </ul>
+
                                 	<form name="boardDelFrm" action="<%=request.getContextPath()%>/board/boardDelete" method="post">
 									    <input type="hidden" name="Review_no" value="<%=b.getReview_no() %>" />
     								</form>
                             </div>
                         </section>
+
+						<!-- 별 자리랑 구매후기내용 -->
                         <section class="review-content">
-                            <div class="star">
-                      		<% for(int i=0; i<b.getReview_star(); i++){ %>
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-    							<%} %>
-                            </div>
-                            <div>
+                        	<div class="item-img col-md-5 offset ">
+                        	 <img src="<%=request.getContextPath()%>/upload/board/<%=b.getReview_image_rename() %>" alt="">
+                        	</div>
+                        
+                           
+                            
+                            <div class="star col-md-5 ">
                                 <p>구매후기:<%=b.getReview_content()%></p>
                             </div>
                         </section>
                     </li>
-                </ul>
                 		<% } %>
                 <% } %>
+                </ul>
             </section>
        
             <!-- 페이징바 -->

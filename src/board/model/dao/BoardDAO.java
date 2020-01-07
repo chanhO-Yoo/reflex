@@ -56,6 +56,7 @@ public class BoardDAO {
 				b1.setReview_star(rset.getInt("review_star"));
 				b1.setReview_content(rset.getString("review_content"));
 				b1.setReview_image(rset.getString("review_image"));
+				b1.setReview_image_rename(rset.getString("review_image_rename"));
 				b1.setReview_readCount(rset.getInt("review_readCount"));
 				b1.setItem_no(rset.getInt("item_no"));
 				//댓글수 필드 추가
