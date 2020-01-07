@@ -56,10 +56,12 @@
 	                    <label for="up-file">첨부파일</label>
 	                    <input type="file" name="upFile" id="up-file">
 	                </div>
+	                
 	                <div class="memberId-wrapper">
 	                    <label for="memberId">문의자아이디</label>
-	                    <input type="text" name="memberId" id="memberId" value="<%=memberLoggedIn.getMemberId()%>" readonly>
+	                    <input type="text" name="memberId" id="memberId" value="<%=memberLoggedIn.getMemberId()%>" placeholder="답변 대기중입니다" readonly>
 	                </div>
+	                
 	                <div class="btnForm-wrapper text-center">
 	                    <button type="button" class="btn-radius" onclick="exit();">취소</button>
 	                    <button type="submit" class="btn-radius" onclick="return boardValidate();">수정</button>

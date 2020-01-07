@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import admin.model.service.AdminService;
 import mypage.model.service.qService;
 import mypage.model.vo.Qna;
 
@@ -35,6 +36,7 @@ public class MypageOneToOneViewServlet extends HttpServlet {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
 				int qNo = Integer.parseInt(request.getParameter("qNo"));
+				String ans = new AdminService().selectAns(qNo);
 				
 				System.out.println("@@@@@@@@qno="+qNo);
 				
@@ -57,6 +59,7 @@ public class MypageOneToOneViewServlet extends HttpServlet {
 				}
 				else {
 					request.setAttribute("q", q);
+					request.setAttribute("ans", ans);
 					
 					request.getRequestDispatcher("/WEB-INF/views/mypage/mypageOneToOneView.jsp").forward(request, response);
 					

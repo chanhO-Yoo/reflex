@@ -628,16 +628,6 @@ public class AdminDAO {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				/*
-				 * 	p_qna_no	number		NOT NULL,
-	member_id	varchar2(20)		NOT NULL,
-	p_qna_type_no	varchar2(30)			NOT NULL,
-	p_qna_title	varchar2(100)		NOT NULL,
-	p_qna_content	varchar2(3000)		NOT NULL,
-	p_qna_date	date	DEFAULT sysdate	NOT NULL,
-	p_ans_yn	char(1)	DEFAULT 'N'	NOT NULL,
-	p_qna_image	varchar2(300)		NULL,
-				 */
 				
 				q = new Qna();
 				q.setqNo(rset.getInt("p_qna_no"));
