@@ -244,7 +244,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 주문상품 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">주문상품</h3>
-    <p>주문상품 (<span class="em-blue strong"><%=cartList.size()%></span>개)</p>
+    <p class="strong">주문상품 (<span class="em-blue"><%=cartList.size()%></span>개)</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -318,7 +318,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 배송지정보 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">배송지정보</h3>
-    <p>배송지정보</p>
+    <p class="strong">배송지정보</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -332,7 +332,7 @@ function plusShipPrice(){
                         <input type="text" name="ordererName" id="ordererName" value="<%=m.getMemberName()%>" readonly>
                     </div>
                     <div class="row">
-                        <label for="tel1">연락처</label>
+                        <label for="tel1" class="col-md-3">연락처</label>
                         <select name="tel1" id="tel1">
                             <option value="010" selected>010</option>
                             <option value="011">011</option>
@@ -345,14 +345,14 @@ function plusShipPrice(){
                         <input type="text" name="tel2" id="tel2" class="phone" value="<%=m.getMemberPhone().substring(3)%>" readonly>
                     </div>
                     <div class="row">
-                        <label for="postcode">주소</label>
+                        <label for="postcode" class="col-md-3">주소</label>
                         <input type="text" id="postcode" placeholder="우편번호" value="<%=m.getMemberPostcode()%>" readonly>
                         <input type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()" value="우편번호 찾기"><br>
                         <input type="text" id="address" placeholder="주소" value="<%=m.getMemberAddress()%>" readonly><br>
                         <input type="text" id="detailAddress" placeholder="상세주소" value="<%=m.getMemberDetailAddress()%>" readonly>
                     </div>
                     <div class="row">
-                        <label for="msg">배송메세지</label>
+                        <label for="msg" class="col-md-3">배송메세지</label>
                         <select name="msg" id="msg">
                             <option value="배송 전에 미리 연락바랍니다.">배송 전에 미리 연락바랍니다.</option>
                             <option value="부재시 경비실에 맡겨주세요">부재시 경비실에 맡겨주세요.</option>
@@ -370,7 +370,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 금액정보 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">결제금액</h3>
-    <p>주문시 결제금액</p>
+    <p class="strong">주문시 결제금액</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -423,7 +423,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 결제수단 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">결제 수단</h3>
-    <p>주문시 결제 수단</p>
+    <p class="strong">주문시 결제 수단</p>
 </div>
 <div class="container-fluid">
     <div class="row">

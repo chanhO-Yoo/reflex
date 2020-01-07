@@ -182,6 +182,7 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneFrm .memberId-wrapper input[type=text]{width: 25%; padding: 0; border: 0;}
 #oneToOneFrm .btnForm-wrapper{padding-bottom: 0;}
 .btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px;}
+#oneToOne-wrapper #warning-wrapper.content-wrapper{border: 0; padding: 100px 50px;}
 
 /*1:1 문의 등록 관리자-답변 */
 label{margin-right: 60px;}
@@ -239,7 +240,7 @@ input[type=file]{display: inline; overflow: hidden;}
 
 
 /* 로그인, 회원가입 */
-#signUpFrm>div, #loginFrm>div, #editInfoFrm>div, #orderFrm>div{margin-bottom: 20px;}
+#signUpFrm>div, #loginFrm>div, #editInfoFrm>div, #orderFrm>div{margin-bottom: 5px;}
 #signUpFrm .btnForm-wrapper, #editInfoFrm .btnForm-wrapper{padding-top: 20px;}
 .form-header{border-top: 0;}
 .form-wrapper{padding: 40px 80px;}
