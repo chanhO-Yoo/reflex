@@ -20,7 +20,13 @@
         <li>1:1문의답변 등록</li>
     </ul>
 </nav>
-
+<style>
+.viewimage{
+   display: inline-block;
+    margin-left: 112px;
+    width: 30%;
+}
+</style>
 <div class="container-fluid contents">
 	<div class="row">
 	    <div class="col-md-1"></div>
@@ -47,9 +53,17 @@
 	                    <textarea name="qContent" id="q-content" cols="50" rows="10" readonly><%=q.getqContent()%></textarea>
 	                 
 	                </div>
-	                <div class="file-wrapper">
+	            <%--     <div class="file-wrapper">
 	                    <label for="up-file">첨부된 파일</label>
-	                    <div style="margin-left: 110px;"><%=q.getqImage() %></div>
+	                    
+	                    <div style="margin-left: 110px;">
+		                    <img src="<%=request.getContextPath()%>/upload/board/<%=q.getqImage()%>" alt="" class="viewimage"/>
+	                    </div>
+	                    
+	                </div> --%>
+	                 <div class="file-wrapper">
+	                    <label for="up-file">첨부된 파일</label>
+	                    <img src="<%=request.getContextPath()%>/upload/board/<%=q.getqImage() %>" alt="" class="viewimage"/>
 	                </div>
 	                <div class="memberId-wrapper"></div>
 	                <div class="aContent-wrapper">

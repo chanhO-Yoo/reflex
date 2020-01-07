@@ -6,6 +6,13 @@
 	Qna q = (Qna)request.getAttribute("q");
 	String ans = (String)request.getAttribute("ans");
 %>
+<style>
+.viewimage{
+   display: inline-block;
+    margin-left: 112px;
+    width: 30%;
+}
+</style>
 
 <!-- page nav -->
 <nav class="line-style page-nav">
@@ -47,8 +54,8 @@
 	                    <textarea name="qContent" id="q-content" cols="50" rows="10" readonly><%=q.getqContent()%></textarea>
 	                </div>
 	                <div class="file-wrapper">
-	                    <label for="up-file">첨부된 파일</label>
-	                    <div style="margin-left: 110px;"><%=q.getqImage() %></div>
+	                    <label for="up-file">첨부파일</label>
+	                    <img src="<%=request.getContextPath()%>/upload/board/<%=q.getqImage() %>" alt="" class="viewimage"/>
 	                </div>
 	                <div class="memberId-wrapper"></div>
 	                <div class="aContent-wrapper">
