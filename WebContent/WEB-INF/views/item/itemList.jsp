@@ -26,7 +26,6 @@ function listFilter(){
 	//정렬
 	selectFilter.addEventListener('change', function(){
 		let optionVal = selectFilter.options[selectFilter.selectedIndex].value;
-		console.log(optionVal);
 		
 		//신상품순
 		if(optionVal==="upToDate")
@@ -48,7 +47,6 @@ function setFilter(){
 	options.forEach(function(obj, idx){
 		let val = obj.value;
 		if(val==="<%=filterType%>"){
-			console.log(val);
 			obj.selected = true;
 		}
 	});
