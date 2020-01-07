@@ -90,10 +90,9 @@ public class MyPagePointMinusServlet extends HttpServlet {
 		
 
 		
-		
-		
-		request.setAttribute("list",list);
-
+		int point = new MyPageService().selectOne(memberId);
+		request.setAttribute("list", list);
+		request.setAttribute("point", point);
 		request.setAttribute("pageBar", pageBar);
 
 		System.out.println("mypage-point-servlet"+list);

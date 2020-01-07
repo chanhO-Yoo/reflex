@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 
-MyPage m = (MyPage)request.getAttribute("mypage");
+int  point = (int)request.getAttribute("point");
 
 List<MyPage> list = (List<MyPage>)request.getAttribute("list");
 
@@ -143,12 +143,12 @@ $(function(){
             <section class="my-header">
                 <h3 class="sr-only">사용할 수 있는 포인트 확인</h3>
                 <div class="line-style text-center">
-                  	<%if(m == null) {%>
+           		<%if(point == 0) {%>
                     <p>현재 사용가능한 포인트는 <span class="em-blue strong">0</span>원입니다.</p>
-                    <%} 
-                    else{%>
-                    <p>현재 사용가능한 포인트는 <span class="em-blue strong"><%=m.getPointAmount()%></span>원입니다.</p>
-                    <%} %>
+                <%} 
+                else{%>
+                    <p>현재 사용가능한 포인트는 <span class="em-blue strong"><%=point%></span>원입니다.</p>
+                <%} %>
                 </div>
             </section>
         </div>

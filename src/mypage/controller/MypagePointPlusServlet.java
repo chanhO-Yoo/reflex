@@ -79,9 +79,9 @@ public class MypagePointPlusServlet extends HttpServlet {
 					+ "&cPage=" + pageNo + "'>[다음]</a>\n";
 		}
 		
-
+		int point = new MyPageService().selectOne(memberId);
 		request.setAttribute("list", list);
-	
+		request.setAttribute("point", point);
 		request.setAttribute("pageBar", pageBar);
 
 		request.getRequestDispatcher("/WEB-INF/views/mypage/mypagePointPlus.jsp").forward(request, response);
