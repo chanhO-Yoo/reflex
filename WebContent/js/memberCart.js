@@ -30,7 +30,7 @@ $(document).ready(function(){
 	});
 
 //////////////////////////////////////////////////////////////////////////// 
-
+//장바구니 삭제
 	function deleteCartItem(){
 		var checkedCart = [];
 		
@@ -120,7 +120,9 @@ $(document).ready(function(){
    
 });
 
-/* 체크박스 전체선택, 전체해제 */
+//=============================================================
+
+/*  체크박스 전체선택, 전체해제 */
 function checkAll(){
       if( $("#th_checkAll").is(':checked') ){
         $("input[name=delCartlist]").prop("checked", true);

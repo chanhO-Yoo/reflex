@@ -6,6 +6,7 @@ import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -103,6 +104,16 @@ public class rentService {
 			close(conn);
 			
 			return list;
+		}
+		//디데이
+		public List<Integer> rentingdday(String itemrentuser) {
+			Connection conn = getConnection();
+			
+			List<Integer> list= new rentDAO().rentingdday(conn, itemrentuser);
+			
+			close(conn);
+			
+			return list;	
 		}
 	
 

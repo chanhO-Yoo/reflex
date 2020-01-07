@@ -474,7 +474,7 @@ public int selectTotalDetailItem(int itemNo) {
 		return totalContent;
 	}
 
-	public int updateOrder(int orderNo, String orderStatus) {
+	public int updateOrder(String orderNo, String orderStatus) {
 		Connection conn = getConnection();
 		int result = new AdminDAO().updateOrder(conn, orderNo, orderStatus);
 		close(conn);

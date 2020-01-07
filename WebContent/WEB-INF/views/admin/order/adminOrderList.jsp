@@ -179,7 +179,7 @@ function orderUpdate(orderNo) {
 		                        </select>
 		                    </td>
                             <td>
-                            	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="orderUpdate(<%=od.getOrderNo() %>)" value="<%=od.getOrderNo() %>">변경</button>
+                            	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="orderUpdate('<%=od.getOrderNo() %>')" value="<%=od.getOrderNo() %>">변경</button>
                             </td>
                         </tr>
                         <%		} 

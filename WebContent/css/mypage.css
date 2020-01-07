@@ -37,9 +37,10 @@
 .item-change li:first-of-type .btn-radius{margin-top: 0;}
 
 
-/* 계약중인 렌탈: my_contracting_rental.jsp */
+/* 계약중/종료된 렌탈: my_contracting_rental.jsp */
+#rent-list #warning-wrapper.content-wrapper{border: 0;}
 #contracting-tbl .em-blue{font-weight: normal;}
-
+#contracting-tbl .item-info img{width: 15%; margin-right: 30px;}
 
 
 /* 포인트 확인: my_point.jsp */
@@ -161,13 +162,14 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneFrm .qContent-wrapper, #oneToOneFrm .file-wrapper, #oneToOneFrm .memberId-wrapper{padding-top: 0;}
 #oneToOneFrm>div:first-of-type{border-bottom: 1px solid;}
 #oneToOneFrm input[type=text]{width: 80%;}
+#oneToOneFrm .file-wrapper input{margin-left: 112px;}
 .qContent-wrapper, .file-wrapper{position: relative;}
 .qContent-wrapper label, .file-wrapper label{
     position: absolute;
     top: 10px;
     left: 20px;
 }
-.qContent-wrapper textarea{margin-left: 125px; width: 80%;}
+.qContent-wrapper textarea{margin-left: 112px; width: 80%;}
 .file-wrapper label{top: 3px;}
 .file-wrapper input{margin-left: 111px;}
 #oneToOneFrm>div.memberId-wrapper{padding-bottom: 30px;}
@@ -218,6 +220,7 @@ input[type=file]{display: inline; overflow: hidden;}
 #reviewFrm-wrapper #oneToOneFrm label{padding: 0 0 0 10px; margin: 0;}
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper label{margin-top: 10px;}
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper{padding-top: 20px;}
+#reviewFrm-wrapper .qContent-wrapper textarea{margin-left: 125px;}
 
 
 /* 1대1문의 상세보기 */
