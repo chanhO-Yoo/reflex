@@ -40,8 +40,8 @@
                 <form action="<%=request.getContextPath()%>/board/boardFormEnd" id="oneToOneFrm"  method="post" enctype="multipart/form-data">
                 <input type="hidden" name="orderDetailNo" value="<%=orderDetailNo %>" />
                    <input type="hidden" name="itemNo" value="<%=itemNo %>" />
-                    <div>
-                        <label for="review-star">별점</label>
+                    <div class="row">
+                        <label for="review-star" class="col-md-1">별점</label>
                         <select name="star" id="review-star">
                             <option value="1">1점</option>
                             <option value="2">2점</option>
@@ -50,16 +50,16 @@
                             <option value="5" selected>5점</option>
                         </select>
                     </div>
-                    <div class="qContent-wrapper">
-                        <label for="r-content">내용</label>
+                    <div class="qContent-wrapper row">
+                        <label for="r-content" class="col-md-1">내용</label>
                         <textarea name="reviewContent"  id="r-content" cols="50" rows="10" required></textarea>
                     </div>
-                    <div class="file-wrapper">
-                        <label for="up-file">첨부파일</label>
+                    <div class="file-wrapper row">
+                        <label for="up-file" class="col-md-1">첨부파일</label>
                         <input type="file" name="upFile" id="upFile">
                     </div>
-                    <div class="memberId-wrapper">
-                        <label for="memberId">아이디</label>
+                    <div class="memberId-wrapper row">
+                        <label for="memberId" class="col-md-1">아이디</label>
                         <input type="text" name="reviewWriter" id="reviewWriter"  value="<%=memberLoggedIn.getMemberId() %>" readonly>
                     </div>
                     <div class="btnForm-wrapper text-center">

@@ -108,7 +108,7 @@
 
 
 /* 1:1문의: my_oneToOne.html */
-.btn-radius.btn-qna{margin-top: 10px; padding: 5px 40px; line-height: 1.4;}
+.btn-radius.btn-qna{margin-top: 10px; padding: 5px 50px; line-height: 1.4;}
 .qna-title{padding: 0;}
 .qna-title a{width: 100%; padding: 14px 0;}
 
@@ -120,6 +120,7 @@
 /* 작성가능한 이용후기 */
 #writable-review .wishlist-inner>li, #writed-review .wishlist-inner>li{height: 150px;}
 #writable-review .wishlist-inner>li>div, #writed-review .wishlist-inner>li>div{border-left: 0;}
+#writable-review .wishlist-inner>li>div:last-of-type{padding-left: 50px;}
 /* #writable-review ul>li:last-of-type{padding-left: 30px;} */
 #writable-review .item-img img{width: 30%;}
 #writable-review .btn-radius.btn-qna{margin-top: 45px;}
@@ -166,13 +167,13 @@ input[type=file]{display: inline; overflow: hidden;}
     top: 10px;
     left: 20px;
 }
-.qContent-wrapper textarea{margin-left: 112px; width: 80%;}
+.qContent-wrapper textarea{margin-left: 125px; width: 80%;}
 .file-wrapper label{top: 3px;}
 .file-wrapper input{margin-left: 111px;}
 #oneToOneFrm>div.memberId-wrapper{padding-bottom: 30px;}
 .memberId-wrapper{border-bottom: 1px solid;}
 .memberId-wrapper label{margin-right: 22px;}
-#oneToOneFrm .memberId-wrapper input[type=text]{width: 25%;}
+#oneToOneFrm .memberId-wrapper input[type=text]{width: 25%; padding: 0; border: 0;}
 #oneToOneFrm .btnForm-wrapper{padding-bottom: 0;}
 .btnForm-wrapper .btn-radius{padding: 5px 50px; margin: 0 10px; 
 /* font-size: 13px; */
@@ -205,10 +206,9 @@ input[type=file]{display: inline; overflow: hidden;}
     top: 20px;
     left: 20px;
 }
-.qContent-wrapper textarea{margin-left: 112px; width: 80%;}
 .aContent-wrapper textarea{margin-left: 112px; width: 80%; margin-top:20px;}
 .file-wrapper label{top: 3px;}
-.file-wrapper input{margin-left: 111px;}
+.file-wrapper input{margin-left: 124px;}
 #oneToOneQnaFrm>div.memberId-wrapper{padding-bottom: 30px;}
 .memberId-wrapper{border-bottom: 1px solid;}
 .memberId-wrapper label{margin-right: 22px;}
@@ -216,8 +216,9 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneQnaFrm .btnForm-wrapper{padding-bottom: 0;}
 
 
-
 /* 이용후기 등록 */
+#reviewFrm-wrapper #oneToOneFrm label{padding: 0 0 0 10px; margin: 0;}
+#reviewFrm-wrapper #oneToOneFrm .qContent-wrapper label{margin-top: 10px;}
 #reviewFrm-wrapper #oneToOneFrm .qContent-wrapper{padding-top: 20px;}
 
 
@@ -236,30 +237,30 @@ input[type=file]{display: inline; overflow: hidden;}
 #signUpFrm>div, #loginFrm>div, #editInfoFrm>div, #orderFrm>div{margin-bottom: 20px;}
 #signUpFrm .btnForm-wrapper, #editInfoFrm .btnForm-wrapper{padding-top: 20px;}
 .form-header{border-top: 0;}
-.form-wrapper{padding: 40px 50px;}
+.form-wrapper{padding: 40px 80px;}
 .form-wrapper .req{margin-left: 3px; color: #8c8c8c; font-size: 12px; font-weight: bold;}
 .form-wrapper input{margin-top: 7px; font-size: 13px;}
 .form-wrapper input[type=text], input[type=email], input[type=password]{width: 62%;}
 .form-wrapper #signUpFrm input[type=password]{width: 62%;}
 .form-wrapper input::placeholder{color: #a5a5a5; font-size: 13px;}
-.form-wrapper label{width: 130px; margin-right: 30px;}
+.form-wrapper label{width: 130px; margin-right: 50px;}
 .form-wrapper select{width: 70px;}
-.form-wrapper #memberId{width: 35%; margin-right: 15px;}
-.form-wrapper #tel2{width: 46%; margin-left: 11px;}
-.form-wrapper #postcode{width: 35%; background: white;}
+.form-wrapper #memberId{width: 42%; margin-right: 15px;}
+.form-wrapper #tel2{width: 51%; margin-left: 11px;}
+.form-wrapper #postcode{width: 28%; background: white;}
 .form-wrapper #btn-postcode{margin-left: 15px; background: white;}
-.form-wrapper #address, .form-wrapper #detailAddress{margin: 5px 0 0 160px;}
-.hobby-wrapper p{display: inline-block; width: 130px; margin-right: 30px;}
+.form-wrapper #address, .form-wrapper #detailAddress{margin: 5px 0 0 180px;}
+.hobby-wrapper p{display: inline-block; width: 130px; margin-right: 50px;}
 .hobby-inner{display: inline-block; margin-bottom: 5px;}
-.hobby-inner:first-of-type{margin: 13px 100px 0 0;}
-.hobby-inner:not(:first-of-type){margin: -20px 0 0 160px;}
+.hobby-inner:first-of-type{margin: 13px 300px 0 0;}
+.hobby-inner:not(:first-of-type){margin-top: 5px;}
 .hobby-inner label{width: inherit; margin-right: 30px;}
 .btnForm-wrapper.btn-bottom{padding: 0; border-top: 0;}
 #signUpFrm .btnForm-wrapper .btn-radius{padding: 5px 80px; font-size: 14px;}
 /* 로그인 */
 .check-wrapper label{width: 130px; margin-right: 0;}
-.form-wrapper #loginFrm #memberId{width: 52%; margin-bottom: 10px; margin-right: 0;}
-.form-wrapper #memberPwd{width: 52%;}
+.form-wrapper #loginFrm #memberId{width: 42%; margin-bottom: 10px; margin-right: 0;}
+.form-wrapper #loginFrm #memberPwd{width: 42%;}
 #loginFrm .btn-login{padding: 5px 115px; margin-bottom: 10px;}
 #loginFrm .btn-signup{padding: 5px 108px;}
 /* 회원정보수정: my_edit_memberInfo.jsp */

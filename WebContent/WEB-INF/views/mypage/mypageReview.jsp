@@ -95,14 +95,14 @@ function showContent(btn, sectionId){
                         <div class="item-img col-md-3 text-center">
                             <a href=""><img src="<%=request.getContextPath()%>/images/<%=o.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="상품이미지"></a>
                         </div>
-                        <div class="wish-info item-info col-md-7">
+                        <div class="wish-info item-info col-md-6">
                             <a href="">
                                 <p class="text-left pbrand"><%=o.getItemBrand() %></p>
                                 <p class="text-left pname"><%=o.getItemName() %></p>
                             </a>
                            
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <a href="<%=request.getContextPath() %>/mypage/mypageReviewForm?itemNo=<%=o.getItemNo()%>&orderDetailNo=<%=o.getOrderDetailNo()%>" class="btn-radius btn-qna">구매후기 쓰기</a>
                         </div>
                     </li>       

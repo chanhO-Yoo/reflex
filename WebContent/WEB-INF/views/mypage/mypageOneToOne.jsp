@@ -60,7 +60,7 @@ String pageBar = (String)request.getAttribute("pageBar");
                         <span>-</span>
                         <input type="text" id="endDate" class="text-center" value="2019 - 12 - 19" readonly>
                     </li>
-                    <li class="col-md-2 bg-purple"><button type="button">조회</button></li>
+                    <li class="col-md-2 color-reflex"><button type="button">조회</button></li>
                 </ul>
             </section>
         </div>
