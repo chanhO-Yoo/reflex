@@ -2,6 +2,7 @@ package mypage.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -28,21 +29,28 @@ public class MypageRentalIngServlet extends HttpServlet {
 	request.setCharacterEncoding("utf-8");
 		
 		String itemrentuser = request.getParameter("memberId");
-		
+		Date itemrentend = setTimestamp(request.getParameter("item_rent_end"));
 		
 		System.out.println(itemrentuser);
 		List<rent> list = new rentService().rentingviewList(itemrentuser);
 		int cnt = new rentService().rentingcnt(itemrentuser);
+		List<Integer> dday = new rentService().rentingdday(itemrentuser);
 		
 		//4.뷰단 포워딩		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher("/WEB-INF/views/mypage/mypageRentalIng.jsp");
 		request.setAttribute("list",list);
+		request.setAttribute("dday",dday);
 		request.setAttribute("cnt", cnt);	
 		reqDispatcher.forward(request, response);
 		
 		
 	}
 	 
+	private Date setTimestamp(String parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
