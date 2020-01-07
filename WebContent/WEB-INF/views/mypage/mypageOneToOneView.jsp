@@ -6,7 +6,7 @@
 <%
 	Qna q = (Qna)request.getAttribute("q");
 
-	
+	String ans = (String)request.getAttribute("ans");
 %>
 
 <!-- page nav -->
@@ -75,6 +75,10 @@
 	                <div class="memberId-wrapper">
 	                    <label for="memberId">문의자아이디</label>
 	                    <input type="text" name="memberId" id="memberId" value="<%=memberLoggedIn.getMemberId()%>" value="<%=q.getMemberId() %>" readonly>
+	                </div>
+	                <div class="aContent-wrapper">
+	                    <label for="a-content">문의답변</label>
+	                    <textarea name="aContent" id="a-content" cols="50" rows="5" placeholder="답변 대기중입니다." readonly><%=ans%></textarea>
 	                </div>
 	                <div class="btnForm-wrapper text-center">
 	                    <button type="button" class="btn-radius" onclick="return deleteOneToOne();">삭제</button>
