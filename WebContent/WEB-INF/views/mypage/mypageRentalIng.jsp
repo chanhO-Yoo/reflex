@@ -87,22 +87,17 @@
 <%
 					for (int i =0; list.size() > i; i++) {
 						List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
-						
-//리스트에 담기
-if (list != null && list.size() > 0) {
-	for (int i =0; list.size() > i; i++) {
 
-	
-	//렌탈기간
-	int rentPeriod = 0;
-	if("RT01".equals(list.get(i).getRentOptNo())) rentPeriod = 7;
-	else if("RT02".equals(list.get(i).getRentOptNo())) rentPeriod = 14;
-	else rentPeriod = 30;
-	
-	/* //가격 , 붙이기
-	DecimalFormat dc = new DecimalFormat("###,###,###,###원");
-	String pbyRentOptNo = dc.format(cart.getPriceByRentOptNo()); //1개가격
-	String pEa = dc.format(cart.getPriceByRentOptNo()*cart.getItemQuantity()); // *수량 */
+					//렌탈기간
+					int rentPeriod = 0;
+					if("RT01".equals(list.get(i).getRentOptNo())) rentPeriod = 7;
+					else if("RT02".equals(list.get(i).getRentOptNo())) rentPeriod = 14;
+					else rentPeriod = 30;
+					
+					/* //가격 , 붙이기
+					DecimalFormat dc = new DecimalFormat("###,###,###,###원");
+					String pbyRentOptNo = dc.format(cart.getPriceByRentOptNo()); //1개가격
+					String pEa = dc.format(cart.getPriceByRentOptNo()*cart.getItemQuantity()); // *수량 */
 %>
                         <tr>
                             <td>
