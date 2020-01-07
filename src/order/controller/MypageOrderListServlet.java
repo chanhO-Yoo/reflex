@@ -53,8 +53,6 @@ public class MypageOrderListServlet extends HttpServlet {
 				orderListByOrderNo.put(orderNoList.get(i), orderList);
 			}
 			
-			
-			
 			//각 주문상품의 대여시작일, 반납일 가져오기
 			//1.item_rent_each_no 찾기 
 			Map<String, Object> paramMap = new HashMap<>(); //each_no찾는 파라미터 담길 map
