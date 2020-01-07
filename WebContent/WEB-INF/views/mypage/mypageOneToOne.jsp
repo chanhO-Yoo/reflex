@@ -176,9 +176,17 @@ $(function(){
                     	</tr>
                     <% }
                     else {
-                     for(Qna q : list) { %>
+                     for(Qna q : list) { 
+                    	 String typeName="";
+                    	 switch(q.getqTypeNo()){
+                    	 case "QT01": typeName="상품문의"; break;
+                    	 case "QT02": typeName="배송문의"; break;
+                    	 case "QT03": typeName="기타문의"; break;
+                    	 }
+                     
+                     %>
 						<tr class="row">
-                            <td class="col-md-2"><%= q.getqTypeNo() %></td>
+                            <td class="col-md-2"><%= typeName %></td>
                             <td class="col-md-6"><a href="<%=request.getContextPath()%>/mypage/mypageOneToOneView?qNo=<%=q.getqNo()%>"><%=q.getqTilte() %></a></td>
                             <td class="col-md-2"><%=q.getqAns() %></td>
                             <td class="col-md-2"><%=q.getqDate() %></td>
