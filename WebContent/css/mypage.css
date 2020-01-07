@@ -37,9 +37,10 @@
 .item-change li:first-of-type .btn-radius{margin-top: 0;}
 
 
-/* 계약중인 렌탈: my_contracting_rental.jsp */
+/* 계약중/종료된 렌탈: my_contracting_rental.jsp */
+#rent-list #warning-wrapper.content-wrapper{border: 0;}
 #contracting-tbl .em-blue{font-weight: normal;}
-
+#contracting-tbl .item-info img{width: 15%; margin-right: 30px;}
 
 
 /* 포인트 확인: my_point.jsp */
@@ -161,6 +162,7 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneFrm .qContent-wrapper, #oneToOneFrm .file-wrapper, #oneToOneFrm .memberId-wrapper{padding-top: 0;}
 #oneToOneFrm>div:first-of-type{border-bottom: 1px solid;}
 #oneToOneFrm input[type=text]{width: 80%;}
+#oneToOneFrm .file-wrapper input{margin-left: 112px;}
 .qContent-wrapper, .file-wrapper{position: relative;}
 .qContent-wrapper label, .file-wrapper label{
     position: absolute;

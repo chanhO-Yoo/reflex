@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@page import="rent.model.vo.rent" %>
+<%@page import="item.model.vo.ItemImage"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.*" %>
 <%@page import="java.util.*" %>
@@ -10,8 +11,9 @@
 <%
 	List<rent>	list= (List<rent>)request.getAttribute("list");
 	int cnt = (int)request.getAttribute("cnt");
+	List<Integer> itemNoList = (List<Integer>)request.getAttribute("itemNoList");
+	Map<Integer, List<ItemImage>> imgMap = (Map<Integer, List<ItemImage>>)request.getAttribute("imgMap");
 
-	
 	//위시리스트 ajax - 회원아이디 담아놓기
 	String memberId = "";
 	if(memberLoggedIn!=null) memberId = memberLoggedIn.getMemberId();
@@ -64,7 +66,14 @@
         <div class="col-md-10 content-wrapper">
             <section id="rent-list" class="list-wrapper">
                 <h3 class="sr-only">주문현황 리스트</h3>
+                <% if (list != null && list.size() > 0) { %>
                 <table id="contracting-tbl" class="text-center list-tbl">
+                	<colgroup>
+	                    <col width="15%">
+	                    <col width="60%">
+	                    <col width="17%">
+	                    <col width="10%">
+	                </colgroup> 
                     <thead>
                         <tr>
                             <th class="text-center">계약번호[날짜]</th>
@@ -74,12 +83,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
 <%
-	System.out.println(list.size());
-			if (list != null && list.size() > 0) {
-				for (int i =0; list.size() > i; i++) {
-
+					for (int i =0; list.size() > i; i++) {
+						List<ItemImage> imgList = imgMap.get(itemNoList.get(i));
 %>
                         <tr>
                             <td>
@@ -87,7 +93,9 @@
                                 <p><%= list.get(i).getItemRentStart() %></p>
                             </td>
                             <td class="item-info">
-                                <a href=""><img src="<%=request.getContextPath()%>/images/item.png" class="pull-left" alt=""></a>
+                                <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=list.get(i).getCategoryNo()%>&itemNo=<%=list.get(i).getItemNo()%>">
+                                <img src="<%=request.getContextPath()%>/images/<%=list.get(i).getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" class="pull-left" alt="상품이미지">
+                                </a>
                                 <p class="text-left pbrand"><%= list.get(i).getItemBrand() %></p>
                                 <p class="text-left pname"><%= list.get(i).getItemName() %></p>
                                 <p class="text-left price"><%= list.get(i).getItemPrice() %><span class="rent-period"> 3개월</p>
@@ -134,19 +142,20 @@ if (distance < 0) {
                                 <p>계약중</p>
                             </td>
                         </tr>
+                    <% } %>
                     </tbody>
-                    
-                    
+               </table>  
 <%
-						}
-					} else {
-					    out.println("<td>");
-					    out.println("렌탈 중인 상품이 없습니다.");
-					    out.println("</td>");
+				} 
+                else {
+%>
+				<div id="warning-wrapper" class="content-wrapper text-center">
+					<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>렌탈종료된 상품이 없습니다.</p> 
+				</div>
+<%
 					   
 					}
 %>
-                </table>
             </section>
             <!-- 페이징바 -->
             <nav class="paging-bar text-center">

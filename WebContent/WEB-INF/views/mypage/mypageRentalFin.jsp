@@ -197,6 +197,7 @@ $(function(){
             <section id="rent-list" class="list-wrapper">
                 <h3 class="sr-only">종료된 렌탈 리스트</h3>
                 <div id="rentlistdiv">
+                 <% if (list != null && list.size() > 0) { %>
                 <table class="text-center list-tbl">
                     <thead>
                         <tr>
@@ -204,16 +205,11 @@ $(function(){
                             <th class="text-center">상품정보</th>
                             <th class="text-center">렌탈기간</th>
                             <th class="text-center">상태</th>
-                            
-
                         </tr>
-                        
-
                     </thead>
                      <tbody>
                      
 <%
-			if (list != null && list.size() > 0) {
 				//for (int i =0; list.size() > i; i++) {
 				for(rent b :list){
 %>
@@ -239,43 +235,25 @@ $(function(){
                             </td>
                             
                         </tr> 
-                    </tbody> 
 <%
-						}
+				}
+%>
+                    </tbody> 
+                  </table>
+<%
 					} else {
-					    out.println("<td>");
-					    out.println("렌탈 종료된 상품이 없습니다.");
-					    out.println("</td>");
-					   
+%>
+					<div id="warning-wrapper" class="content-wrapper text-center">
+						<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>렌탈종료된 상품이 없습니다.</p> 
+					</div>
+<%   
 					}
 %>
 
-                </table>
                 </div>
             </section>
-            <!-- 페이징바 -->
-           <!--  <nav class="paging-bar text-center">
-                <ul class="list-unstyled list-inline">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
-                    </a>
-                </li>
-                <li class="cPage"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-                    </a>
-                </li>
-                </ul>
-            </nav> -->
-        
-        	<div class="col-md-1"></div>
-    	</div>
+        </div>
+        <div class="col-md-1"></div>
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

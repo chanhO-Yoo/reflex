@@ -39,7 +39,7 @@ public class rentDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			
-			String query = "SELECT * FROM ITEM_RENT_EACH IRE JOIN  ITEM I ON IRE.ITEM_NO = I.ITEM_NO WHERE ITEM_RENT_USER = ? AND ITEM_RENT_YN = 'N' ";
+			String query = "SELECT * FROM ITEM_RENT_EACH IRE JOIN ITEM I ON IRE.ITEM_NO = I.ITEM_NO WHERE ITEM_RENT_USER = ? AND ITEM_RENT_YN = 'N' ";
 			
 			System.out.println("DAO@@="+query);
 			System.out.println("DAO@@user="+itemrentuser);
@@ -63,6 +63,7 @@ public class rentDAO {
 					r.setItemPrice(rset.getInt("item_price"));
 					r.setItemEnrollDate(rset.getDate("item_enroll_date"));
 					r.setItemName(rset.getString("item_name"));
+					r.setCategoryNo(rset.getString("category_no"));
 					
 
 					
@@ -115,8 +116,7 @@ public class rentDAO {
 							r.setItemPrice(rset.getInt("item_price"));
 							r.setItemEnrollDate(rset.getDate("item_enroll_date"));
 							r.setItemName(rset.getString("item_name"));
-							
-
+							r.setCategoryNo(rset.getString("category_no"));
 							
 							list.add(r);
 						}

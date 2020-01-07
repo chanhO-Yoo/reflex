@@ -14,17 +14,25 @@ public class rent extends Item implements Serializable {
 	private Date itemRentEnd;
 	private String rentOptNo;
 	private String itemRentUser;
+	private String categoryNo;
 	
 	public rent() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public rent(int itemNo, String categoryNo, int itemStock, String itemBrand, String itemName, int itemPrice,
-			String itemDesc, Date itemEnrollDate) {
-		super(itemNo, categoryNo, itemStock, itemBrand, itemName, itemPrice, itemDesc, itemEnrollDate);
-		// TODO Auto-generated constructor stub
-	}
 	
+	public rent(int itemEachNo, int itemNo, char itemRentYN, Date itemRentStart, Date itemRentEnd, String rentOptNo,
+			String itemRentUser, String categoryNo) {
+		super();
+		this.itemEachNo = itemEachNo;
+		this.itemNo = itemNo;
+		this.itemRentYN = itemRentYN;
+		this.itemRentStart = itemRentStart;
+		this.itemRentEnd = itemRentEnd;
+		this.rentOptNo = rentOptNo;
+		this.itemRentUser = itemRentUser;
+		this.categoryNo = categoryNo;
+	}
 
 	public int getItemEachNo() {
 		return itemEachNo;
@@ -62,6 +70,8 @@ public class rent extends Item implements Serializable {
 	public void setItemRentUser(String itemRentUser) {
 		this.itemRentUser = itemRentUser;
 	}
+	
+	
 	@Override
 	public int getItemNo() {
 		// TODO Auto-generated method stub
