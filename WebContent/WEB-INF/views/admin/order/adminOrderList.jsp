@@ -66,7 +66,7 @@ function orderUpdate(orderNo) {
                 <div class="row height-45"></div>
 
                 <!-- 상품검색 - 상품 판매 개요 -->
-                <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
+                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                     <table class="table ">
                         <tr>
                             <th>전체 주문 수</th>
@@ -98,7 +98,7 @@ function orderUpdate(orderNo) {
                 </div>
                 
                 <!-- 상품검색 - 검색 폼 -->
-                <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
+                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                     <!-- 상품검색 - 검색 종류 선택 -->
                     <div class="form-group col-xs-3" style="padding-top: 7px;">
                         <select class="form-control " id="searchType">
@@ -139,7 +139,7 @@ function orderUpdate(orderNo) {
                 </div>
 
                 <!-- 상품검색 - 상품 검색 결과 -->
-                <div class="col-md-8 col-sm-6 col-xs-6 col-md-offset-2">
+                <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                     <table class="table ">
                         <tr>
                             <th>주문번호</th>
@@ -179,7 +179,7 @@ function orderUpdate(orderNo) {
 		                        </select>
 		                    </td>
                             <td>
-                            	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="orderUpdate(<%=od.getOrderNo() %>)" value="<%=od.getOrderNo() %>">변경</button>
+                            	<button type="button" id="updateBtn" class="btn btn-xs btn-primary updateBtn" onclick="orderUpdate('<%=od.getOrderNo() %>')" value="<%=od.getOrderNo() %>">변경</button>
                             </td>
                         </tr>
                         <%		} 
