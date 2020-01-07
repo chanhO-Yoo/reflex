@@ -33,7 +33,7 @@ public class MemberCartInsertChk extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String addInfo = request.getParameter("addInfo");
 		
-		//delInfo자르기 (상품번호,렌탈유형/상품번호,렌탈유형)
+		//addInfo자르기 (상품번호,렌탈유형/상품번호,렌탈유형);
 		String[] addInfoArr = addInfo.split("/"); //"/"로 자른 문자열 배열
 		String[] sArr = null; //","로 자른 문자열 배열
 		List<String[]> strList = new ArrayList<>(); //최종 [상품번호,렌탈유형]담길 리스트
@@ -44,7 +44,6 @@ public class MemberCartInsertChk extends HttpServlet {
 		}
 		
 		try {
-			//업무로직
 			//업무로직
 			CartService cartService = new CartService();
 			JSONObject resultObj = new JSONObject();
