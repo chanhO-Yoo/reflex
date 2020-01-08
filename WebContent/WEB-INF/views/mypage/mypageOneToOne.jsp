@@ -111,12 +111,12 @@ $(function(){
         <div class="col-md-10 content-wrapper">
             <h2 class="sr-only">1:1문의내역</h2>
             <!-- 문의글 등록하기 -->
-            <section class="my-header">
+             <section class="my-header">
                 <h3 class="sr-only">문의글 등록하기</h3>
                 <div class="line-style text-center">
                     <a href="<%=request.getContextPath()%>/mypage/mypageOneToOneForm" class="btn-radius btn-qna">1:1문의 등록하기</a>
                 </div>
-            </section>
+            </section> 
         </div>
         <div class="col-md-1"></div>
     </div>
@@ -157,9 +157,17 @@ $(function(){
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-10 content-wrapper">
+        <div id="oneToOne-wrapper" class="col-md-10 content-wrapper">
             <section id="point-list" class="list-wrapper">
                 <h3 class="sr-only">문의내역 리스트</h3>
+                <%if(list==null || list.isEmpty()) { %>
+                <div id="warning-wrapper" class="content-wrapper text-center">
+					<p><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>1:1문의 내역이 없습니다.</p> 
+				</div>
+				<%
+                	}
+                	else {
+				%>
                 <table class="text-center list-tbl">
                     <thead>
                         <tr class="row">
@@ -170,12 +178,7 @@ $(function(){
                         </tr>
                     </thead>
                     <tbody>
-                          <%if(list==null || list.isEmpty()) { %>
-                    	<tr class="row">
-                    	<td>등록된 1대1 문의 내역이 없습니다.</td>
-                    	</tr>
-                    <% }
-                    else {
+                    <% 
                      for(Qna q : list) { 
                     	 String typeName="";
                     	 switch(q.getqTypeNo()){
@@ -191,10 +194,7 @@ $(function(){
                             <td class="col-md-2"><%=q.getqAns() %></td>
                             <td class="col-md-2"><%=q.getqDate() %></td>
                         </tr> 
-                     <% }
-                     }
-                     %>
-                       
+                     <% } %>
                     </tbody>
                 </table>
             </section>
@@ -207,10 +207,6 @@ $(function(){
                         </a>
                     </li>
                     <li class="cPage"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
                     <li>
                         <a href="#" aria-label="Next">
                             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
@@ -218,6 +214,7 @@ $(function(){
                     </li>
                     </ul>
             </nav>
+            <% } %>
         </div>
         <div class="col-md-1"></div>
     </div>

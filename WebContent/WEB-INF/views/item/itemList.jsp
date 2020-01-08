@@ -30,9 +30,6 @@ function listFilter(){
 		//신상품순
 		if(optionVal==="upToDate")
 			location.href = "<%=request.getContextPath()%>/item/itemList?categoryNo=<%=categoryNo%>";
-		//후기순
-		else if(optionVal==="reviewCnt")
-			location.href = "<%=request.getContextPath()%>/item/itemListByReviewCnt?categoryNo=<%=categoryNo%>&filterType=reviewCnt"; 
 		//낮은 가격순
 		else if(optionVal==="lowPrice")
 			location.href = "<%=request.getContextPath()%>/item/itemListByLowPrice?categoryNo=<%=categoryNo%>&filterType=lowPrice";
@@ -99,7 +96,6 @@ function setFilter(){
         <li class="pull-right">
             <select name="filterType" id="filterType">
                 <option value="upToDate">신상품순</option>
-                <option value="reviewCnt">상품평순</option>
                 <option value="lowPrice">낮은 가격순</option>
                 <option value="highPrice">높은 가격순</option>
             </select>

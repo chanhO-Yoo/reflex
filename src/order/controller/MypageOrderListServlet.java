@@ -3,6 +3,7 @@ package order.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,25 +71,28 @@ public class MypageOrderListServlet extends HttpServlet {
 					
 					//한 상품의 주문수량이 여러 개일 경우를 대비 rownum=1인 each_no만 가져오기
 					eachNo = orderService.selectRentEachNoOne(paramMap);
+					//System.out.println("orderList="+orderList.get(j)+"의 eachNo="+eachNo);
 					eachNoList.add(eachNo);
 				}
-				
 				eachNoMap.put(orderNoList.get(i), eachNoList); //주문번호에 맞게 담기
+				//System.out.println("eachNoMap="+eachNoMap.get(orderNoList.get(i)));
 			}
+			
 			//2.각 eachNo에 해당하는 개별상품 대여 시작일, 반납일 가져오기
 			Date[] dArr = null; //주문상품의 대여시작일, 반납일 담길 배열
-			List<Date[]> dateList = new ArrayList<>();
 			//3.(최종)키:주문번호, 값:주문상품내역들의 시작일/반납일
 			Map<String, List<Date[]>> rentDateMap = new HashMap<>();
 			
 			for(int i=0; i<orderNoList.size(); i++) {
 				List<Integer> eachNoList = eachNoMap.get(orderNoList.get(i));
+				List<Date[]> dateList = new ArrayList<>();
+				
+				//각 eachNo에 해당하는 시작일/반납일 배열에 담기
 				for(int no: eachNoList) {
-					//2.
 					dArr = orderService.selectRentStartEndDate(no); 
+					//System.out.println("eachNo["+no+"]의 dArr="+Arrays.toString(dArr));
 					dateList.add(dArr);
 				}
-				//3.
 				rentDateMap.put(orderNoList.get(i), dateList);
 			}
 			

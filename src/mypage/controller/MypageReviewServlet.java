@@ -78,32 +78,24 @@ public class MypageReviewServlet extends HttpServlet {
 		int pageEnd = pageStart+pageBarSize-1;
 		int pageNo = pageStart;
 		
-		//[이전] section
-		if(pageNo == 1 ){
-			//pageBar += "<span>[이전]</span>"; 
-		}
-		else {
-			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+(pageNo-1)+"'>[이전]</a> ";
-		}
-			
-		// pageNo section
-		while(pageNo<=pageEnd && pageNo<=totalPage){
-			
-			if(cPage == pageNo ){
-				pageBar += "<span class='cPage'>"+pageNo+"</span> ";
-			} 
-			else {
-				pageBar += "<a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+pageNo+"'>"+pageNo+"</a> ";
-			}
+		//1.이전
+		if(pageNo!=1) 
+			pageBar += "<li><a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+(pageNo-1)+"' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+		else 
+			pageBar += "<li><a href='"+request.getContextPath()+"/mypage/mypageReview?cPage=1' aria-label='Previous'><span class='glyphicon glyphicon-menu-left' aria-hidden='true'></span></a></li>\n";
+		//2.pageNo
+		while(pageNo<=pageEnd && pageNo<=totalPage) {
+			if(cPage==pageNo)
+				pageBar += "<li class='cPage'><a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
+			else
+				pageBar += "<li><a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+pageNo+"'>"+pageNo+"</a></li>\n";
 			pageNo++;
 		}
-		
-		//[다음] section
-		if(pageNo > totalPage){
-
-		} else {
-			pageBar += "<a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+pageNo+"'>[다음]</a>";
-		}
+		//3.다음
+		if(pageNo<=totalPage) 
+			pageBar += "<li><a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+pageNo+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
+		else 
+			pageBar += "<li><a href='"+request.getContextPath()+"/mypage/mypageReview?cPage="+(pageNo-1)+"' aria-label='Next'><span class='glyphicon glyphicon-menu-right' aria-hidden='true'></span></a></li>\n";
 		
 	
 		//4.뷰단 포워딩		

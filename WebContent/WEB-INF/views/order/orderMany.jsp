@@ -124,6 +124,61 @@ document.addEventListener('DOMContentLoaded', function(){
 			}); //end of ajax
 		} //end of card click
 		
+		//계좌이체 요청
+		if($radioChk==="trans"){
+			IMP.request_pay({
+				pg : 'inicis', 
+				pay_method : 'trans',
+				merchant_uid : 'reflex' + new Date().getTime(),
+				name : '<%=cartList.get(0).getItem().getItemName()%> 외...',
+				amount : userTotalPrice,
+				buyer_email : '<%=m.getMemberEmail()%>',
+				buyer_name : '<%=m.getMemberName()%>',
+				buyer_tel : '<%=tel%>',
+				buyer_addr : '<%=m.getMemberAddress()%>',
+				buyer_postcode : '<%=m.getMemberPostcode()%>'
+			}, function(rsp) {
+				//결제 성공 시
+				if ( rsp.success ) {
+					$.ajax({
+						url: "<%=request.getContextPath()%>/order/manyPaymentsComplete",
+						type: "post",
+						data: {
+							merchant_uid: rsp.merchant_uid,
+							imp_uid: rsp.imp_uid,
+							memberId: "<%=m.getMemberId()%>",
+							payMethod: "card",
+							totalItemEa: <%=cartList.size()%>,
+							totalPrice: userTotalPrice,
+							usePoint: userPoint,
+							itemNo: itemNoArr.join(","),
+							rentType: rentOptArr.join(","),
+							ea: quantityArr.join(",")
+						},
+						dataType: "json"
+					}).done(function(data){
+						var msg = '결제가 완료되었습니다.\n';
+						msg += '고유ID : ' + rsp.imp_uid+"\n";
+						msg += '상점 거래ID : ' + rsp.merchant_uid+"\n";
+						msg += '결제 금액 : ' + rsp.paid_amount+"\n";
+						msg += '카드 승인번호 : ' + rsp.apply_num+"\n";
+						alert(msg);
+					});
+					//성공 시 이동
+					location.href="<%=request.getContextPath()%>/order/orderSuccess?orderNo="+rsp.merchant_uid;
+				} 
+				//결제 실패 시
+				else {
+					var msg = '결제에 실패하였습니다.\n';
+					msg += '에러내용 : ' + rsp.error_msg;
+					alert(msg);
+					
+					//실패 시 이동
+					location.href="<%=request.getContextPath()%>/order/orderFail";
+				}
+			});
+		} //end of trans
+		
 	}); //end of btnGoPay click
 	
 	plusShipPrice(); //배송비td 추가하기
@@ -189,7 +244,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 주문상품 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">주문상품</h3>
-    <p>주문상품 (<span class="em-blue strong"><%=cartList.size()%></span>개)</p>
+    <p class="strong">주문상품 (<span class="em-blue"><%=cartList.size()%></span>개)</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -263,7 +318,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 배송지정보 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">배송지정보</h3>
-    <p>배송지정보</p>
+    <p class="strong">배송지정보</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -277,7 +332,7 @@ function plusShipPrice(){
                         <input type="text" name="ordererName" id="ordererName" value="<%=m.getMemberName()%>" readonly>
                     </div>
                     <div class="row">
-                        <label for="tel1">연락처</label>
+                        <label for="tel1" class="col-md-3">연락처</label>
                         <select name="tel1" id="tel1">
                             <option value="010" selected>010</option>
                             <option value="011">011</option>
@@ -290,14 +345,14 @@ function plusShipPrice(){
                         <input type="text" name="tel2" id="tel2" class="phone" value="<%=m.getMemberPhone().substring(3)%>" readonly>
                     </div>
                     <div class="row">
-                        <label for="postcode">주소</label>
+                        <label for="postcode" class="col-md-3">주소</label>
                         <input type="text" id="postcode" placeholder="우편번호" value="<%=m.getMemberPostcode()%>" readonly>
                         <input type="button" id="btn-postcode" class="btn-radius" onclick="Postcode()" value="우편번호 찾기"><br>
                         <input type="text" id="address" placeholder="주소" value="<%=m.getMemberAddress()%>" readonly><br>
                         <input type="text" id="detailAddress" placeholder="상세주소" value="<%=m.getMemberDetailAddress()%>" readonly>
                     </div>
                     <div class="row">
-                        <label for="msg">배송메세지</label>
+                        <label for="msg" class="col-md-3">배송메세지</label>
                         <select name="msg" id="msg">
                             <option value="배송 전에 미리 연락바랍니다.">배송 전에 미리 연락바랍니다.</option>
                             <option value="부재시 경비실에 맡겨주세요">부재시 경비실에 맡겨주세요.</option>
@@ -315,7 +370,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 금액정보 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">결제금액</h3>
-    <p>주문시 결제금액</p>
+    <p class="strong">주문시 결제금액</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -368,7 +423,7 @@ function plusShipPrice(){
 <!-- 결제페이지 - 결제수단 헤더 -->
 <div class="container-fluid line-style text-center">
     <h3 class="sr-only">결제 수단</h3>
-    <p>주문시 결제 수단</p>
+    <p class="strong">주문시 결제 수단</p>
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -382,7 +437,7 @@ function plusShipPrice(){
                 <label for="payType">실시간 계좌이체</label>
             </div>
             <div id="goPay-wrapper" class="col-md-4">
-                <button type="button" id="btn-goPay" class="bg-purple">주문하기</button>
+                <button type="button" id="btn-goPay" class="color-reflex">주문하기</button>
             </div>
         </div>
         <div class="col-md-1"></div>
