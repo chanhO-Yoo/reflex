@@ -30,7 +30,7 @@
             <a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의내역</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
-        <li>1:1문의등록</li>
+        <li>1:1문의수정</li>
     </ul>
 </nav>
 <div class="container-fluid contents">
@@ -60,6 +60,7 @@
 	                </div>
 	                <div class="file-wrapper">
 	                    <label for="up-file">첨부파일</label>
+	                   	<input type="file" name="upFile" id="up-file" style="display:block; margin-bottom:10px;">
 	                    <img src="<%=request.getContextPath()%>/upload/board/<%=q.getqImage() %>" alt="" class="viewimage"/>
 	                </div>
 	                

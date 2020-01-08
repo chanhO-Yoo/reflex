@@ -24,6 +24,7 @@ public class MypageOneToOneDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.parameter handling
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		String memberId = request.getParameter("memberId");
 //		String qImage = request.getParameter("qImage");
 //		System.out.println(qNo+"/"+qImage);
 		
@@ -60,11 +61,11 @@ public class MypageOneToOneDeleteServlet extends HttpServlet {
 		
 		if(result>0) {
 			msg="게시글 삭제 성공.";
-			loc="/mypage/mypageOneToOne";
+			loc="/mypage/mypageOneToOne?memberId="+memberId;
 		}
 		else {
 			msg="게시글 삭제 실패";
-			loc="/mypage/mypageOneToOne";
+			loc="/mypage/mypageOneToOne?memberId="+memberId;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
