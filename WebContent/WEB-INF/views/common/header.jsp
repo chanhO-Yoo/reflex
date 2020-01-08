@@ -154,14 +154,14 @@
                         </button>
                     </header>
                     <ul class="list-unstyled">
-                        <li><a href="<%=request.getContextPath()%>/admin/itemEnroll">상품등록</a></li>
-                        <li><a href="<%=request.getContextPath()%>/admin/itemSearch">상품조회</a></li>
-                        <li><a href="<%=request.getContextPath()%>/admin/rentalList">렌탈내역</a></li>
-                        <li><a href="<%=request.getContextPath()%>/admin/orderOutline">판매현황</a></li>
-                        <li><a href="<%=request.getContextPath()%>/admin/orderList">배송관리</a></li>
-                        <li><a href="<%=request.getContextPath()%>/admin/member/memberQna">1:1문의관리</a></li>
                         <li><a href="<%=request.getContextPath()%>/admin/member/memberSearch">회원조회</a></li>
-
+                        <li><a href="<%=request.getContextPath()%>/admin/orderList">배송관리</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/rentalList">렌탈내역</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/itemSearch">상품조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/member/memberQna">1:1문의관리</a></li>
+                        
+                        <li><a href="<%=request.getContextPath()%>/admin/itemEnroll">상품등록</a></li>
+                        <li><a href="<%=request.getContextPath()%>/admin/orderOutline">판매현황</a></li>
                     </ul>
                 </nav>
                 </div>
