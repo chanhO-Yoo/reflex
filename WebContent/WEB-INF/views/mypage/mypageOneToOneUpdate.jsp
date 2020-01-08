@@ -60,6 +60,7 @@
 	                </div>
 	                <div class="file-wrapper">
 	                    <label for="up-file">첨부파일</label>
+	                   	<input type="file" name="upFile" id="up-file" style="display:block; margin-bottom:10px;">
 	                    <img src="<%=request.getContextPath()%>/upload/board/<%=q.getqImage() %>" alt="" class="viewimage"/>
 	                </div>
 	                
