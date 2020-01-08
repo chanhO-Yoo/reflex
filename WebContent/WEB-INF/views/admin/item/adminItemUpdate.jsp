@@ -29,7 +29,7 @@
     }
     span#fname1, span#fname2, span#fname3, span#fname4, span#fname5 {
 		position:absolute;
-		right: 330px;
+		right: 170px;
 		top: 16px;
 		width: 200px;
 		background-color: #fff;
