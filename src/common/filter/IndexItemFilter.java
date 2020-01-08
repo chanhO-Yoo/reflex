@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import admin.model.service.AdminService;
 import item.model.service.ItemService;
 import item.model.vo.Item;
 import item.model.vo.ItemImage;
@@ -44,17 +45,32 @@ public class IndexItemFilter implements Filter {
 		List<Item> itemList = null;
 		List<ItemImage> imgList = null;
 		
-		String[] hobbyArr= {"",""};
+		List<String> categorySellAmount = new AdminService().selectCategorySellAmount();
+		String[] categorySellAmountArr= {"",""};
+		for(int i=0;i<categorySellAmountArr.length;i++) {
+			String str="";
+			switch(categorySellAmount.get(i)) {
+			case "CT01" : str="반려동물"; break;
+			case "CT02" : str="육아"; break;
+			case "CT03" : str="파티"; break;
+			case "CT04" : str="운동"; break;
+			case "CT05" : str="여행"; break;
+			case "CT06" : str="캠핑"; break;
+			}
+			categorySellAmountArr[i] = str;
+			
+		}
 		
+		String[] hobbyArr= {"",""};
 		//로그인한 경우
 		if(memberLoggedIn != null) {
 			if(memberLoggedIn.getMemberHobby1() == null) {
-				hobbyArr[0] = "반려동물";
-				hobbyArr[1] = "운동";
+				hobbyArr[0] = categorySellAmountArr[0];
+				hobbyArr[1] = categorySellAmountArr[1];
 			}
 			else if(memberLoggedIn.getMemberHobby2() == null) {
 				hobbyArr[0] = memberLoggedIn.getMemberHobby1();
-				hobbyArr[1] = "운동";
+				hobbyArr[1] = categorySellAmountArr[1];
 			}
 			else {
 				hobbyArr[0] = memberLoggedIn.getMemberHobby1();
@@ -62,8 +78,8 @@ public class IndexItemFilter implements Filter {
 			}
 		}
 		else {
-			hobbyArr[0] = "여행";
-			hobbyArr[1] = "파티";
+			hobbyArr[0] = categorySellAmountArr[0];
+			hobbyArr[1] = categorySellAmountArr[1];
 		}
 		System.out.println(hobbyArr[0]+"/"+hobbyArr[1]);
 		for(String str : hobbyArr) {

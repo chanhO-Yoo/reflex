@@ -480,9 +480,18 @@ public int selectTotalDetailItem(int itemNo) {
 		close(conn);
 		return result;
 	}
+
 		
+	//====================================
+	//인덱스 필터처리
 	
-	
+	public List<String> selectCategorySellAmount() {
+		Connection conn = getConnection();
+		List<String> categorySellAmount = new AdminDAO().selectCategorySellAmount(conn);
+		close(conn);
+		return categorySellAmount;
+		
+	}
 
 	
 }

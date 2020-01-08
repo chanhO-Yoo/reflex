@@ -1946,6 +1946,36 @@ public class AdminDAO {
 		return result;
 	}
 	
+	//==========================
+	//메인 필터 처리
+	
+	public List<String> selectCategorySellAmount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectCategorySellAmount");
+		List<String> categorySellAmount = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String str = rset.getString("category_no");
+				
+				categorySellAmount.add(str);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return categorySellAmount;
+	}
+	
 }
 
 	
