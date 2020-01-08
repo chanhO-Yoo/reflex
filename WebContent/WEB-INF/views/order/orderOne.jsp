@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <div id="order-header" class="container-fluid line-style text-center contents">
     <h2 class="sr-only">주문서</h2>
     <p class="strong">주문서</p>
-</div>
+</div> 
 
 <div class="container-fluid">
     <div class="row">
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <!-- 주문자 정보 -->
             <div id="orderer-header" class="container-fluid line-style text-center">
                 <h3 class="sr-only">주문자 정보</h3>
-                <p>주문자 정보</p>
+                <p class="strong">주문자 정보</p>
             </div>
             <ul id="orderer-content" class="list-inline list-unstyled row text-center">
                 <li class="col-md-4">
