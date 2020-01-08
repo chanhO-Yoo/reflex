@@ -186,7 +186,6 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOne-wrapper #warning-wrapper.content-wrapper{border: 0; padding: 100px 50px;}
 
 
-
 /* 이용후기 수정  */
 #reivewUpdate-wrapper #reviewFrm-wrapper #oneToOneFrm label{margin-right: 20px;}
 #reivewUpdate-wrapper #reviewFrm-wrapper #oneToOneFrm label#star-label{margin-right: -8px;}
@@ -196,6 +195,7 @@ input[type=file]{display: inline; overflow: hidden;}
 #oneToOneFrm #reivewUpdateFile-wrapper.file-wrapper input{margin-left: 117px;}
 #oneToOneFrm #reivewUpdateFile-wrapper.file-wrapper #fname{position: absolute; top: 2px; left: 218px; display:inline-block; width: 120px; background: white;}
 #oneToOneFrm #reivewUpdateFile-wrapper.file-wrapper #delFileChk{position: absolute; top: 7px; left: 165px;}
+
 
 /*1:1 문의 등록 관리자-답변 */
 label{margin-right: 60px;}
