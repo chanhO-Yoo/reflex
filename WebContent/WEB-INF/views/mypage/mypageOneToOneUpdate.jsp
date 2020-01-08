@@ -30,7 +30,7 @@
             <a href="<%=request.getContextPath()%>/mypage/mypageOneToOne">1:1문의내역</a>
             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
         </li>
-        <li>1:1문의 수정</li>
+        <li>1:1문의수정</li>
     </ul>
 </nav>
 <div class="container-fluid contents">
