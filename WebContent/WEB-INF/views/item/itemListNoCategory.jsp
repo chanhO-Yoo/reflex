@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			String dP = dc.format(discountedPrice);
 %>
 		<div class="col-md-3">
-		    <a href="<%=request.getContextPath()%>/item/itemView?search=<%=search %>&itemNo=<%=item.getItemNo()%>" class="center-block">
+		    <a href="<%=request.getContextPath()%>/item/itemView?categoryNo=<%=item.getCategoryNo()%>&itemNo=<%=item.getItemNo()%>" class="center-block">
 		        <img src="<%=request.getContextPath()%>/images/<%=item.getCategoryNo()%>/<%=imgList.get(0).getItemImageRenamed()%>" alt="item" class="center-block">
 		        <div class="ptext-wrapper">
 		            <p class="pbrand"><%=item.getItemBrand() %></p>
